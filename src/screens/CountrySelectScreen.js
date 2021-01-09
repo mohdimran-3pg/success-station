@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { View, Text, StyleSheet, Image, Button, TouchableOpacity, Alert } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
-const CountrySelectScreen = () => {
+const CountrySelectScreen = (props) => {
 
     const [country, setCountry] = useState([
         {name: 'Saudi Arabia', id: 1, image: require('../../assets/Flags/saudi-arab-flag.png'), isHidden: true},
@@ -59,6 +59,7 @@ const CountrySelectScreen = () => {
                                     
                                 );
                                 setCountry(array);
+                                props.navigation.navigate('login')
                             }}>
                                 <View style={styles.countryNameStyle}>
                                     <Image 

@@ -11,6 +11,7 @@ import CounterScreenByReducer from "./src/screens/CounterScreenByReducer";
 import TextScreen from "./src/screens/TextScreen";
 import CountrySelectScreen from "./src/screens/CountrySelectScreen";
 import LoginScreen from "./src/screens/LoginScreen";
+import ForgetPassword from "./src/screens/ForgetPassword";
 
 const navigator = createStackNavigator(
   {
@@ -25,9 +26,10 @@ const navigator = createStackNavigator(
     textScreen: TextScreen,
     countrySelectScreen: CountrySelectScreen,
     login: LoginScreen,
+    forgetPassword: ForgetPassword,
   },
   {
-    initialRouteName: 'login',
+    initialRouteName: 'countrySelectScreen',
     defaultNavigationOptions: {
       title: null,
       headerStyle: null,
