@@ -30,7 +30,7 @@ const ForgetPassword = (props) => {
                     </View>
                     <View style={{height: 50}}>
                         <ButtonView clickEvent = { () => {
-                                        console.log("Sign Up Clicked ......")
+                                         props.navigation.navigate('recoveredPassword') 
                                     } } />
                     </View>
                     <View style={styles.dontHaveAccountViewStyle}>
