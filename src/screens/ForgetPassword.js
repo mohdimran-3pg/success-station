@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
 import InputView from "../../components/InputView";
 import ButtonView from "../../components/ButtonView";
 
@@ -7,46 +7,50 @@ import ButtonView from "../../components/ButtonView";
 const ForgetPassword = (props) => {
 
     return (
-        <View style={styles.containerView}>
-            <View style={{height: 350, width: 320, alignSelf: "center", flexDirection: "column", justifyContent: "space-between"}}>
-                <View style={{height: 105}}>
-                    <Image style={{width: 105, height: 105, alignSelf: "center"}} source={require('../../assets/forget-pwd-icon.png')} />
-                </View>
-                <View style={{height: 29, alignContent: "center"}}>
-                    <Text style={styles.forgetPasswordTextStyle}>Forgot your password?</Text>
-                </View>
-                <View style={{height: 50}}>
-                <InputView 
-                                        changeTextEvent = {(newValue) => {
-                                            console.log("Inputtting something .....", newValue);
-                                        }} 
-                                        imageSource={require('../../assets/forest.jpg')}
-                                        placeholderText="Email"
-                                        isSecureField={false}
-                            />
-                </View>
-                <View style={{height: 50}}>
-                    <ButtonView clickEvent = { () => {
-                                    console.log("Sign Up Clicked ......")
-                                } } />
-                </View>
-                <View style={styles.dontHaveAccountViewStyle}>
-                    <TouchableOpacity onPress={() => {
-                        console.log("Don;t have account clicked ....")
-                        props.navigation.pop();
-                    }}>
-                        <View style={{flexDirection: "row"}}>
-                            <Text style={styles.dontHaveAccountTextStyle}>
-                            Back to
-                            </Text>
-                            <Text style={styles.dontHaveSignUpTextStyle}>
-                               Sign In
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={ () => {
+            Keyboard.dismiss()
+        }}>
+            <View style={styles.containerView}>
+                <View style={{height: 350, width: 320, alignSelf: "center", flexDirection: "column", justifyContent: "space-between"}}>
+                    <View style={{height: 105}}>
+                        <Image style={{width: 105, height: 105, alignSelf: "center"}} source={require('../../assets/forget-pwd-icon.png')} />
+                    </View>
+                    <View style={{height: 29, alignContent: "center"}}>
+                        <Text style={styles.forgetPasswordTextStyle}>Forgot your password?</Text>
+                    </View>
+                    <View style={{height: 50}}>
+                    <InputView 
+                                            changeTextEvent = {(newValue) => {
+                                                console.log("Inputtting something .....", newValue);
+                                            }} 
+                                            imageSource={require('../../assets/forest.jpg')}
+                                            placeholderText="Email"
+                                            isSecureField={false}
+                                />
+                    </View>
+                    <View style={{height: 50}}>
+                        <ButtonView clickEvent = { () => {
+                                        console.log("Sign Up Clicked ......")
+                                    } } />
+                    </View>
+                    <View style={styles.dontHaveAccountViewStyle}>
+                        <TouchableOpacity onPress={() => {
+                            console.log("Don;t have account clicked ....")
+                            props.navigation.pop();
+                        }}>
+                            <View style={{flexDirection: "row"}}>
+                                <Text style={styles.dontHaveAccountTextStyle}>
+                                Back to
+                                </Text>
+                                <Text style={styles.dontHaveSignUpTextStyle}>
+                                Sign In
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
-        </View>
+        </TouchableWithoutFeedback>
     )
 }
 
