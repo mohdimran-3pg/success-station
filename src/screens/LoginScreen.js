@@ -30,7 +30,7 @@ const LoginScreen = (props) => {
                                             changeTextEvent = {(newValue) => {
                                                 console.log("Inputtting something .....", newValue);
                                             }} 
-                                            imageSource={require('../../assets/forest.jpg')}
+                                            imageSource={require('../../assets/SignUp/user-icon.png')}
                                             placeholderText="User Name"
                                             isSecureField={false}
                                 />
@@ -40,7 +40,7 @@ const LoginScreen = (props) => {
                                             changeTextEvent = {(newValue) => {
                                                 console.log("Inputtting something .....", newValue);
                                             }}
-                                            imageSource={require('../../assets/forest.jpg')}
+                                            imageSource={require('../../assets/SignUp/password-icon.png')}
                                             placeholderText="Password"
                                             isSecureField={true}
                                 />

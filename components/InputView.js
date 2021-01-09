@@ -5,7 +5,7 @@ const InputView = ({ changeTextEvent , imageSource, placeholderText, isSecureFie
 
     return (
         <View style={style.inputViewStyle}>
-            <View style={{ width: 15, justifyContent: "center"}}>
+            <View style={{ width: 18, justifyContent: "center"}}>
                 <Image 
                     style={style.imageStyle} 
                     source={imageSource}
@@ -35,11 +35,12 @@ const style = StyleSheet.create({
         width: 270,
     },
     imageStyle: {
-        width: 13,
-        height: 13,
+        width: 18,
+        height: 15,
         left: 12,
         borderWidth: 0,
         borderColor: "red",
+        resizeMode: "contain",
     },
     inputViewStyle: {
         borderWidth: 1,

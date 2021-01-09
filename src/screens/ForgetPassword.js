@@ -23,7 +23,7 @@ const ForgetPassword = (props) => {
                                             changeTextEvent = {(newValue) => {
                                                 console.log("Inputtting something .....", newValue);
                                             }} 
-                                            imageSource={require('../../assets/forest.jpg')}
+                                            imageSource={require('../../assets/SignUp/email-icon.png')}
                                             placeholderText="Email"
                                             isSecureField={false}
                                 />
@@ -43,7 +43,7 @@ const ForgetPassword = (props) => {
                                 Back to
                                 </Text>
                                 <Text style={styles.dontHaveSignUpTextStyle}>
-                                Sign In
+                                {` `}Sign In
                                 </Text>
                             </View>
                         </TouchableOpacity>
