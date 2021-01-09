@@ -13,7 +13,7 @@ const ForgetPassword = (props) => {
             <View style={styles.containerView}>
                 <View style={{height: 350, width: 320, alignSelf: "center", flexDirection: "column", justifyContent: "space-between"}}>
                     <View style={{height: 105}}>
-                        <Image style={{width: 105, height: 105, alignSelf: "center"}} source={require('../../assets/forget-pwd-icon.png')} />
+                        <Image style={{width: 105, height: 105, alignSelf: "center"}} source={require('../../assets/forget-pwd-new-icon.png')} />
                     </View>
                     <View style={{height: 29, alignContent: "center"}}>
                         <Text style={styles.forgetPasswordTextStyle}>Forgot your password?</Text>

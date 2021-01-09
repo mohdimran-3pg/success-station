@@ -11,9 +11,8 @@ const LoginScreen = (props) => {
             onPress={() => {
                 Keyboard.dismiss();
             }}>
-            <KeyboardAwareScrollView>
-                <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>    
-                    <View style={{flex: 1}}>
+                <SafeAreaView style={{flex: 1}}>    
+                    <View style={{flex: 1, justifyContent: "center"}}>
                         <View style={style.mainViewStyle}> 
                             <View style={{height: 122, alignSelf: "center"}}>
                                 <Image style={style.logoImageStyle}
@@ -60,7 +59,6 @@ const LoginScreen = (props) => {
                                 <View style={{width: 160, height: 25, alignItems: "flex-end"}}>
                                     <View style={{alignContent: "flex-end", width: 110, height: 25}}>
                                     <TouchableOpacity onPress={() => {
-                                        console.log("Forget Password clicked .......", props.navigation)
                                         props.navigation.navigate('forgetPassword')
                                     }}>
                                         <Text style={{fontWeight: "400", fontSize: 12, lineHeight: 18, color: "#7165E3", textAlignVertical: "center"}}>Forgot Password?</Text>
@@ -91,7 +89,6 @@ const LoginScreen = (props) => {
                         </View>
                     </View>
                 </SafeAreaView>
-            </KeyboardAwareScrollView>
         </TouchableWithoutFeedback>
     )
 };
