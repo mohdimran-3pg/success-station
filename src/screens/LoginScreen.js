@@ -70,7 +70,7 @@ const LoginScreen = (props) => {
                             <View style={{height: 50}}> 
                                 <ButtonView clickEvent = { () => {
                                     console.log("Sign Up Clicked ......")
-                                } } />
+                                } } name="Sign in" />
                             </View>
                             <View style={style.dontHaveAccountViewStyle}>
                                 <TouchableOpacity onPress={() => {

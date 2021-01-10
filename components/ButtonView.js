@@ -1,14 +1,14 @@
 import React from "react";
 import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 
-const ButtonView = ({ clickEvent}) => {
+const ButtonView = ({name, clickEvent}) => {
     return (
         <View style={styles.mainView}>
             <TouchableOpacity
                 onPress = { () => clickEvent()}
             >
             <Text style={styles.buttonStyle}>
-                Sign in
+                {name}
             </Text>
             </TouchableOpacity>
         </View>

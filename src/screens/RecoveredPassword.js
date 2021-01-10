@@ -34,7 +34,7 @@ const RecoveredPassword = (props) => {
           <ButtonView
             clickEvent={() => {
                 props.navigation.navigate('login')
-            }}
+            }} name="Sign in"
           />
         </View>
       </View>

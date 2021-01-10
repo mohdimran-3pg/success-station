@@ -32,7 +32,7 @@ const ForgetPassword = (props) => {
                         <ButtonView clickEvent = { () => {
                                         props.navigation.navigate('otpScreen')
                                         console.log("Sign Up Clicked ......")
-                                    } } />
+                                    } } name="Send" />
                     </View>
                     <View style={styles.dontHaveAccountViewStyle}>
                         <TouchableOpacity onPress={() => {
