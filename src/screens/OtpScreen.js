@@ -1,10 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet, SafeAreaView, TouchableWithoutFeedback, Keyboard, Image, TouchableOpacity } from "react-native";
 import ButtonView from "../../components/ButtonView";
-import OTPInputView from '@twotalltotems/react-native-otp-input';
+import OTPInputView from 'react-native-otp-textinput';
 
 
 const OtpScreen = (props) => {
+   
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: "#F2F2F2", justifyContent: "center"}}>
@@ -26,25 +27,24 @@ const OtpScreen = (props) => {
                     <View style={{height: 16}}>
                         <Text style={{alignSelf: "center", fontSize: 12, fontStyle: "normal", fontWeight: "400", color: "#4A4A4A"}}>An OTP has been sent to your email </Text>
                     </View>    
-                    <View style={{height: 50}}>
+                    <View style={{height: 50 ,marginBottom:18}}>
                         <OTPInputView 
-                            pinCount={4}
-                            codeInputFieldStyle={{color: "black", backgroundColor: "white", width: 70, borderRadius: 4, fontWeight: "500", fontSize: 20}}
-                            onCodeFilled = {(code) => {
-                               console.log(" onCodeFilled ", code);     
-                            }}
-                            //code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
-                            onCodeChanged = {code => { }}
-                            autoFocusOnLoad
-    
+                    
+                    handleTextChange={(e) => {}}
+                    containerStyle={styles.textInputContainer}
+                    textInputStyle={styles.roundedTextInput}
+                    inputCount={4}
+                    tintColor={"#ffffff"}
+                    offTintColor={"#ffffff"}
+                    inputCellLength={1}
                         />
                     </View>
                     <View style={{height: 50}}>
                         <ButtonView
                             clickEvent={() => {
-                                props.navigation.navigate('recoveredPassword') 
+                                props.navigation.navigate('resetPassword') 
  
-                            }} 
+                            }} name="Send"
                         />    
                     </View>
                     <View style={{height: 25}}>
@@ -58,8 +58,16 @@ const OtpScreen = (props) => {
     );
 };
 
-const Style = StyleSheet.create({
-
+const styles = StyleSheet.create({
+    textInputContainer: {
+        marginBottom: 20,
+        
+      },
+      roundedTextInput: {
+        borderRadius: 10,
+        borderWidth: 4,
+        backgroundColor:"#ffffff"
+      },
 });
 
 export default OtpScreen;
