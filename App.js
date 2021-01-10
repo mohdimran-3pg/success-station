@@ -12,6 +12,7 @@ import TextScreen from "./src/screens/TextScreen";
 import CountrySelectScreen from "./src/screens/CountrySelectScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import ForgetPassword from "./src/screens/ForgetPassword";
+import OtpScreen from "./src/screens/OtpScreen";
 
 const navigator = createStackNavigator(
   {
@@ -27,6 +28,7 @@ const navigator = createStackNavigator(
     countrySelectScreen: CountrySelectScreen,
     login: LoginScreen,
     forgetPassword: ForgetPassword,
+    otpScreen: OtpScreen,
   },
   {
     initialRouteName: 'countrySelectScreen',
