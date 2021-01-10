@@ -4,7 +4,7 @@ import ButtonView from "../../components/ButtonView";
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 
 
-const OtpScreen = () => {
+const OtpScreen = (props) => {
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: "#F2F2F2", justifyContent: "center"}}>
@@ -42,7 +42,8 @@ const OtpScreen = () => {
                     <View style={{height: 50}}>
                         <ButtonView
                             clickEvent={() => {
-
+                                props.navigation.navigate('recoveredPassword') 
+ 
                             }} 
                         />    
                     </View>
