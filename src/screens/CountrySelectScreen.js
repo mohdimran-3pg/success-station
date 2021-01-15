@@ -1,38 +1,74 @@
-import React, {useState} from "react";
-import { View, Text, StyleSheet, Image, Button, TouchableOpacity, Alert } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity, I18nManager } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
+import * as RNLocalize from 'react-native-localize';
+import i18n from 'i18n-js';
+import memoize from 'lodash.memoize';
 
-const CountrySelectScreen = (props) => {
+const translationGetters = {
 
-    const [country, setCountry] = useState([
-        {name: 'Saudi Arabia', id: 1, image: require('../../assets/Flags/saudi-arab-flag.png'), isHidden: true},
-        {name: 'UAE', id: 2, image: require('../../assets/Flags/uae-flag.png'), isHidden: true},
-        {name: 'Egypt', id: 3, image: require('../../assets/Flags/egypt-flag.png'), isHidden: true},
-        {name: 'Kuwait', id: 4, image: require('../../assets/Flags/kuwait-flag.png'), isHidden: true},
-        {name: 'Amman', id: 5, image: require('../../assets/Flags/damman-flag.png'), isHidden: true},
-        {name: 'Jordan', id: 6, image: require('../../assets/Flags/jordan-flag.png'), isHidden: true},
-        {name: 'Bahrain', id: 7, image: require('../../assets/Flags/bahrain-flag.png'), isHidden: true},
-    ]);
+    en: () => require('../translations/en.json'),
+    // ar: () => require('./src/translations/ar.json'),
+    // fr: () => require('./src/translations/fr.json'),
+    // ur: () => require('./src/translations/ur.json'),
+  };
+  
+  const translate = memoize(
+    (key, config) => i18n.t(key, config),
+    (key, config) => (config ? key + JSON.stringify(config) : key)
+  );
+  
+  const setI18nConfig = (lang) => {
+    // fallback if no available language fits
+    const fallback = { languageTag: 'en', isRTL: false };
+  
+    const { languageTag, isRTL } = RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) || fallback;
+  
+    // clear translation cache
+    translate.cache.clear();
+    // update layout direction 
+    I18nManager.forceRTL(isRTL);
+    // set i18n-js config
+    i18n.translations = { [lang]: translationGetters[lang]() };
+    i18n.locale = lang;
+  };
+  
+  
 
-    const createThreeButtonAlert = (item) =>
-    Alert.alert(
-      "Alert Title",
-      `My Alert Msg ${item.name}`,
-      [
-        {
-          text: "Ask me later",
-          onPress: () => console.log("Ask me later pressed")
-        },
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ],
-      { cancelable: false }
-    );
+const countryData= [
+    {name: 'Saudi Arabia', id: 1, image: require('../../assets/Flags/saudi-arab-flag.png'), isHidden: true},
+    {name: 'UAE', id: 2, image: require('../../assets/Flags/uae-flag.png'), isHidden: true},
+    {name: 'Egypt', id: 3, image: require('../../assets/Flags/egypt-flag.png'), isHidden: true},
+    {name: 'Kuwait', id: 4, image: require('../../assets/Flags/kuwait-flag.png'), isHidden: true},
+    {name: 'Amman', id: 5, image: require('../../assets/Flags/damman-flag.png'), isHidden: true},
+    {name: 'Jordan', id: 6, image: require('../../assets/Flags/jordan-flag.png'), isHidden: true},
+    {name: 'Bahrain', id: 7, image: require('../../assets/Flags/bahrain-flag.png'), isHidden: true},
+];
 
+
+export default class CountrySelectScreen extends React.Component {
+
+    constructor(props) {
+        super(props);
+        setI18nConfig('en'); // set initial config
+        this.state = {country : countryData}
+      }
+  
+      componentDidMount() {
+        RNLocalize.addEventListener('change', this.handleLocalizationChange);
+      }
+    
+      componentWillUnmount() {
+        RNLocalize.removeEventListener('change', this.handleLocalizationChange);
+      }
+    
+      handleLocalizationChange = (lang) => {
+        setI18nConfig(lang);
+      };
+
+  
+render(){
+    var data = this.state.country
     return (
         <View style={styles.mainViewStyle}>
             <View style={{top: 50}}>
@@ -43,12 +79,12 @@ const CountrySelectScreen = (props) => {
             <View style={{top: 60}}> 
             <FlatList
                 keyExtractor = {(item) => item.id} 
-                data = {country}
+                data = {data}
                 renderItem = { ({item}) => {
                         return (
                             <TouchableOpacity onPress={ () => {
                                 var array = []
-                                country.forEach(element => {
+                                data.forEach(element => {
                                     if (element.id == item.id) {
                                         element.isHidden = false
                                     } else {
@@ -58,8 +94,8 @@ const CountrySelectScreen = (props) => {
                                 }
                                     
                                 );
-                                setCountry(array);
-                                props.navigation.navigate('login')
+                                this.setState({country : array})
+                                this.props.navigation.navigate('login')
                             }}>
                                 <View style={styles.countryNameStyle}>
                                     <Image 
@@ -83,7 +119,8 @@ const CountrySelectScreen = (props) => {
             </View>          
         </View>
     )   
-};
+}
+}
 
 const styles = StyleSheet.create({
     mainViewStyle: {
@@ -146,4 +183,3 @@ const styles = StyleSheet.create({
   });
   
 
-export default CountrySelectScreen;

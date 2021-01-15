@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, Keyboard, TouchableWithoutFeedback, SafeAreaView } from "react-native";
 import InputView from "../../components/InputView";
 import ButtonView from "../../components/ButtonView";
+
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { GuestUserBackGroundView } from "../../components/GuestUserBackGroundView";
+
+import {translate} from "./../util/TranslationUtils";
 const LoginScreen = (props) => {
 
     return (
@@ -23,7 +26,7 @@ const LoginScreen = (props) => {
                                 <Text style={style.welcomeTextViewStyle}>Welcome Back!</Text>
                             </View>
                             <View style={{height: 50}}>
-                                <Text style={style.signInTextViewStyle}>Sign in to continue</Text>
+                                <Text style={style.signInTextViewStyle}>{translate('sign_continue')}</Text>
                             </View>
                             <View style={{height: 50}}>
                                 <InputView 
