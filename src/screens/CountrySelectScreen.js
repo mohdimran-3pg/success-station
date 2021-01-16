@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, I18nManager } from "re
 import { FlatList } from "react-native-gesture-handler";
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
-import memoize from 'lodash.memoize';
+import {translate} from "./../util/TranslationUtils";
 
     const translationGetters = {
 
@@ -11,17 +11,12 @@ import memoize from 'lodash.memoize';
         ar: () => require('../translations/ar.json'),
     };
   
-    const translate = memoize(
-        (key, config) => i18n.t(key, config),
-        (key, config) => (config ? key + JSON.stringify(config) : key)
-    );
-  
+
     const setI18nConfig = (lang) => {
-        const fallback = { languageTag: 'ar', isRTL: true };
-        console.log("this lanfg", lang);
+        const fallback = { languageTag: 'ar', isRTL: false };
         const { languageTag, isRTL } = RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) || fallback;
         translate.cache.clear();
-        I18nManager.forceRTL(true);
+        I18nManager.forceRTL(isRTL);
         i18n.translations = { [lang]: translationGetters[lang]() };
         i18n.locale = lang;
   };
@@ -102,6 +97,7 @@ render(){
                                     
                                 );
                                 this.setState({country : array})
+                                this.handleLocalizationChange(langCode)
                                 this.props.navigation.navigate('login')
                             }}>
                                 <View style={styles.countryNameStyle}>

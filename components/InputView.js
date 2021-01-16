@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { View, Text, Image, StyleSheet, TextInput } from "react-native";
+import { View, Text, Image, StyleSheet, TextInput ,I18nManager} from "react-native";
 
 const InputView = ({ changeTextEvent , imageSource, placeholderText, isSecureField, isFullWidth}) => {
 
@@ -15,7 +15,7 @@ const InputView = ({ changeTextEvent , imageSource, placeholderText, isSecureFie
                 <TextInput
                     autoCapitalize="none"
                     autoCorrect={false}
-                    style={isFullWidth ? style.inputFullFieldStyle : style.inputHalfFieldStyle}
+                    style={isFullWidth ? style.inputFullFieldStyle : style.inputHalfFieldStyle,{textAlign: I18nManager.isRTL ? 'right' : 'left',}}
                     onChangeText = {(newValue) => 
                         changeTextEvent(newValue)
                     }
@@ -56,7 +56,8 @@ const style = StyleSheet.create({
         alignItems: "stretch",
         alignSelf: "center",
         justifyContent: "space-between",
-        flexDirection: "row"
+        flexDirection: "row",
+       
     },
     inputHalfViewStyle: {
         borderWidth: 1,

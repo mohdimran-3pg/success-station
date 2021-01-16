@@ -11,7 +11,7 @@ export default class LoginScreen extends BaseComponent {
 
     static navigationOptions = ({ navigation, navigationOptions }) => {
         return {
-            title: '',
+            title: translate('sign_in')
         };
     };
 
@@ -56,15 +56,15 @@ export default class LoginScreen extends BaseComponent {
                             />
                         </View>
                         <View style={{height: 50}}>
-                            <InputView 
-                                        changeTextEvent = {(newValue) => {
-                                            console.log("Inputtting something .....", newValue);
-                                        }}
-                                        imageSource={require('../../assets/SignUp/password-icon.png')}
-                                        placeholderText={translate('password_placeholder')}
-                                        isSecureField={true}
-                                        isFullWidth={true}
-                            />
+                        <InputView 
+                                                changeTextEvent = {(newValue) => {
+                                                 
+                                                }} 
+                                                imageSource={require('../../assets/SignUp/password-icon.png')}
+                                                placeholderText={translate('password_placeholder')}
+                                                isSecureField={true}
+                                                isFullWidth={true}
+                                    />
                         </View>
                         <View style={{height: 30, width: 320, alignSelf: "center", alignItems: "stretch", flexDirection: "row"}}>
                             <View style={{width: 160, height: 25}}>
