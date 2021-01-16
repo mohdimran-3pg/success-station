@@ -5,66 +5,69 @@ import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
 import memoize from 'lodash.memoize';
 
-const translationGetters = {
+    const translationGetters = {
 
-    en: () => require('../translations/en.json'),
-    // ar: () => require('./src/translations/ar.json'),
-    // fr: () => require('./src/translations/fr.json'),
-    // ur: () => require('./src/translations/ur.json'),
-  };
+        en: () => require('../translations/en.json'),
+        ar: () => require('../translations/ar.json'),
+    };
   
-  const translate = memoize(
-    (key, config) => i18n.t(key, config),
-    (key, config) => (config ? key + JSON.stringify(config) : key)
-  );
+    const translate = memoize(
+        (key, config) => i18n.t(key, config),
+        (key, config) => (config ? key + JSON.stringify(config) : key)
+    );
   
-  const setI18nConfig = (lang) => {
-    // fallback if no available language fits
-    const fallback = { languageTag: 'en', isRTL: false };
-  
-    const { languageTag, isRTL } = RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) || fallback;
-  
-    // clear translation cache
-    translate.cache.clear();
-    // update layout direction 
-    I18nManager.forceRTL(isRTL);
-    // set i18n-js config
-    i18n.translations = { [lang]: translationGetters[lang]() };
-    i18n.locale = lang;
+    const setI18nConfig = (lang) => {
+        const fallback = { languageTag: 'en', isRTL: true };
+        console.log("this lanfg", lang);
+        const { languageTag, isRTL } = RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) || fallback;
+        translate.cache.clear();
+        I18nManager.forceRTL(true);
+        i18n.translations = { [lang]: translationGetters[lang]() };
+        i18n.locale = lang;
   };
   
   
 
 const countryData= [
-    {name: 'Saudi Arabia', id: 1, image: require('../../assets/Flags/saudi-arab-flag.png'), isHidden: true},
-    {name: 'UAE', id: 2, image: require('../../assets/Flags/uae-flag.png'), isHidden: true},
-    {name: 'Egypt', id: 3, image: require('../../assets/Flags/egypt-flag.png'), isHidden: true},
-    {name: 'Kuwait', id: 4, image: require('../../assets/Flags/kuwait-flag.png'), isHidden: true},
-    {name: 'Amman', id: 5, image: require('../../assets/Flags/damman-flag.png'), isHidden: true},
-    {name: 'Jordan', id: 6, image: require('../../assets/Flags/jordan-flag.png'), isHidden: true},
-    {name: 'Bahrain', id: 7, image: require('../../assets/Flags/bahrain-flag.png'), isHidden: true},
+    {name: 'Saudi Arabia', id: 1, image: require('../../assets/Flags/saudi-arab-flag.png'), isHidden: true, 'lang': 'ar'},
+    {name: 'UAE', id: 2, image: require('../../assets/Flags/uae-flag.png'), isHidden: true, 'lang': 'ar'},
+    {name: 'Egypt', id: 3, image: require('../../assets/Flags/egypt-flag.png'), isHidden: true, 'lang': 'ar'},
+    {name: 'Kuwait', id: 4, image: require('../../assets/Flags/kuwait-flag.png'), isHidden: true, 'lang': 'en'},
+    {name: 'Amman', id: 5, image: require('../../assets/Flags/damman-flag.png'), isHidden: true, 'lang': 'ar'},
+    {name: 'Jordan', id: 6, image: require('../../assets/Flags/jordan-flag.png'), isHidden: true, 'lang': 'ar'},
+    {name: 'Bahrain', id: 7, image: require('../../assets/Flags/bahrain-flag.png'), isHidden: true, 'lang': 'ar'},
 ];
 
 
 export default class CountrySelectScreen extends React.Component {
 
+static navigationOptions = ({ navigation, navigationOptions }) => {
+    const { params } = navigation.state;
+    console.log("Country Selection Screen........");
+    return {
+        title: null,
+        headerStyle: null,
+        header: null,
+        };
+    };
+
     constructor(props) {
         super(props);
-        setI18nConfig('en'); // set initial config
+        setI18nConfig('ar'); // set initial config
         this.state = {country : countryData}
       }
   
-      componentDidMount() {
+    componentDidMount() {
         RNLocalize.addEventListener('change', this.handleLocalizationChange);
-      }
-    
-      componentWillUnmount() {
+    }
+
+    componentWillUnmount() {
         RNLocalize.removeEventListener('change', this.handleLocalizationChange);
-      }
-    
-      handleLocalizationChange = (lang) => {
+    }
+
+    handleLocalizationChange = (lang) => {
         setI18nConfig(lang);
-      };
+    };
 
   
 render(){
@@ -73,7 +76,7 @@ render(){
         <View style={styles.mainViewStyle}>
             <View style={{top: 50}}>
                 <Text style={styles.headingStyle}>
-                    Choose the Language
+                    {translate('choose_language')}
                 </Text>
             </View>
             <View style={{top: 60}}> 
@@ -84,13 +87,17 @@ render(){
                         return (
                             <TouchableOpacity onPress={ () => {
                                 var array = []
+                                var langCode = ''
                                 data.forEach(element => {
                                     if (element.id == item.id) {
                                         element.isHidden = false
+                                        langCode = element.lang
                                     } else {
                                         element.isHidden = true
                                     }
                                     array.push(element)
+                                    console.log('language Selected is:::', langCode);
+                                    handleLocalizationChange(langCode)
                                 }
                                     
                                 );

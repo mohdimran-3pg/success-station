@@ -37,11 +37,15 @@ const navigator = createStackNavigator(
   {
     initialRouteName: 'countrySelectScreen',
     defaultNavigationOptions: {
-      title: null,
-      headerStyle: null,
-      header: null,
+      headerStyle: {
+        backgroundColor: '#F2F2F2',
+      },
+      headerTintColor: '#000',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
     },
-  }
+  },
 );
 
 export default createAppContainer(navigator);
