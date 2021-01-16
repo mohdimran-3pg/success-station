@@ -2,52 +2,72 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableWithoutFeedback, Keyboard } from "react-native";
 import InputView from "../../components/InputView";
 import ButtonView from "../../components/ButtonView";
+import * as RNLocalize from 'react-native-localize';
+import {translate} from "./../util/TranslationUtils";
 
+export default class ResetPassword extends React.Component {
 
-const ResetPassword = (props) => {
+    static navigationOptions = ({ navigation, navigationOptions }) => {
+        return {
+            title: '',
+        };
+    };
 
-    return (
-        <TouchableWithoutFeedback onPress={ () => {
-            Keyboard.dismiss()
-        }}>
-            <View style={styles.containerView}>
-                <View style={{height: 350, width: 320, alignSelf: "center", flexDirection: "column", justifyContent: "space-between"}}>
-                    <View style={{height: 105}}>
-                        <Image style={{width: 105, height: 105, alignSelf: "center"}} source={require('../../assets/forgot.png')} />
+    constructor(props) {
+        super(props);
+    }
+  
+    componentDidMount() {
+    }
+
+    componentWillUnmount() {
+    }
+
+    render() {
+        return (
+            <TouchableWithoutFeedback onPress={ () => {
+                Keyboard.dismiss()
+            }}>
+                <View style={styles.containerView}>
+                    <View style={{height: 350, width: 320, alignSelf: "center", flexDirection: "column", justifyContent: "space-between"}}>
+                        <View style={{height: 105}}>
+                            <Image style={{width: 105, height: 105, alignSelf: "center"}} source={require('../../assets/forgot.png')} />
+                        </View>
+                        <View style={{height: 29, alignContent: "center"}}>
+                            <Text style={styles.forgetPasswordTextStyle}>{translate('enter_new_password')}</Text>
+                        </View>
+                        <View style={{height: 50}}>
+                        <InputView 
+                                                changeTextEvent = {(newValue) => {
+                                                 
+                                                }} 
+                                                imageSource={require('../../assets/SignUp/password-icon.png')}
+                                                placeholderText={translate('password_placeholder')}
+                                                isSecureField={false}
+                                    />
+                        </View>
+                        <View style={{height: 50}}>
+                        <InputView 
+                                                changeTextEvent = {(newValue) => {
+                                                    
+                                                }} 
+                                                imageSource={require('../../assets/SignUp/password-icon.png')}
+                                                placeholderText={translate('confirm_password')}
+                                                isSecureField={false}
+                                    />
+                        </View>
+                        <View style={{height: 50}}>
+                            <ButtonView clickEvent = { () => {
+                                             this.props.navigation.navigate('recoveredPassword') 
+                                        } } name={translate('submit')} />
+                        </View>
+                    
                     </View>
-                    <View style={{height: 29, alignContent: "center"}}>
-                        <Text style={styles.forgetPasswordTextStyle}>Enter New password?</Text>
-                    </View>
-                    <View style={{height: 50}}>
-                    <InputView 
-                                            changeTextEvent = {(newValue) => {
-                                             
-                                            }} 
-                                            imageSource={require('../../assets/SignUp/password-icon.png')}
-                                            placeholderText="Password"
-                                            isSecureField={false}
-                                />
-                    </View>
-                    <View style={{height: 50}}>
-                    <InputView 
-                                            changeTextEvent = {(newValue) => {
-                                                
-                                            }} 
-                                            imageSource={require('../../assets/SignUp/password-icon.png')}
-                                            placeholderText="Comfirm Password"
-                                            isSecureField={false}
-                                />
-                    </View>
-                    <View style={{height: 50}}>
-                        <ButtonView clickEvent = { () => {
-                                         props.navigation.navigate('recoveredPassword') 
-                                    } } name="Submit" />
-                    </View>
-                
                 </View>
-            </View>
-        </TouchableWithoutFeedback>
-    )
+            </TouchableWithoutFeedback>
+        )
+    }
+    
 }
 
 const styles = StyleSheet.create({
@@ -66,5 +86,3 @@ const styles = StyleSheet.create({
     },
  
 })
-
-export default ResetPassword;

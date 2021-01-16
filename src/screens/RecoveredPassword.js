@@ -1,4 +1,7 @@
 import React from "react";
+import * as RNLocalize from 'react-native-localize';
+import {translate} from "./../util/TranslationUtils";
+
 import {
   View,
   Text,
@@ -9,38 +12,57 @@ import {
 } from "react-native";
 import ButtonView from "../../components/ButtonView";
 
-const RecoveredPassword = (props) => {
-  return (
-    <SafeAreaView style={{flex: 1}}>
-    <TouchableWithoutFeedback
-      onPress={() => {
-        Keyboard.dismiss();
-      }}
-    >
-      <View style={styles.containerView}>
-      <View style={styles.cireleStyle}>
-          <Image  style={{alignContent:"center"}}
-        source={require('../../assets/tick.png')}/>
+export default class RecoveredPassword extends React.Component {
+
+  static navigationOptions = ({ navigation, navigationOptions }) => {
+    return {
+        title: '',
+    };
+  };
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+  }
+
+  componentWillUnmount() {
+  }
+
+  render() {
+    return (
+      <SafeAreaView style={{flex: 1}}>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}
+      >
+        <View style={styles.containerView}>
+        <View style={styles.cireleStyle}>
+            <Image  style={{alignContent:"center"}}
+          source={require('../../assets/tick.png')}/>
+          </View>
+          <View>
+            <Text style={styles.recoveredPasswordTextStyle}>{translate('password_recovered')}</Text>
+          </View>
+          <View>
+            <Text style={styles.secondaryTextStyle}>
+            {translate('password_recovered_desc')}
+            </Text>
+          </View>
+          <View style={{ height: 50,marginTop:20 }}>
+            <ButtonView
+              clickEvent={() => {
+                  this.props.navigation.navigate('login')
+              }} name={translate('sign_in_title')}
+            />
+          </View>
         </View>
-        <View>
-          <Text style={styles.recoveredPasswordTextStyle}>Password Recovered</Text>
-        </View>
-        <View>
-          <Text style={styles.secondaryTextStyle}>
-          Your password recovered successfully please login
-          </Text>
-        </View>
-        <View style={{ height: 50,marginTop:20 }}>
-          <ButtonView
-            clickEvent={() => {
-                props.navigation.navigate('login')
-            }} name="Sign in"
-          />
-        </View>
-      </View>
-    </TouchableWithoutFeedback>
-    </SafeAreaView>
-  );
+      </TouchableWithoutFeedback>
+      </SafeAreaView>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
@@ -79,5 +101,3 @@ const styles = StyleSheet.create({
     marginTop:14,
   },
 });
-
-export default RecoveredPassword;

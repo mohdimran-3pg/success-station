@@ -1,99 +1,116 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, Keyboard, TouchableWithoutFeedback, SafeAreaView } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, Keyboard, TouchableWithoutFeedback, SafeAreaView, I18nManager } from "react-native";
 import InputView from "../../components/InputView";
 import ButtonView from "../../components/ButtonView";
+import BaseComponent from "../screens/BaseComponent";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { GuestUserBackGroundView } from "../../components/GuestUserBackGroundView";
-
 import {translate} from "./../util/TranslationUtils";
-const LoginScreen = (props) => {
+export default class LoginScreen extends BaseComponent {
 
-    return (
-        <TouchableWithoutFeedback 
-            onPress={() => {
-                Keyboard.dismiss();
-            }}>
-                <SafeAreaView style={{flex: 1}}>    
-                    <View style={{flex: 1, justifyContent: "center"}}>
-                        <View style={style.mainViewStyle}> 
-                            <View style={{height: 122, alignSelf: "center"}}>
-                                <Image style={style.logoImageStyle}
-                                    source={require('../../assets/logo.png')}
-                                />
-                            </View>
-                            <View style={{height: 50}}>
-                                <Text style={style.welcomeTextViewStyle}>Welcome Back!</Text>
-                            </View>
-                            <View style={{height: 50}}>
-                                <Text style={style.signInTextViewStyle}>{translate('sign_continue')}</Text>
-                            </View>
-                            <View style={{height: 50}}>
-                                <InputView 
-                                            changeTextEvent = {(newValue) => {
-                                                console.log("Inputtting something .....", newValue);
-                                            }} 
-                                            imageSource={require('../../assets/SignUp/user-icon.png')}
-                                            placeholderText="User Name"
-                                            isSecureField={false}
-                                />
-                            </View>
-                            <View style={{height: 50}}>
-                                <InputView 
-                                            changeTextEvent = {(newValue) => {
-                                                console.log("Inputtting something .....", newValue);
-                                            }}
-                                            imageSource={require('../../assets/SignUp/password-icon.png')}
-                                            placeholderText="Password"
-                                            isSecureField={true}
-                                />
-                            </View>
-                            <View style={{height: 30, width: 320, alignSelf: "center", alignItems: "stretch", flexDirection: "row"}}>
-                                <View style={{width: 160, height: 25}}>
-                                <TouchableOpacity onPress={() => {
-                                    console.log("Remember me clicked .......")
-                                }}>
-                                    <View style={{alignSelf: "flex-start"}}>
-                                        <View style={{borderWidth: 1, borderColor: "#0A878A", borderRadius: 4, width: 15, height: 15, justifyContent: "center", top: 7.5}}></View>
-                                        <Text style={{fontWeight: "400", fontSize: 13, lineHeight: 18, left: 20, bottom: 10}}>Remember me</Text>
-                                    </View>
-                                </TouchableOpacity>    
+    static navigationOptions = ({ navigation, navigationOptions }) => {
+        return {
+            title: '',
+        };
+    };
+
+    constructor(props) {
+        super(props)
+        I18nManager.forceRTL(true);
+    }
+
+    componentDidMount() {
+    }
+    
+    componentWillUnmount() {
+    }
+
+    render() {
+        return <TouchableWithoutFeedback 
+        onPress={() => {
+            Keyboard.dismiss();
+        }}>
+            <SafeAreaView style={{flex: 1}}>    
+                <View style={{flex: 1, justifyContent: "center"}}>
+                    <View style={style.mainViewStyle}> 
+                        <View style={{height: 122, alignSelf: "center"}}>
+                            <Image style={style.logoImageStyle}
+                                source={require('../../assets/logo.png')}
+                            />
+                        </View>
+                        <View style={{height: 50}}>
+                            <Text style={style.welcomeTextViewStyle}>{translate('welcome_back')}</Text>
+                        </View>
+                        <View style={{height: 50}}>
+                            <Text style={style.signInTextViewStyle}>{translate('sign_continue')}</Text>
+                        </View>
+                        <View style={{height: 50}}>
+                            <InputView 
+                                        changeTextEvent = {(newValue) => {
+                                            console.log("Inputtting something .....", newValue);
+                                        }} 
+                                        imageSource={require('../../assets/SignUp/user-icon.png')}
+                                        placeholderText={translate('user_name_placeholder')}
+                                        isSecureField={false}
+                            />
+                        </View>
+                        <View style={{height: 50}}>
+                            <InputView 
+                                        changeTextEvent = {(newValue) => {
+                                            console.log("Inputtting something .....", newValue);
+                                        }}
+                                        imageSource={require('../../assets/SignUp/password-icon.png')}
+                                        placeholderText={translate('password_placeholder')}
+                                        isSecureField={true}
+                            />
+                        </View>
+                        <View style={{height: 30, width: 320, alignSelf: "center", alignItems: "stretch", flexDirection: "row"}}>
+                            <View style={{width: 160, height: 25}}>
+                            <TouchableOpacity onPress={() => {
+                                console.log("Remember me clicked .......")
+                            }}>
+                                <View style={{alignSelf: "flex-start"}}>
+                                    <View style={{borderWidth: 1, borderColor: "#0A878A", borderRadius: 4, width: 15, height: 15, justifyContent: "center", top: 7.5}}></View>
+                                    <Text style={{fontWeight: "400", fontSize: 13, lineHeight: 18, left: 20, bottom: 10}}>{translate('remember_me')}</Text>
                                 </View>
-                                <View style={{width: 160, height: 25, alignItems: "flex-end"}}>
-                                    <View style={{alignContent: "flex-end", width: 110, height: 25}}>
-                                    <TouchableOpacity onPress={() => {
-                                        props.navigation.navigate('forgetPassword')
-                                    }}>
-                                        <Text style={{fontWeight: "400", fontSize: 12, lineHeight: 18, color: "#7165E3", textAlignVertical: "center"}}>Forgot Password?</Text>
-                                    </TouchableOpacity>
-                                        
-                                    </View>
-                                </View>
+                            </TouchableOpacity>    
                             </View>
-                            <View style={{height: 50}}> 
-                                <ButtonView clickEvent = { () => {
-                                    console.log("Sign Up Clicked ......")
-                                } } name="Sign in" />
-                            </View>
-                            <View style={style.dontHaveAccountViewStyle}>
+                            <View style={{width: 160, height: 25, alignItems: "flex-end"}}>
+                                <View style={{alignContent: "flex-end", width: 110, height: 25}}>
                                 <TouchableOpacity onPress={() => {
-                                    console.log("Don;t have account clicked ....")
+                                    this.props.navigation.navigate('forgetPassword')
                                 }}>
-                                    <View style={{flexDirection: "row"}}>
-                                        <Text style={style.dontHaveAccountTextStyle}>
-                                            Don’t have an account?
-                                        </Text>
-                                        <Text style={style.dontHaveSignUpTextStyle}>
-                                            - Sign Up
-                                        </Text>
-                                    </View>
+                                    <Text style={{fontWeight: "400", fontSize: 12, lineHeight: 18, color: "#7165E3", textAlignVertical: "center"}}>{translate('forgot_password')}</Text>
                                 </TouchableOpacity>
+                                    
+                                </View>
                             </View>
                         </View>
+                        <View style={{height: 50}}> 
+                            <ButtonView clickEvent = { () => {
+                                console.log("Sign Up Clicked ......")
+                            } } name={translate('sign_in_title')} />
+                        </View>
+                        <View style={style.dontHaveAccountViewStyle}>
+                            <TouchableOpacity onPress={() => {
+                                console.log("Don;t have account clicked ....")
+                            }}>
+                                <View style={{flexDirection: "row"}}>
+                                    <Text style={style.dontHaveAccountTextStyle}>
+                                    {translate('Dont_have_account')}
+                                    </Text>
+                                    <Text style={style.dontHaveSignUpTextStyle}>
+                                    {translate('sign_up_text')}
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </SafeAreaView>
-        </TouchableWithoutFeedback>
-    )
+                </View>
+            </SafeAreaView>
+    </TouchableWithoutFeedback>
+    }
 };
 
 const style = StyleSheet.create({
@@ -158,5 +175,3 @@ const style = StyleSheet.create({
     }
 
 });
-
-export default LoginScreen;
