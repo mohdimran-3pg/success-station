@@ -17,11 +17,11 @@ import memoize from 'lodash.memoize';
     );
   
     const setI18nConfig = (lang) => {
-        const fallback = { languageTag: 'en', isRTL: true };
+        const fallback = { languageTag: 'ar', isRTL: true };
         console.log("this lanfg", lang);
         const { languageTag, isRTL } = RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) || fallback;
         translate.cache.clear();
-        I18nManager.forceRTL(isRTL);
+        I18nManager.forceRTL(true);
         i18n.translations = { [lang]: translationGetters[lang]() };
         i18n.locale = lang;
   };
@@ -53,7 +53,7 @@ static navigationOptions = ({ navigation, navigationOptions }) => {
 
     constructor(props) {
         super(props);
-        setI18nConfig('en'); // set initial config
+        setI18nConfig('ar'); // set initial config
         this.state = {country : countryData}
       }
   

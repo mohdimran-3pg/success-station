@@ -48,6 +48,7 @@ export default class ForgetPassword extends React.Component {
                                                 imageSource={require('../../assets/SignUp/email-icon.png')}
                                                 placeholderText={translate('email')}
                                                 isSecureField={false}
+                                                isFullWidth={true}
                                     />
                         </View>
                         <View style={{height: 50}}>

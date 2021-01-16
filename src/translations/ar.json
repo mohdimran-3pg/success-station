@@ -21,5 +21,18 @@
     "confirm_password": "تأكيد كلمة المرور",
     "submit": "إرسال",
     "password_recovered": "استعادة كلمة المرور",
-    "password_recovered_desc": "تم استرداد كلمة المرور الخاصة بك بنجاح الرجاء تسجيل الدخول"
+    "password_recovered_desc": "تم استرداد كلمة المرور الخاصة بك بنجاح الرجاء تسجيل الدخول",
+    "mobile_number": "رقم الهاتف المحمول",
+    "dob": "تاريخ الولادة",
+    "region": "منطقة",
+    "city": "مدينة",
+    "country": "بلد",
+    "Iqama_number": "رقم الهوية / الإقامة",
+    "college": "كلية",
+    "university": "جامعة",
+    "welcome": "أهلا بك!",
+    "sign_up_desc": "يرجى تقديم ما يليتفاصيل حسابك الجديد",
+    "sign_up_btn_text": "سجل",
+    "already_login_text": "هل لديك حساب؟",
+    "sign_in_with_dash": "- تسجيل الدخول"
   }  

@@ -44,6 +44,7 @@ export default class ResetPassword extends React.Component {
                                                 imageSource={require('../../assets/SignUp/password-icon.png')}
                                                 placeholderText={translate('password_placeholder')}
                                                 isSecureField={false}
+                                                isFullWidth={true}
                                     />
                         </View>
                         <View style={{height: 50}}>
@@ -54,6 +55,7 @@ export default class ResetPassword extends React.Component {
                                                 imageSource={require('../../assets/SignUp/password-icon.png')}
                                                 placeholderText={translate('confirm_password')}
                                                 isSecureField={false}
+                                                isFullWidth={true}
                                     />
                         </View>
                         <View style={{height: 50}}>
