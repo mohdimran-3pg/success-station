@@ -15,6 +15,7 @@ import ForgetPassword from "./src/screens/ForgetPassword";
 import OtpScreen from "./src/screens/OtpScreen";
 import RecoveredPassword from "./src/screens/RecoveredPassword";
 import ResetPassword from "./src/screens/ResetPassword";
+import UserSignUpForm from "./src/screens/UserSignUpForm";
 
 const navigator = createStackNavigator(
   {
@@ -33,6 +34,7 @@ const navigator = createStackNavigator(
     otpScreen: OtpScreen,
     recoveredPassword : RecoveredPassword,
     resetPassword : ResetPassword,
+    userSignUpForm: UserSignUpForm
   }, 
   {
     initialRouteName: 'countrySelectScreen',

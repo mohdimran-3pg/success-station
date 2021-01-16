@@ -1,43 +1,39 @@
-import React, {useState} from "react";
-import { View, Text, Image, StyleSheet, TextInput } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, Image } from "react-native";
 
-const InputView = ({ changeTextEvent , imageSource, placeholderText, isSecureField, isFullWidth}) => {
-
+const DropDownSelectBox = ({imageSource, placeholderText, isFullWidth}) => {
     return (
-        <View style={isFullWidth ? style.inputFullViewStyle : style.inputHalfViewStyle}>
+        <View style={ isFullWidth ? style.inputFullViewStyle :style.inputHalfViewStyle}>
             <View style={{ width: 18, justifyContent: "center"}}>
                 <Image 
                     style={style.imageStyle} 
                     source={imageSource}
                 />
             </View>
-            <View style={{width: isFullWidth ? 280: 128, justifyContent: "center"}}>
-                <TextInput
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    style={isFullWidth ? style.inputFullFieldStyle : style.inputHalfFieldStyle}
-                    onChangeText = {(newValue) => 
-                        changeTextEvent(newValue)
-                    }
-                    placeholder={placeholderText}
-                    secureTextEntry={isSecureField}
+            <View style={{width: 284}}>
+                <Text style={style.inputFieldStyle}>
+                    {placeholderText}
+                </Text>
+            </View>
+            <View style={{ width: 18, justifyContent: "center"}}>
+                <Image 
+                    style={style.userTypeimageStyle}
+                    source={require('../assets/drop-down.png')}
                 />
             </View>
         </View>
-    );
-};
+    )
+}
 
 const style = StyleSheet.create({
 
-    inputFullFieldStyle: {
-        height: 45,
-        alignSelf: "center",
-        width: 270,
-    },
-    inputHalfFieldStyle: {
-        height: 45,
-        alignSelf: "center",
-        width: 85,
+    inputFieldStyle: {
+        height: 50,
+        borderWidth: 0,
+        borderColor: "green",
+        left: 20,
+        width: 254,
+        textAlignVertical: "center"
     },
     imageStyle: {
         width: 18,
@@ -46,6 +42,13 @@ const style = StyleSheet.create({
         borderWidth: 0,
         borderColor: "red",
         resizeMode: "contain",
+    },
+    userTypeimageStyle: {
+        width: 10,
+        height: 5,
+        borderWidth: 0,
+        resizeMode: "contain",
+        textAlignVertical: "center"
     },
     inputFullViewStyle: {
         borderWidth: 1,
@@ -71,4 +74,4 @@ const style = StyleSheet.create({
     }
 });
 
-export default InputView;
+export default DropDownSelectBox;

@@ -17,7 +17,6 @@ export default class LoginScreen extends BaseComponent {
 
     constructor(props) {
         super(props)
-        I18nManager.forceRTL(true);
     }
 
     componentDidMount() {
@@ -53,6 +52,7 @@ export default class LoginScreen extends BaseComponent {
                                         imageSource={require('../../assets/SignUp/user-icon.png')}
                                         placeholderText={translate('user_name_placeholder')}
                                         isSecureField={false}
+                                        isFullWidth={true}
                             />
                         </View>
                         <View style={{height: 50}}>
@@ -63,6 +63,7 @@ export default class LoginScreen extends BaseComponent {
                                         imageSource={require('../../assets/SignUp/password-icon.png')}
                                         placeholderText={translate('password_placeholder')}
                                         isSecureField={true}
+                                        isFullWidth={true}
                             />
                         </View>
                         <View style={{height: 30, width: 320, alignSelf: "center", alignItems: "stretch", flexDirection: "row"}}>
@@ -90,11 +91,13 @@ export default class LoginScreen extends BaseComponent {
                         <View style={{height: 50}}> 
                             <ButtonView clickEvent = { () => {
                                 console.log("Sign Up Clicked ......")
+                                
                             } } name={translate('sign_in_title')} />
                         </View>
                         <View style={style.dontHaveAccountViewStyle}>
                             <TouchableOpacity onPress={() => {
                                 console.log("Don;t have account clicked ....")
+                                this.props.navigation.navigate('userSignUpForm')
                             }}>
                                 <View style={{flexDirection: "row"}}>
                                     <Text style={style.dontHaveAccountTextStyle}>
