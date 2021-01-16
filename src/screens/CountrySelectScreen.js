@@ -21,7 +21,7 @@ import memoize from 'lodash.memoize';
         console.log("this lanfg", lang);
         const { languageTag, isRTL } = RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) || fallback;
         translate.cache.clear();
-        I18nManager.forceRTL(true);
+        I18nManager.forceRTL(isRTL);
         i18n.translations = { [lang]: translationGetters[lang]() };
         i18n.locale = lang;
   };
@@ -53,7 +53,7 @@ static navigationOptions = ({ navigation, navigationOptions }) => {
 
     constructor(props) {
         super(props);
-        setI18nConfig('ar'); // set initial config
+        setI18nConfig('en'); // set initial config
         this.state = {country : countryData}
       }
   
@@ -97,7 +97,7 @@ render(){
                                     }
                                     array.push(element)
                                     console.log('language Selected is:::', langCode);
-                                    handleLocalizationChange(langCode)
+                                    //handleLocalizationChange(langCode)
                                 }
                                     
                                 );
