@@ -1,17 +1,21 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
-const DropDownSelectBox = ({imageSource, placeholderText, isFullWidth}) => {
+const DropDownSelectBox = ({imageSource, placeholderText, isFullWidth, onPressEvent}) => {
     return (
-        <View style={ isFullWidth ? style.inputFullViewStyle :style.inputHalfViewStyle}>
+        <TouchableOpacity style={ isFullWidth ? style.inputFullViewStyle :style.inputHalfViewStyle}
+            onPress = {() =>{
+                onPressEvent();
+            }}
+        >
             <View style={{ width: 18, justifyContent: "center"}}>
                 <Image 
                     style={style.imageStyle} 
                     source={imageSource}
                 />
             </View>
-            <View style={{width: 284}}>
-                <Text style={style.inputFieldStyle}>
+            <View style={{width: isFullWidth? 274: 98, justifyContent: "center"}}>
+                <Text style={{width: isFullWidth? 274: 98, borderColor: "black", borderWidth: 0, left: isFullWidth? 15: 15, color: "#C5C5C7"}}>
                     {placeholderText}
                 </Text>
             </View>
@@ -21,7 +25,7 @@ const DropDownSelectBox = ({imageSource, placeholderText, isFullWidth}) => {
                     source={require('../assets/drop-down.png')}
                 />
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -29,10 +33,10 @@ const style = StyleSheet.create({
 
     inputFieldStyle: {
         height: 50,
-        borderWidth: 0,
-        borderColor: "green",
-        left: 20,
-        width: 254,
+        borderWidth: 1,
+        borderColor: "red",
+        left: 15,
+        width: 98,
         textAlignVertical: "center"
     },
     imageStyle: {

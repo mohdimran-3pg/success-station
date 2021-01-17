@@ -5,6 +5,7 @@ import DropDownSelectBox from "../../components/DropDownSelectBox";
 import InputView from "../../components/InputView";
 import {translate} from "./../util/TranslationUtils";
 import ButtonView from "../../components/ButtonView";
+import Modal from 'react-native-modal';
 
 export default class UserSignUpForm extends React.Component {
 
@@ -78,9 +79,12 @@ export default class UserSignUpForm extends React.Component {
                             </View>
                             <View style={{height: 50}}>
                                 <DropDownSelectBox
-                                    placeholderText={translate('mobile_number')} 
+                                    placeholderText={translate('user_type')} 
                                     imageSource={require('../../assets/SignUp/user-type.png')}
                                     isFullWidth={true}
+                                    onPressEvent={() => {
+                                        console.log("User Type Selected.....")
+                                    }}
                                 />
                             </View>
                             <View style={{height: 50}}>
@@ -101,7 +105,6 @@ export default class UserSignUpForm extends React.Component {
                                                 }} 
                                                 imageSource={require('../../assets/SignUp/region.png')}
                                                 placeholderText={translate('region')}
-                                                style={{width: 150}}
                                                 isFullWidth={false}
                                                 
                                     />
@@ -111,14 +114,17 @@ export default class UserSignUpForm extends React.Component {
                                                 }} 
                                                 imageSource={require('../../assets/SignUp/city.png')}
                                                 placeholderText={translate('city')}
-                                                style={{width: 150}}
                                                 isFullWidth={false}
                                     />          
                             </View>
                             <View style={{height: 50, width: 320, justifyContent: "space-between", flexDirection: "row"}}>
                                     <DropDownSelectBox
-                                        placeholderText={translate('mobile_number')} 
-                                        imageSource={require('../../assets/SignUp/user-type.png')}
+                                        placeholderText={translate('country')} 
+                                        imageSource={require('../../assets/SignUp/country.png')}
+                                        isFullWidth={false}
+                                        onPressEvent={() => {
+                                            console.log("Country Drop Down Clicked.......")
+                                        }}
                                     />
                                     <InputView 
                                                 changeTextEvent = {(newValue) => {
@@ -126,7 +132,6 @@ export default class UserSignUpForm extends React.Component {
                                                 }} 
                                                 imageSource={require('../../assets/SignUp/graduate.png')}
                                                 placeholderText={translate('college')}
-                                                style={{width: 150}}
                                                 isFullWidth={false}
                                     />          
                             </View>
@@ -137,6 +142,28 @@ export default class UserSignUpForm extends React.Component {
                                                 }} 
                                                 imageSource={require('../../assets/SignUp/university.png')}
                                                 placeholderText={translate('university')}
+                                                style={{width: 150}}
+                                                isFullWidth={true}
+                                    /> 
+                            </View>
+                            <View style={{height: 50, width: 320}}>
+                                    <InputView 
+                                                changeTextEvent = {(newValue) => {
+                                                    console.log("Inputtting something .....", newValue);
+                                                }} 
+                                                imageSource={require('../../assets/SignUp/university.png')}
+                                                placeholderText={translate('Iqama_number')}
+                                                style={{width: 150}}
+                                                isFullWidth={true}
+                                    /> 
+                            </View>
+                            <View style={{height: 50, width: 320}}>
+                                    <InputView 
+                                                changeTextEvent = {(newValue) => {
+                                                    console.log("Inputtting something .....", newValue);
+                                                }} 
+                                                imageSource={require('../../assets/SignUp/university.png')}
+                                                placeholderText={translate('cr_no')}
                                                 style={{width: 150}}
                                                 isFullWidth={true}
                                     /> 
@@ -176,7 +203,7 @@ const style = StyleSheet.create({
         alignItems: "stretch",
         backgroundColor: "#F2F2F2",
         justifyContent: "space-between",
-        height: 750,
+        height: 850,
         width: 320,
         alignSelf: "center"
     },

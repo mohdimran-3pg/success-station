@@ -11,7 +11,7 @@ const InputView = ({ changeTextEvent , imageSource, placeholderText, isSecureFie
                     source={imageSource}
                 />
             </View>
-            <View style={{width: isFullWidth ? 280: 128, justifyContent: "center"}}>
+            <View style={{width: isFullWidth ? 280: 108, justifyContent: "center"}}>
                 <TextInput
                     autoCapitalize="none"
                     autoCorrect={false}
@@ -56,8 +56,7 @@ const style = StyleSheet.create({
         alignItems: "stretch",
         alignSelf: "center",
         justifyContent: "space-between",
-        flexDirection: "row",
-       
+        flexDirection: "row"
     },
     inputHalfViewStyle: {
         borderWidth: 1,

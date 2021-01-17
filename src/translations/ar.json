@@ -28,11 +28,13 @@
     "city": "مدينة",
     "country": "بلد",
     "Iqama_number": "رقم الهوية / الإقامة",
+    "cr_no": "CR NO",
     "college": "كلية",
     "university": "جامعة",
     "welcome": "أهلا بك!",
     "sign_up_desc": "يرجى تقديم ما يليتفاصيل حسابك الجديد",
     "sign_up_btn_text": "سجل",
     "already_login_text": "هل لديك حساب؟",
-    "sign_in_with_dash": "- تسجيل الدخول"
+    "sign_in_with_dash": "- تسجيل الدخول",
+    "user_type": "نوع المستخدم"
   }  
