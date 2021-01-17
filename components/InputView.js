@@ -15,7 +15,7 @@ const InputView = ({ changeTextEvent , imageSource, placeholderText, isSecureFie
                 <TextInput
                     autoCapitalize="none"
                     autoCorrect={false}
-                    style={isFullWidth ? style.inputFullFieldStyle : style.inputHalfFieldStyle,{textAlign: I18nManager.isRTL ? 'right' : 'left',}}
+                    style={isFullWidth ? style.inputFullFieldStyle : style.inputHalfFieldStyle,{textAlign: I18nManager.isRTL ? 'right' : 'left'}}
                     onChangeText = {(newValue) => 
                         changeTextEvent(newValue)
                     }

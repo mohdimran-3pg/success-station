@@ -5,6 +5,7 @@ import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
 import {translate} from "./../util/TranslationUtils";
 
+
     const translationGetters = {
 
         en: () => require('../translations/en.json'),
@@ -91,8 +92,6 @@ render(){
                                         element.isHidden = true
                                     }
                                     array.push(element)
-                                    console.log('language Selected is:::', langCode);
-                                    //handleLocalizationChange(langCode)
                                 }
                                     
                                 );

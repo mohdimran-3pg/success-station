@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity,I18nManager } from "react-native";
 
-const DropDownSelectBox = ({imageSource, placeholderText, isFullWidth, onPressEvent}) => {
+const DropDownSelectBox = ({imageSource, placeholderText,selectedText, isFullWidth, onPressEvent}) => {
+    
     return (
         <TouchableOpacity style={ isFullWidth ? style.inputFullViewStyle :style.inputHalfViewStyle}
             onPress = {() =>{
@@ -14,9 +15,10 @@ const DropDownSelectBox = ({imageSource, placeholderText, isFullWidth, onPressEv
                     source={imageSource}
                 />
             </View>
+           
             <View style={{width: isFullWidth? 274: 98, justifyContent: "center"}}>
-                <Text style={{width: isFullWidth? 274: 98, borderColor: "black", borderWidth: 0, left: isFullWidth? 15: 15, color: "#C5C5C7"}}>
-                    {placeholderText}
+                <Text style={{width: isFullWidth? 274: 98, borderColor: "black", borderWidth: 0, left: isFullWidth? 15: 15, color: selectedText =='' ?"#C5C5C7" :"black",textAlign: I18nManager.isRTL ? 'right' : 'left'}}>
+                    {selectedText =='' ?placeholderText : selectedText}
                 </Text>
             </View>
             <View style={{ width: 18, justifyContent: "center"}}>
