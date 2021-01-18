@@ -281,19 +281,24 @@ export default class UserSignUpForm extends React.Component {
                           alignItems: 'center',
                           borderBottomWidth: 1,
                           borderColor: '#D3D3D3',
+                          backgroundColor: '#F2F2F2'
                         }}
                         onPress={() => {
                           this.Standard.close();
                           this.setUserType(item);
                         }}>
+                        <View style={{flex: 1, justifyContent: 'center', alignItems: "stretch"}}>
                         <Text
                           style={{
                             color: 'black',
-                            textAlignVertical: 'center',
-                            height: 50,
+                            fontWeight: '500',
+                            alignSelf: 'center',
+                            fontSize: 18,
                           }}>
                           {item.label}
                         </Text>
+                        </View>  
+                        
                       </TouchableOpacity>
                     );
                   }}
