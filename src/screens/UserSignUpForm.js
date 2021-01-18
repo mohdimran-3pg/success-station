@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -15,8 +15,10 @@ import {translate} from './../util/TranslationUtils';
 import ButtonView from '../../components/ButtonView';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {userType} from './../util/DataUtil';
+import CalendarPicker from "react-native-calendar-picker"
 
 export default class UserSignUpForm extends React.Component {
+  
   static navigationOptions = ({navigation, navigationOptions}) => {
     return {
       title: '',
@@ -25,8 +27,7 @@ export default class UserSignUpForm extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log('------');
-    this.state = {selectedUserType: ''};
+    this.state = {selectedUserType: '', isDobVisible: false, viewHeight: 500, dateOfBirth: ''};
   }
 
   componentDidMount() {}
@@ -36,13 +37,22 @@ export default class UserSignUpForm extends React.Component {
     console.log(userType.label);
     this.setState({selectedUserType: userType.label});
   };
+  setIsDobVisible = (isDobVisible) => {
+    this.setState({isDobVisible: isDobVisible});
+  }
+  setViewHeight = (viewHeight) => {
+    this.setState({viewHeight: viewHeight});
+  }
+  setDateOfBirth = (dateOfBirth) => {
+    this.setState({dateOfBirth: dateOfBirth});
+  }
 
   render() {
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: '#F2F2F2'}}>
         <View style={{flex: 1, backgroundColor: '#F2F2F2'}}>
           <KeyboardAwareScrollView>
-            <View style={style.mainViewStyle}>
+            <View style={{flex: 1, alignItems: 'stretch', backgroundColor: '#F2F2F2', justifyContent: 'space-between', height: this.state.viewHeight, width: 320, alignSelf: 'center'}}>
               <View style={{width: 320, height: 122}}>
                 <Image
                   style={{resizeMode: 'contain', alignSelf: 'center'}}
@@ -98,41 +108,51 @@ export default class UserSignUpForm extends React.Component {
                   }}
                 />
               </View>
-              <View style={{height: 50}}>
-                <InputView
-                  changeTextEvent={(newValue) => {
-                    console.log('Inputtting something .....', newValue);
-                  }}
-                  imageSource={require('../../assets/SignUp/dob.png')}
-                  placeholderText={translate('dob')}
-                  isSecureField={false}
-                  isFullWidth={true}
-                />
-              </View>
+              {this.state.selectedUserType === 'Student' || this.state.selectedUserType === 'Individual' ? (
+              <View>  
+                <View style={{height: 50}}>
+                  <DropDownSelectBox
+                        placeholderText={translate('dob')}
+                        imageSource={require('../../assets/SignUp/dob.png')}
+                        isFullWidth={true}
+                        selectedText={this.state.dateOfBirth}
+                        onPressEvent={() => {
+                          this.calendar.open();
+                        }}
+                      />
+                </View>
+              </View>) : null }
+              {this.state.selectedUserType === 'Student' || this.state.selectedUserType === 'Individual' || this.state.selectedUserType === 'Company' ? (            
+              <View>
               <View
-                style={{
-                  height: 50,
-                  width: 320,
-                  justifyContent: 'space-between',
-                  flexDirection: 'row',
-                }}>
-                <InputView
-                  changeTextEvent={(newValue) => {
-                    console.log('Inputtting something .....', newValue);
-                  }}
-                  imageSource={require('../../assets/SignUp/region.png')}
-                  placeholderText={translate('region')}
-                  isFullWidth={false}
-                />
-                <InputView
-                  changeTextEvent={(newValue) => {
-                    console.log('Inputtting something .....', newValue);
-                  }}
-                  imageSource={require('../../assets/SignUp/city.png')}
-                  placeholderText={translate('city')}
-                  isFullWidth={false}
-                />
-              </View>
+                  style={{
+                    height: 50,
+                    width: 320,
+                    justifyContent: 'space-between',
+                    flexDirection: 'row',
+                  }}>
+                  <InputView
+                    changeTextEvent={(newValue) => {
+                      console.log('Inputtting something .....', newValue);
+                    }}
+                    imageSource={require('../../assets/SignUp/region.png')}
+                    placeholderText={translate('region')}
+                    isFullWidth={false}
+                  />
+                  <InputView
+                    changeTextEvent={(newValue) => {
+                      console.log('Inputtting something .....', newValue);
+                    }}
+                    imageSource={require('../../assets/SignUp/city.png')}
+                    placeholderText={translate('city')}
+                    isFullWidth={false}
+                  />
+                </View>       
+              </View>) : null }
+
+              
+
+
 
               {this.state.selectedUserType === 'Student' ? (
                 <View>
@@ -286,6 +306,14 @@ export default class UserSignUpForm extends React.Component {
                         onPress={() => {
                           this.Standard.close();
                           this.setUserType(item);
+                          if (item.id == 1) {
+                              this.setViewHeight(750)
+                          } else if (item.id == 2) {
+                            this.setViewHeight(750)
+                          } else {
+                            this.setViewHeight(680)
+                          }
+                          console.log(item)
                         }}>
                         <View style={{flex: 1, justifyContent: 'center', alignItems: "stretch"}}>
                         <Text
@@ -306,6 +334,25 @@ export default class UserSignUpForm extends React.Component {
                 />
               </View>
             </RBSheet>
+            <RBSheet
+            ref={(ref) => {
+              this.calendar = ref;
+            }}
+            height={400}
+            >
+            <View style={{height: 400, justifyContent: "center", alignItems: "center", backgroundColor: '#F2F2F2'}}>
+            <CalendarPicker
+                        minDate={new Date(1900, 12, 31)}
+                        maxDate={new Date(2050, 12, 31)}
+                        scrollable={true}
+                        onDateChange={(START_DATE) => {
+                          var fullDate = `${START_DATE.toObject().date}-${START_DATE.toObject().months + 1}-${START_DATE.toObject().years}`
+                          this.setDateOfBirth(fullDate);
+                          this.calendar.close();
+                        }}
+                      />
+              </View>
+            </RBSheet> 
           </KeyboardAwareScrollView>
         </View>
       </SafeAreaView>
@@ -319,7 +366,7 @@ const style = StyleSheet.create({
     alignItems: 'stretch',
     backgroundColor: '#F2F2F2',
     justifyContent: 'space-between',
-    height: 850,
+    height: 500,
     width: 320,
     alignSelf: 'center',
   },

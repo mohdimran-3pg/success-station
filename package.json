@@ -19,6 +19,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "^0.63.4",
+    "react-native-calendar-picker": "^7.0.9",
     "react-native-dropdown-latest": "^0.0.8",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
@@ -37,6 +38,8 @@
   "devDependencies": {
     "@babel/core": "~7.9.0",
     "babel-jest": "~25.2.6",
+    "eslint": "^7.18.0",
+    "eslint-plugin-linting-lightning": "^0.0.7",
     "jest": "~25.2.6",
     "react-test-renderer": "~16.13.1"
   },

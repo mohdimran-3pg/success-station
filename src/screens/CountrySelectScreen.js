@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, I18nManager } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, I18nManager, SafeAreaView } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
@@ -69,57 +69,59 @@ static navigationOptions = ({ navigation, navigationOptions }) => {
 render(){
     var data = this.state.country
     return (
-        <View style={styles.mainViewStyle}>
+        <SafeAreaView style={{flex: 1}}>
+            <View style={styles.mainViewStyle}>
             <View style={{top: 50}}>
                 <Text style={styles.headingStyle}>
                     {translate('choose_language')}
                 </Text>
             </View>
             <View style={{top: 60}}> 
-            <FlatList
-                keyExtractor = {(item) => item.id} 
-                data = {data}
-                renderItem = { ({item}) => {
-                        return (
-                            <TouchableOpacity onPress={ () => {
-                                var array = []
-                                var langCode = ''
-                                data.forEach(element => {
-                                    if (element.id == item.id) {
-                                        element.isHidden = false
-                                        langCode = element.lang
-                                    } else {
-                                        element.isHidden = true
+                <FlatList
+                    keyExtractor = {(item) => item.id} 
+                    data = {data}
+                    renderItem = { ({item}) => {
+                            return (
+                                <TouchableOpacity onPress={ () => {
+                                    var array = []
+                                    var langCode = ''
+                                    data.forEach(element => {
+                                        if (element.id == item.id) {
+                                            element.isHidden = false
+                                            langCode = element.lang
+                                        } else {
+                                            element.isHidden = true
+                                        }
+                                        array.push(element)
                                     }
-                                    array.push(element)
-                                }
-                                    
-                                );
-                                this.setState({country : array})
-                                this.handleLocalizationChange(langCode)
-                                this.props.navigation.navigate('login')
-                            }}>
-                                <View style={styles.countryNameStyle}>
-                                    <Image 
-                                        source={item.image} 
-                                        style={styles.imageStyle} 
-                                    />
-                                    <Text style={styles.countryNameTextStyle}>{item.name}</Text>
-                                    <View style={[styles.roundViewStyle, item.isHidden ? styles.roundViewStyle : styles.roundViewStyleWithoutBorder]}>
-                                        <Image
-                                            source={require('../../assets/yellow-check-mark.png')}
-                                            style={{display: item.isHidden ? "none" :  "flex", width: 20, height: 20}}
+                                        
+                                    );
+                                    this.setState({country : array})
+                                    this.handleLocalizationChange(langCode)
+                                    this.props.navigation.navigate('login')
+                                }}>
+                                    <View style={styles.countryNameStyle}>
+                                        <Image 
+                                            source={item.image} 
+                                            style={styles.imageStyle} 
                                         />
+                                        <Text style={styles.countryNameTextStyle}>{item.name}</Text>
+                                        <View style={[styles.roundViewStyle, item.isHidden ? styles.roundViewStyle : styles.roundViewStyleWithoutBorder]}>
+                                            <Image
+                                                source={require('../../assets/yellow-check-mark.png')}
+                                                style={{display: item.isHidden ? "none" :  "flex", width: 20, height: 20}}
+                                            />
+                                        </View>
                                     </View>
-                                </View>
-                            </TouchableOpacity>
-                            
-                        )
-                    }
-                } 
-            />
+                                </TouchableOpacity>
+                                
+                            )
+                        }
+                    } 
+                />
             </View>          
-        </View>
+            </View>
+        </SafeAreaView>
     )   
 }
 }
