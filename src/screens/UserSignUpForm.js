@@ -15,7 +15,7 @@ import {translate} from './../util/TranslationUtils';
 import ButtonView from '../../components/ButtonView';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {userType} from './../util/DataUtil';
-import CalendarPicker from "react-native-calendar-picker"
+// import CalendarPicker from "react-native-calendar-picker"
 
 export default class UserSignUpForm extends React.Component {
   
@@ -341,16 +341,7 @@ export default class UserSignUpForm extends React.Component {
             height={400}
             >
             <View style={{height: 400, justifyContent: "center", alignItems: "center", backgroundColor: '#F2F2F2'}}>
-            <CalendarPicker
-                        minDate={new Date(1900, 12, 31)}
-                        maxDate={new Date(2050, 12, 31)}
-                        scrollable={true}
-                        onDateChange={(START_DATE) => {
-                          var fullDate = `${START_DATE.toObject().date}-${START_DATE.toObject().months + 1}-${START_DATE.toObject().years}`
-                          this.setDateOfBirth(fullDate);
-                          this.calendar.close();
-                        }}
-                      />
+       
               </View>
             </RBSheet> 
           </KeyboardAwareScrollView>

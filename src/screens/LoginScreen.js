@@ -2,12 +2,9 @@ import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, Keyboard, TouchableWithoutFeedback, SafeAreaView, I18nManager } from "react-native";
 import InputView from "../../components/InputView";
 import ButtonView from "../../components/ButtonView";
-import BaseComponent from "../screens/BaseComponent";
 
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { GuestUserBackGroundView } from "../../components/GuestUserBackGroundView";
 import {translate} from "./../util/TranslationUtils";
-export default class LoginScreen extends BaseComponent {
+export default class LoginScreen extends React.Component {
 
     static navigationOptions = ({ navigation, navigationOptions }) => {
         return {
@@ -90,7 +87,7 @@ export default class LoginScreen extends BaseComponent {
                         </View>
                         <View style={{height: 50}}> 
                             <ButtonView clickEvent = { () => {
-                                console.log("Sign Up Clicked ......")
+                              this.props.navigation.navigate('dashBoard')
                                 
                             } } name={translate('sign_in_title')} />
                         </View>

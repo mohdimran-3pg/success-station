@@ -16,6 +16,8 @@ import OtpScreen from "./src/screens/OtpScreen";
 import RecoveredPassword from "./src/screens/RecoveredPassword";
 import ResetPassword from "./src/screens/ResetPassword";
 import UserSignUpForm from "./src/screens/UserSignUpForm";
+import DashBoard from "./src/screens/dashboard/DashBoard"
+
 
 const navigator = createStackNavigator(
   {
@@ -34,6 +36,7 @@ const navigator = createStackNavigator(
     otpScreen: OtpScreen,
     recoveredPassword : RecoveredPassword,
     resetPassword : ResetPassword,
+    dashBoard: DashBoard,
     userSignUpForm: UserSignUpForm
   }, 
   {
