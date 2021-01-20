@@ -41,10 +41,7 @@ const NavigationDrawerStructure = (props) => {
       <TouchableOpacity onPress={() => toggleDrawer()}>
         {/*Donute Button Image */}
         <Image
-          source={{
-            uri:
-              'https://raw.githubusercontent.com/AboutReact/sampleresource/master/drawerWhite.png',
-          }}
+          source={require('../../../assets/tabs/menu.png')}
           style={{width: 25, height: 25, marginLeft: 5}}
         />
       </TouchableOpacity>
@@ -92,7 +89,7 @@ const BottomTabStack = () => {
           tabBarLabel: 'Offer',
           tabBarIcon: ({ color, focused }) => (
  
-             <Image source={require('../../../assets/tabs/offers.png')} style={{width:18,height:18,tintColor:focused? "#FFA733" :"#9EA6BE"}}></Image>
+             <Image source={require('../../../assets/tabs/offers.png')} style={{width:28,height:18,tintColor:focused? "#FFA733" :"#9EA6BE", resizeMode: "contain"}}></Image>
            
            ),
         }}
@@ -103,7 +100,7 @@ const BottomTabStack = () => {
         options={{
           tabBarLabel: 'Friends',
            tabBarIcon: ({ color, focused }) => (
-            <Image source={require('../../../assets/tabs/friends.png')} style={{width:18,height:18,tintColor:focused? "#FFA733" :"#9EA6BE"}}></Image>
+            <Image source={require('../../../assets/tabs/friends.png')} style={{width:28,height:18,tintColor:focused? "#FFA733" :"#9EA6BE", resizeMode: "contain"}}></Image>
             ),
         }}
       />
@@ -113,7 +110,7 @@ const BottomTabStack = () => {
         options={{
           tabBarLabel: 'Services',
            tabBarIcon: ({ color, focused }) => (
-            <Image source={require('../../../assets/tabs/services.png')} style={{width:18,height:18,tintColor:focused? "#FFA733" :"#9EA6BE"}}></Image>
+            <Image source={require('../../../assets/tabs/services.png')} style={{width:28,height:18,tintColor:focused? "#FFA733" :"#9EA6BE", resizeMode: "contain"}}></Image>
             ),
         }}
       />
@@ -123,7 +120,7 @@ const BottomTabStack = () => {
         options={{
           tabBarLabel: 'Ads',
          tabBarIcon: ({ color, focused }) => (
-          <Image source={require('../../../assets/tabs/ads.png')} style={{width:18,height:18,tintColor:focused? "#FFA733" :"#9EA6BE"}}></Image>
+          <Image source={require('../../../assets/tabs/ads.png')} style={{width:28,height:18,tintColor:focused? "#FFA733" :"#9EA6BE", resizeMode: "contain"}}></Image>
           ),
         }}
       />
