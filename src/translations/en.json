@@ -37,5 +37,16 @@
   "sign_up_btn_text": "Sign Up",
   "already_login_text": "Already have an account?",
   "sign_in_with_dash": " - Sign In",
-  "user_type": "User Type"
+  "user_type": "User Type",
+  "announce_new": "Announce New",
+  "contact_information": "Contact information",
+  "review_publish": "Review and publish",
+  "category": "Category",
+  "title": "Title",
+  "description": "Description",
+  "next": "Next",
+  "01": "01",
+  "02": "02",
+  "03": "03",
+  "ads": "Ads"
 }
