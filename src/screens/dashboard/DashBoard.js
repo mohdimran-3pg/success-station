@@ -4,7 +4,7 @@
 import 'react-native-gesture-handler';
 
 import * as React from 'react';
-import {View, TouchableOpacity, Image,StatusBar} from 'react-native';
+import {View, TouchableOpacity, Image,StatusBar,StyleSheet,Text} from 'react-native';
 
 import {
   NavigationContainer,
@@ -18,14 +18,18 @@ import Friends from './screen/Friends';
 import Services from './screen/Services';
 import AdsScreen from './screen/Ads';
 import ExploreScreen from './screen/ExploreScreen';
+import SidebarMenu from './SideBarMenu';
 import SettingScreen from './screen/SettingScreen';
-
+import {drawerIconStyle} from './../../styles/CommonStyleSheet';
+import {adsIcon,notificationIcon,profileIcon,messageIcon,membershipIcon,adsTabIcon,offerTabIcon,serviceTabIcon,friendTabIcon} from './../../util/ImageConstant'
 
 
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
+
+
 
 const NavigationDrawerStructure = (props) => {
   //Structure for the navigatin Drawer
@@ -89,7 +93,7 @@ const BottomTabStack = () => {
           tabBarLabel: 'Offer',
           tabBarIcon: ({ color, focused }) => (
  
-             <Image source={require('../../../assets/tabs/offers.png')} style={{width:28,height:18,tintColor:focused? "#FFA733" :"#9EA6BE", resizeMode: "contain"}}></Image>
+             <TabIcon src ={offerTabIcon} focused = {focused}/>
            
            ),
         }}
@@ -100,7 +104,7 @@ const BottomTabStack = () => {
         options={{
           tabBarLabel: 'Friends',
            tabBarIcon: ({ color, focused }) => (
-            <Image source={require('../../../assets/tabs/friends.png')} style={{width:28,height:18,tintColor:focused? "#FFA733" :"#9EA6BE", resizeMode: "contain"}}></Image>
+            <TabIcon src ={friendTabIcon} focused = {focused}/>
             ),
         }}
       />
@@ -110,7 +114,7 @@ const BottomTabStack = () => {
         options={{
           tabBarLabel: 'Services',
            tabBarIcon: ({ color, focused }) => (
-            <Image source={require('../../../assets/tabs/services.png')} style={{width:28,height:18,tintColor:focused? "#FFA733" :"#9EA6BE", resizeMode: "contain"}}></Image>
+        <TabIcon src ={serviceTabIcon} focused = {focused}/>
             ),
         }}
       />
@@ -120,13 +124,14 @@ const BottomTabStack = () => {
         options={{
           tabBarLabel: 'Ads',
          tabBarIcon: ({ color, focused }) => (
-          <Image source={require('../../../assets/tabs/ads.png')} style={{width:28,height:18,tintColor:focused? "#FFA733" :"#9EA6BE", resizeMode: "contain"}}></Image>
+          <TabIcon src ={adsTabIcon} focused = {focused}/>
           ),
         }}
       />
     </Tab.Navigator>
   );
 };
+
 
 const HomeScreenStack = ({navigation}) => {
   return (
@@ -191,24 +196,74 @@ export default class DashBoard extends React.Component {
     <NavigationContainer>
       <Drawer.Navigator
         drawerContentOptions={{
-          activeTintColor: '#e91e63',
-          itemStyle: {marginVertical: 5},
-        }}>
+          activeTintColor: '#0A878A',
+          inactiveTintColor: '#9EA6BE',
+          labelStyle:{marginHorizontal :1},
+          iconStyle :{margin:3}
+        }} 
+        drawerContent={(props) => <SidebarMenu {...props} />}>
         <Drawer.Screen
           name="HomeScreenStack"
-          options={{drawerLabel: 'Home Screen Option'}}
+          options={{drawerLabel: 'Profile'
+          ,drawerIcon: ((focused,color,size)=>
+          <DrawerIcon src={profileIcon}/>
+          )}}
+          
           component={HomeScreenStack}
         />
         <Drawer.Screen
           name="SettingScreenStack"
-          options={{drawerLabel: 'Setting Screen Option'}}
+          options={{drawerLabel:  'My Ads',drawerIcon: ((focused,color,size)=>
+          <DrawerIcon src={adsIcon}/>
+          )}}
+      
           component={SettingScreenStack}
         />
+          <Drawer.Screen
+          name="HomeScreenStack1"
+          options={{drawerLabel: 'Messages' ,drawerIcon:((focused,color,size)=>
+          <DrawerIcon src={messageIcon}/>
+          )}}
+          
+          component={HomeScreenStack}
+        />
+        <Drawer.Screen
+          name="SettingScreenStack1"
+          options={{drawerLabel: 'Membership',drawerIcon: ((focused,color,size)=>
+          <DrawerIcon src={membershipIcon}/>)}}
+      
+          component={SettingScreenStack}
+        />
+          <Drawer.Screen
+          name="HomeScreenStack2"
+          options={{drawerLabel: 'Notifications',drawerIcon: ((focused,color,size)=>
+          <DrawerIcon src={notificationIcon}/>
+          )}}
+          
+          component={HomeScreenStack}
+        />
+      
        
         
       </Drawer.Navigator>
     </NavigationContainer>
   );
 }};
+
+const DrawerIcon = ({src}) => {
+  return (
+    <View style={drawerIconStyle.menuIconBg}>
+      <Image source={src} style={drawerIconStyle.menuIcon} />
+    </View>
+  );
+};
+
+
+
+const TabIcon = ({src,focused}) => {
+  return (
+      <Image source={src} style={{width:28,height:18,tintColor:focused? "#FFA733" :"#9EA6BE", resizeMode: "contain"}} />
+  );
+};
 
 
