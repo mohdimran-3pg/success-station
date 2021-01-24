@@ -16,7 +16,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Offers from './screen/Offers';
 import Friends from './screen/Friends';
 import Services from './screen/Services';
-import Ads from './screen/Ads';
+import AdsScreen from './screen/Ads';
+import ExploreScreen from './screen/ExploreScreen';
 import SidebarMenu from './SideBarMenu';
 import SettingScreen from './screen/SettingScreen';
 import {drawerIconStyle} from './../../styles/CommonStyleSheet';
@@ -119,7 +120,7 @@ const BottomTabStack = () => {
       />
       <Tab.Screen
         name="Ads"
-        component={Ads}
+        component={AdsScreen}
         options={{
           tabBarLabel: 'Ads',
          tabBarIcon: ({ color, focused }) => (

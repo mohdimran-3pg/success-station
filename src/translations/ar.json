@@ -36,5 +36,16 @@
     "sign_up_btn_text": "سجل",
     "already_login_text": "هل لديك حساب؟",
     "sign_in_with_dash": "- تسجيل الدخول",
-    "user_type": "نوع المستخدم"
+    "user_type": "نوع المستخدم",
+    "announce_new": "أعلن جديد",
+    "contact_information": "معلومات للتواصل",
+    "review_publish": "مراجعة ونشر",
+    "category": "الفئة",
+    "title": "عنوان",
+    "description": "وصف",
+    "next": "التالى",
+    "01": "واحد",
+    "02": "إثنان",
+    "03": "ثلاثة",
+    "ads": "إعلانات"
   }  
