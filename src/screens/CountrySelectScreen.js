@@ -69,6 +69,7 @@ static navigationOptions = ({ navigation, navigationOptions }) => {
 render(){
     var data = this.state.country
     return (
+    
         <SafeAreaView style={{flex: 1}}>
             <View style={styles.mainViewStyle}>
             <View style={{top: 50}}>
