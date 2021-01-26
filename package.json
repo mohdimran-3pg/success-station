@@ -24,6 +24,7 @@
     "react-dom": "16.13.1",
     "react-native": "^0.63.4",
     "react-native-calendar-picker": "^6.1.5",
+    "react-native-customized-image-picker": "^1.1.0",
     "react-native-dropdown-latest": "^0.0.8",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",

@@ -1,12 +1,12 @@
 import React from 'react'
 import {View, Text, Image, StyleSheet} from 'react-native'
 
-const AdsStepView = ({isSelected, displayText, stepNo, isArrowNeeded}) => {
+const AdsStepView = ({isSelected, displayText, stepNo}) => {
     console.log("isSelected:::::", isSelected)
     imageName = isSelected ? '../assets/Ads/ads-enable-arrow.png' : '../assets/Ads/ads-disable-arrow.png'
     return (<View style={{width: "100%", height: 65, flexDirection: "row", alignitems: "space-between"}}>
-                <View style={{width: 87, height: 65, flexDirection: "column", alignitems: "space-between"}}>
-                    <View style={{width:87, height:33, justifyContent: "center"}}>
+                <View style={{width: 80, height: 65, flexDirection: "column", alignitems: "space-between"}}>
+                    <View style={{width:80, height:33, justifyContent: "center"}}>
                         <View style={isSelected ? styles.selectedViewStyle: styles.unselectedViewStyle}>
                             <Text style={isSelected ? styles.selectedStepNumberText: styles.unSelectedStepNumberText}>{stepNo}</Text>
                         </View>
@@ -15,19 +15,6 @@ const AdsStepView = ({isSelected, displayText, stepNo, isArrowNeeded}) => {
                         <Text style={isSelected ? styles.selectedStepTitleText: styles.unSelectedStepTitleText}>{displayText}</Text>
                     </View>
                 </View>
-                {isArrowNeeded ? 
-                <View style={{height:65, width:39, justifyContent: "center"}}>
-                    {isSelected ?
-                    <Image
-                        style={{height:5, width:39}} 
-                        source={require('../assets/Ads/ads-enable-arrow.png')}
-                    />
-                    : <Image
-                    style={{height:5, width:39}} 
-                    source={require('../assets/Ads/ads-disable-arrow.png')}
-                /> }
-                </View>
-                 : null}
             </View>
             )
 }
