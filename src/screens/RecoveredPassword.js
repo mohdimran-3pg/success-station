@@ -51,7 +51,7 @@ export default class RecoveredPassword extends React.Component {
             {translate('password_recovered_desc')}
             </Text>
           </View>
-          <View style={{ height: 50,marginTop:20 }}>
+          <View style={{ height: 50,marginTop:20, width: 320, alignSelf: "center"}}>
             <ButtonView
               clickEvent={() => {
                   this.props.navigation.navigate('login')

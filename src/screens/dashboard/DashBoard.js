@@ -17,6 +17,8 @@ import Offers from './screen/Offers';
 import Friends from './screen/Friends';
 import Services from './screen/Services';
 import AdsScreen from './screen/Ads';
+import AdDetail from './screen/AdDetail';
+import EnterPublisherDetail from './screen/EnterPublisherDetail';
 import ExploreScreen from './screen/ExploreScreen';
 import SidebarMenu from './SideBarMenu';
 import SettingScreen from './screen/SettingScreen';
@@ -120,12 +122,13 @@ const BottomTabStack = () => {
       />
       <Tab.Screen
         name="Ads"
-        component={AdsScreen}
+        component={AdScreenStack}
         options={{
           tabBarLabel: 'Ads',
          tabBarIcon: ({ color, focused }) => (
           <TabIcon src ={adsTabIcon} focused = {focused}/>
           ),
+          headerShown: false
         }}
       />
     </Tab.Navigator>
@@ -183,6 +186,45 @@ const SettingScreenStack = ({navigation}) => {
     </Stack.Navigator>
   );
 };
+
+const AdScreenStack = ({navigation}) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Ad Screen"
+      screenOptions={{
+        headerLeft: () => (
+          <NavigationDrawerStructure navigationProps={navigation} />
+        ),
+        headerStyle: null,
+        headerTintColor: '#fff', //Set Header text color
+        headerTitleStyle: null,
+        headerShown: false,
+      }}>
+      <Stack.Screen
+        name="AdsScreen"
+        component={AdsScreen}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name="EnterPublisherDetail"
+        component={EnterPublisherDetail}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name="AdDetail"
+        component={AdDetail}
+        options={{
+          headerShown: false
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 
 export default class DashBoard extends React.Component {
 

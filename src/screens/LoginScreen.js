@@ -85,7 +85,7 @@ export default class LoginScreen extends React.Component {
                                 </View>
                             </View>
                         </View>
-                        <View style={{height: 50}}> 
+                        <View style={{height: 50, width: 320, alignSelf: "center"}}> 
                             <ButtonView clickEvent = { () => {
                               this.props.navigation.navigate('dashBoard')
                                 

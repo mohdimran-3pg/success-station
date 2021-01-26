@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 
-const ButtonView = ({name, clickEvent}) => {
+const BorderButton = ({name, clickEvent}) => {
     return (
         <View style={styles.mainView}>
             <TouchableOpacity
@@ -22,12 +22,14 @@ const styles = StyleSheet.create({
         width: "100%",
         height: 50,
         borderRadius: 4,
-        backgroundColor: "#F78A3A",
+        backgroundColor: "#F2F2F2",
         alignSelf: "center",
         justifyContent: "center",
-        alignItems: "stretch"
+        alignItems: "stretch",
+        borderColor: "#F78A3A",
+        borderWidth: 1
     },
-    buttonStyle: {color: "#ffffff", fontSize: 17, fontWeight: "700", textAlign: "center"}
+    buttonStyle: {color: "#F78A3A", fontSize: 17, fontWeight: "700", textAlign: "center"}
 });
 
-export default ButtonView;
+export default BorderButton;

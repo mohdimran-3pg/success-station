@@ -59,7 +59,7 @@ export default class OtpScreen extends React.Component {
                         inputCellLength={1}
                             />
                         </View>
-                        <View style={{height: 50}}>
+                        <View style={{height: 50, width: 320}}>
                             <ButtonView
                                 clickEvent={() => {
                                     this.props.navigation.navigate('resetPassword') 

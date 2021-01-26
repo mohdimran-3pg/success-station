@@ -4,22 +4,22 @@
 import * as React from 'react';
 import {Button, View, Text, SafeAreaView, TouchableWithoutFeedback, Image, StyleSheet, TextInput, I18nManager, TouchableOpacity} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import InputView from '../../../../components/InputView';
-import DropDownSelectBox from '../../../../components/DropDownSelectBox';
+import InputViewWithOutImage from '../../../../components/InputViewWithOutImage';
+import DropDownSelectBoxWithoutImage from '../../../../components/DropDownSelectBoxWithoutImage';
 import {translate} from '../../../util/TranslationUtils';
 import AdsStepView from '../../../../components/AdsStepView'
+import ArrowView from '../../../../components/ArrowView'
 import ButtonView from '../../../../components/ButtonView'
+import ImagePicker from "react-native-customized-image-picker";
+
 const AdsScreen = ({navigation}) => {
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1}}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'column',
-            alignItems: 'stretch',
-          }}>
-          <View style={{backgroundColor:"#0A878A", height: 190, alignItems: 'center'}}>
+            <KeyboardAwareScrollView>
+            <View style={{flex: 1, flexDirection: "column", height: 850}}>
+            <View style={{backgroundColor:"#0A878A", height: 80, alignItems: 'center'}}>
               <View style={{height: 40, width:"95%", flexDirection: 'row', top: 10}}>
                 <View style={{width: "20%", justifyContent: "flex-start"}}>
                   <Button style={{flex: 1, color: "#ff5c5c", width: "35", height: "35", fontSize: "28"}}
@@ -38,51 +38,67 @@ const AdsScreen = ({navigation}) => {
                   />
                 </View>
               </View>
-              <View style={{height: 65, width:"85%", flexDirection: 'row', top: 25, justifyContent: "space-between", alignSelf: "center"}}>
-                  <View style={{width: "32%", height: 65}}>
-                    <AdsStepView
-                         isSelected={true} 
-                         displayText={translate('announce_new')}
-                         stepNo={translate('01')}
-                         isArrowNeeded={true}
-                    />
-                  </View>
-                  <View style={{width: "32%", height: 65}}>
-                    <AdsStepView
-                         isSelected={false} 
-                         displayText={translate('contact_information')}
-                         stepNo={translate('02')}
-                         isArrowNeeded={true}
-                    />
-                  </View>
-                  <View style={{width: "32%", height: 65}}>
-                    <AdsStepView
-                          isSelected={false} 
-                          displayText={translate('review_publish')}
-                          stepNo={translate('03')}
-                          isArrowNeeded={false}
-                      />
-                  </View>
-              </View>
           </View>  
-          <View style={{width: "100%", height: 750, top: 25}}>
-            <KeyboardAwareScrollView style={{}}>
-            <View style={{flex: 1, alignItems: 'stretch', backgroundColor: '#F2F2F2', justifyContent: 'space-between', width: 320, alignSelf: 'center', height: 700}}>
+            <View style={{backgroundColor:"#0A878A", height: 80}}>
+            <View style={{width:"80%", flexDirection: 'row', justifyContent: "space-between", alignSelf: "center"}}>
+                  <View style={{width: "32%", height: 65, flexDirection: "row", justifyContent: "space-between"}}>
+                    <View>
+                      <AdsStepView
+                          isSelected={true} 
+                          displayText={translate('announce_new')}
+                          stepNo={translate('01')}
+                      />
+                    </View>
+                    <View style={{justifyContent: 'center'}}>
+                      <ArrowView
+                        isSelected={true} 
+                        style={{alignSelf: 'center'}}
+                      />
+                    </View>
+                  </View>
+                  <View style={{width: "32%", height: 65, flexDirection: "row", justifyContent: "space-between"}}>
+                    <View>
+                      <AdsStepView
+                          isSelected={false} 
+                          displayText={translate('contact_information')}
+                          stepNo={translate('02')}
+                      />
+                    </View>
+                    <View style={{justifyContent: 'center'}}>
+                      <ArrowView
+                        isSelected={false} 
+                      />
+                    </View>
+                    
+                  </View>
+                  <View style={{width: "25%", height: 65, alignSelf: "center"}}>
+                    <View style={{alignSelf: "center"}}>
+                      <AdsStepView
+                            isSelected={false} 
+                            displayText={translate('review_publish')}
+                            stepNo={translate('03')}
+                        />
+                    </View>
+                  </View> 
+              </View>
+            </View>  
+            <View style={{flex: 1, alignItems: 'stretch', backgroundColor: '#F2F2F2', justifyContent: 'space-between', width: 320, alignSelf: 'center', height: 650, top: 25}}>
               <View style={{height: 80, justifyContent: 'space-between'}}>
                 <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>{translate('category')}</Text>
-                <DropDownSelectBox
+                <DropDownSelectBoxWithoutImage
                   placeholderText={translate('category')}
-                  imageSource={require('../../../../assets/SignUp/user-type.png')}
+                  selectedText={''}
                   isFullWidth={true}
                   onPressEvent={() => {
+                    console.log('------')
                   }}
                 />
               </View>
               <View style={{height: 80, justifyContent: 'space-between'}}>
                 <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>{translate('user_type')}</Text>
-                <DropDownSelectBox
+                <DropDownSelectBoxWithoutImage
                   placeholderText={translate('user_type')}
-                  imageSource={require('../../../../assets/SignUp/user-type.png')}
+                  selectedText={''}
                   isFullWidth={true}
                   onPressEvent={() => {
                   }}
@@ -90,13 +106,11 @@ const AdsScreen = ({navigation}) => {
               </View>
               <View style={{height: 80, justifyContent: 'space-between'}}>
                 <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>{translate('title')}</Text>
-                <InputView
+                <InputViewWithOutImage
                   changeTextEvent={(newValue) => {
                     console.log('Inputtting something .....', newValue);
                   }}
-                  imageSource={require('../../../../assets/SignUp/email-icon.png')}
                   placeholderText={translate('title')}
-                  isSecureField={false}
                   isFullWidth={true}
                 />
               </View>
@@ -106,12 +120,22 @@ const AdsScreen = ({navigation}) => {
                     autoCapitalize="none"
                     autoCorrect={false}
                     style={{textAlign: I18nManager.isRTL ? 'right' : 'left', borderWidth: 1, borderColor: "#0A878A", borderRadius:4, height: 90}}
-                    placeholder={translate('description')}
+                    placeholder={`  `+translate('description')}
                     multiline={true}
                 />
               </View>
               <View style={{width: "100%", height: 54, backgroundColor: "#FFA73342", borderRadius:4}}>
-                  <TouchableOpacity style={{width: "100%", height: "100%", justifyContent: "center", alignItems: 'center'}}>
+                  <TouchableOpacity 
+                      style={{width: "100%", height: "100%", justifyContent: "center", alignItems: 'center'}}
+                      onPress={() => {
+                        console.log('hello imran', navigation);
+                        ImagePicker.openPicker({}).then(image => {
+                          console.log(image);
+                        });
+                      }
+
+                      }
+                  >
                       <View style={{width: 120, height: 20, flexDirection: "row", justifyContent: "space-between"}}>
                         <Image
                             style={{width: 24, height: 20, resizeMode: "contain"}}
@@ -123,32 +147,31 @@ const AdsScreen = ({navigation}) => {
               </View>
               <View style={{height: 80, justifyContent: 'space-between'}}>
                 <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>{translate('city')}</Text>
-                <InputView
+                <InputViewWithOutImage
                   changeTextEvent={(newValue) => {
                     console.log('Inputtting something .....', newValue);
                   }}
-                  imageSource={require('../../../../assets/SignUp/email-icon.png')}
                   placeholderText={translate('city')}
-                  isSecureField={false}
                   isFullWidth={true}
                 />
               </View>
-              <View style={{height: 50, width: "100%"}}>
+              <View style={{height: 50, width: 320}}>
                 <ButtonView
                   clickEvent={() => {
                     console.log('Sign Up Clicked ......');
+                    navigation.navigate('EnterPublisherDetail')
                   }}
                   name={translate('next')}
                 />
               </View>
             </View>
+            </View>
             </KeyboardAwareScrollView>
-          </View>
-        </View>
       </View>
     </SafeAreaView>
   );
-};
+
+}
 
 const styles = StyleSheet.create({
   baseText: {
@@ -186,5 +209,6 @@ const styles = StyleSheet.create({
     flexDirection: "row"
 }
 });
+
 
 export default AdsScreen;

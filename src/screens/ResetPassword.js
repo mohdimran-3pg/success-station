@@ -58,7 +58,7 @@ export default class ResetPassword extends React.Component {
                                                 isFullWidth={true}
                                     />
                         </View>
-                        <View style={{height: 50}}>
+                        <View style={{height: 50, width: 320}}>
                             <ButtonView clickEvent = { () => {
                                              this.props.navigation.navigate('recoveredPassword') 
                                         } } name={translate('submit')} />

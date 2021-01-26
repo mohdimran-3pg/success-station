@@ -48,5 +48,14 @@
   "01": "01",
   "02": "02",
   "03": "03",
-  "ads": "Ads"
+  "ads": "Ads",
+  "full_name": "Full Name",
+  "mobile_no": "Mobile No",
+  "Telephone_no": "Telephone No",
+  "notes": "Notes",
+  "previous": "Previous",
+  "save_as_draft": "Save as draft",
+  "publish": "Publish",
+  "details": "Details",
+  "ad_posted_at": "Ad Posted at"
 }

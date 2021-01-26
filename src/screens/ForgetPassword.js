@@ -51,7 +51,7 @@ export default class ForgetPassword extends React.Component {
                                                 isFullWidth={true}
                                     />
                         </View>
-                        <View style={{height: 50}}>
+                        <View style={{height: 50, width: 320}}>
                             <ButtonView clickEvent = { () => {
                                             this.props.navigation.navigate('otpScreen')
                                             console.log("Sign Up Clicked ......")
