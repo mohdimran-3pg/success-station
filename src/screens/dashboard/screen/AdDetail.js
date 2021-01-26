@@ -31,10 +31,8 @@ const AdDetail = ({navigation}) => {
                 <View style={{backgroundColor:"#0A878A", height: 80, alignItems: 'center'}}>
               <View style={{height: 40, width:"95%", flexDirection: 'row', top: 10}}>
                 <View style={{width: "20%", justifyContent: "flex-start"}}>
-                  <Button style={{flex: 1, color: "#ff5c5c", width: "35", height: "35", fontSize: "28"}}
-                  color="white"
-                  fontSize="28"
-                    title="X"
+                <Image style={{width: 15, height:15}}
+                  source ={require('./../../../../assets/Ads/cross.png')}
                    />
                 </View>
                 <View style={{width: "60%", justifyContent: "center"}}>
