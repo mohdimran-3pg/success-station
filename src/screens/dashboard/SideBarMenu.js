@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -27,7 +25,13 @@ const user ={name:"Rahul",email:"rahul@gmal.com",src:BASE_PATH}
 const DrawerProfile = (data) => {
     return (
         <View style = {{flexDirection:'column',height : 142 ,marginTop : 24}}>
-            <Image source={require('./../../../assets/drawer/edit.png')} style = {{width:15,height:15, alignSelf: 'flex-end',marginEnd: 25,marginTop:15}}/>
+            <TouchableOpacity onPress={() => {
+
+            }}>
+              <Image source={require('./../../../assets/drawer/edit.png')} 
+                    style = {{width:15,height:15, alignSelf: 'flex-end',marginEnd: 25,marginTop:15}}/>
+            </TouchableOpacity>
+            
         <View style = {{flexDirection:'row',  marginTop: 20,marginStart: 20}}>
             <Image source={{uri : user.src}}  style = {styles.image}/>
             <View style = {{flexDirection:'column',marginStart:20,justifyContent: 'center'}}>
