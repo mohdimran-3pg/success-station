@@ -50,7 +50,7 @@ const style = StyleSheet.create({
         textAlignVertical: "center"
     },
     inputFullViewStyle: {
-        borderWidth: 1,
+        borderWidth: 0,
         borderColor: "#0A878A",
         height: 50,
         width: 320,
@@ -58,10 +58,11 @@ const style = StyleSheet.create({
         alignItems: "stretch",
         alignSelf: "center",
         justifyContent: "space-between",
-        flexDirection: "row"
+        flexDirection: "row",
+        backgroundColor: "#FFFFFF"
     },
     inputHalfViewStyle: {
-        borderWidth: 1,
+        borderWidth: 0,
         borderColor: "#0A878A",
         height: 50,
         width: 150,
@@ -69,7 +70,8 @@ const style = StyleSheet.create({
         alignItems: "stretch",
         alignSelf: "center",
         justifyContent: "space-between",
-        flexDirection: "row"
+        flexDirection: "row",
+        backgroundColor: "#FFFFFF"
     }
 });
 

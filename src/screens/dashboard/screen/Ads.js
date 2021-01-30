@@ -117,7 +117,7 @@ const AdsScreen = ({navigation}) => {
                 <TextInput
                     autoCapitalize="none"
                     autoCorrect={false}
-                    style={{textAlign: I18nManager.isRTL ? 'right' : 'left', borderWidth: 1, borderColor: "#0A878A", borderRadius:4, height: 90}}
+                    style={{textAlign: I18nManager.isRTL ? 'right' : 'left', borderWidth: 1, borderColor: "#FFFFFF", borderRadius:4, height: 90, backgroundColor: '#FFFFFF'}}
                     placeholder={`  `+translate('description')}
                     multiline={true}
                 />
