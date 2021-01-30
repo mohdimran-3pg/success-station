@@ -14,7 +14,7 @@ import {
   FlatList,
 } from 'react-native';
 
-import {Card, Title, Paragraph, Avatar} from 'react-native-paper';
+import {Card, Paragraph} from 'react-native-paper';
 import {cardFollower, cardLocation} from './../../../../util/ImageConstant';
 
 const profileData = {

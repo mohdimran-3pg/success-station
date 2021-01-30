@@ -21,6 +21,7 @@ import AdDetail from './screen/AdDetail';
 import EnterPublisherDetail from './screen/EnterPublisherDetail';
 import SidebarMenu from './SideBarMenu';
 import StudentProfile from './screen/profile/StudentProfile';
+import Membership from './screen/membership/Membership';
 import EditProfile from './../Edit-Profile/EditProfileScreen';
 
 import {adsTabIcon,offerTabIcon,serviceTabIcon,friendTabIcon} from './../../util/ImageConstant'
@@ -176,6 +177,20 @@ const MainScreenStack = ({navigation}) => {
         component={EditProfile}
         options={{
           title: 'Edit Profile', //Set Header Title
+          
+          headerStyle: {
+            backgroundColor: '#0A878A', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}/>
+        <Stack.Screen
+        name="Membership"
+        component={Membership}
+        options={{
+          title: 'Membership', //Set Header Title
           
           headerStyle: {
             backgroundColor: '#0A878A', //Set Header color
