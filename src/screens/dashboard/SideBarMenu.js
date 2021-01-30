@@ -106,7 +106,7 @@ const SidebarMenu = (props) => {
           icon={({color, size}) => <DrawerIcon src={membershipIcon} />}
           label="Membership"
           onPress={() => {
-            props.navigation.navigate('AdsScreen');
+            props.navigation.navigate('Membership');
           }}
         />
         <DrawerItem
