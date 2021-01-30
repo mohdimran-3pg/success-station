@@ -150,6 +150,7 @@ const MainScreenStack = ({navigation}) => {
           ),
           headerStyle: {
             backgroundColor: '#0A878A', //Set Header color
+            elevation: 0 
           },
           headerTintColor: '#fff', //Set Header text color
           headerTitleStyle: {
