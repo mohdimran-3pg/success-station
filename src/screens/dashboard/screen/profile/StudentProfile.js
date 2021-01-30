@@ -3,14 +3,14 @@
 
 import * as React from 'react';
 import {
-  Button,
+ 
   View,
   Text,
   SafeAreaView,
-  TouchableWithoutFeedback,
+  TouchableOpacity,
   Image,
   StyleSheet,
-  TextInput,
+
   FlatList,
 } from 'react-native';
 
@@ -104,13 +104,17 @@ const FlatListItems = [
   },
 
 ];
-const UserCardHeader = (profile) => {
-  var header_View = (
+const UserCardHeader = ({profile,...props}) => {
+  return (
     <View style={{flex: 1}}>
       <View style={[styles.parent, {position: 'absolute'}]} />
 
       <Card style={{margin: 14, elevation: 10}}>
         <View style={{flexDirection: 'column', justifyContent: 'center'}}>
+        <TouchableOpacity onPress={() => {
+              props.navigation.navigate('EditProfile');
+
+            }}>
           <Image
             source={require('./../../../../../assets/drawer/edit.png')}
             style={{
@@ -122,6 +126,7 @@ const UserCardHeader = (profile) => {
               marginTop: 15,
             }}
           />
+          </TouchableOpacity>
           <Image
             style={[
               {backgroundColor: 'yellow', alignSelf: 'center', marginTop: 5},
@@ -188,7 +193,6 @@ const UserCardHeader = (profile) => {
     </View>
   );
 
-  return header_View;
 };
 
 const CardItem = (item) => {
@@ -242,6 +246,10 @@ const CardItem = (item) => {
   return header_View;
 };
 export default class StudentProfile extends React.Component {
+  constructor(props) {
+    super(props);
+    }
+
   render() {
     return (
       <SafeAreaView style={{flex: 1}}>
@@ -250,7 +258,7 @@ export default class StudentProfile extends React.Component {
           data={FlatListItems}
           renderItem={({item}) => CardItem(item)}
           numColumns={2}
-          ListHeaderComponent={UserCardHeader(profileData)}
+          ListHeaderComponent={<UserCardHeader profile = {profileData} {...this.props}/>}
         />
       </SafeAreaView>
     );

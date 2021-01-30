@@ -27,10 +27,12 @@ const BASE_PATH =
   'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg';
 
 const user = {name: 'Rahul', email: 'rahul@gmal.com', src: BASE_PATH};
-const DrawerProfile = (data) => {
+const DrawerProfile = ({data,...props}) => {
     return (
         <View style = {{flexDirection:'column',height : 142 ,marginTop : 24}}>
+          {console.log(props)}
             <TouchableOpacity onPress={() => {
+              props.navigation.navigate('EditProfile');
 
             }}>
               <Image source={require('./../../../assets/drawer/edit.png')} 
@@ -38,10 +40,10 @@ const DrawerProfile = (data) => {
             </TouchableOpacity>
             
         <View style = {{flexDirection:'row',  marginTop: 20,marginStart: 20}}>
-            <Image source={{uri : user.src}}  style = {styles.image}/>
+            <Image source={{uri : data.src}}  style = {styles.image}/>
             <View style = {{flexDirection:'column',marginStart:20,justifyContent: 'center'}}>
-                <Text style ={styles.name} >{user.name}</Text>
-                <Text style ={styles.email}>{user.email}</Text>
+                <Text style ={styles.name} >{data.name}</Text>
+                <Text style ={styles.email}>{data.email}</Text>
             </View>
         </View>
 
@@ -76,7 +78,7 @@ const SidebarMenu = (props) => {
   return (
     <View style={{flex: 1}}>
       {/*Top Large Image */}
-      <DrawerProfile data={user} />
+      <DrawerProfile  data={user} {...props}/>
       <DrawerContentScrollView {...props}>
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={profileIcon} />}

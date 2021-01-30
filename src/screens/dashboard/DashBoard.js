@@ -21,6 +21,7 @@ import AdDetail from './screen/AdDetail';
 import EnterPublisherDetail from './screen/EnterPublisherDetail';
 import SidebarMenu from './SideBarMenu';
 import StudentProfile from './screen/profile/StudentProfile';
+import EditProfile from './../Edit-Profile/EditProfileScreen';
 
 import {adsTabIcon,offerTabIcon,serviceTabIcon,friendTabIcon} from './../../util/ImageConstant'
 
@@ -170,6 +171,22 @@ const MainScreenStack = ({navigation}) => {
           },
         }}
       />
+        <Stack.Screen
+        name="EditProfile"
+        component={EditProfile}
+        options={{
+          title: 'Edit Profile', //Set Header Title
+          
+          headerStyle: {
+            backgroundColor: '#0A878A', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+      />
+      
        
   
     </Stack.Navigator>
