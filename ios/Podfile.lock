@@ -300,16 +300,20 @@ PODS:
     - React-jsi (= 0.63.4)
   - RNCMaskedView (0.1.10):
     - React
+  - RNCustomizedImagePicker (1.1.0):
+    - React
+    - TZImagePickerController
   - RNGestureHandler (1.8.0):
     - React
   - RNLocalize (2.0.1):
     - React-Core
-  - RNReanimated (1.7.0):
-    - React
+  - RNReanimated (1.13.2):
+    - React-Core
   - RNScreens (2.15.0):
     - React-Core
   - RNVectorIcons (8.0.0):
     - React-Core
+  - TZImagePickerController (3.5.8)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -363,6 +367,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
+  - RNCustomizedImagePicker (from `../node_modules/react-native-customized-image-picker`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -383,6 +388,7 @@ SPEC REPOS:
     - Flipper-RSocket
     - FlipperKit
     - OpenSSL-Universal
+    - TZImagePickerController
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -440,6 +446,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
+  RNCustomizedImagePicker:
+    :path: "../node_modules/react-native-customized-image-picker"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNLocalize:
@@ -492,11 +500,13 @@ SPEC CHECKSUMS:
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
+  RNCustomizedImagePicker: 8314d768197c560aecabc710f78d57cbde36ac39
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNLocalize: 41026b7c14878f1a1b381bc79f668f1fbf841adb
-  RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
+  RNReanimated: e03f7425cb7a38dcf1b644d680d1bfc91c3337ad
   RNScreens: 2ad555d4d9fa10b91bb765ca07fe9b29d59573f0
   RNVectorIcons: f67a1abce2ec73e62fe4606e8110e95a832bc859
+  TZImagePickerController: 7fd9702897ef8c0b7c951e5463f4bcf398296f9e
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 

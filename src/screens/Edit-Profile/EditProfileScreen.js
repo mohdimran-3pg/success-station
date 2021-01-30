@@ -40,9 +40,9 @@ export default class EditProfileScreen extends React.Component {
         return (
             <SafeAreaView style={{flex: 1}}>
                 <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'space-between'}}>
-                    <View style={{height:"90%"}}>
+                    <View >
                         <KeyboardAwareScrollView style={{backgroundColor:"#F2F2F2"}}>
-                            <View style={{flex: 1, alignItems: 'stretch', backgroundColor: '#F2F2F2', justifyContent: 'space-between', width: 320, alignSelf: 'center', height: 700}}>
+                            <View style={{flex: 1, alignItems: 'stretch', backgroundColor: '#F2F2F2', justifyContent: 'space-around', width: 320, alignSelf: 'center', height: 700}}>
             
                                     <View style={{width: 120, height: 120, borderRadius: 60, backgroundColor: "red", alignSelf: "center", marginTop: 25}}>
                                         <Image
@@ -244,7 +244,7 @@ export default class EditProfileScreen extends React.Component {
                             </RBSheet>
                         </KeyboardAwareScrollView>
                     </View>
-                    <View style={{backgroundColor:'#FFFFFF', height: "10%", alignitems: 'center', justifyContent: 'center'}}>
+                    <View style={{backgroundColor:'#FFFFFF', position:'absolute',bottom:0, marginBottom:10,alignitems: 'center', justifyContent: 'center'}}>
                         <View style={{height: "80%", width: "90%", backgroundColor:'#FFFFFF', flexDirection: 'row', justifyContent: 'space-between', alignSelf:'center'}}>
                             <View style={{width: "48%", height: "100%"}}>
                                 <BorderButton
