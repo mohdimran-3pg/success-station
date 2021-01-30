@@ -16,3 +16,6 @@ export const adsTabIcon = require('./../../assets/tabs/ads.png');
 export const offerTabIcon = require('./../../assets/tabs/offers.png'); 
 export const serviceTabIcon = require('./../../assets/tabs/services.png');
 export const friendTabIcon = require('./../../assets/tabs/friends.png'); 
+
+export const cardFollower = require('./../../assets/card/follower.png'); 
+export const cardLocation = require('./../../assets/card/location.png'); 

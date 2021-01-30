@@ -19,11 +19,10 @@ import Services from './screen/Services';
 import AdsScreen from './screen/Ads';
 import AdDetail from './screen/AdDetail';
 import EnterPublisherDetail from './screen/EnterPublisherDetail';
-import ExploreScreen from './screen/ExploreScreen';
 import SidebarMenu from './SideBarMenu';
-import SettingScreen from './screen/SettingScreen';
-import {drawerIconStyle} from './../../styles/CommonStyleSheet';
-import {adsIcon,notificationIcon,profileIcon,messageIcon,membershipIcon,adsTabIcon,offerTabIcon,serviceTabIcon,friendTabIcon} from './../../util/ImageConstant'
+import StudentProfile from './screen/profile/StudentProfile';
+
+import {adsTabIcon,offerTabIcon,serviceTabIcon,friendTabIcon} from './../../util/ImageConstant'
 
 
 
@@ -136,11 +135,11 @@ const BottomTabStack = () => {
 };
 
 
-const HomeScreenStack = ({navigation}) => {
+const MainScreenStack = ({navigation}) => {
   return (
-    <Stack.Navigator initialRouteName="Offers">
+    <Stack.Navigator >
       <Stack.Screen
-        name="BottomTabStack"
+        name=" "
         component={BottomTabStack}
         options={({route}) => ({
           
@@ -156,14 +155,31 @@ const HomeScreenStack = ({navigation}) => {
           },
         })}
       />
+       <Stack.Screen
+        name="StudentProfile"
+        component={StudentProfile}
+        options={{
+          title: 'Profile', //Set Header Title
+          
+          headerStyle: {
+            backgroundColor: '#0A878A', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+      />
+       
+  
     </Stack.Navigator>
   );
 };
 
-const SettingScreenStack = ({navigation}) => {
+const ProfileStack = ({navigation}) => {
   return (
     <Stack.Navigator
-      initialRouteName="SecondPage"
+      initialRouteName="StudentProfile"
       screenOptions={{
         headerLeft: () => (
           <NavigationDrawerStructure navigationProps={navigation} />
@@ -177,24 +193,26 @@ const SettingScreenStack = ({navigation}) => {
         },
       }}>
       <Stack.Screen
-        name="SettingScreen"
-        component={SettingScreen}
+        name="StudentProfile"
+        component={StudentProfile}
         options={{
-          title: 'Setting', //Set Header Title
+          title: 'Profile', //Set Header Title
         }}
       />
     </Stack.Navigator>
   );
 };
 
+
+
+
+
 const AdScreenStack = ({navigation}) => {
   return (
     <Stack.Navigator
-      initialRouteName="Ad Screen"
+      initialRouteName="AdsScreen"
       screenOptions={{
-        headerLeft: () => (
-          <NavigationDrawerStructure navigationProps={navigation} />
-        ),
+       
         headerStyle: null,
         headerTintColor: '#fff', //Set Header text color
         headerTitleStyle: null,
@@ -235,70 +253,29 @@ export default class DashBoard extends React.Component {
 };
   render() {
   return (
-    <NavigationContainer>
+    <NavigationContainer >
       <Drawer.Navigator
+      
         drawerContentOptions={{
           activeTintColor: '#0A878A',
           inactiveTintColor: '#9EA6BE',
           labelStyle:{marginHorizontal :1},
           iconStyle :{margin:3}
         }} 
+    
         drawerContent={(props) => <SidebarMenu {...props} />}>
-        <Drawer.Screen
-          name="HomeScreenStack"
-          options={{drawerLabel: 'Profile'
-          ,drawerIcon: ((focused,color,size)=>
-          <DrawerIcon src={profileIcon}/>
-          )}}
-          
-          component={HomeScreenStack}
-        />
-        <Drawer.Screen
-          name="SettingScreenStack"
-          options={{drawerLabel:  'My Ads',drawerIcon: ((focused,color,size)=>
-          <DrawerIcon src={adsIcon}/>
-          )}}
       
-          component={SettingScreenStack}
-        />
-          <Drawer.Screen
-          name="HomeScreenStack1"
-          options={{drawerLabel: 'Messages' ,drawerIcon:((focused,color,size)=>
-          <DrawerIcon src={messageIcon}/>
-          )}}
-          
-          component={HomeScreenStack}
-        />
-        <Drawer.Screen
-          name="SettingScreenStack1"
-          options={{drawerLabel: 'Membership',drawerIcon: ((focused,color,size)=>
-          <DrawerIcon src={membershipIcon}/>)}}
-      
-          component={SettingScreenStack}
-        />
-          <Drawer.Screen
-          name="HomeScreenStack2"
-          options={{drawerLabel: 'Notifications',drawerIcon: ((focused,color,size)=>
-          <DrawerIcon src={notificationIcon}/>
-          )}}
-          
-          component={HomeScreenStack}
-        />
-      
-       
+      <Drawer.Screen name="MainScreenStack" component={MainScreenStack} />
+      <Drawer.Screen name="AdsScreenStack" component={AdScreenStack} />
+         
         
       </Drawer.Navigator>
+      
     </NavigationContainer>
   );
 }};
 
-const DrawerIcon = ({src}) => {
-  return (
-    <View style={drawerIconStyle.menuIconBg}>
-      <Image source={src} style={drawerIconStyle.menuIcon} />
-    </View>
-  );
-};
+
 
 
 
