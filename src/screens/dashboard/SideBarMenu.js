@@ -31,12 +31,12 @@ const DrawerProfile = ({data,...props}) => {
     return (
         <View style = {{flexDirection:'column',height : 142 ,marginTop : 24}}>
           {console.log(props)}
-            <TouchableOpacity onPress={() => {
+            <TouchableOpacity style= {{width:20,height:20, alignSelf: 'flex-end',marginEnd: 25,marginTop:20}} onPress={() => {
               props.navigation.navigate('EditProfile');
 
             }}>
               <Image source={require('./../../../assets/drawer/edit.png')} 
-                    style = {{width:15,height:15, alignSelf: 'flex-end',marginEnd: 25,marginTop:15}}/>
+                    style = {{width:15,height:15}}/>
             </TouchableOpacity>
             
         <View style = {{flexDirection:'row',  marginTop: 20,marginStart: 20}}>

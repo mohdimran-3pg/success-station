@@ -3,29 +3,29 @@
 
 import * as React from 'react';
 import {Button, View, Text, SafeAreaView, FlatList, Image, StyleSheet, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
-import BorderButton from '../../../../components/BorderButton';
-import SearchBar from 'react-native-search-bar';
+import { Searchbar ,DefaultTheme} from 'react-native-paper';
+
 //
 const UserProfile =(user) => {
   console.log('THis is User:::', user)
   return (
-    <View style={{width: 165, height: 200, justifyContent: "space-between", marginTop: 10, borderColor: "#00000030", borderWidth: 1, borderRadius: 4}}>
-        <View style={{width: 60, height: 60, borderRadius: 30, alignSelf: "center", marginTop: 10}}>
+    <View style={{width:'49%', marginEnd:'2%', marginTop: 10, borderColor: "#00000030", borderWidth: 1, borderRadius: 4}}>
+        <View style={{width: 60, height: 60, borderRadius: 30, alignSelf: "center", marginTop: 21}}>
             <Image style={{width: 60, height: 60, borderRadius: 30}} 
                   source={{uri: user.src}}
             />
         </View>
-        <View style={{height: 40}}>
+        <View style={{height: 40, marginTop:7}}>
           <Text style={{fontSize: 15, fontWeight: "700", textAlign: "center", color: "#000000"}}>{user.name}</Text>
-          <Text style={{fontSize: 15, fontWeight: "400", textAlign: "center", color: "#9EA6BE"}}>{user.role}</Text>
+          <Text style={{fontSize: 15, fontWeight: "400", textAlign: "center", color: "#9EA6BE",marginTop:9}}>{user.role}</Text>
         </View>
-        <View style={{width: "70%", alignSelf: "center", justifyContent: "space-between", flexDirection: "row", height: 30}}>
+        <View style={{width: "70%", alignSelf: "center",marginTop:15, justifyContent: "space-between", flexDirection: "row", height: 30}}>
           <Image style={{width: 24, height:24}}
               source={require('../../../../assets/friends/graduation-icon.png')}
           />
-          <Text style={{fontSize: 11, fontWeight: "400", textAlign: "center", color: "#9EA6BE", fontStyle: "normal"}}>{user.location}</Text>
+          <Text style={{fontSize: 11, fontWeight: "400",marginStart:4, color: "#9EA6BE", fontStyle: "normal"}}>{user.location}</Text>
         </View>
-        <View style={{width: "80%", alignSelf: "center", height: 35, marginBottom: 10}}>
+        <View style={{width: "80%", alignSelf: "center", height: 35, marginBottom: 10,marginTop:13}}>
         <View style={styles.mainView}>
             <TouchableOpacity>
             <Text style={styles.buttonStyle}>
@@ -105,6 +105,16 @@ const friendsData = [
   },
 
 ];
+const theme = {
+  ...DefaultTheme,
+ 
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#0A878A',
+    accent: 'black',
+    secondary:'black'
+  },
+};
 
 export default class FreindsScreen extends React.Component {
 
@@ -130,9 +140,11 @@ export default class FreindsScreen extends React.Component {
             style={{
               flex: 1,
             }}>
-            <View style={{height: "10%", backgroundColor: '', width: "100%"}}>
-            <SearchBar
+            <View style={{height: "10%", width: "100%" ,backgroundColor:"rgba(10, 135, 138, 1)"}}>
+            <Searchbar style ={{marginStart:10,marginEnd:10}} 
               placeholder={'Search Book'}
+              theme = {theme}
+              icon={()=><Image source = {require('./../../../../assets/search.png')} />}
             />
             </View>
             <View style={{width: "100%", backgroundColor: "white", height: "90%"}}>
