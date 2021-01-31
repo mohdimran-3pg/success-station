@@ -1,7 +1,7 @@
 // React Navigate Drawer with Bottom Tab
 // https://aboutreact.com/bottom-tab-view-inside-navigation-drawer/
 
-import * as React from 'react';
+import React, {useState} from 'react';
 import {Button, View, Text, SafeAreaView, TouchableWithoutFeedback, Image, StyleSheet, TextInput, I18nManager, TouchableOpacity} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import InputViewWithOutImage from '../../../../components/InputViewWithOutImage';
@@ -13,7 +13,7 @@ import ButtonView from '../../../../components/ButtonView'
 import ImagePicker from "react-native-customized-image-picker";
 
 const AdsScreen = ({navigation}) => {
-
+  const [borderWidth, setBorderWidth] = useState(0)
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1}}>
@@ -22,9 +22,6 @@ const AdsScreen = ({navigation}) => {
             <View style={{backgroundColor:"#0A878A", height: 80, alignItems: 'center'}}>
               <View style={{height: 40, width:"95%", flexDirection: 'row', top: 10}}>
                 <View style={{width: "20%", justifyContent: "flex-start"}}>
-                  <Image style={{width: 15, height:15}}
-                  source ={require('./../../../../assets/Ads/cross.png')}
-                   />
                 </View>
                 <View style={{width: "60%", justifyContent: "center"}}>
                   <Text style={styles.titleText}>{translate('ads')}</Text>
@@ -117,9 +114,12 @@ const AdsScreen = ({navigation}) => {
                 <TextInput
                     autoCapitalize="none"
                     autoCorrect={false}
-                    style={{textAlign: I18nManager.isRTL ? 'right' : 'left', borderWidth: 1, borderColor: "#FFFFFF", borderRadius:4, height: 90, backgroundColor: '#FFFFFF'}}
+                    style={{textAlign: I18nManager.isRTL ? 'right' : 'left', borderWidth: borderWidth, borderColor: "#0A878A", borderRadius:4, height: 90, backgroundColor: '#FFFFFF'}}
                     placeholder={`  `+translate('description')}
                     multiline={true}
+                    onFocus = {(newValue) => {
+                      setBorderWidth(1);
+                    }}
                 />
               </View>
               <View style={{width: "100%", height: 54, backgroundColor: "#FFA73342", borderRadius:4}}>

@@ -24,7 +24,7 @@ import CalendarPicker from "react-native-calendar-picker"
 import ArrowView from '../../../../components/ArrowView'
 
 const EnterPublisherDetail = ({navigation}) => {
-  
+  const [borderWidth, setBorderWidth] = useState(0);
   setUserType = (userType) => {
     console.log(userType.label);
     this.setState({selectedUserType: userType.label});
@@ -47,9 +47,7 @@ const EnterPublisherDetail = ({navigation}) => {
         <View style={{backgroundColor:"#0A878A", height: 80, alignItems: 'center'}}>
               <View style={{height: 40, width:"95%", flexDirection: 'row', top: 10}}>
                 <View style={{width: "20%", justifyContent: "flex-start"}}>
-                <Image style={{width: 15, height:15}}
-                  source ={require('./../../../../assets/Ads/cross.png')}
-                   />
+                
                 </View>
                 <View style={{width: "60%", justifyContent: "center"}}>
                   <Text style={style.titleText}>{translate('ads')}</Text>
@@ -151,9 +149,12 @@ const EnterPublisherDetail = ({navigation}) => {
               <TextInput
                   autoCapitalize="none"
                   autoCorrect={false}
-                  style={{textAlign: I18nManager.isRTL ? 'right' : 'left', borderWidth: 1, borderColor: "#FFFFFF", borderRadius:4, height: 90, backgroundColor: '#FFFFFF'}}
+                  style={{textAlign: I18nManager.isRTL ? 'right' : 'left', borderWidth: borderWidth, borderColor: "#0A878A", borderRadius:4, height: 90, backgroundColor: '#FFFFFF'}}
                   placeholder={`  `+translate('notes')}
                   multiline={true}
+                  onFocus = {(newValue) => {
+                    setBorderWidth(1);
+                  }}
               />
             </View>
             <View style={{height: 80, width: 320, flexDirection: 'row', justifyContent: 'space-between'}}>

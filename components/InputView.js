@@ -2,9 +2,9 @@ import React, {useState} from "react";
 import { View, Text, Image, StyleSheet, TextInput ,I18nManager} from "react-native";
 
 const InputView = ({ changeTextEvent , imageSource, placeholderText, isSecureField, isFullWidth}) => {
-
+    const [borderWidth, setBorderWidth] = useState(0);
     return (
-        <View style={isFullWidth ? style.inputFullViewStyle : style.inputHalfViewStyle}>
+        <View style={[isFullWidth ? style.inputFullViewStyle : style.inputHalfViewStyle, {borderWidth: borderWidth}]}>
             <View style={{ width: 18, justifyContent: "center"}}>
                 <Image 
                     style={style.imageStyle} 
@@ -16,9 +16,16 @@ const InputView = ({ changeTextEvent , imageSource, placeholderText, isSecureFie
                     autoCapitalize="none"
                     autoCorrect={false}
                     style={isFullWidth ? style.inputFullFieldStyle : style.inputHalfFieldStyle,{textAlign: I18nManager.isRTL ? 'right' : 'left'}}
-                    onChangeText = {(newValue) => 
+                    onChangeText = {(newValue) => {
                         changeTextEvent(newValue)
+                        
+                        console.log("", borderWidth)
+                        }
                     }
+                    onFocus = {(newValue) => {
+                        setBorderWidth(1);
+                    }}
+                    
                     placeholder={placeholderText}
                     secureTextEntry={isSecureField}
                 />

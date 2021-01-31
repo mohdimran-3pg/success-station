@@ -2,9 +2,9 @@ import React, {useState} from "react";
 import { View, Text, Image, StyleSheet, TextInput ,I18nManager} from "react-native";
 
 const InputViewWithOutImage = ({ changeTextEvent, placeholderText, isFullWidth}) => {
-
+    const [borderWidth, setBorderWidth] = useState(0);
     return (
-        <View style={isFullWidth ? style.inputFullViewStyle : style.inputHalfViewStyle}>
+        <View style={[isFullWidth ? style.inputFullViewStyle : style.inputHalfViewStyle, {borderWidth: borderWidth}]}>
             <View style={{width: isFullWidth ? "100%": "50%", justifyContent: "center"}}>
                 <TextInput
                     autoCapitalize="none"
@@ -14,6 +14,9 @@ const InputViewWithOutImage = ({ changeTextEvent, placeholderText, isFullWidth})
                         changeTextEvent(newValue)
                     }
                     placeholder={`  `+placeholderText}
+                    onFocus = {(newValue) => {
+                        setBorderWidth(1);
+                    }}
                 />
             </View>
         </View>
