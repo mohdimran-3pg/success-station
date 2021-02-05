@@ -57,5 +57,7 @@
   "save_as_draft": "Save as draft",
   "publish": "Publish",
   "details": "Details",
-  "ad_posted_at": "Ad Posted at"
+  "ad_posted_at": "Ad Posted at",
+  "save": "Save",
+  "cancel": "Cancel"
 }

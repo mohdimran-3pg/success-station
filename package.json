@@ -37,9 +37,11 @@
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.15.0",
     "react-native-search-bar": "^3.5.1",
+    "react-native-tab-view": "^2.15.2",
     "react-native-unimodules": "^0.7.0",
     "react-native-vector-icons": "^8.0.0",
     "react-native-web": "~0.13.12",
+    "react-native-webview": "^11.2.1",
     "react-navigation": "^4.4.3",
     "react-navigation-stack": "^2.10.2",
     "react-otp-input": "^2.3.0"
