@@ -143,7 +143,6 @@ export default class FreindsScreen extends React.Component {
             <View style={{height: "10%", width: "100%" ,backgroundColor:"rgba(10, 135, 138, 1)"}}>
             <Searchbar style ={{marginStart:10,marginEnd:10}} 
               placeholder={'Search Book'}
-              theme = {theme}
               icon={()=><Image source = {require('./../../../../assets/search.png')} />}
             />
             </View>
