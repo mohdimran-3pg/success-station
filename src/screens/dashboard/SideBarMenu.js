@@ -22,7 +22,7 @@ import {
   membershipIcon,
 } from './../../util/ImageConstant';
 import {drawerIconStyle} from './../../styles/CommonStyleSheet';
-
+import {translate} from './../../util/TranslationUtils'
 const BASE_PATH =
   'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg';
 
@@ -82,7 +82,7 @@ const SidebarMenu = (props) => {
       <DrawerContentScrollView {...props}>
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={profileIcon} />}
-          label="Profile"
+          label={translate('profile')}
           onPress={() => {
             console.log(props);
             props.navigation.navigate('StudentProfile');
@@ -90,28 +90,28 @@ const SidebarMenu = (props) => {
         />
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={adsIcon} />}
-          label="My Ads"
+          label={translate('my_ads')}
           onPress={() => {
             props.navigation.navigate('Profile');
           }}
         />
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={messageIcon} />}
-          label="Messages"
+          label={translate('messeges')}
           onPress={() => {
             props.navigation.navigate('Messages');
           }}
         />
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={membershipIcon} />}
-          label="Membership"
+          label={translate('membership')}
           onPress={() => {
             props.navigation.navigate('Membership');
           }}
         />
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={notificationIcon} />}
-          label="Notification"
+          label={translate('notification')}
           onPress={() => {
             props.navigation.navigate('SupportScreen');
           }}
@@ -136,28 +136,28 @@ const SidebarMenu = (props) => {
         </Text>
 
         <LinkMenuItem
-          title="About us"
+          title={translate('about_us')}
           src={profileIcon}
           link="https://www.google.com"
           {...props}></LinkMenuItem>
 
         <LinkMenuItem
-          title="Advertise with us"
+          title={translate('advertise_with_us')}
           src={adsIcon}
           link="https://www.google.com"></LinkMenuItem>
 
         <LinkMenuItem
-          title="Privacy"
+          title={translate('privacy')}
           src={privacyIcon}
           link="https://www.google.com"></LinkMenuItem>
 
         <LinkMenuItem
-          title="Usage Agreement"
+          title={translate('user_agreement')}
           src={userAgreementIcon}
           link="https://www.google.com"></LinkMenuItem>
 
         <LinkMenuItem
-          title="Contact us"
+          title={translate('cntact_us')}
           src={contactIcon}
           link="https://www.google.com"></LinkMenuItem>
       </DrawerContentScrollView>
