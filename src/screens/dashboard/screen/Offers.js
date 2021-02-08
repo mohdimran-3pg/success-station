@@ -4,6 +4,7 @@ import * as React from 'react';
 import {Button, View, Text, Dimensions,SafeAreaView, FlatList, Image, StyleSheet, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import { Searchbar ,DefaultTheme, Card} from 'react-native-paper';
 import Carousel, { Pagination } from 'react-native-snap-carousel'
+import {translate} from '../../../util/TranslationUtils';
 
 const SLIDER_WIDTH = Dimensions.get('window').width 
 const ITEM_WIDTH = Dimensions.get('window').width
@@ -177,7 +178,7 @@ export default class OffersScreen extends React.Component {
             }}>
             <View style={{height: "10%", width: "100%" ,backgroundColor:"rgba(10, 135, 138, 1)"}}>
             <Searchbar style ={{marginStart:10,marginEnd:10}} 
-              placeholder={'Search Book'}
+              placeholder={translate('search_book')}
               icon={()=><Image source = {require('./../../../../assets/search.png')} />}
             />
             </View>
@@ -185,7 +186,7 @@ export default class OffersScreen extends React.Component {
               <CarouselCards/>
             </View>
             <View>
-             <Text style={{fontSize: 20, fontWeight: "700", fontStyle: "normal",marginStart:20}}>Categories</Text>
+             <Text style={{fontSize: 20, fontWeight: "700", fontStyle: "normal",marginStart:20}}>{translate('categories')}</Text>
 
                 <View style={{width: "90%",height:'100%', alignSelf: "center"}}>
                 <FlatList
