@@ -17,7 +17,7 @@ import RecoveredPassword from "./src/screens/RecoveredPassword";
 import ResetPassword from "./src/screens/ResetPassword";
 import UserSignUpForm from "./src/screens/UserSignUpForm";
 import DashBoard from "./src/screens/dashboard/DashBoard"
-
+import ChooseLanguageScreen from "./src/screens/ChooseLanguageScreen";
 
 
 
@@ -40,10 +40,11 @@ const navigator = createStackNavigator(
     recoveredPassword : RecoveredPassword,
     resetPassword : ResetPassword,
     dashBoard: DashBoard,
-    userSignUpForm: UserSignUpForm
+    userSignUpForm: UserSignUpForm,
+    chooseLanguageScreen: ChooseLanguageScreen,
   }, 
   {
-    initialRouteName: 'countrySelectScreen',
+    initialRouteName: 'chooseLanguageScreen',
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: '#F2F2F2',

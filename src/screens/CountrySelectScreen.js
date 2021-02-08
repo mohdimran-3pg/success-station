@@ -37,19 +37,16 @@ const countryData= [
 
 export default class CountrySelectScreen extends React.Component {
 
-static navigationOptions = ({ navigation, navigationOptions }) => {
-    const { params } = navigation.state;
-    console.log("Country Selection Screen........");
-    return {
-        title: null,
-        headerStyle: null,
-        header: null,
+    static navigationOptions = ({ navigation, navigationOptions }) => {
+        return {
+            title: translate('choose_language')
         };
     };
 
     constructor(props) {
         super(props);
-        setI18nConfig('ar'); // set initial config
+        console.log("this is props::::", props, "this is data:::",this.props.navigation.state.params.data);
+        setI18nConfig(this.props.navigation.state.params.data.code); // set initial config
         this.state = {country : countryData}
       }
   
