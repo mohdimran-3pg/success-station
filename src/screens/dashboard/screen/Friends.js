@@ -6,10 +6,12 @@ import {Button, View, Text, SafeAreaView, FlatList, Image, StyleSheet, Touchable
 import { Searchbar ,DefaultTheme} from 'react-native-paper';
 
 //
-const UserProfile =(user) => {
+const UserProfile =({user,...props}) => {
   console.log('THis is User:::', user)
   return (
-    <View style={{width:'49%', marginEnd:'2%', marginTop: 10, borderColor: "#00000030", borderWidth: 1, borderRadius: 4}}>
+    <TouchableOpacity style={{width:'49%', marginEnd:'2%', marginTop: 10, borderColor: "#00000030", borderWidth: 1, borderRadius: 4}} onPress = {()=> props.navigation.navigate('ProfileDetail',{  
+      user: user
+     })} >
         <View style={{width: 60, height: 60, borderRadius: 30, alignSelf: "center", marginTop: 21}}>
             <Image style={{width: 60, height: 60, borderRadius: 30}} 
                   source={{uri: user.src}}
@@ -34,7 +36,7 @@ const UserProfile =(user) => {
             </TouchableOpacity>
         </View>
         </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
@@ -46,6 +48,16 @@ const friendsData = [
     role: 'Student',
     name: 'Tabrez Ahmed',
     location: 'ABES Institute Of Technology',
+    ads: 100,
+    follower: 40,
+    following: 100,
+    profileMsg:
+      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
+      contact:'https://www.google.com/maps/place/Delhi/@28.6466773,76.813073,10z/data=!3m1!4b1!4m5!3m4!1s0x390cfd5b347eb62d:0x37205b715389640!8m2!3d28.7040592!4d77.1024902',
+      adsmsg :'message and products. For Google, text ads appear on search results pages and throughout the “Google Network,” including search partners, Search Network and Display Network. ...',
+      study:'Designed to complement your own learning style, whether that’s gaining a thorough understanding of the business organisational structure or simply concentrating on the key examinable topics.',
+      about:'SMS was developed in the United Kingdom in the late 1980s, and the first text message was sent on December 3, 1992. An SMS commercial service was launched in the United Kingdom in 1995. Text messaging did not take off, however, until it became possible to send messages between the four main British cell phone networks in 1998.Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts century who is thought to have scrambled partscentury who is thought to have scrambled parts'
+   
   },
   {
     id: 12,
@@ -54,6 +66,16 @@ const friendsData = [
     role: 'Student',
     name: 'Mohammad Iman',
     location: 'ABES Institute Of Technology',
+    ads: 100,
+    follower: 40,
+    following: 100,
+    profileMsg:
+      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
+      contact:'https://www.google.com/maps/place/Delhi/@28.6466773,76.813073,10z/data=!3m1!4b1!4m5!3m4!1s0x390cfd5b347eb62d:0x37205b715389640!8m2!3d28.7040592!4d77.1024902',
+      adsmsg :'message and products. For Google, text ads appear on search results pages and throughout the “Google Network,” including search partners, Search Network and Display Network. ...',
+      study:'Designed to complement your own learning style, whether that’s gaining a thorough understanding of the business organisational structure or simply concentrating on the key examinable topics.',
+      about:'SMS was developed in the United Kingdom in the late 1980s, and the first text message was sent on December 3, 1992. An SMS commercial service was launched in the United Kingdom in 1995. Text messaging did not take off, however, until it became possible to send messages between the four main British cell phone networks in 1998.Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts century who is thought to have scrambled partscentury who is thought to have scrambled parts'
+  
   },
   {
     id: 13,
@@ -62,6 +84,16 @@ const friendsData = [
     role: 'Student',
     name: 'Rahul Pandey',
     location: 'ABES Institute Of Technology',
+    ads: 100,
+    follower: 40,
+    following: 100,
+    profileMsg:
+      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
+      contact:'https://www.google.com/maps/place/Delhi/@28.6466773,76.813073,10z/data=!3m1!4b1!4m5!3m4!1s0x390cfd5b347eb62d:0x37205b715389640!8m2!3d28.7040592!4d77.1024902',
+      adsmsg :'message and products. For Google, text ads appear on search results pages and throughout the “Google Network,” including search partners, Search Network and Display Network. ...',
+      study:'Designed to complement your own learning style, whether that’s gaining a thorough understanding of the business organisational structure or simply concentrating on the key examinable topics.',
+      about:'SMS was developed in the United Kingdom in the late 1980s, and the first text message was sent on December 3, 1992. An SMS commercial service was launched in the United Kingdom in 1995. Text messaging did not take off, however, until it became possible to send messages between the four main British cell phone networks in 1998.Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts century who is thought to have scrambled partscentury who is thought to have scrambled parts'
+   
   },
   {
     id: 14,
@@ -70,6 +102,16 @@ const friendsData = [
     role: 'Student',
     name: 'Pathak Ji',
     location: 'ABES Institute Of Technology',
+    ads: 100,
+    follower: 40,
+    following: 100,
+    profileMsg:
+      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
+      contact:'https://www.google.com/maps/place/Delhi/@28.6466773,76.813073,10z/data=!3m1!4b1!4m5!3m4!1s0x390cfd5b347eb62d:0x37205b715389640!8m2!3d28.7040592!4d77.1024902',
+      adsmsg :'message and products. For Google, text ads appear on search results pages and throughout the “Google Network,” including search partners, Search Network and Display Network. ...',
+      study:'Designed to complement your own learning style, whether that’s gaining a thorough understanding of the business organisational structure or simply concentrating on the key examinable topics.',
+      about:'SMS was developed in the United Kingdom in the late 1980s, and the first text message was sent on December 3, 1992. An SMS commercial service was launched in the United Kingdom in 1995. Text messaging did not take off, however, until it became possible to send messages between the four main British cell phone networks in 1998.Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts century who is thought to have scrambled partscentury who is thought to have scrambled parts'
+
   },
   {
     id: 15,
@@ -78,6 +120,16 @@ const friendsData = [
     role: 'Student',
     name: 'Amanat ali',
     location: 'ABES Institute Of Technology',
+    ads: 100,
+    follower: 40,
+    following: 100,
+    profileMsg:
+      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
+      contact:'https://www.google.com/maps/place/Delhi/@28.6466773,76.813073,10z/data=!3m1!4b1!4m5!3m4!1s0x390cfd5b347eb62d:0x37205b715389640!8m2!3d28.7040592!4d77.1024902',
+      adsmsg :'message and products. For Google, text ads appear on search results pages and throughout the “Google Network,” including search partners, Search Network and Display Network. ...',
+      study:'Designed to complement your own learning style, whether that’s gaining a thorough understanding of the business organisational structure or simply concentrating on the key examinable topics.',
+      about:'SMS was developed in the United Kingdom in the late 1980s, and the first text message was sent on December 3, 1992. An SMS commercial service was launched in the United Kingdom in 1995. Text messaging did not take off, however, until it became possible to send messages between the four main British cell phone networks in 1998.Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts century who is thought to have scrambled partscentury who is thought to have scrambled parts'
+   
   },
   {
     id: 16,
@@ -86,6 +138,15 @@ const friendsData = [
     role: 'Student',
     name: 'Amanat ali',
     location: 'ABES Institute Of Technology',
+    ads: 100,
+    follower: 40,
+    following: 100,
+    profileMsg:
+      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
+    contact:'https://www.google.com/maps/place/Delhi/@28.6466773,76.813073,10z/data=!3m1!4b1!4m5!3m4!1s0x390cfd5b347eb62d:0x37205b715389640!8m2!3d28.7040592!4d77.1024902',
+    adsmsg :'message and products. For Google, text ads appear on search results pages and throughout the “Google Network,” including search partners, Search Network and Display Network. ...',
+    study:'Designed to complement your own learning style, whether that’s gaining a thorough understanding of the business organisational structure or simply concentrating on the key examinable topics.',
+    about:'SMS was developed in the United Kingdom in the late 1980s, and the first text message was sent on December 3, 1992. An SMS commercial service was launched in the United Kingdom in 1995. Text messaging did not take off, however, until it became possible to send messages between the four main British cell phone networks in 1998.Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts century who is thought to have scrambled partscentury who is thought to have scrambled parts'
   },
   {
     id: 17,
@@ -94,6 +155,16 @@ const friendsData = [
     role: 'Student',
     name: 'Amanat ali',
     location: 'ABES Institute Of Technology',
+    ads: 100,
+    follower: 40,
+    following: 100,
+    profileMsg:
+      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
+      contact:'https://www.google.com/maps/place/Delhi/@28.6466773,76.813073,10z/data=!3m1!4b1!4m5!3m4!1s0x390cfd5b347eb62d:0x37205b715389640!8m2!3d28.7040592!4d77.1024902',
+      adsmsg :'message and products. For Google, text ads appear on search results pages and throughout the “Google Network,” including search partners, Search Network and Display Network. ...',
+      study:'Designed to complement your own learning style, whether that’s gaining a thorough understanding of the business organisational structure or simply concentrating on the key examinable topics.',
+      about:'SMS was developed in the United Kingdom in the late 1980s, and the first text message was sent on December 3, 1992. An SMS commercial service was launched in the United Kingdom in 1995. Text messaging did not take off, however, until it became possible to send messages between the four main British cell phone networks in 1998.Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts century who is thought to have scrambled partscentury who is thought to have scrambled parts'
+   
   },
   {
     id: 18,
@@ -102,6 +173,16 @@ const friendsData = [
     role: 'Student',
     name: 'Amanat ali',
     location: 'ABES Institute Of Technology',
+     ads: 100,
+  follower: 40,
+  following: 100,
+  profileMsg:
+    'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
+    contact:'https://www.google.com/maps/place/Delhi/@28.6466773,76.813073,10z/data=!3m1!4b1!4m5!3m4!1s0x390cfd5b347eb62d:0x37205b715389640!8m2!3d28.7040592!4d77.1024902',
+    adsmsg :'message and products. For Google, text ads appear on search results pages and throughout the “Google Network,” including search partners, Search Network and Display Network. ...',
+    study:'Designed to complement your own learning style, whether that’s gaining a thorough understanding of the business organisational structure or simply concentrating on the key examinable topics.',
+    about:'SMS was developed in the United Kingdom in the late 1980s, and the first text message was sent on December 3, 1992. An SMS commercial service was launched in the United Kingdom in 1995. Text messaging did not take off, however, until it became possible to send messages between the four main British cell phone networks in 1998.Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts century who is thought to have scrambled partscentury who is thought to have scrambled parts'
+ 
   },
 
 ];
@@ -154,7 +235,7 @@ export default class FreindsScreen extends React.Component {
                     keyExtractor = {(item) => item.id} 
                     data = {friendsData}
                     numColumns={2}
-                    renderItem={({item}) => UserProfile(item)} 
+                    renderItem={({item}) => <UserProfile user = {item} {...this.props}/>} 
                 />
                 </View>
             </View>

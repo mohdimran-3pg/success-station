@@ -21,6 +21,8 @@ import AdDetail from './screen/AdDetail';
 import EnterPublisherDetail from './screen/EnterPublisherDetail';
 import SidebarMenu from './SideBarMenu';
 import StudentProfile from './screen/profile/StudentProfile';
+import ProfileDetail from './screen/profileDetails/ProfileDetails';
+
 import Membership from './screen/membership/Membership';
 import EditProfile from './../Edit-Profile/EditProfileScreen';
 
@@ -201,6 +203,22 @@ const MainScreenStack = ({navigation}) => {
             fontWeight: 'bold', //Set Header text style
           },
         }}
+      />
+       <Stack.Screen
+        name="ProfileDetail"
+        component={ProfileDetail}
+        options={{
+          title: 'Profile', //Set Header Title
+          
+          headerStyle: {
+            backgroundColor: '#0A878A', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+        
       />
       
        

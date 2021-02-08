@@ -131,35 +131,24 @@ export default class OffersScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={{flex: 1}}>
-        <View style={{flex: 1}}>
-          <View
+      <View style={{flex: 1, padding: 16}}>
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text
             style={{
-              flex: 1,
+              fontSize: 25,
+              textAlign: 'center',
+              marginBottom: 16,
             }}>
-            <View style={{height: "10%", width: "100%" ,backgroundColor:"rgba(10, 135, 138, 1)"}}>
-            <Searchbar style ={{marginStart:10,marginEnd:10}} 
-              placeholder={'Search Book'}
-              icon={()=><Image source = {require('./../../../../assets/search.png')} />}
-            />
-            </View>
-            <View style={{width: "100%", height: "20%", backgroundColor: "red"}}>
-
-            </View>
-            <View style={{width: "100%", backgroundColor: "white", height: "70%"}}>
-                <View style={{width: "90%", alignSelf: "center", height: "100%"}}>
-                <FlatList
-                    columnWrapperStyle={{justifyContent: 'space-between'}}
-                    style = {{width: "100%"}}
-                    keyExtractor = {(item) => item.id} 
-                    data = {friendsData}
-                    numColumns={2}
-                    renderItem={({item}) => UserProfile(item)} 
-                />
-                </View>
-            </View>
-            </View>
-        </View>
-      </SafeAreaView>
+            Offer Screen
+          </Text>
+          </View>
+      </View>
+    </SafeAreaView>
     );
   }
 }

@@ -28,10 +28,9 @@ export default class ChooseLanguageScreen extends React.Component {
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
-    console.log("Country Selection Screen........");
+  
     return {
-        title: null,
-        headerStyle: null,
+      header: () => null
         };
     };
 
