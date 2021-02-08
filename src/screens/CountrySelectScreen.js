@@ -69,12 +69,8 @@ render(){
     
         <SafeAreaView style={{flex: 1}}>
             <View style={styles.mainViewStyle}>
-            <View style={{top: 50}}>
-                <Text style={styles.headingStyle}>
-                    {translate('choose_language')}
-                </Text>
-            </View>
-            <View style={{top: 60}}> 
+          
+            <View style={{}}> 
                 <FlatList
                     keyExtractor = {(item) => item.id} 
                     data = {data}

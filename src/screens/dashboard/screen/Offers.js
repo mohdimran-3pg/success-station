@@ -2,6 +2,7 @@
 // https://aboutreact.com/bottom-tab-view-inside-navigation-drawer/
 import * as React from 'react';
 import {Button, View, Text, Dimensions,SafeAreaView, FlatList, Image, StyleSheet, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { Searchbar ,DefaultTheme, Card} from 'react-native-paper';
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import {translate} from '../../../util/TranslationUtils';
@@ -182,6 +183,7 @@ export default class OffersScreen extends React.Component {
               icon={()=><Image source = {require('./../../../../assets/search.png')} />}
             />
             </View>
+            <ScrollView style={{marginBottom:50}}>
             <View >
               <CarouselCards/>
             </View>
@@ -199,6 +201,7 @@ export default class OffersScreen extends React.Component {
                 />
                 </View>
             </View>
+            </ScrollView>
             </View>
         </View>
       </SafeAreaView>
