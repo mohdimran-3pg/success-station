@@ -37,11 +37,9 @@ const countryData= [
 
 export default class CountrySelectScreen extends React.Component {
 
-static navigationOptions = ({ navigation, navigationOptions }) => {
-    const { params } = navigation.state;
-    console.log("Country Selection Screen........");
-    return {
-        title: ''
+    static navigationOptions = ({ navigation, navigationOptions }) => {
+        return {
+            title: translate('choose_language')
         };
     };
 

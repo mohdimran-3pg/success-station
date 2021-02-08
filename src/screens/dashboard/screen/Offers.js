@@ -171,7 +171,9 @@ export default class OffersScreen extends React.Component {
         <View style={{flex: 1}}>
           <View
             style={{
-              flex: 1,
+              fontSize: 25,
+              textAlign: 'center',
+              marginBottom: 16,
             }}>
             <View style={{height: "10%", width: "100%" ,backgroundColor:"rgba(10, 135, 138, 1)"}}>
             <Searchbar style ={{marginStart:10,marginEnd:10}} 
