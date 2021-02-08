@@ -1,49 +1,72 @@
 // React Navigate Drawer with Bottom Tab
 // https://aboutreact.com/bottom-tab-view-inside-navigation-drawer/
 import * as React from 'react';
-import {Button, View, Text, SafeAreaView, FlatList, Image, StyleSheet, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
-import { Searchbar ,DefaultTheme} from 'react-native-paper';
+import {Button, View, Text, Dimensions,SafeAreaView, FlatList, Image, StyleSheet, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import { Searchbar ,DefaultTheme, Card} from 'react-native-paper';
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 
-const SLIDER_WIDTH = Dimensions.get('window').width + 80
-const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7)
+const SLIDER_WIDTH = Dimensions.get('window').width 
+const ITEM_WIDTH = Dimensions.get('window').width
 
 const CarouselCardItem = ({ item, index }) => {
   return (
-    <View style={styles.container} key={index}>
+    <View style={[styles.container]} key={index}>
       <Image
         source={{ uri: item.imgUrl }}
         style={styles.image}
       />
+      <View style ={{position:'absolute',bottom:20,window:ITEM_WIDTH}}>
       <Text style={styles.header}>{item.title}</Text>
-      <Text style={styles.body}>{item.body}</Text>
+      <Text style={styles.body} numberOfLines ={2}>{item.body}</Text>
+      </View>
     </View>
   )
 }
 const CarouselCards = () => {
+  const [index, setIndex] = React.useState(0)
   const isCarousel = React.useRef(null)
 
   return (
     <View>
-      <Carousel
-        layout="tinder"
-        layoutCardOffset={9}
-        ref={isCarousel}
-        data={data}
-        renderItem={CarouselCardItem}
-        sliderWidth={SLIDER_WIDTH}
-        itemWidth={ITEM_WIDTH}
-        inactiveSlideShift={0}
-        useScrollView={true}
-      />
+          <Carousel
+                layout="default"
+                layoutCardOffset={9}
+                ref={isCarousel}
+                data={data}
+                renderItem={CarouselCardItem}
+                sliderWidth={SLIDER_WIDTH}
+                itemWidth={ITEM_WIDTH}
+                onSnapToItem={(index) => setIndex(index)}
+                useScrollView={true}
+                activeSlideAlignment='center'
+              />
+               <Pagination
+              containerStyle={{marginTop:-20}}
+              dotsLength={data.length}
+              activeDotIndex={index}
+              carouselRef={isCarousel}
+              dotStyle={{
+                width: 10,
+                height: 10,
+                borderRadius: 5,
+                marginHorizontal: 0,
+                backgroundColor: '#FFA733',
+            
+              }}
+              inactiveDotOpacity={0.2}
+              inactiveDotScale={0.6}
+              tappableDots={true}
+              
+            />
+              
     </View>
   )
 }
 
-const UserProfile =(user) => {
+const CategoryCard =(user) => {
   console.log('THis is User:::', user)
   return (
-    <View style={{width:"32%",height:110, marginTop: 30}}>
+    <View style={{width:"31%",margin:'1%'}}>
         <View style={{width: "100%", height: 90, borderRadius: 30, marginTop: 21,  borderWidth: 1,
     borderRadius: 4,
     borderColor: 'rgba(158, 166, 190, 0.12)',
@@ -83,39 +106,39 @@ const data = [
   }
 ]
 
-const friendsData = [
+const cardData = [
   {
-    id: 11,
+    id: 1,
     src:
       'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
     name: 'Wrote',
     image: require('../../../../assets/categories/wrote-category.png')
   },{
-    id: 11,
+    id: 12,
     src:
       'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
     name: 'Medical supplies',
     image: require('../../../../assets/categories/medical.png')
   },{
-    id: 11,
+    id: 3,
     src:
       'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
     name: 'Engineering Supplies',
     image: require('../../../../assets/categories/engineering.png')
   },{
-    id: 11,
+    id: 4,
     src:
       'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
     name: 'Wrote',
     image: require('../../../../assets/categories/wrote-category.png')
   },{
-    id: 11,
+    id: 5,
     src:
       'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
     name: 'Medical supplies',
     image: require('../../../../assets/categories/medical.png')
   },{
-    id: 11,
+    id: 6,
     src:
       'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
     name: 'Engineering Supplies',
@@ -150,7 +173,7 @@ export default class OffersScreen extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1,backgroundColor:'white'}}>
         <View style={{flex: 1}}>
           <View
             style={{
@@ -162,46 +185,20 @@ export default class OffersScreen extends React.Component {
               icon={()=><Image source = {require('./../../../../assets/search.png')} />}
             />
             </View>
-            <View style={{width: "100%", height: "20%", backgroundColor: "red"}}>
-              <Carousel
-                layout="tinder"
-                layoutCardOffset={9}
-                ref={isCarousel}
-                data={data}
-                renderItem={CarouselCardItem}
-                sliderWidth={SLIDER_WIDTH}
-                itemWidth={ITEM_WIDTH}
-                onSnapToItem={(index) => setIndex(index)}
-                useScrollView={true}
-              />
-              <Pagination
-              dotsLength={data.length}
-              activeDotIndex={index}
-              carouselRef={isCarousel}
-              dotStyle={{
-                width: 10,
-                height: 10,
-                borderRadius: 5,
-                marginHorizontal: 0,
-                backgroundColor: 'rgba(0, 0, 0, 0.92)'
-              }}
-              inactiveDotOpacity={0.4}
-              inactiveDotScale={0.6}
-              tappableDots={true}
-            />
+            <View >
+              <CarouselCards/>
             </View>
-            <View style={{width: "100%", backgroundColor: "white", height: "70%"}}>
-                <View style={{width: "90%", alignSelf: "center"}}>
-                  <Text style={{fontSize: 20, fontWeight: "700", fontStyle: "normal"}}>Categories</Text>
-                </View>
-                <View style={{width: "90%", alignSelf: "center", height: "100%"}}>
+            <View>
+             <Text style={{fontSize: 20, fontWeight: "700", fontStyle: "normal",marginStart:20}}>Categories</Text>
+
+                <View style={{width: "90%",height:'100%', alignSelf: "center"}}>
                 <FlatList
-                    columnWrapperStyle={{justifyContent: 'space-between'}}
-                    style = {{width: "100%"}}
+                 contentContainerStyle={{ flexDirection: 'row',
+                 flexWrap: 'wrap'}}
                     keyExtractor = {(item) => item.id} 
-                    data = {friendsData}
+                    data = {cardData}
                     numColumns={3}
-                    renderItem={({item}) => UserProfile(item)} 
+                    renderItem={({item}) => CategoryCard(item)} 
                 />
                 </View>
             </View>
@@ -228,8 +225,10 @@ const styles = StyleSheet.create({
   buttonStyle: {color: "#F78A3A", fontSize: 17, fontWeight: "700", textAlign: "center"},
   container: {
     backgroundColor: 'white',
+    
     borderRadius: 8,
     width: ITEM_WIDTH,
+    height: 150,
     paddingBottom: 40,
     shadowColor: "#000",
     shadowOffset: {
@@ -238,24 +237,27 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
-    elevation: 7,
+    elevation: 0,
   },
   image: {
     width: ITEM_WIDTH,
-    height: 300,
+    padding:8,
+    aspectRatio: 16/9 ,
   },
   header: {
-    color: "#222",
-    fontSize: 28,
+    color: "white",
+    fontSize: 18,
     fontWeight: "bold",
-    paddingLeft: 20,
-    paddingTop: 20
+    paddingLeft: 10,
+    paddingTop: 20,
+    shadowColor:'black'
   },
   body: {
-    color: "#222",
-    fontSize: 18,
-    paddingLeft: 20,
-    paddingLeft: 20,
-    paddingRight: 20
+    color: "white",
+    fontSize: 15,
+    
+    padding:10,
+    marginEnd:10
+    
   }
 });
