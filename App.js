@@ -18,7 +18,7 @@ import ResetPassword from "./src/screens/ResetPassword";
 import UserSignUpForm from "./src/screens/UserSignUpForm";
 import DashBoard from "./src/screens/dashboard/DashBoard"
 import ChooseLanguageScreen from "./src/screens/ChooseLanguageScreen";
-
+import BookDetailScreen from "./src/screens/dashboard/screen/book/BookDetailScreen";
 
 
 
@@ -42,6 +42,7 @@ const navigator = createStackNavigator(
     dashBoard: DashBoard,
     userSignUpForm: UserSignUpForm,
     chooseLanguageScreen: ChooseLanguageScreen,
+    bookDetailScreen: BookDetailScreen
   }, 
   {
     initialRouteName: 'chooseLanguageScreen',
