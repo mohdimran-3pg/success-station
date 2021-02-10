@@ -39,7 +39,6 @@ const style = StyleSheet.create({
         borderColor: "red",
         left: 15,
         width: 98,
-        textAlignVertical: "center"
     },
     imageStyle: {
         width: 18,
@@ -54,7 +53,6 @@ const style = StyleSheet.create({
         height: 5,
         borderWidth: 0,
         resizeMode: "contain",
-        textAlignVertical: "center"
     },
     inputFullViewStyle: {
         borderWidth: 0,
