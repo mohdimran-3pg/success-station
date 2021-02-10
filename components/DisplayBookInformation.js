@@ -6,8 +6,8 @@ const DisplayBookInformation = ({heading, headingValue}) => {
         <View style={styles.mainView}>
             <View style={{width: 8, height: 8, backgroundColor: "#9EA6BE46", alignSelf: "center"}}></View>
             <View style={{flexDirection: "row", left: 10}}>
-                <Text style={{fontSize:14, color:"#9EA6BE", fontweight:"400", fontStyle: "normal", textAlign: "left"}}>{heading}</Text> 
-                <Text style={{fontSize:14, color:"#000", fontweight:"400", fontStyle: "normal", left: 5}}>{headingValue}</Text>
+                <Text style={{fontSize:14, color:"#9EA6BE", fontWeight:"400", fontStyle: "normal", textAlign: "left"}}>{heading}</Text> 
+                <Text style={{fontSize:14, color:"#000", fontWeight:"400", fontStyle: "normal", left: 5}}>{headingValue}</Text>
             </View>
         </View>
     )

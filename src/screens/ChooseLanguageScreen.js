@@ -85,8 +85,9 @@ export default class ChooseLanguageScreen extends React.Component {
                             <ButtonView
                                 name={translate('next')}
                                 clickEvent = { () => {
-                                    console.log('----:', this.state.lang)
-                                    console.log("this is language code::::",this.state.langCode)
+                                    //`console.log('----:', this.state.lang)
+                                    //console.log("this is language code::::",this.state.langCode)
+                                    //this.props.navigation.navigate('bookDetailScreen', { data: { detail: {}} });
                                     this.props.navigation.navigate('countrySelectScreen', { data: { code: this.state.langCode} })
                                 }}
                             />
