@@ -111,10 +111,10 @@ const FlatListItems = [
   },
 ];
 
-const CardItem = (item) => {
+const CardItem = ({item,...props}) => {
   var header_View = (
-    <View style={{flex: 1}}>
-      <Card style={{margin: 7, elevation: 10}}>
+    <TouchableOpacity style={{flex: 1}} onPress= {()=>props.navigation.navigate('BookDetailScreen')}>
+      <Card style={{margin: 7, elevation: 10}} >
         <View style={{flexDirection: 'column', justifyContent: 'center'}}>
           <Image style={styles.cardImageItem} source={{uri: item.src}} />
           <View style={{flexDirection: 'column', marginStart: 10}}>
@@ -164,7 +164,7 @@ const CardItem = (item) => {
           </View>
         </View>
       </Card>
-    </View>
+    </TouchableOpacity>
   );
 
   return header_View;
@@ -229,7 +229,7 @@ export default class StudentProfile extends React.Component {
         <FlatList
           style={{}}
           data={FlatListItems}
-          renderItem={({item}) => CardItem(item)}
+          renderItem={({item}) => <CardItem item = {item} {...this.props}/>} 
           numColumns={2}
         />
         <RBSheet

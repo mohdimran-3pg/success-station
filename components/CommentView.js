@@ -9,7 +9,7 @@ const CommentView = ({clickEvent}) => {
     return (
         <View style={{width: "100%", backgroundColor: "white"}}>
             <View style={{width: "90%", alignSelf: "center", flexDirection: "row"}}>
-                <View style={{width: "", marginTop: 10}}>
+                <View style={{marginTop: 10}}>
                     <Image style={{width: 40, height: 40, borderRadius: 20}}
                         resizeMode="contain"
                         source={require('../assets/book/profile-pic-lady.png')}

@@ -5,16 +5,12 @@ import {
   SafeAreaView,
   TouchableOpacity,
   StyleSheet,
-  FlatList,
   Image,
   ScrollView
 } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
 import DisplayBookInformation from '../../../../../components/DisplayBookInformation';
-import InputViewWithOutImage from '../../../../../components/InputViewWithOutImage';
 import {translate} from '../../../../util/TranslationUtils';
-import ButtonView from '../../../../../components/ButtonView';
-import BorderButton from '../../../../../components/BorderButton';
 import ProfileView from '../../../../../components/ProfileView';
 import AdPostedAtView from '../../../../../components/AdPostedAtView';
 import CommentView from '../../../../../components/CommentView';
@@ -24,11 +20,11 @@ export default class BookDetailScreen extends React.Component {
 
     static navigationOptions = ({ navigation, navigationOptions }) => {
         const { params } = navigation.state;
-    
+      
         return {
-            header: () => null
+          header: () => null
+            };
         };
-    };
 
     constructor(props) {
         super(props);
@@ -63,7 +59,7 @@ export default class BookDetailScreen extends React.Component {
                                 source={require('../../../../../assets/book/back-icon.png')}
                             />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{width: 22, height: 22, position: "absolute", marginTop: 55, marginLeft: 370}}>
+                            <TouchableOpacity style={{width: 22, height: 22, position: 'absolute', marginTop: 55, right:10}}>
                             <Image  
                                 resizeMode="contain"
                                 source={require('../../../../../assets/book/share-icon.png')}
