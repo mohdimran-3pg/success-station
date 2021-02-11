@@ -22,9 +22,10 @@ import EnterPublisherDetail from './screen/EnterPublisherDetail';
 import SidebarMenu from './SideBarMenu';
 import StudentProfile from './screen/profile/StudentProfile';
 import ProfileDetail from './screen/profileDetails/ProfileDetails';
-
+import Category from './screen/Category';
 import Membership from './screen/membership/Membership';
 import EditProfile from './../Edit-Profile/EditProfileScreen';
+
 
 import {adsTabIcon,offerTabIcon,serviceTabIcon,friendTabIcon} from './../../util/ImageConstant'
 
@@ -209,6 +210,22 @@ const MainScreenStack = ({navigation}) => {
         component={ProfileDetail}
         options={{
           title: 'Profile', //Set Header Title
+          
+          headerStyle: {
+            backgroundColor: '#0A878A', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+        
+      />
+       <Stack.Screen
+        name="Category"
+        component={Category}
+        options={{
+          title: '', //Set Header Title
           
           headerStyle: {
             backgroundColor: '#0A878A', //Set Header color

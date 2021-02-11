@@ -65,10 +65,10 @@ const CarouselCards = () => {
   )
 }
 
-const CategoryCard =(user) => {
-  console.log('THis is User:::', user)
+const CategoryCard =({user,...props}) => {
+  console.log('THis is User:::', props)
   return (
-    <View style={{width:"31%",margin:'1%'}}>
+    <TouchableOpacity style={{width:"31%",margin:'1%'}} onPress = {()=> {  props.navigation.navigate('Category');}}>
         <View style={{width: "100%", height: 90, borderRadius: 30, marginTop: 21,  borderWidth: 1,
     borderRadius: 4,
     borderColor: 'rgba(158, 166, 190, 0.12)',
@@ -86,7 +86,7 @@ const CategoryCard =(user) => {
         <View style={{height: 40, marginTop:7}}>
           <Text style={{fontSize: 16, fontWeight: "500", textAlign: "center", color: "#000000"}}>{user.name}</Text>
         </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
@@ -197,7 +197,7 @@ export default class OffersScreen extends React.Component {
                     keyExtractor = {(item) => item.id} 
                     data = {cardData}
                     numColumns={3}
-                    renderItem={({item}) => CategoryCard(item)} 
+                    renderItem={({item}) => <CategoryCard {...this.props} user = {item}/>} 
                 />
                 </View>
             </View>
