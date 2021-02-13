@@ -81,5 +81,12 @@
   "section": "Section",
   "write_comment_here": "Write Comment Here",
   "add_to_favourites": "Add to Favourites",
-  "contact": "Contact"
+  "contact": "Contact",
+  "connect": "Connect",
+  "read_more": "Read More",
+  "reset": "Reset",
+  "filter": "Filter",
+  "done": "Done",
+  "sub_categories": "Sub Categories",
+  "condition": "Condition"
 }

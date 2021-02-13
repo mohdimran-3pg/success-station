@@ -4,7 +4,7 @@
 import * as React from 'react';
 import {Button, View, Text, SafeAreaView, FlatList, Image, StyleSheet, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import { Searchbar ,DefaultTheme} from 'react-native-paper';
-
+import {translate} from '../../../util/TranslationUtils';
 //
 const UserProfile =({user,...props}) => {
   console.log('THis is User:::', user)
@@ -31,7 +31,7 @@ const UserProfile =({user,...props}) => {
         <View style={styles.mainView}>
             <TouchableOpacity>
             <Text style={styles.buttonStyle}>
-            Connect
+            {translate("connect")}
             </Text>
             </TouchableOpacity>
         </View>
@@ -223,7 +223,7 @@ export default class FreindsScreen extends React.Component {
             }}>
             <View style={{height: "10%", width: "100%" ,backgroundColor:"rgba(10, 135, 138, 1)"}}>
             <Searchbar style ={{marginStart:10,marginEnd:10}} 
-              placeholder={'Search Book'}
+              placeholder={translate('search_book')}
               icon={()=><Image source = {require('./../../../../assets/search.png')} />}
             />
             </View>

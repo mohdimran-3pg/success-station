@@ -221,7 +221,7 @@ export default class StudentProfile extends React.Component {
                   fontSize: 15,
                   textAlignVertical: 'center',
                 }}>
-                Filter
+                {translate('filter')}
               </Text>
             </TouchableOpacity>
           </View>
