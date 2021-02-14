@@ -10,39 +10,23 @@ import {
   StyleSheet,
   FlatList,
 } from 'react-native';
-
+import {translate} from '../../../../util/TranslationUtils'
 import {Card} from 'react-native-paper';
 
 
 const FlatListItems = [
   {
     id: 1,
-    title: 'Google Maps ',
+    title: translate("google_maps"),
   },
   {
     id: 2,
-    title: 'Telephone number',
+    title: translate("telephone_number"),
   },
   {
     id: 3,
-    title: 'Information ',
-  },
-  {
-    id: 4,
-    title: 'Lorem ipsum dolor sit ',
-  },
-  {
-    id: 5,
-    title: 'Origins and Meaning',
-  },
-  {
-    id: 6,
-    title: 'Origins and Meaning',
-  },
-  {
-    id: 7,
-    title: 'Origins and Meaning',
-  },
+    title: translate("Information"),
+  }
 ];
 
 const Header = () => {

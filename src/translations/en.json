@@ -91,5 +91,9 @@
   "condition": "Condition",
   "offer": "Offer",
   "friends": "Friends",
-  "services": "Services"
+  "services": "Services",
+  "google_maps": "Google Maps", 
+  "telephone_numbers": "Telephone Numbers",
+  "information": "Information",
+  "service_provider": "Service Provider"
 }
