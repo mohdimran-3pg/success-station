@@ -15,9 +15,13 @@ import {
   TextInput,
 } from 'react-native';
 import {translate} from '../../../util/TranslationUtils';
+import DynamicTabView from 'react-native-dynamic-tab-view';
 
-
-
+const tabData = [
+  { title: 'ALL', key: '1' },
+  { title: 'CLOTHES', key: '2' },
+  { title: 'ELECTRONICS', key: '3' },
+]
 
 const serviceData = [
   {
@@ -100,6 +104,18 @@ const serviceData = [
   },
 
 ];
+
+_renderItem = (item, index) => {
+  console.log("renderItem", index);
+  return (
+    <View
+      key={item["key"]}
+      style={{ backgroundColor: item["color"], flex: 1 }}
+    />
+  );
+};
+
+onChangeTab = index => {};
 
 const SearchBar = () => {
   return (
@@ -207,6 +223,14 @@ export default class ServicesScreen extends React.Component {
         { key: 'stationary', title: 'STATIONARY'},
       ],
     };
+    this.data = [
+      { title: 'ALL', key: '1' },
+  { title: 'CLOTHES', key: '2' },
+  { title: 'ELECTRONICS', key: '3' },
+  { title: 'ALL', key: '1' },
+  { title: 'CLOTHES', key: '2' },
+  { title: 'ELECTRONICS', key: '3' },
+    ];
     }
 
   render() {
@@ -217,6 +241,21 @@ export default class ServicesScreen extends React.Component {
               <View style={{width: '80%', height: 50, alignSelf: "center", justifyContent: "center", marginTop: 10}}>
                   <SearchBar style={{}} />
               </View>
+            </View>
+            <View style={{width:"100%", height: 2, backgroundColor: "#F78A3A"}}></View>
+            <View style={{width: "100%", height: 80}}>
+            <DynamicTabView
+            data={this.data}
+            renderTab={() => <View
+            style={{flex: 1, height: 80 }}
+          />}
+            defaultIndex={this.state.defaultIndex}
+            containerStyle={styles.container}
+            headerBackgroundColor={'white'}
+            headerTextStyle={styles.headerText}
+            onChangeTab={this.onChangeTab}
+            headerUnderlayColor={'#F78A3A'}
+          />
             </View>
             <FlatList 
                     columnWrapperStyle={{justifyContent: 'space-around'}}
@@ -247,7 +286,20 @@ const styles = StyleSheet.create({
     borderColor: "#F78A3A",
     borderWidth: 1
 },
-buttonStyle: {color: "#F78A3A", fontSize: 11, fontWeight: "700", textAlign: "center"}
+buttonStyle: {color: "#F78A3A", fontSize: 11, fontWeight: "700", textAlign: "center"},
+container: {
+  flex: 1
+},
+headerContainer: {
+  marginTop: 16
+},
+headerText: {
+  color:'black',
+  fontSize: 15, fontWeight:"400", fontStyle: "normal"
+},
+tabItemContainer: {
+  backgroundColor: "#cf6bab"
+}
 });
 
 
