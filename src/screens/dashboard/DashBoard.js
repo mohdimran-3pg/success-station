@@ -28,7 +28,7 @@ import EditProfile from './../Edit-Profile/EditProfileScreen';
 
 import BookDetailScreen from "./screen/book/BookDetailScreen";
 import {adsTabIcon,offerTabIcon,serviceTabIcon,friendTabIcon} from './../../util/ImageConstant'
-
+import {translate} from '../../util/TranslationUtils'
 
 
 const Stack = createStackNavigator();
@@ -93,10 +93,10 @@ const BottomTabStack = () => {
         },
       }}>
       <Tab.Screen
-        name="Offer"
+        name="Offers"
         component={Offers}
         options={{
-          tabBarLabel: 'Offer',
+          tabBarLabel: `${translate('offer')}`,
           tabBarIcon: ({ color, focused }) => (
  
              <TabIcon src ={offerTabIcon} focused = {focused}/>
@@ -108,7 +108,7 @@ const BottomTabStack = () => {
         name="Friends"
         component={Friends}
         options={{
-          tabBarLabel: 'Friends',
+          tabBarLabel: `${translate('friends')}`,
            tabBarIcon: ({ color, focused }) => (
             <TabIcon src ={friendTabIcon} focused = {focused}/>
             ),
@@ -118,7 +118,7 @@ const BottomTabStack = () => {
         name="Services"
         component={Services}
         options={{
-          tabBarLabel: 'Services',
+          tabBarLabel: `${translate('services')}`,
            tabBarIcon: ({ color, focused }) => (
         <TabIcon src ={serviceTabIcon} focused = {focused}/>
             ),
@@ -128,7 +128,7 @@ const BottomTabStack = () => {
         name="Ads"
         component={AdScreenStack}
         options={{
-          tabBarLabel: 'Ads',
+          tabBarLabel: `${translate('ads')}`,
          tabBarIcon: ({ color, focused }) => (
           <TabIcon src ={adsTabIcon} focused = {focused}/>
           ),

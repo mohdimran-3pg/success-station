@@ -88,5 +88,8 @@
   "filter": "Filter",
   "done": "Done",
   "sub_categories": "Sub Categories",
-  "condition": "Condition"
+  "condition": "Condition",
+  "offer": "Offer",
+  "friends": "Friends",
+  "services": "Services"
 }

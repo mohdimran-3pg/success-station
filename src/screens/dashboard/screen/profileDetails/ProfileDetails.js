@@ -33,9 +33,7 @@ const profileData = {
 const UserCardHeader = ({profile,...props}) => {
   return (
   
-   
-
-      <Card style={{margin: 14, elevation: 10}}>
+    <Card style={{margin: 14, elevation: 10}}>
         <View style={{flexDirection: 'column', justifyContent: 'center'}}>
           <Image
             style={[
