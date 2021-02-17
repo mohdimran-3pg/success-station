@@ -21,6 +21,7 @@ import AdDetail from './screen/AdDetail';
 import EnterPublisherDetail from './screen/EnterPublisherDetail';
 import SidebarMenu from './SideBarMenu';
 import StudentProfile from './screen/profile/StudentProfile';
+import ServiceDetails from './screen/service/ServiceDetails';
 import ProfileDetail from './screen/profileDetails/ProfileDetails';
 import Category from './screen/Category';
 import Membership from './screen/membership/Membership';
@@ -195,7 +196,7 @@ const MainScreenStack = ({navigation}) => {
         component={Membership}
         options={{
           title: 'Membership', //Set Header Title
-          
+          headerShown: true,
           headerStyle: {
             backgroundColor: '#0A878A', //Set Header color
           },
@@ -240,6 +241,23 @@ const MainScreenStack = ({navigation}) => {
             <Stack.Screen
         name="BookDetailScreen"
         component={BookDetailScreen}
+        options={{
+          title: '', //Set Header Title
+          headerShown: false,
+          headerStyle: {
+            backgroundColor: '#0A878A', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+        
+      />
+
+<Stack.Screen
+        name="ServiceProfileScreen"
+        component={ServiceDetails}
         options={{
           title: '', //Set Header Title
           headerShown: false,

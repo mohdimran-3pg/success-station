@@ -31,7 +31,11 @@ const serviceData = [
     role: 'Student',
     name: 'The Complete SQL Bootcamp 2020:',
     avgStar: 1,
-    totalStar: 103
+    totalStar: 103,
+    follower: 40,
+    following: 100,
+    profileMsg:
+      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
   },
   {
     id: 12,
@@ -40,7 +44,11 @@ const serviceData = [
     role: 'Student',
     name: 'The Complete SQL Bootcamp 2020:',
     avgStar: 2,
-    totalStar: 113
+    totalStar: 113,
+    follower: 40,
+    following: 100,
+    profileMsg:
+      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
   
   },
   {
@@ -50,7 +58,11 @@ const serviceData = [
     role: 'Student',
     name: 'The Complete SQL Bootcamp 2020:',
     avgStar: 3,
-    totalStar: 193
+    totalStar: 193,
+    follower: 40,
+    following: 100,
+    profileMsg:
+      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
    
   },
   {
@@ -60,7 +72,11 @@ const serviceData = [
     role: 'Student',
     name: 'The Complete SQL Bootcamp 2020:',
     avgStar: 4,
-    totalStar: 23
+    totalStar: 23,
+    follower: 40,
+    following: 100,
+    profileMsg:
+      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
 
   },
   {
@@ -70,7 +86,11 @@ const serviceData = [
     role: 'Student',
     name: 'The Complete SQL Bootcamp 2020:',
     avgStar: 5,
-    totalStar: 183
+    totalStar: 183,
+    follower: 40,
+    following: 100,
+    profileMsg:
+      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
    
   },
   {
@@ -80,7 +100,11 @@ const serviceData = [
     role: 'Student',
     name: 'The Complete SQL Bootcamp 2020:',
     avgStar: 4,
-    totalStar: 193
+    totalStar: 193,
+    follower: 40,
+    following: 100,
+    profileMsg:
+      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
   },
   {
     id: 17,
@@ -89,7 +113,11 @@ const serviceData = [
     role: 'Student',
     name: 'The Complete SQL Bootcamp 2020:',
     avgStar: 4,
-    totalStar: 133
+    totalStar: 133,
+    follower: 40,
+    following: 100,
+    profileMsg:
+      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
    
   },
   {
@@ -99,7 +127,11 @@ const serviceData = [
     role: 'Student',
     name: 'The Complete SQL Bootcamp 2020:',
     avgStar: 4,
-    totalStar: 143
+    totalStar: 143,
+    follower: 40,
+    following: 100,
+    profileMsg:
+      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
  
   },
 
@@ -176,7 +208,8 @@ const RatingView = ({avgRating, totalStar}) => {
 const BookCard =({book,...props}) => {
   console.log('THis is User:::', book)
   return (
-    <View style={{width:'46%', marginTop: 10, borderColor: "#00000030", borderWidth: 1, borderRadius: 4, height: 234}} >
+    <TouchableOpacity style={{width:'46%', marginTop: 10, borderColor: "#00000030", borderWidth: 1, borderRadius: 4, height: 234}} onPress = {()=> props.navigation.navigate('ServiceProfileScreen',{book})}>
+    <View style={{}} >
         <View style={{width: "100%", height: "50%"}}>
             <Image
                   source={require('../../../../assets/book/book-pencil.png')}
@@ -205,6 +238,7 @@ const BookCard =({book,...props}) => {
           </View>
         </View>
     </View>
+    </TouchableOpacity>
   )
 }
 
@@ -238,7 +272,7 @@ export default class ServicesScreen extends React.Component {
       <SafeAreaView style={{flex: 1}}>
         <View style={{flex:1}}>
             <View style={{backgroundColor:"#0A878A", height: 70}}>
-              <View style={{width: '80%', height: 50, alignSelf: "center", justifyContent: "center", marginTop: 10}}>
+              <View style={{width: '92%', height: 50, alignSelf: "center", justifyContent: "center", marginTop: 10}}>
                   <SearchBar style={{}} />
               </View>
             </View>
