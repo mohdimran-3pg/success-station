@@ -139,6 +139,7 @@ export default class Membership extends React.Component {
               elevation: 15,
               marginStart: 16,
               marginEnd: 16,
+              marginTop:50,
               borderRadius: 10,
             }}>
             <Header />
