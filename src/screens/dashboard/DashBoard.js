@@ -37,6 +37,21 @@ const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
 
+const NavigationRight = (props) => {
+
+
+  return (
+    <View style={{flexDirection: 'row',justifyContent:'center'}}>
+     
+         <Image
+          source={{uri: props.url}}
+          style={{width: 36, height: 36,borderRadius:16,margin:16 }}
+        />
+
+    </View>
+  );
+};
+
 
 const NavigationDrawerStructure = (props) => {
   //Structure for the navigatin Drawer
@@ -46,16 +61,27 @@ const NavigationDrawerStructure = (props) => {
   };
 
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={{flexDirection: 'row',justifyContent:'flex-end',flex:1}}>
       <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#0A878A" translucent = {true}/>
-
-      <TouchableOpacity onPress={() => toggleDrawer()}>
+      <View style={{flexDirection: 'row',width:"100%"}}>
+      <TouchableOpacity onPress={() => toggleDrawer()}  style={{alignSelf:'center'}}>
         {/*Donute Button Image */}
         <Image
           source={require('../../../assets/tabs/menu.png')}
-          style={{width: 25, height: 25, marginLeft: 5}}
+          style={{width: 25, height: 25, marginLeft: 10,alignSelf:'center'}}
         />
+        
       </TouchableOpacity>
+
+      <Image
+          source={require('../../../assets/card/location.png')}
+          style={{width: 14, height: 14, marginLeft: 5,alignSelf:'center',tintColor:'white'}}
+        />
+      
+        <Text style= {{color:'white',marginLeft: 5, alignSelf:'center'}}>{props.location}</Text>
+
+     
+        </View>
     </View>
   );
 };
@@ -150,7 +176,10 @@ const MainScreenStack = ({navigation}) => {
         options={({route}) => ({
           
           headerLeft: () => (
-            <NavigationDrawerStructure navigationProps={navigation} />
+            <NavigationDrawerStructure navigationProps={navigation} location = {'01, Mehta House, 1st Floor'} />
+          ),
+          headerRight:() => (
+            <NavigationRight navigationProps={navigation} url = {'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg'} />
           ),
           headerStyle: {
             backgroundColor: '#0A878A', //Set Header color
