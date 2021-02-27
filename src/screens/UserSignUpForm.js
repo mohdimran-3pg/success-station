@@ -16,6 +16,13 @@ import ButtonView from '../../components/ButtonView';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {userType} from './../util/DataUtil';
 import CalendarPicker from "react-native-calendar-picker"
+import DynamicTabView from 'react-native-dynamic-tab-view';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+
+var radio_props = [
+  {label: translate('company'), value: 'company' },
+  {label: translate('individual'), value: 'individual' }
+];
 
 export default class UserSignUpForm extends React.Component {
   
@@ -27,15 +34,19 @@ export default class UserSignUpForm extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {selectedUserType: '', isDobVisible: false, viewHeight: 500, dateOfBirth: ''};
+    this.state = {selectedUserType: 'student', isDobVisible: false, viewHeight: 750+80, dateOfBirth: '', index: 0};
+    this.data = [
+      {title: translate('student'), key: '3', type: 'student'},
+      {title: translate('company'), key: '1', type: 'company'}
+    ];
   }
 
   componentDidMount() {}
 
   componentWillUnmount() {}
   setUserType = (userType) => {
-    console.log(userType.label);
-    this.setState({selectedUserType: userType.label});
+    console.log(userType);
+    this.setState({selectedUserType: userType});
   };
   setIsDobVisible = (isDobVisible) => {
     this.setState({isDobVisible: isDobVisible});
@@ -63,6 +74,32 @@ export default class UserSignUpForm extends React.Component {
                 <Text style={{textAlign: 'center'}}>
                   {translate('sign_up_desc')}
                 </Text>
+              </View>
+              <View style={{width: "80%", height: 60, justifyContent: 'center', alignSelf: 'center'}}>
+                <DynamicTabView
+                  data={this.data}
+                  renderTab={() => <View
+                  style={{flex: 1, height: 1 }}
+                  />
+                }
+              
+                  defaultIndex={this.state.defaultIndex}
+                  containerStyle={style.container2}
+                  headerBackgroundColor={'#F2F2F2'}
+                  headerTextStyle={style.headerText}
+                  onChangeTab={(item) => {
+                    console.log('clicked....', this.data[item].type)
+
+                    if (this.data[item].type == "student") {
+                      this.setViewHeight(750+80)
+                    } else {
+                      this.setViewHeight(680+60)
+                    }
+                    this.setUserType(this.data[item].type)
+                  }
+                  }
+                  headerUnderlayColor={'#F78A3A'}
+                />
               </View>
               <View style={{height: 50}}>
                 <InputView
@@ -97,18 +134,28 @@ export default class UserSignUpForm extends React.Component {
                   isFullWidth={true}
                 />
               </View>
-              <View style={{height: 50}}>
-                <DropDownSelectBox
-                  placeholderText={translate('user_type')}
-                  selectedText={this.state.selectedUserType}
-                  imageSource={require('../../assets/SignUp/user-type.png')}
-                  isFullWidth={true}
-                  onPressEvent={() => {
-                    this.Standard.open();
+              {this.state.selectedUserType === 'company' || this.state.selectedUserType === 'individual' ? (
+              <View style={{height: 50, width: 320, justifyContent: 'flex-end'}}>
+                <RadioForm
+                  radio_props={radio_props}
+                  initial={0}
+                  formHorizontal={true}
+                  selectedButtonColor={"#F78A3A"}
+                  buttonColor={"#F78A3A"}
+                  labelStyle={{marginRight: 15}}
+                  onPress={(item) => {
+                    console.log(item)
+                    if (item == "individual") {
+                      this.setViewHeight(750+80)
+                    } else {
+                      this.setViewHeight(680+60)
+                    }
+                    this.setUserType(item)
                   }}
-                />
-              </View>
-              {this.state.selectedUserType === 'Student' || this.state.selectedUserType === 'Individual' ? (
+                />   
+              </View>)
+              : null}
+              {this.state.selectedUserType === 'student' || this.state.selectedUserType === 'individual' ? (
               <View>  
                 <View style={{height: 50}}>
                   <DropDownSelectBox
@@ -122,7 +169,7 @@ export default class UserSignUpForm extends React.Component {
                       />
                 </View>
               </View>) : null }
-              {this.state.selectedUserType === 'Student' || this.state.selectedUserType === 'Individual' || this.state.selectedUserType === 'Company' ? (            
+              {this.state.selectedUserType === 'student' || this.state.selectedUserType === 'individual' || this.state.selectedUserType === 'company' ? (            
               <View>
               <View
                   style={{
@@ -154,7 +201,7 @@ export default class UserSignUpForm extends React.Component {
 
 
 
-              {this.state.selectedUserType === 'Student' ? (
+              {this.state.selectedUserType === 'student' ? (
                 <View>
                   <View
                     style={{
@@ -195,7 +242,7 @@ export default class UserSignUpForm extends React.Component {
                 </View>
               ) : null}
 
-              {this.state.selectedUserType === 'Individual' ? (
+              {this.state.selectedUserType === 'individual' ? (
                   <View>
                       <View
                     style={{
@@ -227,7 +274,7 @@ export default class UserSignUpForm extends React.Component {
                 </View>
                 </View>
               ) : null}
-              {this.state.selectedUserType === 'Company' ? (
+              {this.state.selectedUserType === 'company' ? (
                   <View>
                   <View
                 style={{
@@ -307,11 +354,11 @@ export default class UserSignUpForm extends React.Component {
                           this.Standard.close();
                           this.setUserType(item);
                           if (item.id == 1) {
-                              this.setViewHeight(750)
+                              this.setViewHeight(750+80)
                           } else if (item.id == 2) {
-                            this.setViewHeight(750)
+                            this.setViewHeight(750+80)
                           } else {
-                            this.setViewHeight(680)
+                            this.setViewHeight(680+60)
                           }
                           console.log(item)
                         }}>
@@ -399,4 +446,19 @@ const style = StyleSheet.create({
     fontStyle: 'normal',
     color: '#F78A3A',
   },
+  container2: {
+
+  },
+  headerContainer: {
+    marginTop: 16,
+  },
+  headerText: {
+    color: 'black',
+    fontSize: 15,
+    fontWeight: '400',
+    fontStyle: 'normal',
+  },
+  tabItemContainer: {
+    backgroundColor: '#cf6bab',
+  }
 });

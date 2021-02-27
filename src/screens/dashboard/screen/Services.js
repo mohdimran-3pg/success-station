@@ -16,7 +16,8 @@ import {
 } from 'react-native';
 import {translate} from '../../../util/TranslationUtils';
 import DynamicTabView from 'react-native-dynamic-tab-view';
-
+import MapView, { Marker } from "react-native-maps";
+import RBSheet from 'react-native-raw-bottom-sheet';
 const tabData = [
   { title: 'ALL', key: '1' },
   { title: 'CLOTHES', key: '2' },
@@ -122,14 +123,17 @@ _renderItem = (item, index) => {
 
 onChangeTab = index => {};
 
-const SearchBar = () => {
+const SearchBar = ({displayType, clickEvent}) => {
+  console.log("diplayType", displayType)
   return (
     <View style={{width: "100%", height: 50, borderRadius: 4, backgroundColor: "white", flexDirection: "row"}}>
       <View style={{width: 76, height: "100%", flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-          <TouchableOpacity style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+          <TouchableOpacity style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}
+            onPress = { () => clickEvent()}
+          >
             <Image
               style={{width: 21, height: 21, marginLeft: 18}}
-              source={require('../../../../assets/book/list-view.png')} 
+              source={displayType == "1" ? require('../../../../assets/book/list-view.png') : require('../../../../assets/book/map-view.png')} 
             />
             <Image
               style={{width: 12, height: 5, marginLeft: 15}}
@@ -223,56 +227,130 @@ export default class ServicesScreen extends React.Component {
     super(props);
     this.state = {
       index: 0,
-      routes: [
-        { key: 'all', title: 'ALL'  },
-        { key: 'clothes', title: 'CLOTHES'},
-        { key: 'electronics', title: 'ELECTRONICS' },
-        { key: 'stationary', title: 'STATIONARY'},
-      ],
+      region: {
+        latitude: 21.487301,
+        longitude: 39.181339,
+        latitudeDelta: 0.009,
+        longitudeDelta: 0.009
+      },
+      displayType: [{
+        'id': "1",
+        'title': 'List'
+      },{
+        'id': "2",
+        'title': 'Map'
+      }],
+      isList: "1",
     };
     this.data = [
       { title: 'ALL', key: '1' },
   { title: 'CLOTHES', key: '2' },
-  { title: 'ELECTRONICS', key: '3' },
-  { title: 'ALL', key: '1' },
-  { title: 'CLOTHES', key: '2' },
-  { title: 'ELECTRONICS', key: '3' },
+  { title: 'ELECTRONICS', key: '3' }
     ];
+
+    
+
     }
 
   render() {
     return (
       <SafeAreaView style={{flex: 1}}>
         <View style={{flex:1}}>
-            <View style={{backgroundColor:"#0A878A", height: 70}}>
-              <View style={{width: '92%', height: 50, alignSelf: "center", justifyContent: "center", marginTop: 10}}>
-                  <SearchBar style={{}} />
-              </View>
-            </View>
-            <View style={{width:"100%", height: 2, backgroundColor: "#F78A3A"}}></View>
-            <View style={{width: "100%", height: 60}}>
-            <DynamicTabView
-            data={this.data}
-            renderTab={() => <View
-            style={{flex: 1 , height: 1}}
-          />}
-            defaultIndex={this.state.defaultIndex}
-            containerStyle={styles.container}
-            headerBackgroundColor={'white'}
-            headerTextStyle={styles.headerText}
-            onChangeTab={this.onChangeTab}
-            headerUnderlayColor={'#F78A3A'}
-          />
-            </View>
-            <FlatList 
+        <View style={{backgroundColor:"#0A878A", height: 70}}>
+                  <View style={{width: '92%', height: 50, alignSelf: "center", justifyContent: "center", marginTop: 10}}>
+                      {console.log("Before::::", this.state.isList)}
+                      <SearchBar style={{}} 
+                      displayType={this.state.isList}
+                      clickEvent={() => {
+                    this.displayTypeView.open();
+                  }} />
+                  </View>
+                </View>  
+        <View style={{width:"100%", height: 2, backgroundColor: "#F78A3A"}}></View>
+                <View style={{width: "100%", height: 60}}>
+                    <DynamicTabView
+                      data={this.data}
+                      renderTab={() => <View
+                      style={{flex: 1 , height: 1}}
+                    />}
+                    defaultIndex={this.state.defaultIndex}
+                    containerStyle={styles.container}
+                    headerBackgroundColor={'white'}
+                    headerTextStyle={styles.headerText}
+                    onChangeTab={this.onChangeTab}
+                    headerUnderlayColor={'#F78A3A'}
+                  />
+                </View>
+            {this.state.isList == "1" ? (
+            <View style={{flex:1}}>
+                <FlatList 
                     columnWrapperStyle={{justifyContent: 'space-around'}}
                     style = {{width: "100%"}}
                     keyExtractor = {(item) => item.id} 
                     data = {serviceData}
                     numColumns={2}
                     renderItem={({item}) => <BookCard book = {item} {...this.props} />}
-             />
+                />
+            </View>
+            ): (
+              <View style={{flex:1}}>
+                <MapView
+                  style={{ flex: 1 }}
+                  region={this.state.region}
+                  onRegionChangeComplete={region => this.state.region}
+                >
+                  <Marker coordinate={{ latitude: 21.487301, longitude:39.181339 }} />
+                </MapView>
+              </View>)
+            }
+
+              <RBSheet ref={(ref) => {
+                  this.displayTypeView = ref;
+                }}
+                height={150}
+                >
+              <View>
+              <FlatList
+                  data={this.state.displayType}
+                  renderItem={({item}) => {
+                    return (
+                      <TouchableOpacity
+                        style={{
+                          height: 50,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          borderBottomWidth: 1,
+                          borderColor: '#D3D3D3',
+                          backgroundColor: '#FFFFFF'
+                        }}
+                        onPress={() => {
+                          this.setState({isList: item.id})
+                          console.log("Item ID is:::", item.id);
+                          this.displayTypeView.close();
+                          
+                          
+                        }}>
+                        <View style={{flex: 1, justifyContent: 'center', alignItems: "stretch"}}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            fontWeight: '500',
+                            alignSelf: 'center',
+                            fontSize: 18,
+                          }}>
+                          {item.title}
+                        </Text>
+                        </View>  
+                        
+                      </TouchableOpacity>
+                    );
+                  }}
+                  keyExtractor={(item) => item.id}
+                />
+              </View>
+            </RBSheet>      
         </View>
+            
       </SafeAreaView>
     );
   }

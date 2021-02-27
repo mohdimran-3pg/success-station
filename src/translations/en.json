@@ -95,5 +95,8 @@
   "google_maps": "Google Maps", 
   "telephone_numbers": "Telephone Numbers",
   "information": "Information",
-  "service_provider": "Service Provider"
+  "service_provider": "Service Provider",
+  "student": "Student",
+  "individual": "Individual",
+  "company": "Company"
 }

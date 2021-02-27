@@ -7,6 +7,7 @@
     "Dont_have_account": " - ليس لديك حساب؟",
     "sign_up_text": "سجلسجل",
     "user_name_placeholder": "اسم المستخدم",
+    "user_name": "اسم االمستخدم",
     "password_placeholder": "كلمه السر",
     "sign_in": "تسجيل الدخول",
     "forgot_your_password": "نسيت رقمك السري؟",
@@ -95,5 +96,8 @@
     "google_maps": "خرائط جوجل", 
     "telephone_numbers": "أرقام الهاتف",
     "information": "معلومة",
-    "service_provider": "مقدم الخدمة"
+    "service_provider": "مقدم الخدمة",
+    "student": "طالب علم",
+    "individual": "فرد",
+    "company": "شركة"
   }  
