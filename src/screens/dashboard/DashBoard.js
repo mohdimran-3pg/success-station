@@ -17,6 +17,7 @@ import Offers from './screen/Offers';
 import Friends from './screen/Friends';
 import Services from './screen/Services';
 import AdsScreen from './screen/Ads';
+
 import AdDetail from './screen/AdDetail';
 import EnterPublisherDetail from './screen/EnterPublisherDetail';
 import SidebarMenu from './SideBarMenu';
@@ -30,6 +31,9 @@ import EditProfile from './../Edit-Profile/EditProfileScreen';
 import BookDetailScreen from "./screen/book/BookDetailScreen";
 import {adsTabIcon,offerTabIcon,serviceTabIcon,friendTabIcon} from './../../util/ImageConstant'
 import {translate} from '../../util/TranslationUtils'
+import MyAdsListScreen from './screen/MyAdsList';
+import AddAds from './screen/AddAds'
+import MyLocationScreen from './screen/MyLocation';
 
 
 const Stack = createStackNavigator();
@@ -251,6 +255,61 @@ const MainScreenStack = ({navigation}) => {
         }}
         
       />
+
+<Stack.Screen
+        name="MyAdsList"
+        component={MyAdsListScreen}
+        options={{
+          title: 'My Ads', //Set Header Title
+          headerRight: () => (
+            <TouchableOpacity style={{marginRight:10}}  onPress= {()=>navigation.navigate('AddAds')}>
+              <Image source={require('./../../../assets/plus.png')} style={{width:35,height:35,tintColor:'white'}}/>
+            </TouchableOpacity>
+          
+          ),
+          headerStyle: {
+            backgroundColor: '#0A878A', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+        
+      />
+      <Stack.Screen
+        name="AddAds"
+        component={AddAds}
+        options={{
+          title: 'Add Ads', //Set Header Title
+          
+          headerStyle: {
+            backgroundColor: '#0A878A', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+        
+      />
+ <Stack.Screen
+        name="MyLocation"
+        component={MyLocationScreen}
+        options={{
+          title: 'My Location', //Set Header Title
+          
+          headerStyle: {
+            backgroundColor: '#0A878A', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+        
+      />
+
        <Stack.Screen
         name="Category"
         component={Category}

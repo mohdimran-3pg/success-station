@@ -73,40 +73,16 @@ const UserCardHeader = ({profile,...props}) => {
               borderBottomWidth: 1,
             }}
           />
+          
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'center',
               justifyContent: 'space-evenly',
-              marginTop: 10,
-              marginBottom: 24,
+              marginTop: 12,
+              marginBottom: 12,
             }}>
-            <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-              <Text style={styles.countTextStye}>{profile.ads}</Text>
-              <Text style={styles.titleCountTextStye}>Ads</Text>
-            </View>
-            <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-              <Text style={styles.countTextStye}>{profile.follower}</Text>
-              <Text style={styles.titleCountTextStye}>Follower</Text>
-            </View>
-            <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-              <Text style={styles.countTextStye}>{profile.following}</Text>
-              <Text style={styles.titleCountTextStye}>Following</Text>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              justifyContent: 'space-evenly',
-              marginTop: 6,
-              marginBottom: 10,
-            }}>
-            <TouchableOpacity style={{height:50,width:'35%',backgroundColor:'#F78A3A',borderRadius:5,justifyContent:'center'}}>
-            <Text style={{color:'white',fontSize:17,textAlign:'center',fontWeight:'bold'}}>
-            Follow
-            </Text>
-            </TouchableOpacity>
+          
             <TouchableOpacity style={{height:50,width:'35%',backgroundColor:'white',borderRadius:5,justifyContent:'center',borderColor:'#0A878A',borderWidth:1}}>
             <Text style={{color:'#151522',fontSize:17,textAlign:'center',fontWeight:'bold'}}>
             Add Friend

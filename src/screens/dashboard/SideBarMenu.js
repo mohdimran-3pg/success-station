@@ -20,32 +20,47 @@ import {
   notificationIcon,
   messageIcon,
   membershipIcon,
+  cardLocation,
 } from './../../util/ImageConstant';
 import {drawerIconStyle} from './../../styles/CommonStyleSheet';
-import {translate} from './../../util/TranslationUtils'
+import {translate} from './../../util/TranslationUtils';
 const BASE_PATH =
   'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg';
 
 const user = {name: 'Rahul', email: 'rahul@gmal.com', src: BASE_PATH};
-const DrawerProfile = ({data,...props}) => {
-    return (
-        <View style = {{flexDirection:'column',height : 142 ,marginTop : 24}}>
-          {console.log(props)}
-            <TouchableOpacity style= {{width:20,height:20, alignSelf: 'flex-end',marginEnd: 25,marginTop:20}} onPress={() => {
-              props.navigation.navigate('EditProfile');
+const DrawerProfile = ({data, ...props}) => {
+  return (
+    <View style={{flexDirection: 'column', height: 142, marginTop: 24}}>
+      {console.log(props)}
+      <TouchableOpacity
+        style={{
+          width: 20,
+          height: 20,
+          alignSelf: 'flex-end',
+          marginEnd: 25,
+          marginTop: 20,
+        }}
+        onPress={() => {
+          props.navigation.navigate('EditProfile');
+        }}>
+        <Image
+          source={require('./../../../assets/drawer/edit.png')}
+          style={{width: 15, height: 15}}
+        />
+      </TouchableOpacity>
 
-            }}>
-              <Image source={require('./../../../assets/drawer/edit.png')} 
-                    style = {{width:15,height:15}}/>
-            </TouchableOpacity>
-            
-        <View style = {{flexDirection:'row',  marginTop: 20,marginStart: 20}}>
-            <Image source={{uri : data.src}}  style = {styles.image}/>
-            <View style = {{flexDirection:'column',marginStart:20,justifyContent: 'center'}}>
-                <Text style ={styles.name} >{data.name}</Text>
-                <Text style ={styles.email}>{data.email}</Text>
-            </View>
+      <View style={{flexDirection: 'row', marginTop: 20, marginStart: 20}}>
+        <Image source={{uri: data.src}} style={styles.image} />
+        <View
+          style={{
+            flexDirection: 'column',
+            marginStart: 20,
+            justifyContent: 'center',
+          }}>
+          <Text style={styles.name}>{data.name}</Text>
+          <Text style={styles.email}>{data.email}</Text>
         </View>
+      </View>
 
       <View
         style={{
@@ -78,7 +93,7 @@ const SidebarMenu = (props) => {
   return (
     <View style={{flex: 1}}>
       {/*Top Large Image */}
-      <DrawerProfile  data={user} {...props}/>
+      <DrawerProfile data={user} {...props} />
       <DrawerContentScrollView {...props}>
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={profileIcon} />}
@@ -92,7 +107,15 @@ const SidebarMenu = (props) => {
           icon={({color, size}) => <DrawerIcon src={adsIcon} />}
           label={translate('my_ads')}
           onPress={() => {
-            props.navigation.navigate('Profile');
+            props.navigation.navigate('MyAdsList');
+          }}
+        />
+
+        <DrawerItem
+          icon={({color, size}) => <DrawerIcon src={cardLocation} />}
+          label={'My Location'}
+          onPress={() => {
+            props.navigation.navigate('MyLocation');
           }}
         />
         <DrawerItem

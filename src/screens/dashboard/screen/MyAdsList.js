@@ -12,13 +12,13 @@ import {
   Dimensions,
 } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import DynamicTabView from 'react-native-dynamic-tab-view';
+
 import {Card, Paragraph, Searchbar} from 'react-native-paper';
 import {
   cardFollower,
   cardLocation,
   filter,
-} from './../../../util/ImageConstant';
+} from '../../../util/ImageConstant';
 import {translate} from '../../../util/TranslationUtils';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 const profileData = {
@@ -169,218 +169,24 @@ const CardItem = ({item,...props}) => {
 
   return header_View;
 };
-export default class StudentProfile extends React.Component {
+export default class MyAdsListScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-     
-      index: 0,
-      
-    };
-
-    this.data = [
-      {title: 'ALL', key: '1'},
-      {title: 'CLOTHES', key: '2'},
-      {title: 'ELECTRONICS', key: '3'},
-      {title: 'BOOKS', key: '4'},
-      {title: 'COMPUTER', key: '5'},
-      {title: 'MOBILE', key: '6'},
-    ];
   }
-  onChangeTab = (index) => {};
 
   render() {
     return (
-      <SafeAreaView style={{flex: 1,backgroundColor:'white'}}>
-        <View
-          style={{backgroundColor: 'rgba(10, 135, 138, 1)', paddingBottom: 28}}>
-          <Searchbar
-            style={{marginStart: 10, marginEnd: 10}}
-            placeholder={translate('search_book')}
-            icon={() => (
-              <Image source={require('./../../../../assets/search.png')} />
-            )}
-          />
-        </View>
-        <View style={{flexDirection: 'row', margin: 7, height: 30}}>
-          <Text
-            style={{
-              flex: 1,
-              alignSelf: 'flex-start',
-              textAlignVertical: 'center',
-              height: 30,
-              fontSize: 18,
-            }}>
-            Book List
-          </Text>
-          <View style={{flex: 1, alignItems: 'flex-end'}}>
-            <TouchableOpacity
-              style={{
-                backgroundColor: '#F78A3A',
-                flexDirection: 'row',
-                borderRadius: 4,
-                width: 84,
-                justifyContent: 'center',
-                height: 30,
-              }}
-              onPress={() => {
-                this.Standard.open();
-              }}>
-              <Image
-                style={{alignSelf: 'center', marginRight: 5}}
-                source={filter}
-              />
-              <Text
-                style={{
-                  color: 'white',
-                  fontSize: 15,
-                  textAlignVertical: 'center',
-                }}>
-                {translate('filter')}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={{width: "100%", height: 60}}>
-            <DynamicTabView
-            data={this.data}
-            renderTab={() => <View
-            style={{flex: 1, height: 1 }}
-          />}
-        
-            defaultIndex={this.state.defaultIndex}
-            containerStyle={styles.container2}
-            headerBackgroundColor={'white'}
-            headerTextStyle={styles.headerText}
-            onChangeTab={this.onChangeTab}
-            headerUnderlayColor={'#F78A3A'}
-          
-          />
-            </View>
+      <SafeAreaView style={{flex: 1}}>
+       
+       
         <FlatList
-          style={{marginTop:10,marginBottom:10}}
+          style={{marginTop:10,marginBottom:10,backgroundColor:'white'}}
           data={FlatListItems}
           renderItem={({item}) => <CardItem item = {item} {...this.props}/>} 
           numColumns={2}
         />
-        <RBSheet
-          ref={(ref) => {
-            this.Standard = ref;
-          }}
-          height={500}
-          customStyles={{
-            container: {
-              borderTopLeftRadius: 20,
-              borderTopRightRadius: 20,
-            },
-          }}
-          >
-          <View style={{flex: 1}}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                margin: 16,
         
-              }}>
-              <Text style={{color: 'black'}}>Reset</Text>
-              <Text>Filter</Text>
-              <TouchableOpacity style={{padding: 0}}>
-                <Text style={{color: '#F78A3A'}}>Done</Text>
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                height: 1,
-                backgroundColor: '#EAECEF',
-                width: '100%',
-              }}></View>
-            <Text style={{fontSize: 21, marginStart: 16, marginTop: 13}}>
-              Sub Categories
-            </Text>
-
-            <View
-              style={{
-                flexDirection: 'row',
-               
-                margin: 8,
-              }}>
-              <CheckBox
-               
-              />
-              <Text style={{textAlignVertical:'center'}}>Medical1 books</Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-               
-                margin: 8,
-              }}>
-              <CheckBox
-               
-              />
-              <Text style={{textAlignVertical:'center'}}>Medical2 books</Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-               
-                margin: 8,
-              }}>
-              <CheckBox
-               
-              />
-              <Text style={{textAlignVertical:'center'}}>Medical3 books</Text>
-            </View>
-            <Text style={{fontSize: 21, marginStart: 16, marginTop: 13}}>
-              Condition
-            </Text>
-
-            <View
-              style={{
-                flexDirection: 'row',
-               
-                margin: 8,
-              }}>
-              <CheckBox
-               
-              />
-              <Text style={{textAlignVertical:'center'}}>New</Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-               
-                margin: 8,
-              }}>
-              <CheckBox
-               
-              />
-              <Text style={{textAlignVertical:'center'}}>Old</Text>
-            </View>
-
-            <Text style={{fontSize: 21, marginStart: 16, marginTop: 13}}>
-              Price
-            </Text>
-            <View
-              style={{
-                marginStart:20,
-              }}>
-             <MultiSlider
-          values={[multiSliderValue[0], multiSliderValue[1]]}
-          sliderLength={Dimensions.get('window').width-40}
-          onValuesChange={(i)=>{console.log(i)}}
-          min={0}
-          max={10}
-          step={.1}
-          allowOverlap
-          snapped
         
-        />
-            </View>
-      
-          </View>
-        </RBSheet>
       </SafeAreaView>
     );
   }
@@ -450,20 +256,5 @@ const styles = StyleSheet.create({
     width: 'auto',
     height: 'auto',
     aspectRatio: 16 / 9,
-  },
-  container2: {
-
-  },
-  headerContainer: {
-    marginTop: 16,
-  },
-  headerText: {
-    color: 'black',
-    fontSize: 15,
-    fontWeight: '400',
-    fontStyle: 'normal',
-  },
-  tabItemContainer: {
-    backgroundColor: '#cf6bab',
   },
 });

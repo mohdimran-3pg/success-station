@@ -31,7 +31,7 @@ const UserProfile =({user,...props}) => {
         <View style={styles.mainView}>
             <TouchableOpacity>
             <Text style={styles.buttonStyle}>
-            {translate("connect")}
+            Add Friend
             </Text>
             </TouchableOpacity>
         </View>

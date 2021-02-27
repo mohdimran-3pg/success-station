@@ -106,34 +106,7 @@ const serviceData = [
     profileMsg:
       'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
   },
-  {
-    id: 17,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    role: 'Student',
-    name: 'The Complete SQL Bootcamp 2020:',
-    avgStar: 4,
-    totalStar: 133,
-    follower: 40,
-    following: 100,
-    profileMsg:
-      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
-   
-  },
-  {
-    id: 18,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    role: 'Student',
-    name: 'The Complete SQL Bootcamp 2020:',
-    avgStar: 4,
-    totalStar: 143,
-    follower: 40,
-    following: 100,
-    profileMsg:
-      'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
- 
-  },
+  
 
 ];
 
@@ -277,11 +250,11 @@ export default class ServicesScreen extends React.Component {
               </View>
             </View>
             <View style={{width:"100%", height: 2, backgroundColor: "#F78A3A"}}></View>
-            <View style={{width: "100%", height: 80}}>
+            <View style={{width: "100%", height: 60}}>
             <DynamicTabView
             data={this.data}
             renderTab={() => <View
-            style={{flex: 1, height: 80 }}
+            style={{flex: 1 , height: 1}}
           />}
             defaultIndex={this.state.defaultIndex}
             containerStyle={styles.container}
