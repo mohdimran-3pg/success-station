@@ -18,6 +18,7 @@ import {userType} from './../util/DataUtil';
 import CalendarPicker from "react-native-calendar-picker"
 import DynamicTabView from 'react-native-dynamic-tab-view';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import axios from 'axios';
 
 var radio_props = [
   {label: translate('company'), value: 'company' },
@@ -34,14 +35,72 @@ export default class UserSignUpForm extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {selectedUserType: 'student', isDobVisible: false, viewHeight: 750+80, dateOfBirth: '', index: 0};
+    console.log("constructor called......")
+    this.getUniversities = this.getUniversities.bind(this);
+    this.getCountries = this.getCountries.bind(this);
+    this.getCityByCountry = this.getCityByCountry.bind(this);
+    this.state = {selectedUserType: 'student', isDobVisible: false, viewHeight: 750+80, dateOfBirth: '', index: 0, universities: [], countries: [], cities: []};
     this.data = [
       {title: translate('student'), key: '3', type: 'student'},
       {title: translate('company'), key: '1', type: 'company'}
     ];
   }
 
-  componentDidMount() {}
+  getCountries () {
+
+      axios({
+        'method':'GET',
+        'url':'http://eshgksa.com/success_station/api/v1/countries',
+        'headers': {
+            'content-type':'application/json',
+        },
+        'params': {
+            'search':'parameter',
+        },
+      }).then((response) => {
+        console.log(response.data.data)
+        this.setState({countries: response.data.data});
+      })
+  }
+
+  getCityByCountry(countryId) {
+    console.log("getCityByCountry.......")
+    axios({
+      'method':'GET',
+      'url':'http://eshgksa.com/success_station/api/v1/cities',
+      'headers': {
+          'content-type':'application/json',
+      },
+      'params': {
+          'country':countryId,
+      },
+    }).then( (response)=> {
+      this.setState({cities: response.data.data});
+    })
+  }
+
+  getUniversities() {
+    console.log("getUniversities called......")
+    axios({
+      'method':'GET',
+      'url':'http://eshgksa.com/success_station/api/v1/universities',
+      'headers': {
+          'content-type':'application/json',
+      },
+      'params': {
+          'search':'parameter',
+      },
+    }).then( (response)=> {
+      this.setState({universities: response.data.data});
+    })
+  }
+
+  componentDidMount() {
+    console.log("componentDidMount called......")
+    this.getCountries()
+    this.getUniversities()
+    this.getCityByCountry(277)
+  }
 
   componentWillUnmount() {}
   setUserType = (userType) => {
@@ -309,7 +368,9 @@ export default class UserSignUpForm extends React.Component {
               <View style={{height: 50, width: 320}}>
                 <ButtonView
                   clickEvent={() => {
-                    console.log('Sign Up Clicked ......');
+                    console.log('Countries ......',this.state.countries);
+                    console.log('University ......',this.state.universities);
+                    console.log('Cities ......',this.state.cities);
                   }}
                   name={translate('sign_up_btn_text')}
                 />
