@@ -4,7 +4,7 @@ import { FlatList } from "react-native-gesture-handler";
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
 import {translate} from "./../util/TranslationUtils";
-
+import Loading from 'react-native-whc-loading'
 
     const translationGetters = {
 
@@ -69,7 +69,6 @@ render(){
     
         <SafeAreaView style={{flex: 1}}>
             <View style={styles.mainViewStyle}>
-          
             <View style={{}}> 
                 <FlatList
                     keyExtractor = {(item) => item.id} 
