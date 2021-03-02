@@ -18,16 +18,11 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import {userType} from './../util/DataUtil';
 import CalendarPicker from "react-native-calendar-picker"
 import DynamicTabView from 'react-native-dynamic-tab-view';
-<<<<<<< HEAD
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import axios from 'axios';
-=======
-import RadioForm ,{RadioButton, RadioButtonInput, RadioButtonLabel}  from 'react-native-simple-radio-button';
 import ApiService from '../network/ApiService';
 import Helper from '../util/Helper';
-//import Loading from 'react-native-whc-loading'
 import Loader from './Loader';
->>>>>>> API+Integration
 
 var radio_props = [
   {label: translate('company'), value: 'company' },
