@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import DropDownSelectBox from '../../components/DropDownSelectBox';
@@ -17,8 +18,16 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import {userType} from './../util/DataUtil';
 import CalendarPicker from "react-native-calendar-picker"
 import DynamicTabView from 'react-native-dynamic-tab-view';
+<<<<<<< HEAD
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import axios from 'axios';
+=======
+import RadioForm ,{RadioButton, RadioButtonInput, RadioButtonLabel}  from 'react-native-simple-radio-button';
+import ApiService from '../network/ApiService';
+import Helper from '../util/Helper';
+//import Loading from 'react-native-whc-loading'
+import Loader from './Loader';
+>>>>>>> API+Integration
 
 var radio_props = [
   {label: translate('company'), value: 'company' },
@@ -35,11 +44,30 @@ export default class UserSignUpForm extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log("constructor called......")
-    this.getUniversities = this.getUniversities.bind(this);
-    this.getCountries = this.getCountries.bind(this);
-    this.getCityByCountry = this.getCityByCountry.bind(this);
-    this.state = {selectedUserType: 'student', isDobVisible: false, viewHeight: 750+80, dateOfBirth: '', index: 0, universities: [], countries: [], cities: []};
+   
+    this.state = {isLoading: false, 
+                  selectedUserType: 'student', 
+                  isDobVisible: false, 
+                  viewHeight: 750+80, 
+                  dateOfBirth: '', 
+                  index: 0, 
+                  universities: [], 
+                  countries: [], 
+                  cities: [],
+                  selectedUniversity: '', 
+                  selectedCountry: '',
+                  selectedCity: '',
+                  selectedUniversityId: 0,
+                  selectedCountryId: 0,
+                  selectedCityId: 0,
+                  userName: '',
+                  email: '',
+                  mobileNumber: '',
+                  region: '',
+                  college: '',
+                  crNo: '',
+                  iqamaNo: ''
+                };
     this.data = [
       {title: translate('student'), key: '3', type: 'student'},
       {title: translate('company'), key: '1', type: 'company'}
@@ -47,59 +75,107 @@ export default class UserSignUpForm extends React.Component {
   }
 
   getCountries () {
-
-      axios({
-        'method':'GET',
-        'url':'http://eshgksa.com/success_station/api/v1/countries',
-        'headers': {
-            'content-type':'application/json',
-        },
-        'params': {
-            'search':'parameter',
-        },
-      }).then((response) => {
-        console.log(response.data.data)
-        this.setState({countries: response.data.data});
-      })
+    ApiService.get('countries').then((response) => {
+      console.log('Country Data:::::'+response.data[0].name)
+      this.setState({countries: response.data})
+      this.setState({isLoading: false});
+      this.getUniversities()
+      this.setState({isLoading: true});
+  }).catch ((error)=> {alert(error)})
   }
 
-  getCityByCountry(countryId) {
-    console.log("getCityByCountry.......")
-    axios({
-      'method':'GET',
-      'url':'http://eshgksa.com/success_station/api/v1/cities',
-      'headers': {
-          'content-type':'application/json',
-      },
-      'params': {
-          'country':countryId,
-      },
-    }).then( (response)=> {
-      this.setState({cities: response.data.data});
-    })
+  getCityByCountry = () => {
+   this.setState({isLoading : true})
+    ApiService.get('cities',{
+      'country':this.state.selectedCountryId,
+  }).then((response) => {
+    this.setState({isLoading : false})
+    this.setState({cities: response.data})
+    this.citySheet.open();
+  }).catch ((error)=> {
+    this.setState({isLoading : false})
+    alert(error)})
   }
 
   getUniversities() {
-    console.log("getUniversities called......")
-    axios({
-      'method':'GET',
-      'url':'http://eshgksa.com/success_station/api/v1/universities',
-      'headers': {
-          'content-type':'application/json',
-      },
-      'params': {
-          'search':'parameter',
-      },
-    }).then( (response)=> {
-      this.setState({universities: response.data.data});
-    })
+  
+    ApiService.get('universities',{
+      'search':'parameter',
+  }).then((response) => {
+    console.log('University Data:::::', response.data)
+    this.setState({universities: response.data});
+    this.setState({isLoading: false});
+  }).catch ((error)=> {alert(error)})
+  }
+
+  startSignUp() {
+    errorArray = []
+    console.log('--------- startSignUp |||| ', this.state.selectedCountryId, 'isValid ---- ', Helper.isEmailValid(this.state.email))
+    if(this.state.userName == '') {
+      errorArray.push("Enter User Name")
+    } 
+    
+    if (this.state.email == '') {
+      errorArray.push("Enter Email")
+    } 
+    
+    if (Helper.isEmailValid(this.state.email)) {
+      errorArray.push("Enter valid Email")
+    } 
+    
+    if (this.state.mobileNumber == '') {
+      errorArray.push("Enter Mobile")
+    } 
+  
+    if (this.state.selectedCountryId == 0) {
+      errorArray.push("Select Country")
+    } 
+    
+    if (this.state.selectedCityId == 0) {
+      errorArray.push("Select City")
+    } 
+    
+    if (this.state.region == 0) {
+      errorArray.push("Enter Region")
+    }
+
+    if (this.state.selectedUserType == 'student') {
+      if (this.state.dateOfBirth == '') {
+        errorArray.push("Select Date of Birth")
+      } 
+      
+      if (this.state.college == '') {
+        errorArray.push("Enter college")
+      } 
+      
+      if (this.state.selectedUniversityId == 0) {
+        errorArray.push("Selected University")
+      }
+    } else if (this.state.selectedUserType == 'company') {
+      if (this.state.crNo == '') {
+        errorArray.push("Enter CR Number")
+      } 
+    } else if (this.state.selectedUserType == 'individual') {
+
+      if (this.state.dateOfBirth == '') {
+        errorArray.push("Select Date of Birth")
+      } 
+      
+      if (this.state.iqamaNo == '') {
+        errorArray.push("Enter Iqama Number")
+      }
+    }
+
+    if (errorArray.length > 0) {
+      errorText = errorArray.join("\n")
+      alert(errorText)
+    }
   }
 
   componentDidMount() {
-    console.log("componentDidMount called......")
+    this.setState({isLoading: true});
     this.getCountries()
-    this.getUniversities()
-    this.getCityByCountry(277)
+   
   }
 
   componentWillUnmount() {}
@@ -119,15 +195,18 @@ export default class UserSignUpForm extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={{flex: 1, backgroundColor: '#F2F2F2'}}>
-        <View style={{flex: 1, backgroundColor: '#F2F2F2'}}>
+    
+      (<SafeAreaView style={{flex: 1, backgroundColor: '#F2F2F2'}}>
+                     <View style={{flex: 1, backgroundColor: '#F2F2F2'}}>
+                
           <KeyboardAwareScrollView>
+          
             <View style={{flex: 1, alignItems: 'stretch', backgroundColor: '#F2F2F2', justifyContent: 'space-between', height: this.state.viewHeight, width: 320, alignSelf: 'center'}}>
               <View style={{width: 320, height: 122}}>
                 <Image
                   style={{resizeMode: 'contain', alignSelf: 'center'}}
                   source={require('../../assets/logo.png')}
-                />
+                /> 
               </View>
               <View style={{height: 50, width: 320}}>
                 <Text style={{textAlign: 'center'}}>
@@ -164,6 +243,7 @@ export default class UserSignUpForm extends React.Component {
                 <InputView
                   changeTextEvent={(newValue) => {
                     console.log('Inputtting something .....', newValue);
+                    this.setState({userName: newValue});
                   }}
                   imageSource={require('../../assets/SignUp/user-icon.png')}
                   placeholderText={translate('user_name')}
@@ -175,6 +255,7 @@ export default class UserSignUpForm extends React.Component {
                 <InputView
                   changeTextEvent={(newValue) => {
                     console.log('Inputtting something .....', newValue);
+                    this.setState({email: newValue});
                   }}
                   imageSource={require('../../assets/SignUp/email-icon.png')}
                   placeholderText={translate('email')}
@@ -186,6 +267,7 @@ export default class UserSignUpForm extends React.Component {
                 <InputView
                   changeTextEvent={(newValue) => {
                     console.log('Inputtting something .....', newValue);
+                    this.setState({mobileNumber: newValue});
                   }}
                   imageSource={require('../../assets/SignUp/phone.png')}
                   placeholderText={translate('mobile_number')}
@@ -240,19 +322,22 @@ export default class UserSignUpForm extends React.Component {
                   <InputView
                     changeTextEvent={(newValue) => {
                       console.log('Inputtting something .....', newValue);
+                      this.setState({region: newValue});
                     }}
                     imageSource={require('../../assets/SignUp/region.png')}
                     placeholderText={translate('region')}
                     isFullWidth={false}
                   />
-                  <InputView
-                    changeTextEvent={(newValue) => {
-                      console.log('Inputtting something .....', newValue);
-                    }}
-                    imageSource={require('../../assets/SignUp/city.png')}
-                    placeholderText={translate('city')}
-                    isFullWidth={false}
-                  />
+                  <DropDownSelectBox
+                      placeholderText={translate('city')}
+                      imageSource={require('../../assets/SignUp/city.png')}
+                      isFullWidth={false}
+                      selectedText={this.state.selectedCity}
+                      onPressEvent={() => {
+                        this.getCityByCountry();
+                        console.log('Country Drop Down Clicked.......');
+                      }}
+                    />
                 </View>       
               </View>) : null }
 
@@ -273,14 +358,16 @@ export default class UserSignUpForm extends React.Component {
                       placeholderText={translate('country')}
                       imageSource={require('../../assets/SignUp/country.png')}
                       isFullWidth={false}
-                      selectedText={''}
+                      selectedText={this.state.selectedCountry}
                       onPressEvent={() => {
+                        this.countriesSheet.open();
                         console.log('Country Drop Down Clicked.......');
                       }}
                     />
                     <InputView
                       changeTextEvent={(newValue) => {
                         console.log('Inputtting something .....', newValue);
+                        this.setState({college: newValue});
                       }}
                       imageSource={require('../../assets/SignUp/graduate.png')}
                       placeholderText={translate('college')}
@@ -288,15 +375,15 @@ export default class UserSignUpForm extends React.Component {
                     />
                   </View>
                   <View style={{height: 50, width: 320, marginTop: 15}}>
-                    <InputView
-                      changeTextEvent={(newValue) => {
-                        console.log('Inputtting something .....', newValue);
-                      }}
-                      imageSource={require('../../assets/SignUp/university.png')}
-                      placeholderText={translate('university')}
-                      style={{width: 150}}
-                      isFullWidth={true}
-                    />
+                    <DropDownSelectBox
+                        placeholderText={translate('university')}
+                        imageSource={require('../../assets/SignUp/university.png')}
+                        isFullWidth={true}
+                        selectedText={this.state.selectedUniversity}
+                        onPressEvent={() => {
+                          this.universitySheet.open();
+                        }}
+                      />
                   </View>
                 </View>
               ) : null}
@@ -314,8 +401,9 @@ export default class UserSignUpForm extends React.Component {
                       placeholderText={translate('country')}
                       imageSource={require('../../assets/SignUp/country.png')}
                       isFullWidth={true}
-                      selectedText={''}
+                      selectedText={this.state.selectedCountry}
                       onPressEvent={() => {
+                        this.countriesSheet.open();
                         console.log('Country Drop Down Clicked.......');
                       }}
                     />
@@ -324,6 +412,7 @@ export default class UserSignUpForm extends React.Component {
                   <InputView
                     changeTextEvent={(newValue) => {
                       console.log('Inputtting something .....', newValue);
+                      this.setState({iqamaNo: newValue});
                     }}
                     imageSource={require('../../assets/SignUp/university.png')}
                     placeholderText={translate('Iqama_number')}
@@ -346,8 +435,9 @@ export default class UserSignUpForm extends React.Component {
                   placeholderText={translate('country')}
                   imageSource={require('../../assets/SignUp/country.png')}
                   isFullWidth={true}
-                  selectedText={''}
+                  selectedText={this.state.selectedCountry}
                   onPressEvent={() => {
+                    this.countriesSheet.open();
                     console.log('Country Drop Down Clicked.......');
                   }}
                 />
@@ -356,6 +446,7 @@ export default class UserSignUpForm extends React.Component {
                   <InputView
                     changeTextEvent={(newValue) => {
                       console.log('Inputtting something .....', newValue);
+                      this.setState({crNo: newValue});
                     }}
                     imageSource={require('../../assets/SignUp/university.png')}
                     placeholderText={translate('cr_no')}
@@ -367,10 +458,8 @@ export default class UserSignUpForm extends React.Component {
               ) : null}
               <View style={{height: 50, width: 320}}>
                 <ButtonView
-                  clickEvent={() => {
-                    console.log('Countries ......',this.state.countries);
-                    console.log('University ......',this.state.universities);
-                    console.log('Cities ......',this.state.cities);
+                  clickEvent={()=>{
+                    this.startSignUp();
                   }}
                   name={translate('sign_up_btn_text')}
                 />
@@ -467,10 +556,137 @@ export default class UserSignUpForm extends React.Component {
                   }
                 />
               </View>
+            </RBSheet>
+            <RBSheet ref={(ref) => {
+              this.universitySheet = ref;
+              console.log('+++++++++++', this.state.universities)
+            }}>
+              <FlatList  
+                data={this.state.universities}
+                renderItem={({item}) => {
+                  return (
+                    <TouchableOpacity
+                      style={{
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderBottomWidth: 1,
+                        borderColor: '#D3D3D3',
+                        backgroundColor: '#F2F2F2'
+                      }}
+                      onPress={() => {
+                        this.setState({selectedUniversity: item.name});
+                        this.setState({selectedUniversityId: item.id});
+                        this.universitySheet.close();
+                        console.log('Selected University=========='+item.name)
+                      }}>
+                      <View style={{flex: 1, justifyContent: 'center', alignItems: "stretch"}}>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontWeight: '500',
+                          alignSelf: 'center',
+                          fontSize: 18,
+                        }}>
+                        {item.name}
+                      </Text>
+                      </View>  
+                      
+                    </TouchableOpacity>
+                  );
+                }}
+                keyExtractor={(item) => item.id} 
+              />
+            </RBSheet>
+            <RBSheet ref={(ref) => {
+              this.countriesSheet = ref;
+              console.log('+++++++++++', this.state.countries)
+            }}>
+              <FlatList  
+                data={this.state.countries}
+                renderItem={({item}) => {
+                  return (
+                    <TouchableOpacity
+                      style={{
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderBottomWidth: 1,
+                        borderColor: '#D3D3D3',
+                        backgroundColor: '#F2F2F2'
+                      }}
+                      onPress={() => {
+                        this.setState({selectedCountry: item.name});
+                        this.setState({selectedCountryId: item.id});
+                        this.countriesSheet.close();
+                        console.log('Selected Country=========='+item.name)
+                      }}>
+                      <View style={{flex: 1, justifyContent: 'center', alignItems: "stretch"}}>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontWeight: '500',
+                          alignSelf: 'center',
+                          fontSize: 18,
+                        }}>
+                        {item.name}
+                      </Text>
+                      </View>  
+                      
+                    </TouchableOpacity>
+                  );
+                }}
+                keyExtractor={(item) => item.id} 
+              />
+            </RBSheet>
+            <RBSheet ref={(ref) => {
+              this.citySheet = ref;
+              console.log('+++++++++++', this.state.countries)
+            }}>
+              <FlatList  
+                data={this.state.cities}
+                renderItem={({item}) => {
+                  return (
+                    <TouchableOpacity
+                      style={{
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderBottomWidth: 1,
+                        borderColor: '#D3D3D3',
+                        backgroundColor: '#F2F2F2'
+                      }}
+                      onPress={() => {
+                        this.setState({selectedCity: item.city});
+                        this.setState({selectedCityId: 227});
+                        this.citySheet.close();
+                        console.log('Selected Country=========='+item.name)
+                      }}>
+                      <View style={{flex: 1, justifyContent: 'center', alignItems: "stretch"}}>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontWeight: '500',
+                          alignSelf: 'center',
+                          fontSize: 18,
+                        }}>
+                        {item.city}
+                      </Text>
+                      </View>  
+                      
+                    </TouchableOpacity>
+                  );
+                }}
+                keyExtractor={(item) => item.id} 
+              />
             </RBSheet> 
           </KeyboardAwareScrollView>
         </View>
-      </SafeAreaView>
+        {this.state.isLoading ?   <Loader
+          loading={this.state.loading} /> :null}
+
+        
+      </SafeAreaView>)
     );
   }
 }
