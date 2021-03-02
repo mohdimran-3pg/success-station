@@ -19,7 +19,6 @@ import {userType} from './../util/DataUtil';
 import CalendarPicker from "react-native-calendar-picker"
 import DynamicTabView from 'react-native-dynamic-tab-view';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
-import axios from 'axios';
 import ApiService from '../network/ApiService';
 import Helper from '../util/Helper';
 import Loader from './Loader';

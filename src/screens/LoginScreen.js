@@ -4,6 +4,9 @@ import InputView from "../../components/InputView";
 import ButtonView from "../../components/ButtonView";
 
 import {translate} from "./../util/TranslationUtils";
+import ApiService from '../network/ApiService';
+import Helper from '../util/Helper';
+import Loader from './Loader';
 export default class LoginScreen extends React.Component {
 
     static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -14,12 +17,25 @@ export default class LoginScreen extends React.Component {
 
     constructor(props) {
         super(props)
+        this.state = {isLoading: false}
     }
 
     componentDidMount() {
     }
     
     componentWillUnmount() {
+    }
+
+    startLogin = () => {
+        ApiService.post('login', {
+            "email": "nshukla0310@gmail.com", "password": "123456"
+        })
+        .then((response) => {
+            console.log("Response:::", response.data);
+        })
+        .error(err => {
+            console.log("Response:::", err);
+        })
     }
 
     render() {
@@ -94,7 +110,8 @@ export default class LoginScreen extends React.Component {
                         <View style={style.dontHaveAccountViewStyle}>
                             <TouchableOpacity onPress={() => {
                                 console.log("Don;t have account clicked ....")
-                                this.props.navigation.navigate('userSignUpForm')
+                                this.startLogin()
+                                //this.props.navigation.navigate('userSignUpForm')
                             }}>
                                 <View style={{flexDirection: "row"}}>
                                     <Text style={style.dontHaveAccountTextStyle}>
@@ -108,6 +125,8 @@ export default class LoginScreen extends React.Component {
                         </View>
                     </View>
                 </View>
+                {this.state.isLoading ?   <Loader
+                loading={this.state.loading} /> :null}
             </SafeAreaView>
     </TouchableWithoutFeedback>
     }
