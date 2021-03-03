@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, Keyboard, TouchableWithoutFeedback, SafeAreaView, I18nManager } from "react-native";
 import InputView from "../../components/InputView";
 import ButtonView from "../../components/ButtonView";
-
 import {translate} from "./../util/TranslationUtils";
 import ApiService from '../network/ApiService';
 import Helper from '../util/Helper';
 import Loader from './Loader';
+
 export default class LoginScreen extends React.Component {
 
     static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -17,7 +17,7 @@ export default class LoginScreen extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {isLoading: false}
+        this.state = {isLoading: false, email: '', password: ''}
     }
 
     componentDidMount() {
@@ -27,14 +27,33 @@ export default class LoginScreen extends React.Component {
     }
 
     startLogin = () => {
+
+        if (this.state.email == '') {
+            alert('Please enter email')
+            return;
+        } 
+          
+        if (Helper.isEmailValid(this.state.email)) {
+            alert('Enter valid Email')
+            return;
+        } 
+
+        if (this.state.password == '') {
+            alert('Please enter password')
+            return;
+        }
+
+        this.setState({isLoading: true});
         ApiService.post('login', {
-            "email": "nshukla0310@gmail.com", "password": "123456"
+            "email": this.state.email, "password": this.state.password
         })
         .then((response) => {
-            console.log("Response:::", response.data);
+            this.setState({isLoading: false});
+            this.props.navigation.navigate('dashBoard');
         })
-        .error(err => {
-            console.log("Response:::", err);
+        .catch ((error)=> {
+            this.setState({isLoading : false})
+            alert(error.data.message)
         })
     }
 
@@ -61,6 +80,7 @@ export default class LoginScreen extends React.Component {
                             <InputView 
                                         changeTextEvent = {(newValue) => {
                                             console.log("Inputtting something .....", newValue);
+                                            this.setState({email: newValue})
                                         }} 
                                         imageSource={require('../../assets/SignUp/user-icon.png')}
                                         placeholderText={translate('user_name_placeholder')}
@@ -71,7 +91,7 @@ export default class LoginScreen extends React.Component {
                         <View style={{height: 50}}>
                         <InputView 
                                                 changeTextEvent = {(newValue) => {
-                                                 
+                                                 this.setState({password: newValue})
                                                 }} 
                                                 imageSource={require('../../assets/SignUp/password-icon.png')}
                                                 placeholderText={translate('password_placeholder')}
@@ -103,15 +123,15 @@ export default class LoginScreen extends React.Component {
                         </View>
                         <View style={{height: 50, width: 320, alignSelf: "center"}}> 
                             <ButtonView clickEvent = { () => {
-                              this.props.navigation.navigate('dashBoard')
+                                this.startLogin()
+                              //this.props.navigation.navigate('dashBoard')
                                 
                             } } name={translate('sign_in_title')} />
                         </View>
                         <View style={style.dontHaveAccountViewStyle}>
                             <TouchableOpacity onPress={() => {
                                 console.log("Don;t have account clicked ....")
-                                this.startLogin()
-                                //this.props.navigation.navigate('userSignUpForm')
+                                this.props.navigation.navigate('userSignUpForm')
                             }}>
                                 <View style={{flexDirection: "row"}}>
                                     <Text style={style.dontHaveAccountTextStyle}>
