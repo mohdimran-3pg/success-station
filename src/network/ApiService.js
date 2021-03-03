@@ -16,13 +16,11 @@ const client = axios.create({
  */
 const request = function(options) {
   const onSuccess = function(response) {
-    console.debug('Request Successful!', response);
+   
     return response.data;
   }
 
   const onError = function(error) {
-    console.error('Request Failed:', error.config);
-
     if (error.response) {
       // Request was made but server responded with something
       // other than 2xx
@@ -38,7 +36,7 @@ const request = function(options) {
 
     return Promise.reject(error.response || error.message);
   }
-
+console.log(options)
   return client(options)
             .then(onSuccess)
             .catch(onError);
@@ -52,6 +50,7 @@ function get(endpoint,params) {
   }
   
 function post(endPoint, postData) {
+  console.log(JSON.stringify(postData))
     return request({
       url:    endPoint,
       method: 'POST',
