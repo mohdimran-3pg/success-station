@@ -45,7 +45,7 @@ export default class LoginScreen extends React.Component {
 
         this.setState({isLoading: true});
         ApiService.post('login', {
-            email: this.state.email.trim(), password : this.state.password
+            "email": this.state.email.trim(), "password": this.state.password
         })
         .then((response) => {
             this.setState({isLoading: false});
