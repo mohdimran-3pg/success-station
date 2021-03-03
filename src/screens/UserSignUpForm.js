@@ -25,7 +25,6 @@ import RadioForm, {
 } from 'react-native-simple-radio-button';
 import ApiService from '../network/ApiService';
 import Helper from '../util/Helper';
-//import Loading from 'react-native-whc-loading'
 import Loader from './Loader';
 
 
