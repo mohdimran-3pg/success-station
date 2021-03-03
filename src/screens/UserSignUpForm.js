@@ -21,7 +21,6 @@ import DynamicTabView from 'react-native-dynamic-tab-view';
 import RadioForm ,{RadioButton, RadioButtonInput, RadioButtonLabel}  from 'react-native-simple-radio-button';
 import ApiService from '../network/ApiService';
 import Helper from '../util/Helper';
-//import Loading from 'react-native-whc-loading'
 import Loader from './Loader';
 
 var radio_props = [
