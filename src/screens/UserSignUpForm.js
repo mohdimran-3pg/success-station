@@ -97,7 +97,7 @@ export default class UserSignUpForm extends React.Component {
       })
       .catch((error) => {
         this.setState({isLoading: false});
-        alert(error.data.);
+        alert(error.data.message);
       });
   };
 
