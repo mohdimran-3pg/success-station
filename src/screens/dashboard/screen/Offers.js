@@ -17,20 +17,23 @@ import {
 import {Searchbar, DefaultTheme, Card} from 'react-native-paper';
 import {translate} from '../../../util/TranslationUtils';
 import DynamicTabView from 'react-native-dynamic-tab-view';
+import ApiService from '../../../network/ApiService';
+import Loader from '../../Loader';
 
 const ITEM_WIDTH = Dimensions.get('window').width;
 
 
 
 
+
 const BookCard = ({book, ...props}) => {
-  {console.log(book.src)}
+
   return (
     <TouchableOpacity>
       <View  >
         <Image
         
-          source={{uri:book.src}}
+          source={{uri:book.image_ads.url}}
           style={{
             
             marginLeft:10,
@@ -47,43 +50,8 @@ const BookCard = ({book, ...props}) => {
   );
 };
 
-const data = [
-  {
-    imgUrl: 'https://picsum.photos/id/11/200/300',
-  },
-  {
-    imgUrl: 'https://picsum.photos/id/10/200/300',
-  },
-  {
-    imgUrl: 'https://picsum.photos/id/12/200/300',
-  },
-];
 
-const offerData = [
-  {
-    id: 11,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
 
-    name: 'The Complete SQL Bootcamp 2020:',
-  },
-  {
-    id: 12,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-
-    name: 'The Complete SQL Bootcamp 2020:',
-  },
-  {
-    id: 13,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-
-    name: 'The Complete SQL Bootcamp 2020:',
-  },
-  
- 
-];
 
 
 export default class OffersScreen extends React.Component {
@@ -92,36 +60,70 @@ export default class OffersScreen extends React.Component {
     options: {},
   };
 
+  getCategories = ()=> {
+    this.setState({isLoading: true});
+    ApiService.get('ads-categories')
+      .then((response) => {
+      
+        console.log(response)
+        var tempArray = []
+        for (var key in response.data) {
+         var temp = {
+            key: response.data[key].id,
+            title : response.data[key].category_name
+          }
+          tempArray.push(temp)
+      } 
+
+        this.categoryData = tempArray
+        this.getAllBanners()
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        alert(error.data);
+      });
+  }
+  
+  getAllBanners = () =>{
+    this.setState({isLoading: true});
+    ApiService.get('all-ads')
+      .then((response) => {
+       this.bannersData = response.data
+       this.setState({isLoading: false});
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        alert(error.data);
+      });
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-     
+       isLoading: false,
       index: 0,
-      
+    
     };
+    this.categoryData =[]
+    this.bannersData =[]
 
-    this.data = [
-      {title: 'ALL', key: '1'},
-      {title: 'CLOTHES', key: '2'},
-      {title: 'ELECTRONICS', key: '3'},
-      {title: 'BOOKS', key: '4'},
-      {title: 'COMPUTER', key: '5'},
-      {title: 'MOBILE', key: '6'},
-    ];
   }
   _renderItem = (item, index) => {
-    console.log('renderItem', index);
+   
     return (
-      <View key={item['key']} style={{backgroundColor: item['color'],}} />
+      <View key={item['id']} style={{backgroundColor: item['color'],}} />
     );
   };
   
   onChangeTab = (index) => {};
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.getCategories()
+  }
   componentWillUnmount() {}
 
   render() {
+   
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
         <View style={{flex: 1}}>
@@ -137,7 +139,7 @@ export default class OffersScreen extends React.Component {
                 width: '100%',
                 backgroundColor: 'rgba(10, 135, 138, 1)',
               }}>
-              <Searchbar
+              <Searchbar 
                 style={{marginStart: 10, marginEnd: 10}}
                 placeholder={translate('search_book')}
                 icon={() => (
@@ -147,7 +149,7 @@ export default class OffersScreen extends React.Component {
             </View>
             <View style={{width: "100%", height: 60}}>
             <DynamicTabView
-            data={this.data}
+            data={this.categoryData}
             renderTab={() => <View
             style={{flex: 1, height: 1 }}
           />}
@@ -164,10 +166,12 @@ export default class OffersScreen extends React.Component {
             <FlatList
               style={{width: '100%',marginBottom:120}}
               keyExtractor={(item) => item.id}
-              data={offerData}
+              data={this.bannersData}
               renderItem={({item}) => <BookCard book={item} {...this.props} />}
             />
           </View>
+          {this.state.isLoading ?   <Loader
+                loading={this.state.loading} /> :null}
         </View>
       </SafeAreaView>
     );

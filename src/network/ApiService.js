@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import AsyncStorage from '@react-native-community/async-storage'
 
 
 
@@ -50,16 +50,26 @@ function get(endpoint,params) {
   }
   
 function post(endPoint, postData) {
-  console.log(JSON.stringify(postData))
+ 
     return request({
       url:    endPoint,
       method: 'POST',
       data:   postData
     });
   }
+
+  function setToken(token) {
+      console.log(token)
+      if (token) {
+        client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+       } else {
+        delete client.defaults.headers.common['Authorization'];
+       }
+  
+   }
   
   const ApiService = {
-    get, post 
+    get, post,setToken
   }
   
   export default ApiService;

@@ -34,6 +34,7 @@ import {translate} from '../../util/TranslationUtils'
 import MyAdsListScreen from './screen/MyAdsList';
 import AddAds from './screen/AddAds'
 import MyLocationScreen from './screen/MyLocation';
+import AsyncStorage from '@react-native-community/async-storage'
 
 
 const Stack = createStackNavigator();
@@ -440,10 +441,17 @@ export default class DashBoard extends React.Component {
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     return {
-        header: null
+        header: null,
+        
     };
 };
+
+constructor(props) {
+  super(props)
+  this.state = {userdata:{}}
+}
   render() {
+    AsyncStorage.getItem('userdata').then((value)=> this.setState({userdata: JSON.parse(value)}));
   return (
     <NavigationContainer >
       <Drawer.Navigator
@@ -455,7 +463,7 @@ export default class DashBoard extends React.Component {
           iconStyle :{margin:3}
         }} 
     
-        drawerContent={(props) => <SidebarMenu {...props} />}>
+        drawerContent={(props) => <SidebarMenu {...props} data= {this.state.userdata} />}>
       
       <Drawer.Screen name="MainScreenStack" component={MainScreenStack} />
       <Drawer.Screen name="AdsScreenStack" component={AdScreenStack} />

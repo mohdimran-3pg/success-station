@@ -6,6 +6,7 @@ import {translate} from "./../util/TranslationUtils";
 import ApiService from '../network/ApiService';
 import Helper from '../util/Helper';
 import Loader from './Loader';
+import AsyncStorage from '@react-native-community/async-storage'
 
 export default class LoginScreen extends React.Component {
 
@@ -49,6 +50,9 @@ export default class LoginScreen extends React.Component {
         })
         .then((response) => {
             this.setState({isLoading: false});
+            ApiService.setToken(response.access_token)
+            AsyncStorage.setItem('userdata',JSON.stringify(response))
+
             this.props.navigation.navigate('dashBoard');
         })
         .catch ((error)=> {

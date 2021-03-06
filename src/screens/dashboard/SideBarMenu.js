@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 
 import {
@@ -29,9 +29,11 @@ const BASE_PATH =
 
 const user = {name: 'Rahul', email: 'rahul@gmal.com', src: BASE_PATH};
 const DrawerProfile = ({data, ...props}) => {
+
+
   return (
     <View style={{flexDirection: 'column', height: 142, marginTop: 24}}>
-      {console.log(props)}
+  
       <TouchableOpacity
         style={{
           width: 20,
@@ -50,15 +52,15 @@ const DrawerProfile = ({data, ...props}) => {
       </TouchableOpacity>
 
       <View style={{flexDirection: 'row', marginTop: 20, marginStart: 20}}>
-        <Image source={{uri: data.src}} style={styles.image} />
+        <Image source={{uri: BASE_PATH}} style={styles.image} />
         <View
           style={{
             flexDirection: 'column',
             marginStart: 20,
             justifyContent: 'center',
           }}>
-          <Text style={styles.name}>{data.name}</Text>
-          <Text style={styles.email}>{data.email}</Text>
+          <Text style={styles.name} ellipsizeMode='tail' numberOfLines={1}>{data.name}</Text>
+          <Text style={styles.email} ellipsizeMode='tail' numberOfLines={1}>{data.email}</Text>
         </View>
       </View>
 
@@ -89,17 +91,17 @@ const LinkMenuItem = ({title, src, link}) => {
   );
 };
 
-const SidebarMenu = (props) => {
+const SidebarMenu = (props,data) => {
+
   return (
     <View style={{flex: 1}}>
       {/*Top Large Image */}
-      <DrawerProfile data={user} {...props} />
+      <DrawerProfile data={data} {...props} />
       <DrawerContentScrollView {...props}>
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={profileIcon} />}
           label={translate('profile')}
           onPress={() => {
-            console.log(props);
             props.navigation.navigate('StudentProfile');
           }}
         />
@@ -111,7 +113,7 @@ const SidebarMenu = (props) => {
           }}
         />
 
-        <DrawerItem
+        <DrawerItem 
           icon={({color, size}) => <DrawerIcon src={cardLocation} />}
           label={'My Location'}
           onPress={() => {
@@ -223,10 +225,13 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 20,
     color: '#181725',
+    width: 170
   },
   email: {
     fontSize: 16,
     color: '#7C7C7C',
+    width: 170
+
   },
 
   drawerContent: {
