@@ -1,22 +1,25 @@
 import React, {useState} from "react";
-import {View,SafeAreaView, StyleSheet, Text, Image, FlatList, TouchableOpacity, I18nManager} from "react-native"
+import {View,SafeAreaView, Alert, Text, Image, FlatList, TouchableOpacity, I18nManager} from "react-native"
 import DropDownSelectBox from '../../components/DropDownSelectBox'
 import ButtonView from '../../components/ButtonView'
 import * as RNLocalize from 'react-native-localize';
+import { StackActions, NavigationActions } from 'react-navigation';
 import i18n from 'i18n-js';
 import {translate} from "./../util/TranslationUtils";
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {languageArray} from './../util/DataUtil'
-
+import AsyncStorage from '@react-native-community/async-storage'
+import Loader from './Loader';
+import ApiService from '../network/ApiService';
 const translationGetters = {
 
     en: () => require('../translations/en.json'),
-    ar: () => require('../translations/ar.json'),
+    ar: () => require('../translations/ar.json'), 
 };
 
 
 const setI18nConfig = (lang) => {
-    const fallback = { languageTag: 'ar', isRTL: false };
+    const fallback = { languageTag: lang, isRTL: false };
     const { languageTag, isRTL } = RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) || fallback;
     translate.cache.clear();
     I18nManager.forceRTL(isRTL);
@@ -24,6 +27,10 @@ const setI18nConfig = (lang) => {
     i18n.locale = lang;
 };
 
+const resetAction = StackActions.reset({
+  index: 0,
+  actions: [NavigationActions.navigate({ routeName: 'dashBoard' })],
+});
 export default class ChooseLanguageScreen extends React.Component {
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -36,27 +43,46 @@ export default class ChooseLanguageScreen extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {langTitle: languageArray[0].label, langCode: languageArray[0].code}
-        setI18nConfig('en');
+        this.state = {langTitle: languageArray[0].label, langCode: languageArray[0].code,isLoading:true}
+        this.setState({isLoading : true})
+        AsyncStorage.getItem('langCode').then((code)=> {
+        console.log("kkkk"+code)
+        setI18nConfig(code);
+        this.loadScreen()
+        }).catch(()=> {
+          setI18nConfig('en')
+          this.loadScreen()
+        })
     }
   
+    loadScreen(){
+      this.setState({isLoading : true})
+      
+      AsyncStorage.getItem('userdata').then((value)=> {
+        
+        if(!value || 0 != value.length){ 
+          ApiService.setToken(JSON.parse(value).access_token)
+          this.props.navigation.dispatch(resetAction)
+        }
+        this.setState({isLoading : false})
+         
+      } ).catch(()=> this.setState({isLoading : false}))
+    }
+
     componentDidMount() {
+      
+
     }
 
     componentWillUnmount() {
     }
 
-    setChosseLang = (lang) => {
-      this.setState({chosseLang: lang});
-    }
 
-    setLanguage = (item) => {
-      console.log(item.label);
-      this.setState({chosseLang: item.code});
-    };
 
     render() {
       return (
+        this.state.isLoading? <Loader
+        loading={this.state.loading} /> : (
         <SafeAreaView style={{flex: 1, backgroundColor: "#F2F2F2"}}>
             <View style={{flex: 1, justifyContent: "center"}}>
                 <View style={{width: 320, alignSelf: "center"}}>
@@ -116,7 +142,8 @@ export default class ChooseLanguageScreen extends React.Component {
                           this.ChooseLanguage.close();
                           this.setState({'langTitle': item.label})
                           this.setState({'langCode': item.code})
-                          console.log("id is:::", item.id, item.code)
+                          AsyncStorage.setItem('langCode',item.code)
+                        
                         }}>
                         <View style={{flex: 1, justifyContent: 'center', alignItems: "stretch"}}>
                         <Text
@@ -137,9 +164,10 @@ export default class ChooseLanguageScreen extends React.Component {
                 />
               </View>
             </RBSheet>
+            
             </View>
-        </SafeAreaView>
-    )
+        </SafeAreaView>))
+    
     }
     
 }

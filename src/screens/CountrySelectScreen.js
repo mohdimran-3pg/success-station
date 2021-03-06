@@ -4,6 +4,7 @@ import { FlatList } from "react-native-gesture-handler";
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
 import {translate} from "./../util/TranslationUtils";
+import AsyncStorage from '@react-native-community/async-storage'
 //import Loading from 'react-native-whc-loading'
 
     const translationGetters = {
@@ -45,8 +46,12 @@ export default class CountrySelectScreen extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log("this is props::::", props, "this is data:::",this.props.navigation.state.params.data);
-        setI18nConfig(this.props.navigation.state.params.data.code); // set initial config
+       
+        AsyncStorage.getItem('langCode').then((code)=> {
+            setI18nConfig(code)
+            }).catch(()=> {
+                setI18nConfig('en')
+            })
         this.state = {country : countryData}
       }
   
@@ -59,7 +64,7 @@ export default class CountrySelectScreen extends React.Component {
     }
 
     handleLocalizationChange = (lang) => {
-        setI18nConfig(lang);
+        // setI18nConfig(lang);
     };
 
   
@@ -112,7 +117,8 @@ render(){
                         }
                     } 
                 />
-            </View>          
+            </View>     
+      
             </View>
         </SafeAreaView>
     )   

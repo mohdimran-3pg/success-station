@@ -7,6 +7,12 @@ import ApiService from '../network/ApiService';
 import Helper from '../util/Helper';
 import Loader from './Loader';
 import AsyncStorage from '@react-native-community/async-storage'
+import { StackActions, NavigationActions } from 'react-navigation';
+
+const resetAction = StackActions.reset({
+    index: 0,
+    actions: [NavigationActions.navigate({ routeName: 'dashBoard' })],
+  });
 
 export default class LoginScreen extends React.Component {
 
@@ -52,7 +58,7 @@ export default class LoginScreen extends React.Component {
             this.setState({isLoading: false});
             ApiService.setToken(response.access_token)
             AsyncStorage.setItem('userdata',JSON.stringify(response))
-            this.props.navigation.navigate('dashBoard');
+            this.props.navigation.dispatch(resetAction);
         })
         .catch ((error)=> {
             this.setState({isLoading : false})
