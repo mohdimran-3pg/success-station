@@ -52,7 +52,6 @@ export default class LoginScreen extends React.Component {
             this.setState({isLoading: false});
             ApiService.setToken(response.access_token)
             AsyncStorage.setItem('userdata',JSON.stringify(response))
-
             this.props.navigation.navigate('dashBoard');
         })
         .catch ((error)=> {
