@@ -67,6 +67,10 @@ export default class OffersScreen extends React.Component {
       
         console.log(response)
         var tempArray = []
+        tempArray.push({
+          key: 0,
+          title : "All"
+        })
         for (var key in response.data) {
          var temp = {
             key: response.data[key].id,
@@ -97,6 +101,24 @@ export default class OffersScreen extends React.Component {
       });
   }
 
+  getBannersByCategory = (categoryId) =>{
+    this.setState({isLoading: true});
+    if (categoryId > 0) {
+      ApiService.get(`all-ads?category=${categoryId}`)
+      .then((response) => {
+       this.bannersData = response.data
+       this.setState({isLoading: false});
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        alert(error.data);
+      });
+    } else {
+      this.getAllBanners();
+    }
+    
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -115,7 +137,11 @@ export default class OffersScreen extends React.Component {
     );
   };
   
-  onChangeTab = (index) => {};
+  onChangeTab = (index) => {
+    console.log('this is id:::', this.categoryData[index].key)
+
+    this.getBannersByCategory(this.categoryData[index].key)
+  };
 
   componentDidMount() {
     this.getCategories()
@@ -150,9 +176,11 @@ export default class OffersScreen extends React.Component {
             <View style={{width: "100%", height: 60}}>
             <DynamicTabView
             data={this.categoryData}
-            renderTab={() => <View
+            renderTab={() => {
+            <View
             style={{flex: 1, height: 1 }}
-          />}
+          />
+        }}
         
             defaultIndex={this.state.defaultIndex}
             containerStyle={styles.container2}
@@ -170,9 +198,9 @@ export default class OffersScreen extends React.Component {
               renderItem={({item}) => <BookCard book={item} {...this.props} />}
             />
           </View>
-          {this.state.isLoading ?   <Loader
-                loading={this.state.loading} /> :null}
         </View>
+        {this.state.isLoading ?   <Loader
+                loading={this.state.loading} /> :null}
       </SafeAreaView>
     );
   }

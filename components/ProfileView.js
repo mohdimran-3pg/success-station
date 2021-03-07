@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { View, Text, Image, StyleSheet, TextInput ,I18nManager, TouchableOpacity} from "react-native";
 import {translate} from "../src/util/TranslationUtils";
-const ProfileView = ({clickEvent}) => {
+const ProfileView = ({data, clickEvent}) => {
 
     return (
         <View style={{width: "100%", height: 70}}>
@@ -18,7 +18,7 @@ const ProfileView = ({clickEvent}) => {
                     />
                 </View>
                 <View style={{marginLeft: 15}}>
-                    <Text style={{fontSize: 15, fontWeight: "500", fontStyle: "normal", color: "#000000"}}>Kathryn Cooper</Text>
+                    <Text style={{fontSize: 15, fontWeight: "500", fontStyle: "normal", color: "#000000"}}>{data.name}</Text>
                     <Text style={{fontSize: 11, fontWeight: "400", fontStyle: "normal", color: "#0A878A"}}>Owner</Text>
                 </View>
                 <View style={{flexDirection: "row", marginLeft: 125}}>
