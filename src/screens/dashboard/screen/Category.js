@@ -21,102 +21,23 @@ import {
 } from './../../../util/ImageConstant';
 import {translate} from '../../../util/TranslationUtils';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-const profileData = {
-  name: 'Rahul Pandey',
-  src:
-    'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg',
-  ads: 100,
-  follower: 40,
-  following: 100,
-  profileMsg:
-    'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
-};
+import ApiService from '../../../network/ApiService';
+import Loader from '../../Loader';
 
 const 
     multiSliderValue= [0, 100]
-const FlatListItems = [
-  {
-    id: 1,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    location: 'Dubai UAE',
-    follower: 'Imran',
-  },
-  {
-    id: 2,
-    src:
-      'https://cbsnews2.cbsistatic.com/hub/i/r/2015/12/11/7f3c9843-adb1-4022-be13-82515641a9fc/thumbnail/1200x630/5af2e16fd2ecd02f06637db5ca110a43/open-book.jpg',
-    price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    location: '3/4 Block 3 Dubai UAE',
-    follower: 'Ramesh',
-  },
-  {
-    id: 3,
-    src:
-      'https://cbsnews2.cbsistatic.com/hub/i/r/2015/12/11/7f3c9843-adb1-4022-be13-82515641a9fc/thumbnail/1200x630/5af2e16fd2ecd02f06637db5ca110a43/open-book.jpg',
 
-    price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    location: '2 lane Dubai UAE',
-    follower: 'Imran',
-  },
-  {
-    id: 4,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    title: 'Medicine book on Internal Medicine ',
-    location: 'Dubai 9 /3 street UAE',
-    follower: 'Rahul',
-    price: 'AED 1100',
-  },
-  {
-    id: 5,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    location: 'Dubai 4 block UAE',
-    follower: 'Mohd',
-  },
-  {
-    id: 6,
-    src:
-      'https://cbsnews2.cbsistatic.com/hub/i/r/2015/12/11/7f3c9843-adb1-4022-be13-82515641a9fc/thumbnail/1200x630/5af2e16fd2ecd02f06637db5ca110a43/open-book.jpg',
-    price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    price: 'AED 20',
-    location: 'Dubai 4 street UAE',
-    follower: 'Raman',
-  },
-  {
-    id: 7,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    location: 'Dubai 2 street UAE',
-    follower: 'Imran',
-  },
-  {
-    id: 8,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    price: 'AED 130',
-    title: 'Medicine book on Internal Medicine  Test book',
-    location: 'Dubai UAE',
-    follower: 'Rahul',
-  },
-];
 
 const CardItem = ({item,...props}) => {
   var header_View = (
-    <TouchableOpacity style={{flex: 1}} onPress= {()=>props.navigation.navigate('BookDetailScreen')}>
+    <TouchableOpacity style={{flex: 1}} onPress= {()=>{
+    console.log("Clicking here.......", item.id); 
+    props.navigation.navigate('BookDetailScreen', { data: { bookId: item.id} }) 
+  }
+    }>
       <Card style={{margin: 7, elevation: 5}} >
         <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-          <Image style={styles.cardImageItem} source={{uri: item.src}} />
+          <Image style={styles.cardImageItem} source={{uri: item.image.url}} />
           <View style={{flexDirection: 'column', marginStart: 10}}>
             <Text
               style={{
@@ -128,7 +49,7 @@ const CardItem = ({item,...props}) => {
             </Text>
 
             <Text style={{color: '#0A878A', fontSize: 15, marginTop: 11}}>
-              {item.price}
+              SR {item.price}
             </Text>
             <View
               style={{
@@ -146,7 +67,7 @@ const CardItem = ({item,...props}) => {
                     color: 'rgba(0, 0, 0, 0.6)',
                     marginStart: 5,
                   }}>
-                  {item.location}
+                  {item.cities[0].city}
                 </Text>
               </View>
               <View style={{flexDirection: 'row'}}>
@@ -157,7 +78,7 @@ const CardItem = ({item,...props}) => {
                     color: 'rgba(0, 0, 0, 0.6)',
                     marginStart: 5,
                   }}>
-                  {item.follower}
+                  {item.contact_name}
                 </Text>
               </View>
             </View>
@@ -175,7 +96,9 @@ export default class StudentProfile extends React.Component {
     this.state = {
      
       index: 0,
-      
+      books: [],
+      categories: [],
+      isLoading: false,
     };
 
     this.data = [
@@ -187,7 +110,70 @@ export default class StudentProfile extends React.Component {
       {title: 'MOBILE', key: '6'},
     ];
   }
-  onChangeTab = (index) => {};
+  onChangeTab = (index) => {
+    this.getBooksByCategory(this.state.categories[index].key)
+  };
+
+  getBookCategories = () => {
+    this.setState({isLoading: true});
+    ApiService.get('listing-categories')
+      .then((response) => {
+        console.log("Categories Data is:::", response)
+        var tempArray = []
+        tempArray.push({
+          key: 0,
+          title : "All"
+        })
+        for (var key in response.data) {
+         var temp = {
+            key: response.data[key].id,
+            title : response.data[key].category
+          }
+          tempArray.push(temp)
+        }
+        this.setState({categories: tempArray})
+        this.getBooks();
+        console.log(response)
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        console.log("Error of Category is :::", error)
+      });
+  }
+
+  getBooks = () => {
+    ApiService.get('listings')
+      .then((response) => {
+        this.setState({isLoading: false});
+        console.log("Books Data is:::", response.data)
+        this.setState({books: response.data})
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        console.log("Error of Book is :::", error)
+      });
+  }
+
+  getBooksByCategory = (id) => {
+
+    if (id > 0) {
+      ApiService.get(`listings?category=${id}`)
+      .then((response) => {
+        this.setState({books: response.data})
+      })
+      .catch((error) => {
+        console.log("Error of Book is :::", error)
+      });
+    } else {
+      this.getBooks()
+    }
+
+    
+  }
+
+  componentDidMount() {
+    this.getBookCategories();
+  }
 
   render() {
     return (
@@ -243,7 +229,7 @@ export default class StudentProfile extends React.Component {
         </View>
         <View style={{width: "100%", height: 60}}>
             <DynamicTabView
-            data={this.data}
+            data={this.state.categories}
             renderTab={() => <View
             style={{flex: 1, height: 1 }}
           />}
@@ -259,7 +245,7 @@ export default class StudentProfile extends React.Component {
             </View>
         <FlatList
           style={{marginTop:10,marginBottom:10}}
-          data={FlatListItems}
+          data={this.state.books}
           renderItem={({item}) => <CardItem item = {item} {...this.props}/>} 
           numColumns={2}
         />
@@ -381,6 +367,8 @@ export default class StudentProfile extends React.Component {
       
           </View>
         </RBSheet>
+        {this.state.isLoading ?   <Loader
+                loading={this.state.loading} /> :null}
       </SafeAreaView>
     );
   }

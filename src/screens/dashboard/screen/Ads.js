@@ -6,7 +6,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Searchbar ,DefaultTheme, Card} from 'react-native-paper';
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import {translate} from '../../../util/TranslationUtils';
-
+import ApiService from '../../../network/ApiService';
+import Loader from '../../Loader';
 const SLIDER_WIDTH = Dimensions.get('window').width 
 const ITEM_WIDTH = Dimensions.get('window').width
 
@@ -24,17 +25,17 @@ const CarouselCardItem = ({ item, index }) => {
     </View>
   )
 }
-const CarouselCards = () => {
+const CarouselCards = (carouselData) => {
   const [index, setIndex] = React.useState(0)
   const isCarousel = React.useRef(null)
-
+  console.log("carouselData is ::: ", carouselData)
   return (
     <View>
           <Carousel
                 layout="default"
                 layoutCardOffset={9}
                 ref={isCarousel}
-                data={data}
+                data={carouselData.carouselData}
                 renderItem={CarouselCardItem}
                 sliderWidth={SLIDER_WIDTH}
                 itemWidth={ITEM_WIDTH}
@@ -44,7 +45,7 @@ const CarouselCards = () => {
               />
                <Pagination
               containerStyle={{marginTop:-20}}
-              dotsLength={data.length}
+              dotsLength={carouselData.carouselData.length}
               activeDotIndex={index}
               carouselRef={isCarousel}
               dotStyle={{
@@ -65,8 +66,7 @@ const CarouselCards = () => {
   )
 }
 
-const CategoryCard =({user,...props}) => {
-  console.log('THis is User:::', props)
+const CategoryCard =({category,...props}) => {
   return (
     <TouchableOpacity style={{width:"31%",margin:'1%'}} onPress = {()=> {  props.navigation.navigate('Category');}}>
         <View style={{width: "100%", height: 90, borderRadius: 30, marginTop: 21,  borderWidth: 1,
@@ -79,71 +79,54 @@ const CategoryCard =({user,...props}) => {
     shadowRadius: 4,
     elevation: 3, backgroundColor:"#FFFFFF", justifyContent: "center"}}>
             <Image style={{width: 39, height: 33, alignSelf: "center"}} 
-                  source={user.image}
+                  source={{uri: category.image.url}} 
                   resizeMode="contain"
             />
         </View>
         <View style={{height: 40, marginTop:7}}>
-          <Text style={{fontSize: 16, fontWeight: "500", textAlign: "center", color: "#000000"}}>{user.name}</Text>
+          <Text style={{fontSize: 16, fontWeight: "500", textAlign: "center", color: "#000000"}}>{category.category}</Text>
         </View>
     </TouchableOpacity>
   )
 }
 
-const data = [
-  {
-    imgUrl: "https://picsum.photos/id/11/200/300"
-  },
-  {
-    imgUrl: "https://picsum.photos/id/10/200/300"
-  },
-  {
-    imgUrl: "https://picsum.photos/id/12/200/300"
-  }
-]
-
-const cardData = [
-  {
-    id: 1,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    name: 'Wrote',
-    image: require('../../../../assets/categories/wrote-category.png')
-  },{
-    id: 12,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    name: 'Medical supplies',
-    image: require('../../../../assets/categories/medical.png')
-  },{
-    id: 3,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    name: 'Engineering Supplies',
-    image: require('../../../../assets/categories/engineering.png')
-  },{
-    id: 4,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    name: 'Wrote',
-    image: require('../../../../assets/categories/wrote-category.png')
-  },{
-    id: 5,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    name: 'Medical supplies',
-    image: require('../../../../assets/categories/medical.png')
-  },{
-    id: 6,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    name: 'Engineering Supplies',
-    image: require('../../../../assets/categories/engineering.png')
-  },
-
-];
+const data = []
 
 export default class AdsScreen extends React.Component {
+
+  getBookCategories = () => {
+    ApiService.get('listing-categories')
+      .then((response) => {
+        console.log("Categories Data is:::", response)
+        this.setState({categories: response.data})
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log("Error of Category is :::", error)
+      });
+  }
+
+  getBanners = () => {
+    ApiService.get('banners')
+      .then((response) => {
+        console.log("Banners Data is:::", response)
+
+        var tempArray = []
+        for (var key in response.data) {
+         var temp = {
+            imgUrl: response.data[key].image.url
+          }
+          tempArray.push(temp)
+      }
+
+        this.setState({bannerData: tempArray})
+        this.getBookCategories();
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log("Error of Banner is :::", error)
+      });
+  }
 
   static navigationOptions = {
     header: null,
@@ -160,11 +143,18 @@ export default class AdsScreen extends React.Component {
         "https://source.unsplash.com/1024x768/?water",
         "https://source.unsplash.com/1024x768/?girl",
         "https://source.unsplash.com/1024x768/?tree", // Network image
-      ]
+      ],
+      bannerData: [],
+      categories: []
     };
+    
   }
 
-  componentDidMount() {}
+  
+
+  componentDidMount() {
+    this.getBanners();
+  }
   componentWillUnmount() {}
 
   render() {
@@ -185,7 +175,7 @@ export default class AdsScreen extends React.Component {
             </View>
             <ScrollView style={{marginBottom:50}}>
             <View >
-              <CarouselCards/>
+              <CarouselCards carouselData={this.state.bannerData}/>
             </View>
             <View>
              <Text style={{fontSize: 20, fontWeight: "700", fontStyle: "normal",marginStart:20}}>{translate('categories')}</Text>
@@ -195,15 +185,17 @@ export default class AdsScreen extends React.Component {
                  contentContainerStyle={{ flexDirection: 'row',
                  flexWrap: 'wrap'}}
                     keyExtractor = {(item) => item.id} 
-                    data = {cardData}
+                    data = {this.state.categories}
                     numColumns={3}
-                    renderItem={({item}) => <CategoryCard {...this.props} user = {item}/>} 
+                    renderItem={({item}) => <CategoryCard {...this.props} category = {item}/>} 
                 />
                 </View>
             </View>
             </ScrollView>
             </View>
         </View>
+        {this.state.isLoading ?   <Loader
+                loading={this.state.loading} /> :null}
       </SafeAreaView>
     );
   }
