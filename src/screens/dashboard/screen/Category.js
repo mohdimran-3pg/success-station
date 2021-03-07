@@ -29,15 +29,16 @@ const
 
 
 const CardItem = ({item,...props}) => {
+  console.log("item.image.url.......", JSON.stringify(item)); 
   var header_View = (
     <TouchableOpacity style={{flex: 1}} onPress= {()=>{
-    console.log("Clicking here.......", item.id); 
+    
     props.navigation.navigate('BookDetailScreen', { data: { bookId: item.id} }) 
   }
     }>
       <Card style={{margin: 7, elevation: 5}} >
         <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-          <Image style={styles.cardImageItem} source={{uri: item.image.url}} />
+          <Image style={styles.cardImageItem} source={{uri: item.image[0].url}} />
           <View style={{flexDirection: 'column', marginStart: 10}}>
             <Text
               style={{

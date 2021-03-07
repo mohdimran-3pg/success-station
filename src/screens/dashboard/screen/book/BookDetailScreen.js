@@ -24,7 +24,7 @@ export default class BookDetailScreen extends React.Component {
 
     getBookDetail = () => {
         this.setState({isLoading: true});
-        ApiService.get(`listings?id=5`)
+        ApiService.get(`listings?id=${this.props.route.params.data.bookId}`)
         .then((response) => {
             this.setState({isLoading: false});
             console.log("Book Data is ::::: ",response.data.category.category);
@@ -48,10 +48,7 @@ export default class BookDetailScreen extends React.Component {
     constructor(props) {
         super(props);
         
-        console.log("Props is bookId ::::: ",props.navigation.state);
-        
         this.state = {
-            bookId: props.bookId,
             isLoading: false,
             book: {}
         }

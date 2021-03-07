@@ -14,7 +14,7 @@ const AdPostedAtView = () => {
       });
     return (
         <View style={{width: "100%", height: 270}}>
-            <View style={{width: "90%", alignSelf: "center"}}>
+            <View style={{width: "90%", alignSelf: "center", height: 150}}>
                 <Text style={{fontSize: 20, fontWeight: "700", fontStyle: "normal", marginTop: 10}}>Ad Posted at</Text>
                 <MapView
       style={{ flex: 1 }}

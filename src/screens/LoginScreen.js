@@ -109,17 +109,8 @@ export default class LoginScreen extends React.Component {
                                     />
                         </View>
                         <View style={{height: 30, width: 320, alignSelf: "center", alignItems: "stretch", flexDirection: "row"}}>
+                            
                             <View style={{width: 160, height: 25}}>
-                            <TouchableOpacity onPress={() => {
-                                console.log("Remember me clicked .......")
-                            }}>
-                                <View style={{alignSelf: "flex-start"}}>
-                                    <View style={{borderWidth: 1, borderColor: "#0A878A", borderRadius: 4, width: 15, height: 15, justifyContent: "center", top: 7.5}}></View>
-                                    <Text style={{fontWeight: "400", fontSize: 13, lineHeight: 18, left: 20, bottom: 10}}>{translate('remember_me')}</Text>
-                                </View>
-                            </TouchableOpacity>    
-                            </View>
-                            <View style={{width: 160, height: 25, alignItems: "flex-end"}}>
                                 <View style={{alignContent: "flex-end", width: 110, height: 25}}>
                                 <TouchableOpacity onPress={() => {
                                     this.props.navigation.navigate('forgetPassword')
@@ -133,8 +124,6 @@ export default class LoginScreen extends React.Component {
                         <View style={{height: 50, width: 320, alignSelf: "center"}}> 
                             <ButtonView clickEvent = { () => {
                                 this.startLogin()
-                              //this.props.navigation.navigate('dashBoard')
-                                
                             } } name={translate('sign_in_title')} />
                         </View>
                         <View style={style.dontHaveAccountViewStyle}>

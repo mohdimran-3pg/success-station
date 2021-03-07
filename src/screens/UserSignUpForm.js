@@ -47,7 +47,7 @@ export default class UserSignUpForm extends React.Component {
       isLoading: false,
       selectedUserType: 'student',
       isDobVisible: false,
-      viewHeight: 750 + 80,
+      viewHeight: 900,
       dateOfBirth: '',
       index: 0,
       universities: [],
@@ -324,9 +324,9 @@ export default class UserSignUpForm extends React.Component {
                   headerTextStyle={style.headerText}
                   onChangeTab={(item) => {
                     if (this.data[item].type == 'student') {
-                      this.setViewHeight(750 + 80);
+                      this.setViewHeight(900);
                     } else {
-                      this.setViewHeight(680 + 60);
+                      this.setViewHeight(800);
                     }
                     this.setUserType(this.data[item].type);
                   }}
@@ -379,9 +379,9 @@ export default class UserSignUpForm extends React.Component {
                     labelStyle={{marginRight: 15}}
                     onPress={(item) => {
                       if (item == 'individual') {
-                        this.setViewHeight(850 + 80);
+                        this.setViewHeight(850);
                       } else {
-                        this.setViewHeight(780 + 60);
+                        this.setViewHeight(800);
                       }
                       this.setUserType(item);
                     }}
@@ -426,6 +426,14 @@ export default class UserSignUpForm extends React.Component {
                       }}
                     />
                   </View>
+                </View>
+              ) : null}
+
+{this.state.selectedUserType === 'student' ||
+              this.state.selectedUserType === 'individual' ||
+              this.state.selectedUserType === 'company' ? (
+              <View style={{ width: 320,}}>
+
                   <View
                     style={{
                       height: 50,
@@ -446,7 +454,14 @@ export default class UserSignUpForm extends React.Component {
                       }}
                     />
                   </View>
-                  <View
+              </View>
+              ): null}
+
+{this.state.selectedUserType === 'student' ||
+              this.state.selectedUserType === 'individual' ||
+              this.state.selectedUserType === 'company' ? (
+              <View style={{ width: 320,}}>
+              <View
                     style={{
                       height: 50,
                       width: 320,
@@ -465,12 +480,11 @@ export default class UserSignUpForm extends React.Component {
                       }}
                     />
                   </View>
-                </View>
-              ) : null}
+              </View>): null}
 
               {this.state.selectedUserType === 'student' ? (
                 <View>
-                  <View style={{height: 50, width: 320, marginTop: 15}}>
+                  <View style={{height: 50, width: 320}}>
                     <DropDownSelectBox
                       placeholderText={translate('university')}
                       imageSource={require('../../assets/SignUp/university.png')}
@@ -485,6 +499,11 @@ export default class UserSignUpForm extends React.Component {
                       }}
                     />
                   </View>
+                </View>
+              ) : null}
+
+{this.state.selectedUserType === 'student' ? (
+                <View>
                   <View
                     style={{
                       height: 50,
@@ -506,22 +525,12 @@ export default class UserSignUpForm extends React.Component {
                         }
                       }}
                     />
-                    
                   </View>
-                </View>
-              ) : null}
+                </View>): null}
 
               {this.state.selectedUserType === 'individual' ? (
                 <View>
-                  <View
-                    style={{
-                      height: 50,
-                      width: 320,
-                      justifyContent: 'space-between',
-                      flexDirection: 'row',
-                    }}>
-                  </View>
-                  <View style={{height: 50, width: 320, marginTop: 15}}>
+                  <View style={{height: 50, width: 320}}>
                     <InputView
                       changeTextEvent={(newValue) => {
                         this.setState({iqamaNo: newValue});
@@ -536,15 +545,7 @@ export default class UserSignUpForm extends React.Component {
               ) : null}
               {this.state.selectedUserType === 'company' ? (
                 <View>
-                  <View
-                    style={{
-                      height: 50,
-                      width: 320,
-                      justifyContent: 'space-between',
-                      flexDirection: 'row',
-                    }}>
-                  </View>
-                  <View style={{height: 50, width: 320, marginTop: 15}}>
+                  <View style={{height: 50, width: 320}}>
                     <InputView
                       changeTextEvent={(newValue) => {
                         this.setState({crNo: newValue});
@@ -606,9 +607,9 @@ export default class UserSignUpForm extends React.Component {
                           if (item.id == 1) {
                             this.setViewHeight(750 + 80);
                           } else if (item.id == 2) {
-                            this.setViewHeight(750 + 80);
+                            this.setViewHeight(650 + 80);
                           } else {
-                            this.setViewHeight(680 + 60);
+                            this.setViewHeight(580 + 60);
                           }
                         }}>
                         <View
