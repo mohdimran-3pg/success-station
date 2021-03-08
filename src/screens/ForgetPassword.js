@@ -5,6 +5,9 @@ import ButtonView from "../../components/ButtonView";
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
 import memoize from 'lodash.memoize';
+import Helper from '../util/Helper';
+import ApiService from '../network/ApiService';
+import Loader from './Loader';
 import {translate} from "./../util/TranslationUtils";
 
 export default class ForgetPassword extends React.Component {
@@ -17,8 +20,9 @@ export default class ForgetPassword extends React.Component {
 
     constructor(props) {
         super(props);
-        I18nManager.forceRTL(true);
-        console.log("I am here....");
+        this.email = ''
+        this.state = {isLoading : false}
+      
     }
   
     componentDidMount() {
@@ -26,6 +30,25 @@ export default class ForgetPassword extends React.Component {
 
     componentWillUnmount() {
     }
+    setPassword() {
+        if (Helper.isEmailValid(this.email.trim())) {
+            alert('Enter valid Email');
+          }
+       
+        let data = {
+          email: this.email,
+        };
+        this.setState({isLoading: true});
+        ApiService.post('forgot-password', data)
+          .then((response) => {
+            this.setState({isLoading: false});
+            this.props.navigation.navigate('otpScreen',{data: {email: this.email.trim()}})
+          })
+          .catch((error) => {
+            this.setState({isLoading: false});
+            alert(error.data.message);
+          });
+      }
 
     render() {
         return (
@@ -43,7 +66,7 @@ export default class ForgetPassword extends React.Component {
                         <View style={{height: 50}}>
                         <InputView 
                                                 changeTextEvent = {(newValue) => {
-                                                    console.log("Inputtting something .....", newValue);
+                                                    this.email = newValue;
                                                 }} 
                                                 imageSource={require('../../assets/SignUp/email-icon.png')}
                                                 placeholderText={translate('email')}
@@ -53,13 +76,13 @@ export default class ForgetPassword extends React.Component {
                         </View>
                         <View style={{height: 50, width: 320}}>
                             <ButtonView clickEvent = { () => {
-                                            this.props.navigation.navigate('otpScreen')
-                                            console.log("Sign Up Clicked ......")
+                                            this.setPassword()
+                                        
                                         } } name={translate('send')} />
                         </View>
                         <View style={styles.dontHaveAccountViewStyle}>
                             <TouchableOpacity onPress={() => {
-                                console.log("Don;t have account clicked ....")
+                      
                                 this.props.navigation.pop();
                             }}>
                                 <View style={{flexDirection: "row"}}>
@@ -73,6 +96,7 @@ export default class ForgetPassword extends React.Component {
                             </TouchableOpacity>
                         </View>
                     </View>
+                    {this.state.isLoading ? <Loader loading={this.state.loading} /> : null}
                 </View>
             </TouchableWithoutFeedback>
         )
