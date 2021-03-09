@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View,SafeAreaView, Alert, Text, Image, FlatList, TouchableOpacity, I18nManager} from "react-native"
+import {View,SafeAreaView, Alert, Text, Image, FlatList, TouchableOpacity, I18nManager, Platform} from "react-native"
 import DropDownSelectBox from '../../components/DropDownSelectBox'
 import ButtonView from '../../components/ButtonView'
 import * as RNLocalize from 'react-native-localize';
@@ -10,6 +10,7 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import {languageArray} from './../util/DataUtil'
 import AsyncStorage from '@react-native-community/async-storage'
 import Loader from './Loader';
+import SplashScreen from 'react-native-splash-screen'
 import ApiService from '../network/ApiService';
 const translationGetters = {
 
@@ -43,10 +44,10 @@ export default class ChooseLanguageScreen extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {langTitle: languageArray[0].label, langCode: languageArray[0].code,isLoading:true}
-        this.setState({isLoading : true})
+        this.state = {langTitle: languageArray[0].label, langCode: languageArray[0].code,isLoading:Platform.OS != 'android'}
+    
         AsyncStorage.getItem('langCode').then((code)=> {
-        console.log("kkkk"+code)
+    
         setI18nConfig(code);
         this.loadScreen()
         }).catch(()=> {
@@ -56,22 +57,25 @@ export default class ChooseLanguageScreen extends React.Component {
     }
   
     loadScreen(){
-      this.setState({isLoading : true})
+      this.setState({isLoading :  Platform.OS != 'android'})
       
       AsyncStorage.getItem('userdata').then((value)=> {
         
         if(!value || 0 != value.length){ 
           ApiService.setToken(JSON.parse(value).access_token)
           this.props.navigation.dispatch(resetAction)
+          Platform.OS == 'android' ?  SplashScreen.hide():null
+         
         }
         this.setState({isLoading : false})
          
-      } ).catch(()=> this.setState({isLoading : false}))
+      } ).catch(()=> {
+        this.setState({isLoading : false})
+      Platform.OS == 'android' ?  SplashScreen.hide():null})
     }
 
     componentDidMount() {
-      
-
+       
     }
 
     componentWillUnmount() {
