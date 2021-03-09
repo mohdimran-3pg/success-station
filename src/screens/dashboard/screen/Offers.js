@@ -161,7 +161,7 @@ export default class OffersScreen extends React.Component {
             }}>
             <View
               style={{
-                height: '10%',
+                height: 60,
                 width: '100%',
                 backgroundColor: 'rgba(10, 135, 138, 1)',
               }}>

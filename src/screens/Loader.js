@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   Modal,
+  SafeAreaView,
   ActivityIndicator
 } from 'react-native';
 
@@ -18,12 +19,12 @@ const Loader = props => {
       animationType={'none'}
       visible={loading}
       onRequestClose={() => {console.log('close modal')}}>
-      <View style={styles.modalBackground}>
+      <SafeAreaView style={styles.modalBackground}>
         <View style={styles.activityIndicatorWrapper}>
           <ActivityIndicator size='large'
             animating={true} color='#F78A3A' />
         </View>
-      </View>
+      </SafeAreaView>
     </Modal>
   )
 }
