@@ -233,7 +233,7 @@ export default class UserSignUpForm extends React.Component {
       let type = 2
       if(this.state.userType == 'company'){
       type=3
-      }else  if(this.state.userType === 'individual'){
+      }else  if(this.state.userType == 'individual'){
         type = 4
       }
       const data = {
