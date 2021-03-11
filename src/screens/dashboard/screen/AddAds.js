@@ -2,23 +2,134 @@
 // https://aboutreact.com/bottom-tab-view-inside-navigation-drawer/
 
 import React, {useState} from 'react';
-import {Button, View, Text, SafeAreaView, TouchableWithoutFeedback, Image, StyleSheet, TextInput, I18nManager, TouchableOpacity} from 'react-native';
+import {Button, View, Text, SafeAreaView, FlatList, Image, StyleSheet, TextInput, I18nManager, TouchableOpacity} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import InputViewWithOutImage from '../../../../components/InputViewWithOutImage';
 import DropDownSelectBoxWithoutImage from '../../../../components/DropDownSelectBoxWithoutImage';
+import DropDownSelectBox from '../../../../components/DropDownSelectBox';
 import {translate} from '../../../util/TranslationUtils';
 import AdsStepView from '../../../../components/AdsStepView'
 import ArrowView from '../../../../components/ArrowView'
 import ButtonView from '../../../../components/ButtonView'
 import ImagePicker from "react-native-customized-image-picker";
+import ApiService from '../../../network/ApiService';
+import Loader from '../../Loader';
+import RBSheet from 'react-native-raw-bottom-sheet';
 
-const AddAdsScreen = ({navigation}) => {
-  const [borderWidth, setBorderWidth] = useState(0)
+export default class AddAdsScreen extends React.Component {
+  //const [borderWidth, setBorderWidth] = useState(0)
+
+  constructor(props) {
+    super(props);
+    this.state = {isLoading: false,borderWidth:0, countries: [],
+      regions: [],
+      cities: [],
+      types:[],
+      categories :[],
+      types : [],
+      selectedCountry: '',
+      selectedCountryId: 0,
+      selectedRegionId: 0,
+      selectedRegion: '',
+      selectedCity: '',
+      selectedCityId: 0,
+      selectedCategory: '',
+      selectedCategoryId: 0,
+      selectedAdType: '',
+      selectedAdTypeId: 0
+    }
+
+    this.price =''
+    this.description =''
+    this.title =''
+    this.imagePath=''
+    this.mime=''
+    
+      
+  }
+
+  getCountries= () =>{
+    this.setState({isLoading: true});
+    ApiService.get('countries')
+      .then((response) => {
+        this.setState({isLoading: false});
+        this.setState({countries: response.data});
+        this.countriesSheet.open()
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        alert(error.data);
+      });
+  }
+  getCategory= () =>{
+    this.setState({isLoading: true});
+    ApiService.get('listing-categories')
+      .then((response) => {
+        this.setState({isLoading: false});
+        this.setState({categories: response.data}) 
+        this.categoryType.open()
+       
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        alert(error.data);
+      });
+  }
+  getAddType= () =>{
+    this.setState({isLoading: true});
+    ApiService.get('listing-types')
+      .then((response) => {
+        this.setState({isLoading: false});
+        this.setState({types: response.data}) 
+        this.adType.open()
+       
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        alert(error.data);
+      });
+  }
+
+  
+  getRegionByCountry = () => {
+    this.setState({isLoading: true});
+    ApiService.get('regions', {
+      country: this.state.selectedCountryId,
+    })
+      .then((response) => {
+        this.setState({isLoading: false});
+        this.setState({regions: response.data});
+        this.regionSheet.open();
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        alert(error.data.message);
+      });
+  };
+
+  getCityByRegion = () => {
+    this.setState({isLoading: true});
+    ApiService.get('cities', {
+      region: this.state.selectedRegionId,
+    })
+      .then((response) => {
+        this.setState({isLoading: false});
+        this.setState({cities: response.data});
+        this.citySheet.open();
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        alert(error.data.message);
+      });
+  };
+
+  render(){
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1}}>
             <KeyboardAwareScrollView>
-            <View style={{flex: 1, flexDirection: "column", height: 850}}>
+            <View style={{flex: 1, flexDirection: "column"}}>
             <View style={{backgroundColor:"#0A878A", height: 80, alignItems: 'center'}}>
               <View style={{height: 40, width:"95%", flexDirection: 'row', top: 10}}>
                 <View style={{width: "20%", justifyContent: "flex-start"}}>
@@ -77,58 +188,73 @@ const AddAdsScreen = ({navigation}) => {
                   </View> 
               </View>
             </View>  
-            <View style={{flex: 1, alignItems: 'stretch', backgroundColor: '#F2F2F2', justifyContent: 'space-between', width: 320, alignSelf: 'center', height: 650, top: 25}}>
-              <View style={{height: 80, justifyContent: 'space-between'}}>
+            <View style={{flex: 1, alignItems: 'stretch', backgroundColor: '#F2F2F2', marginTop:10, width: 320, alignSelf: 'center', top: 25}}>
+              <View style={{height: 80}}>
                 <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>{translate('category')}</Text>
                 <DropDownSelectBoxWithoutImage
                   placeholderText={translate('category')}
-                  selectedText={''}
+                  selectedText={this.state.selectedCategory}
                   isFullWidth={true}
                   onPressEvent={() => {
-                    console.log('------')
+                    this.getCategory()
                   }}
                 />
               </View>
-              <View style={{height: 80, justifyContent: 'space-between'}}>
+              <View style={{height: 80, marginTop:10}}>
                 <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>{translate('user_type')}</Text>
                 <DropDownSelectBoxWithoutImage
                   placeholderText={translate('user_type')}
-                  selectedText={''}
+                  selectedText={this.state.selectedAdType}
                   isFullWidth={true}
                   onPressEvent={() => {
+                    this.getAddType()
                   }}
                 />
               </View>
-              <View style={{height: 80, justifyContent: 'space-between'}}>
+              <View style={{height: 80,marginTop:10}}>
                 <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>{translate('title')}</Text>
                 <InputViewWithOutImage
                   changeTextEvent={(newValue) => {
-                    console.log('Inputtting something .....', newValue);
+                    this.title = newValue
                   }}
                   placeholderText={translate('title')}
                   isFullWidth={true}
                 />
               </View>
-              <View style={{height: 115, justifyContent: 'space-between'}}>
+              <View style={{height: 115, marginTop:10}}>
                 <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>{translate('description')}</Text>
                 <TextInput
                     autoCapitalize="none"
                     autoCorrect={false}
-                    style={{textAlign: I18nManager.isRTL ? 'right' : 'left', borderWidth: borderWidth, borderColor: "#0A878A", borderRadius:4, height: 90, backgroundColor: '#FFFFFF'}}
+                    style={{textAlign: I18nManager.isRTL ? 'right' : 'left', borderWidth: this.state.borderWidth, borderColor: "#0A878A", borderRadius:4, height: 90,textAlignVertical: 'top', backgroundColor: '#FFFFFF'}}
                     placeholder={`  `+translate('description')}
                     multiline={true}
+                    onChangeText={text => this.description = text}
                     onFocus = {(newValue) => {
-                      setBorderWidth(1);
+                     this.setState({borderWidth:1})
                     }}
                 />
               </View>
-              <View style={{width: "100%", height: 54, backgroundColor: "#FFA73342", borderRadius:4}}>
+              <View style={{height: 80,marginTop:10}}>
+                <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>Price</Text>
+                <InputViewWithOutImage
+                  changeTextEvent={(newValue) => {
+                    this.price = newValue
+                  }}
+                  placeholderText={'Price'}
+                  isFullWidth={true}
+                />
+              </View>
+
+              <View style={{width: "100%", marginTop:10, height: 54, backgroundColor: "#FFA73342", borderRadius:4}}>
                   <TouchableOpacity 
                       style={{width: "100%", height: "100%", justifyContent: "center", alignItems: 'center'}}
                       onPress={() => {
-                        console.log('hello imran', navigation);
+                    
                         ImagePicker.openPicker({}).then(image => {
-                          console.log(image);
+                          console.log(image)
+                          this.imagePath = image[0].path
+                          this.mime = image[0].mime
                         });
                       }
 
@@ -143,32 +269,335 @@ const AddAdsScreen = ({navigation}) => {
                       </View>
                   </TouchableOpacity>
               </View>
-              <View style={{height: 80, justifyContent: 'space-between'}}>
-                <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>{translate('city')}</Text>
-                <InputViewWithOutImage
-                  changeTextEvent={(newValue) => {
-                    console.log('Inputtting something .....', newValue);
-                  }}
-                  placeholderText={translate('city')}
-                  isFullWidth={true}
-                />
+              
+              <View style={{ marginTop:10 }}>
+              <View style={{
+                  width: 320,
+                }}>
+                  <View
+                    style={{
+                      height: 50,
+                      width: 320,
+                    }}>
+                    <DropDownSelectBox
+                      placeholderText={translate('country')}
+                      imageSource={require('../../../../assets/SignUp/country.png')}
+                      isFullWidth={true}
+                      selectedText={this.state.selectedCountry}
+                      onPressEvent={() => {
+                         this.getCountries()
+                      }}
+                    />
+                  </View>
+                </View>
+
+              
               </View>
-              <View style={{height: 50, width: 320 ,marginBottom:30}}>
+               
+              <View style={{ marginTop:10}}>
+              <View style={{
+                  width: 320,
+                }}>
+                  <View
+                    style={{
+                      height: 50,
+                      width: 320,
+                    }}>
+                    <DropDownSelectBox
+                      placeholderText={translate('region')}
+                      imageSource={require('../../../../assets/SignUp/region.png')}
+                      isFullWidth={true}
+                      selectedText={this.state.selectedRegion}
+                      onPressEvent={() => {
+                       this.getRegionByCountry()
+                      }}
+                    />
+                  </View>
+                </View>
+                
+              
+              </View>
+               
+              <View style={{ marginTop:10}}>
+              <View style={{
+                  width: 320,
+                }}>
+                  <View
+                    style={{
+                      height: 50,
+                      width: 320,
+                    }}>
+                    <DropDownSelectBox
+                      placeholderText={translate('city')}
+                      imageSource={require('../../../../assets/SignUp/city.png')}
+                      isFullWidth={true}
+                      selectedText={this.state.selectedCity}
+                      onPressEvent={() => {
+                       this.getCityByRegion()
+                      }}
+                    />
+                  </View>
+                </View>
+                
+              
+              </View>
+              <View style={{height: 50, width: 320 ,marginBottom:30,marginTop:10}}>
                 <ButtonView
                   clickEvent={() => {
-                    console.log('Sign Up Clicked ......');
-                    navigation.navigate('EnterPublisherDetail')
+                    let adsData = {
+                        title : this.title,
+                        description : this.description,
+                        price: this.price,
+                        category_id:this.state.selectedCategoryId,
+                        type_id: this.state.selectedAdTypeId,
+                        imagePath: this.imagePath,
+                        city_id: this.state.selectedCityId,
+                        region_id: this.state.selectedRegionId,
+                        country_id: this.state.selectedCountryId,
+                        category:this.state.selectedCategory,
+                        type: this.state.selectedAdType,
+                        city: this.state.selectedCity,
+                        region: this.state.selectedRegion,
+                        country: this.state.selectedCountry,
+                        
+                        mime: this.mime
+                    }
+                    
+                     this.props.navigation.navigate('EnterPublisherDetail',{data:adsData})
                   }}
                   name={translate('next')}
                 />
               </View>
             </View>
             </View>
+            <RBSheet
+              ref={(ref) => {
+                this.countriesSheet = ref;
+              }}>
+              <FlatList
+                data={this.state.countries}
+                renderItem={({item}) => {
+                  return (
+                    <TouchableOpacity
+                      style={{
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderBottomWidth: 1,
+                        borderColor: '#D3D3D3',
+            
+                      }}
+                      onPress={() => {
+                        this.setState({selectedCountry: item.name});
+                        this.setState({selectedCountryId: item.id});
+                        this.countriesSheet.close();
+                      }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          justifyContent: 'center',
+                          alignItems: 'stretch',
+                        }}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            fontWeight: '500',
+                            alignSelf: 'center',
+                            fontSize: 18,
+                          }}>
+                          {item.name}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                }}
+                keyExtractor={(item) => item.id}
+              />
+            </RBSheet>
+            <RBSheet
+              ref={(ref) => {
+                this.regionSheet = ref;
+              }}>
+              <FlatList
+                data={this.state.regions}
+                renderItem={({item}) => {
+                  return (
+                    <TouchableOpacity
+                      style={{
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderBottomWidth: 1,
+                        borderColor: '#D3D3D3',
+                    
+                      }}
+                      onPress={() => {
+                        this.setState({selectedRegion: item.region});
+                        this.setState({selectedRegionId: item.id});
+                        this.regionSheet.close();
+                      }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          justifyContent: 'center',
+                          alignItems: 'stretch',
+                        }}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            fontWeight: '500',
+                            alignSelf: 'center',
+                            fontSize: 18,
+                          }}>
+                          {item.region}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                }}
+                keyExtractor={(item) => item.id}
+              />
+            </RBSheet>
+            <RBSheet
+              ref={(ref) => {
+                this.citySheet = ref;
+              }}>
+              <FlatList
+                data={this.state.cities}
+                renderItem={({item}) => {
+                  return (
+                    <TouchableOpacity
+                      style={{
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderBottomWidth: 1,
+                        borderColor: '#D3D3D3',
+                
+                      }}
+                      onPress={() => {
+                        this.setState({selectedCity: item.city});
+                        this.setState({selectedCityId: item.id});
+                        this.citySheet.close();
+                      }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          justifyContent: 'center',
+                          alignItems: 'stretch',
+                        }}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            fontWeight: '500',
+                            alignSelf: 'center',
+                            fontSize: 18,
+                          }}>
+                          {item.city}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                }}
+                keyExtractor={(item) => item.id}
+              />
+            </RBSheet>
+            <RBSheet
+              ref={(ref) => {
+                this.adType = ref;
+              }}>
+              <FlatList
+                data={this.state.types}
+                renderItem={({item}) => {
+                  return (
+                    <TouchableOpacity
+                      style={{
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderBottomWidth: 1,
+                        borderColor: '#D3D3D3',
+                      
+                      }}
+                      onPress={() => {
+                        this.setState({selectedAdType: item.type});
+                        this.setState({selectedAdTypeId: item.id});
+                        this.adType.close();
+                      }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          justifyContent: 'center',
+                          alignItems: 'stretch',
+                        }}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            fontWeight: '500',
+                            alignSelf: 'center',
+                            fontSize: 18,
+                          }}>
+                          {item.type}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                }}
+                keyExtractor={(item) => item.id}
+              />
+            </RBSheet>
+            <RBSheet
+              ref={(ref) => {
+                this.categoryType = ref;
+              }}>
+              <FlatList
+                data={this.state.categories}
+                style = {{backgroundColor:'white'}}
+                renderItem={({item}) => {
+                  return (
+                    <TouchableOpacity
+                      style={{
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderBottomWidth: 1,
+                        borderColor: '#D3D3D3',
+                      
+                      }}
+                      onPress={() => {
+                        this.setState({selectedCategory: item.category});
+                        this.setState({selectedCategoryId: item.id});
+                        this.categoryType.close();
+                      }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          justifyContent: 'center',
+                          alignItems: 'stretch',
+                          
+                        }}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            fontWeight: '500',
+                            alignSelf: 'center',
+                            fontSize: 18,
+                          }}>
+                          {item.category}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                }}
+                keyExtractor={(item) => item.id}
+              />
+            </RBSheet>
             </KeyboardAwareScrollView>
+            {this.state.isLoading ? <Loader loading={this.state.loading} /> : null}
       </View>
     </SafeAreaView>
   );
-
+              }
 }
 
 const styles = StyleSheet.create({
@@ -208,5 +637,3 @@ const styles = StyleSheet.create({
 }
 });
 
-
-export default AddAdsScreen;

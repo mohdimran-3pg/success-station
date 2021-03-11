@@ -1,44 +1,44 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  FlatList,
   SafeAreaView,
-  TouchableOpacity,
   Image,
   TextInput,
   I18nManager,
-  Button,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import DropDownSelectBoxWithoutImage from '../../../../components/DropDownSelectBoxWithoutImage';
 import InputViewWithOutImage from '../../../../components/InputViewWithOutImage';
 import {translate} from '../../../util/TranslationUtils';
 import ButtonView from '../../../../components/ButtonView';
 import BorderButton from '../../../../components/BorderButton';
 import AdsStepView from '../../../../components/AdsStepView'
-import RBSheet from 'react-native-raw-bottom-sheet';
-import {userType} from '../../../util/DataUtil';
-import CalendarPicker from "react-native-calendar-picker"
+
 import ArrowView from '../../../../components/ArrowView'
 
-const EnterPublisherDetail = ({navigation}) => {
-  const [borderWidth, setBorderWidth] = useState(0);
-  setUserType = (userType) => {
-    console.log(userType.label);
-    this.setState({selectedUserType: userType.label});
-  };
-  setIsDobVisible = (isDobVisible) => {
-    this.setState({isDobVisible: isDobVisible});
-  }
-  setViewHeight = (viewHeight) => {
-    this.setState({viewHeight: viewHeight});
-  }
-  setDateOfBirth = (dateOfBirth) => {
-    this.setState({dateOfBirth: dateOfBirth});
-  }
 
+  export default class EnterPublisherDetail extends React.Component {
+  
+    constructor(props) {
+      super(props);
+      this.state = {isLoading: false,
+        borderWidth:0,
+      }
+  
+      this.name =''
+      this.email =''
+      this.mobileNo =''
+      this.telNo=''
+      this.notes=''
+      this.adsData = this.props.route.params.data
+      
+        
+    }
+  
+
+
+  render(){
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#F2F2F2'}}>
       <View style={{flex: 1, backgroundColor: '#F2F2F2'}}>
@@ -108,7 +108,7 @@ const EnterPublisherDetail = ({navigation}) => {
               <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>{translate('full_name')}</Text>
               <InputViewWithOutImage
                 changeTextEvent={(newValue) => {
-                  console.log('Inputtting something .....', newValue);
+                  this.name = newValue
                 }}
                 placeholderText={translate('full_name')}
                 isFullWidth={true}
@@ -118,7 +118,7 @@ const EnterPublisherDetail = ({navigation}) => {
               <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>{translate('mobile_no')}</Text>
               <InputViewWithOutImage
                 changeTextEvent={(newValue) => {
-                  console.log('Inputtting something .....', newValue);
+                  this.mobileNo = newValue
                 }}
                 placeholderText={translate('mobile_no')}
                 isFullWidth={true}
@@ -128,7 +128,7 @@ const EnterPublisherDetail = ({navigation}) => {
               <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>{translate('Telephone_no')}</Text>
               <InputViewWithOutImage
                 changeTextEvent={(newValue) => {
-                  console.log('Inputtting something .....', newValue);
+                  this.telNo = newValue
                 }}
                 placeholderText={translate('Telephone_no')}
                 isFullWidth={true}
@@ -138,7 +138,7 @@ const EnterPublisherDetail = ({navigation}) => {
               <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>{translate('email')}</Text>
               <InputViewWithOutImage
                 changeTextEvent={(newValue) => {
-                  console.log('Inputtting something .....', newValue);
+                  this.email = newValue
                 }}
                 placeholderText={translate('email')}
                 isFullWidth={true}
@@ -149,11 +149,13 @@ const EnterPublisherDetail = ({navigation}) => {
               <TextInput
                   autoCapitalize="none"
                   autoCorrect={false}
-                  style={{textAlign: I18nManager.isRTL ? 'right' : 'left', borderWidth: borderWidth, borderColor: "#0A878A", borderRadius:4, height: 90, backgroundColor: '#FFFFFF'}}
+                  style={{textAlign: I18nManager.isRTL ? 'right' : 'left', borderWidth: this.state.borderWidth, borderColor: "#0A878A", borderRadius:4, height: 90, backgroundColor: '#FFFFFF',textAlignVertical: 'top',}}
                   placeholder={`  `+translate('notes')}
                   multiline={true}
+                  onChangeText={text => this.notes = text}
                   onFocus = {(newValue) => {
-                    setBorderWidth(1);
+                    this.setState({borderWidth:1})
+                    
                   }}
               />
             </View>
@@ -170,8 +172,13 @@ const EnterPublisherDetail = ({navigation}) => {
               <View style={{width: "48%", height: "100%"}}>
               <ButtonView
                 clickEvent={() => {
-                  navigation.navigate('AdDetail')
-                  console.log('Sign Up Clicked ......', navigation);
+                  this.adsData.contact_name= this.name
+                  this.adsData.email= this.email
+                  this.adsData.notes= this.notes
+                  this.adsData.phone= this.mobileNo
+                  this.adsData.telNo= this.telNo
+      
+                  this.props.navigation.navigate('AdDetail',{data: this.adsData})
                 }}
                 name={translate('next')}
               />
@@ -183,6 +190,7 @@ const EnterPublisherDetail = ({navigation}) => {
       </View>
     </SafeAreaView>
   );
+}
 }
 
 const style = StyleSheet.create({
@@ -224,5 +232,3 @@ const style = StyleSheet.create({
     color: "white"
   }
 });
-
-export default EnterPublisherDetail;

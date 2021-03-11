@@ -19,9 +19,62 @@ import ButtonView from '../../../../components/ButtonView';
 import BorderButton from '../../../../components/BorderButton';
 import AdsStepView from '../../../../components/AdsStepView'
 import ArrowView from '../../../../components/ArrowView'
+import ImgToBase64 from 'react-native-image-base64'
+import ApiService from '../../../network/ApiService';
+import AsyncStorage from '@react-native-community/async-storage'
+import Loader from './../../Loader';
 
-const AdDetail = ({navigation}) => {
-    console.log(navigation);
+  export default class AdDetail extends React.Component {
+  
+
+    constructor(props) {
+      super(props);
+      this.state = {isLoading: false,
+        borderWidth:0,
+        img:''
+      }
+  
+    
+      this.adsData = this.props.route.params.data
+      console.log(JSON.stringify(this.adsData))
+      this.userData =''
+       
+      ImgToBase64.getBase64String(this.adsData.imagePath)
+        .then(base64String => {
+          this.setState({img:base64String})})
+          .catch(err => console.log(err));  
+              
+      AsyncStorage.getItem('userdata').then((value)=> {
+        
+        if(!value || 0 != value.length){ 
+          console.log(value)
+          this.userData = JSON.parse(value)
+          console.log(this.userData)
+        }
+      } )
+      
+        
+    }
+
+    postAds =()=>{
+      this.adsData.image = this.state.img
+      this.adsData.user_name_id = this.userData.user_id
+
+      this.adsData.status='new'
+      this.setState({isLoading: true});
+      ApiService.post('listings-create',this.adsData)
+    .then((response) => {
+        this.setState({isLoading: false});
+        this.props.navigation.navigate('MyAdsList')
+    })
+    .catch ((error)=> {
+        this.setState({isLoading : false})
+        alert(error.data.message)
+    })
+    }
+
+    render(){
+
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: '#F2F2F2'}}>
           <View style={{flex: 1, backgroundColor: '#F2F2F2'}}>
@@ -86,17 +139,19 @@ const AdDetail = ({navigation}) => {
               </View>
           </View>
                     <View style={{height: 280, width: "100%"}}>
-                        <Image style={{width: "100%"}}
+            
+                        <Image style={{width: "100%",height:280}}
                             resizeMode="contain"
-                            source={require('../../../../assets/book-image.png')} 
+                            source={{
+                              uri : `data:${this.adsData.mime};base64,${this.state.img}` }} 
                         />
                     </View>
                     <View style={{width: "100%"}}>
                         <Text style={{marginLeft: 15, marginTop: 15, marginRight: 15, fontSize: 20, fontStyle: "normal", color: "#000"}}>
-                            Medicine book on Internal Medicine used one year
+                        {this.adsData.title}
                         </Text>
                         <Text style={{marginLeft: 15, marginTop: 15, marginRight: 15, fontSize: 20, fontStyle: "normal", color: "#0A878A"}}>
-                            AED 140
+                        AED {this.adsData.price}
                         </Text>
                     </View>
                     <View style={{width: "100%", height: 6, backgroundColor: "#F4F7FC", marginTop: 25}}></View>
@@ -105,13 +160,13 @@ const AdDetail = ({navigation}) => {
                             <View style={{width: "25%", marginLeft: 15}}>
                                 <DisplayBookInformation 
                                     heading="City"
-                                    headingValue="Jeddah"
+                                    headingValue={this.adsData.city}
                                 />
                             </View>
                             <View style={{width: "25%", marginLeft: 15}}>
                                 <DisplayBookInformation 
                                     heading="Type"
-                                    headingValue="Medical"
+                                    headingValue={this.adsData.category}
                                 />
                             </View>
                         </View>
@@ -119,7 +174,7 @@ const AdDetail = ({navigation}) => {
                             <View style={{width: 100, marginLeft: 15}}>
                                 <DisplayBookInformation 
                                     heading="Ad Number"
-                                    headingValue="9990624253"
+                                    headingValue={this.adsData.phone}
                                 />
                             </View>
                             <View style={{width: "25%", marginLeft: 15}}>
@@ -144,13 +199,13 @@ const AdDetail = ({navigation}) => {
                         {translate('details')}
                         </Text>
                         <Text style={{marginLeft: 15, fontSize: 12, fontStyle: "normal", color: "#000", fontweight: "500", marginTop: 15}}>
-                            Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts
+                        {this.adsData.description}
                         </Text>
                     </View>
                     <View style={{width: "100%", height: 6, backgroundColor: "#F4F7FC"}}></View>
                     <View style={{width: "100%", height: 250, justifyContent: "space-between", flexDirection: "column"}}>
                     <Text style={{marginLeft: 15, fontSize: 20, fontStyle: "normal", color: "#000", fontweight: "700"}}>
-                            {translate('ad_posted_at')}
+                          {translate('ad_posted_at')}
                     </Text>
                     <Image
                         source={require('../../../../assets/map-image.png')}
@@ -170,8 +225,8 @@ const AdDetail = ({navigation}) => {
                         <View style={{width: "48%", height: "100%"}}>
                         <ButtonView
                             clickEvent={() => {
-                            navigation.navigate('AdDetail')
-                            console.log('Sign Up Clicked ......', navigation);
+                            this.postAds()
+                           
                             }}
                             name={translate('publish')}
                         />
@@ -180,10 +235,12 @@ const AdDetail = ({navigation}) => {
                 </View>
                 </View>
             </KeyboardAwareScrollView>
+            {this.state.isLoading ? <Loader loading={this.state.loading} /> : null}
           </View>
         </SafeAreaView>
       );
 }
+  }
 
 const style = StyleSheet.create({
   mainViewStyle: {
@@ -225,4 +282,3 @@ const style = StyleSheet.create({
   }
 });
 
-export default AdDetail;

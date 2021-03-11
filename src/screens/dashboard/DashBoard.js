@@ -293,6 +293,37 @@ const MainScreenStack = ({navigation}) => {
           },
         }}
         
+        
+      />
+       <Stack.Screen
+        name="EnterPublisherDetail"
+        component={EnterPublisherDetail}
+        options={{
+          title: 'Add Ads', //Set Header Title
+          
+          headerStyle: {
+            backgroundColor: '#0A878A', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+      />
+      <Stack.Screen
+        name="AdDetail"
+        component={AdDetail}
+        options={{
+          title: 'Add Ads', //Set Header Title
+          
+          headerStyle: {
+            backgroundColor: '#0A878A', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
       />
  <Stack.Screen
         name="MyLocation"
