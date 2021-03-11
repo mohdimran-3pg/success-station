@@ -174,6 +174,19 @@ export default class MyAdsListScreen extends React.Component {
     super(props);
   }
 
+  getBooks = () => {
+    ApiService.get('listings')
+      .then((response) => {
+        this.setState({isLoading: false});
+        console.log("Books Data is:::", response.data)
+        this.setState({books: response.data})
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        console.log("Error of Book is :::", error)
+      });
+  }
+
   render() {
     return (
       <SafeAreaView style={{flex: 1}}>

@@ -123,6 +123,72 @@ export default class AddAdsScreen extends React.Component {
       });
   };
 
+  validateForm = () => {
+    let errorArray = [];
+    if (this.state.selectedCategory == '') {
+      errorArray.push('Enter Category Name');
+    }
+
+    if (this.state.selectedAdTypeId == 0) {
+      errorArray.push('Select Type');
+    }
+
+    if (this.title == '') {
+      errorArray.push('Enter Title');
+    }
+
+    if (this.description == '') {
+      errorArray.push('Enter Description');
+    }
+
+    if (this.price == '') {
+      errorArray.push('Enter Price');
+    }
+
+    if (this.imagePath == '') {
+      errorArray.push('Select Image');
+    }
+
+    if (this.state.selectedCountryId == 0) {
+      errorArray.push('Select Country');
+    }
+
+    if (this.state.selectedRegionId == 0) {
+      errorArray.push('Select Region');
+    }
+
+    if (this.state.selectedCityId == 0) {
+      errorArray.push('Select City');
+    }
+
+    if (errorArray.length > 0) {
+      errorText = errorArray.join('\n');
+      alert(errorText);
+    } else {
+      let adsData = {
+        title : this.title,
+        description : this.description,
+        price: this.price,
+        category_id:this.state.selectedCategoryId,
+        type_id: this.state.selectedAdTypeId,
+        imagePath: this.imagePath,
+        city_id: this.state.selectedCityId,
+        region_id: this.state.selectedRegionId,
+        country_id: this.state.selectedCountryId,
+        category:this.state.selectedCategory,
+        type: this.state.selectedAdType,
+        city: this.state.selectedCity,
+        region: this.state.selectedRegion,
+        country: this.state.selectedCountry,
+        
+        mime: this.mime
+    }
+    
+     this.props.navigation.navigate('EnterPublisherDetail',{data:adsData})
+    }
+    
+  }
+
   render(){
 
   return (
@@ -201,9 +267,9 @@ export default class AddAdsScreen extends React.Component {
                 />
               </View>
               <View style={{height: 80, marginTop:10}}>
-                <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>{translate('user_type')}</Text>
+                <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>{translate('type')}</Text>
                 <DropDownSelectBoxWithoutImage
-                  placeholderText={translate('user_type')}
+                  placeholderText={translate('type')}
                   selectedText={this.state.selectedAdType}
                   isFullWidth={true}
                   onPressEvent={() => {
@@ -344,26 +410,7 @@ export default class AddAdsScreen extends React.Component {
               <View style={{height: 50, width: 320 ,marginBottom:30,marginTop:10}}>
                 <ButtonView
                   clickEvent={() => {
-                    let adsData = {
-                        title : this.title,
-                        description : this.description,
-                        price: this.price,
-                        category_id:this.state.selectedCategoryId,
-                        type_id: this.state.selectedAdTypeId,
-                        imagePath: this.imagePath,
-                        city_id: this.state.selectedCityId,
-                        region_id: this.state.selectedRegionId,
-                        country_id: this.state.selectedCountryId,
-                        category:this.state.selectedCategory,
-                        type: this.state.selectedAdType,
-                        city: this.state.selectedCity,
-                        region: this.state.selectedRegion,
-                        country: this.state.selectedCountry,
-                        
-                        mime: this.mime
-                    }
-                    
-                     this.props.navigation.navigate('EnterPublisherDetail',{data:adsData})
+                    this.validateForm()
                   }}
                   name={translate('next')}
                 />

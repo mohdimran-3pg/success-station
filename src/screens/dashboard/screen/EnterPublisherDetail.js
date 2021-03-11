@@ -14,6 +14,7 @@ import {translate} from '../../../util/TranslationUtils';
 import ButtonView from '../../../../components/ButtonView';
 import BorderButton from '../../../../components/BorderButton';
 import AdsStepView from '../../../../components/AdsStepView'
+import Helper from '../../../util/Helper';
 
 import ArrowView from '../../../../components/ArrowView'
 
@@ -36,7 +37,38 @@ import ArrowView from '../../../../components/ArrowView'
         
     }
   
+    validateForm = () => {
+      let errorArray = [];
+      if (this.name == '') {
+        errorArray.push('Enter User Name');
+      }
+  
+      if (this.email == '') {
+        errorArray.push('Enter Email');
+      }
+  
+      if (Helper.isEmailValid(this.email)) {
+        errorArray.push('Enter valid Email');
+      }
+  
+      if (this.mobileNo == '') {
+        errorArray.push('Enter Mobile');
+      }
 
+      if (errorArray.length > 0) {
+        errorText = errorArray.join('\n');
+        alert(errorText);
+      } else {
+
+        this.adsData.contact_name= this.name
+        this.adsData.email= this.email
+        this.adsData.notes= this.notes
+        this.adsData.phone= this.mobileNo
+        this.adsData.telNo= this.telNo
+
+        this.props.navigation.navigate('AdDetail',{data: this.adsData})
+      }
+    }
 
   render(){
   return (
@@ -172,13 +204,7 @@ import ArrowView from '../../../../components/ArrowView'
               <View style={{width: "48%", height: "100%"}}>
               <ButtonView
                 clickEvent={() => {
-                  this.adsData.contact_name= this.name
-                  this.adsData.email= this.email
-                  this.adsData.notes= this.notes
-                  this.adsData.phone= this.mobileNo
-                  this.adsData.telNo= this.telNo
-      
-                  this.props.navigation.navigate('AdDetail',{data: this.adsData})
+                  this.validateForm()
                 }}
                 name={translate('next')}
               />

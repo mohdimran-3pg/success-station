@@ -57,7 +57,7 @@ import Loader from './../../Loader';
     }
 
     postAds =()=>{
-      this.adsData.image = this.state.img
+      this.adsData.image = `data:${this.adsData.mime};base64,${this.state.img}`
       this.adsData.user_name_id = this.userData.user_id
 
       this.adsData.status='new'
@@ -151,7 +151,7 @@ import Loader from './../../Loader';
                         {this.adsData.title}
                         </Text>
                         <Text style={{marginLeft: 15, marginTop: 15, marginRight: 15, fontSize: 20, fontStyle: "normal", color: "#0A878A"}}>
-                        AED {this.adsData.price}
+                        SR {this.adsData.price}
                         </Text>
                     </View>
                     <View style={{width: "100%", height: 6, backgroundColor: "#F4F7FC", marginTop: 25}}></View>
@@ -166,7 +166,7 @@ import Loader from './../../Loader';
                             <View style={{width: "25%", marginLeft: 15}}>
                                 <DisplayBookInformation 
                                     heading="Type"
-                                    headingValue={this.adsData.category}
+                                    headingValue={this.adsData.type}
                                 />
                             </View>
                         </View>
@@ -179,16 +179,8 @@ import Loader from './../../Loader';
                             </View>
                             <View style={{width: "25%", marginLeft: 15}}>
                                 <DisplayBookInformation 
-                                    heading="Status"
-                                    headingValue="Used"
-                                />
-                            </View>
-                        </View>
-                        <View style={{width: "80%", height: 40, justifyContent: 'space-between', flexDirection: "row"}}>
-                            <View style={{width: "25%", marginLeft: 15}}>
-                                <DisplayBookInformation 
                                     heading="Section"
-                                    headingValue="Books"
+                                    headingValue={this.adsData.category}
                                 />
                             </View>
                         </View>

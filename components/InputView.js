@@ -28,6 +28,7 @@ const InputView = ({ changeTextEvent , imageSource, placeholderText, isSecureFie
                     
                     placeholder={placeholderText}
                     secureTextEntry={isSecureField}
+                    keyboardType={'phone-pad'}
                 />
             </View>
         </View>
