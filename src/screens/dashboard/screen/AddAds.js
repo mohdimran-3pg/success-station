@@ -27,6 +27,7 @@ export default class AddAdsScreen extends React.Component {
       types:[],
       categories :[],
       types : [],
+      statuses: [{title: 'New', id: 'New' },{title: 'Used', id: 'Used'}],
       selectedCountry: '',
       selectedCountryId: 0,
       selectedRegionId: 0,
@@ -36,7 +37,9 @@ export default class AddAdsScreen extends React.Component {
       selectedCategory: '',
       selectedCategoryId: 0,
       selectedAdType: '',
-      selectedAdTypeId: 0
+      selectedAdTypeId: 0,
+      selectedStatus: '',
+      selectedStatusId: ''
     }
 
     this.price =''
@@ -180,7 +183,7 @@ export default class AddAdsScreen extends React.Component {
         city: this.state.selectedCity,
         region: this.state.selectedRegion,
         country: this.state.selectedCountry,
-        
+        status: this.state.selectedStatusId,
         mime: this.mime
     }
     
@@ -274,6 +277,17 @@ export default class AddAdsScreen extends React.Component {
                   isFullWidth={true}
                   onPressEvent={() => {
                     this.getAddType()
+                  }}
+                />
+              </View>
+              <View style={{height: 80, marginTop:10}}>
+                <Text style={{width: "100%", fontSize:15, fontWeight:"400", fontStyle: "normal", color:"#9EA6BE", height: 25}}>{translate('status')}</Text>
+                <DropDownSelectBoxWithoutImage
+                  placeholderText={translate('status')}
+                  selectedText={this.state.selectedStatus}
+                  isFullWidth={true}
+                  onPressEvent={() => {
+                    this.statusType.open();
                   }}
                 />
               </View>
@@ -632,6 +646,52 @@ export default class AddAdsScreen extends React.Component {
                             fontSize: 18,
                           }}>
                           {item.category}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                }}
+                keyExtractor={(item) => item.id}
+              />
+            </RBSheet>
+            <RBSheet
+              ref={(ref) => {
+                this.statusType = ref;
+              }}>
+              <FlatList
+                data={this.state.statuses}
+                style = {{backgroundColor:'white'}}
+                renderItem={({item}) => {
+                  return (
+                    <TouchableOpacity
+                      style={{
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderBottomWidth: 1,
+                        borderColor: '#D3D3D3',
+                      
+                      }}
+                      onPress={() => {
+                        this.setState({selectedStatus: item.title});
+                        this.setState({selectedStatusId: item.id});
+                        this.statusType.close();
+                      }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          justifyContent: 'center',
+                          alignItems: 'stretch',
+                          
+                        }}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            fontWeight: '500',
+                            alignSelf: 'center',
+                            fontSize: 18,
+                          }}>
+                          {item.title}
                         </Text>
                       </View>
                     </TouchableOpacity>
