@@ -12,8 +12,10 @@ import {
   Dimensions,
 } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
-
+import AsyncStorage from '@react-native-community/async-storage'
 import {Card, Paragraph, Searchbar} from 'react-native-paper';
+import ApiService from '../../../network/ApiService';
+import Loader from '../../Loader';
 import {
   cardFollower,
   cardLocation,
@@ -21,102 +23,14 @@ import {
 } from '../../../util/ImageConstant';
 import {translate} from '../../../util/TranslationUtils';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-const profileData = {
-  name: 'Rahul Pandey',
-  src:
-    'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg',
-  ads: 100,
-  follower: 40,
-  following: 100,
-  profileMsg:
-    'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
-};
-
-const 
-    multiSliderValue= [0, 100]
-const FlatListItems = [
-  {
-    id: 1,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    location: 'Dubai UAE',
-    follower: 'Imran',
-  },
-  {
-    id: 2,
-    src:
-      'https://cbsnews2.cbsistatic.com/hub/i/r/2015/12/11/7f3c9843-adb1-4022-be13-82515641a9fc/thumbnail/1200x630/5af2e16fd2ecd02f06637db5ca110a43/open-book.jpg',
-    price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    location: '3/4 Block 3 Dubai UAE',
-    follower: 'Ramesh',
-  },
-  {
-    id: 3,
-    src:
-      'https://cbsnews2.cbsistatic.com/hub/i/r/2015/12/11/7f3c9843-adb1-4022-be13-82515641a9fc/thumbnail/1200x630/5af2e16fd2ecd02f06637db5ca110a43/open-book.jpg',
-
-    price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    location: '2 lane Dubai UAE',
-    follower: 'Imran',
-  },
-  {
-    id: 4,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    title: 'Medicine book on Internal Medicine ',
-    location: 'Dubai 9 /3 street UAE',
-    follower: 'Rahul',
-    price: 'AED 1100',
-  },
-  {
-    id: 5,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    location: 'Dubai 4 block UAE',
-    follower: 'Mohd',
-  },
-  {
-    id: 6,
-    src:
-      'https://cbsnews2.cbsistatic.com/hub/i/r/2015/12/11/7f3c9843-adb1-4022-be13-82515641a9fc/thumbnail/1200x630/5af2e16fd2ecd02f06637db5ca110a43/open-book.jpg',
-    price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    price: 'AED 20',
-    location: 'Dubai 4 street UAE',
-    follower: 'Raman',
-  },
-  {
-    id: 7,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    location: 'Dubai 2 street UAE',
-    follower: 'Imran',
-  },
-  {
-    id: 8,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    price: 'AED 130',
-    title: 'Medicine book on Internal Medicine  Test book',
-    location: 'Dubai UAE',
-    follower: 'Rahul',
-  },
-];
 
 const CardItem = ({item,...props}) => {
+  let imageurl = item.image.length > 0 ? item.image[0].url: ""
   var header_View = (
     <TouchableOpacity style={{flex: 1}} onPress= {()=>props.navigation.navigate('BookDetailScreen')}>
       <Card style={{margin: 7, elevation: 5}} >
         <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-          <Image style={styles.cardImageItem} source={{uri: item.src}} />
+          <Image style={styles.cardImageItem} source={{uri: imageurl}} />
           <View style={{flexDirection: 'column', marginStart: 10}}>
             <Text
               style={{
@@ -128,7 +42,7 @@ const CardItem = ({item,...props}) => {
             </Text>
 
             <Text style={{color: '#0A878A', fontSize: 15, marginTop: 11}}>
-              {item.price}
+              SR {item.price}
             </Text>
             <View
               style={{
@@ -146,7 +60,7 @@ const CardItem = ({item,...props}) => {
                     color: 'rgba(0, 0, 0, 0.6)',
                     marginStart: 5,
                   }}>
-                  {item.location}
+                  {item.cities != null && item.cities.length > 0 ? item.cities[0].city : "N/A"}
                 </Text>
               </View>
               <View style={{flexDirection: 'row'}}>
@@ -157,7 +71,7 @@ const CardItem = ({item,...props}) => {
                     color: 'rgba(0, 0, 0, 0.6)',
                     marginStart: 5,
                   }}>
-                  {item.follower}
+                  {item.contact_name}
                 </Text>
               </View>
             </View>
@@ -172,19 +86,38 @@ const CardItem = ({item,...props}) => {
 export default class MyAdsListScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {books: []}
+  }
+
+  componentDidMount() {
+    this.getBooks();
   }
 
   getBooks = () => {
-    ApiService.get('listings')
-      .then((response) => {
-        this.setState({isLoading: false});
-        console.log("Books Data is:::", response.data)
-        this.setState({books: response.data})
-      })
-      .catch((error) => {
-        this.setState({isLoading: false});
-        console.log("Error of Book is :::", error)
-      });
+    this.setState({isLoading : true})
+    AsyncStorage.getItem('userdata').then((value)=> {
+        
+      if(!value || 0 != value.length){ 
+        
+        let userdata = JSON.parse(value)
+        ApiService.get(`listings?user=${userdata.user_id}`)
+        .then((response) => {
+          this.setState({isLoading: false});
+          this.setState({books: response.data})
+        })
+        .catch((error) => {
+          this.setState({isLoading: false});
+        });
+      } else {
+        this.setState({isLoading : false})
+      }
+      
+       
+    }).catch(()=> {
+      this.setState({isLoading : false})
+    })
+
+    
   }
 
   render() {
@@ -194,12 +127,13 @@ export default class MyAdsListScreen extends React.Component {
        
         <FlatList
           style={{marginTop:10,marginBottom:10,backgroundColor:'white'}}
-          data={FlatListItems}
+          data={this.state.books}
           renderItem={({item}) => <CardItem item = {item} {...this.props}/>} 
           numColumns={2}
         />
         
-        
+        {this.state.isLoading ?   <Loader
+                loading={this.state.loading} /> :null}  
       </SafeAreaView>
     );
   }

@@ -60,7 +60,7 @@ import Loader from './../../Loader';
       this.adsData.image = `data:${this.adsData.mime};base64,${this.state.img}`
       this.adsData.user_name_id = this.userData.user_id
 
-      this.adsData.status='new'
+      this.adsData.status='New'
       this.setState({isLoading: true});
       ApiService.post('listings-create',this.adsData)
     .then((response) => {
