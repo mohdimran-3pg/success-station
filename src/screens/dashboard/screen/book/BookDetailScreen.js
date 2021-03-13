@@ -110,7 +110,7 @@ export default class BookDetailScreen extends React.Component {
                                     <View style={{width: "25%", marginLeft: 15}}>
                                         <DisplayBookInformation 
                                             heading={translate("city")}
-                                            headingValue={this.state.book.cities != null? this.state.book.cities[0].city: "N/A"}
+                                            headingValue={this.state.book.cities != null && this.state.book.cities.length > 0 ? this.state.book.cities[0].city: "N/A"}
                                         />
                                     </View>
                                     <View style={{width: "25%", marginLeft: 15}}>

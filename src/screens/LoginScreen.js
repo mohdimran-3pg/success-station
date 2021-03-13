@@ -91,10 +91,11 @@ export default class LoginScreen extends React.Component {
                                             console.log("Inputtting something .....", newValue);
                                             this.setState({email: newValue})
                                         }} 
-                                        imageSource={require('../../assets/SignUp/user-icon.png')}
-                                        placeholderText={translate('user_name_placeholder')}
+                                        imageSource={require('../../assets/SignUp/email-icon.png')}
+                                        placeholderText={translate('email')}
                                         isSecureField={false}
                                         isFullWidth={true}
+                                        keyboardTypeValue={"email-address"}
                             />
                         </View>
                         <View style={{height: 50}}>

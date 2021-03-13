@@ -154,6 +154,7 @@ import ArrowView from '../../../../components/ArrowView'
                 }}
                 placeholderText={translate('mobile_no')}
                 isFullWidth={true}
+                keyboardTypeValue={"phone-pad"}
               />
             </View>
             <View style={{height: 80, justifyContent: 'space-between'}}>
@@ -164,6 +165,7 @@ import ArrowView from '../../../../components/ArrowView'
                 }}
                 placeholderText={translate('Telephone_no')}
                 isFullWidth={true}
+                keyboardTypeValue={"phone-pad"}
               />
             </View>
             <View style={{height: 80, justifyContent: 'space-between'}}>
@@ -174,6 +176,7 @@ import ArrowView from '../../../../components/ArrowView'
                 }}
                 placeholderText={translate('email')}
                 isFullWidth={true}
+                keyboardTypeValue={"email-address"}
               />
             </View>
             <View style={{height: 120, justifyContent: 'space-between'}}>

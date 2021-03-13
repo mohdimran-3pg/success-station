@@ -353,6 +353,7 @@ export default class UserSignUpForm extends React.Component {
                   placeholderText={translate('email')}
                   isSecureField={false}
                   isFullWidth={true}
+                  keyboardTypeValue={"email-address"}
                 />
               </View>
               <View style={{height: 50}}>
@@ -364,6 +365,7 @@ export default class UserSignUpForm extends React.Component {
                   placeholderText={translate('mobile_number')}
                   isSecureField={false}
                   isFullWidth={true}
+                  keyboardTypeValue={"phone-pad"}
                 />
               </View>
               {this.state.selectedUserType === 'company' ||

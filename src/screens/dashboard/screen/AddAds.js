@@ -309,6 +309,7 @@ export default class AddAdsScreen extends React.Component {
                   }}
                   placeholderText={'Price'}
                   isFullWidth={true}
+                  keyboardTypeValue={"decimal-pad"}
                 />
               </View>
 

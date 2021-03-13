@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { View, Text, Image, StyleSheet, TextInput ,I18nManager} from "react-native";
 
-const InputViewWithOutImage = ({ changeTextEvent, placeholderText, isFullWidth}) => {
+const InputViewWithOutImage = ({ changeTextEvent, placeholderText, isFullWidth, keyboardTypeValue = "default"}) => {
     const [borderWidth, setBorderWidth] = useState(0);
     return (
         <View style={[isFullWidth ? style.inputFullViewStyle : style.inputHalfViewStyle, {borderWidth: borderWidth}]}>
@@ -17,6 +17,7 @@ const InputViewWithOutImage = ({ changeTextEvent, placeholderText, isFullWidth})
                     onFocus = {(newValue) => {
                         setBorderWidth(1);
                     }}
+                    keyboardType={keyboardTypeValue}
                 />
             </View>
         </View>

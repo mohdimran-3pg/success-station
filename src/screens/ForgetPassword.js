@@ -72,6 +72,7 @@ export default class ForgetPassword extends React.Component {
                                                 placeholderText={translate('email')}
                                                 isSecureField={false}
                                                 isFullWidth={true}
+                                                keyboardTypeValue={"email-address"}
                                     />
                         </View>
                         <View style={{height: 50, width: 320}}>

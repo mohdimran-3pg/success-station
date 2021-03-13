@@ -27,7 +27,7 @@ import MultiSlider from '@ptomasroos/react-native-multi-slider';
 const CardItem = ({item,...props}) => {
   let imageurl = item.image.length > 0 ? item.image[0].url: ""
   var header_View = (
-    <TouchableOpacity style={{flex: 1}} onPress= {()=>props.navigation.navigate('BookDetailScreen')}>
+    <TouchableOpacity style={{flex: 1}} onPress= {()=>props.navigation.navigate('BookDetailScreen', { data: { bookId: item.id} })}>
       <Card style={{margin: 7, elevation: 5}} >
         <View style={{flexDirection: 'column', justifyContent: 'center'}}>
           <Image style={styles.cardImageItem} source={{uri: imageurl}} />
