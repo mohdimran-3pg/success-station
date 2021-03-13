@@ -29,7 +29,6 @@ const
 
 
 const CardItem = ({item,...props}) => {
-  console.log("item.image.url.......", JSON.stringify(item)); 
   var header_View = (
     <TouchableOpacity style={{flex: 1}} onPress= {()=>{
     
@@ -119,7 +118,6 @@ export default class StudentProfile extends React.Component {
     this.setState({isLoading: true});
     ApiService.get('listing-categories')
       .then((response) => {
-        console.log("Categories Data is:::", response)
         var tempArray = []
         tempArray.push({
           key: 0,
@@ -138,7 +136,6 @@ export default class StudentProfile extends React.Component {
       })
       .catch((error) => {
         this.setState({isLoading: false});
-        console.log("Error of Category is :::", error)
       });
   }
 

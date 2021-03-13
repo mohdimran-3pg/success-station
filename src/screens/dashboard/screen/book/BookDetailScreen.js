@@ -101,7 +101,7 @@ export default class BookDetailScreen extends React.Component {
                                 {this.state.book != null? this.state.book.title: "N/A"}
                             </Text>
                             <Text style={{marginLeft: 15, marginTop: 15, marginRight: 15, fontSize: 20, fontStyle: "normal", color: "#0A878A"}}>
-                                AED {this.state.book.price}
+                                SR {this.state.book.price}
                             </Text>
                         </View>
                         <View style={{width: "100%", height: 6, backgroundColor: "#F4F7FC", marginTop: 15}}></View>
