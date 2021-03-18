@@ -494,7 +494,11 @@ constructor(props) {
           iconStyle :{margin:3}
         }} 
     
-        drawerContent={(props) => <SidebarMenu {...props} data= {this.state.userdata} />}>
+        drawerContent={(props) => <SidebarMenu {...props} data= {this.state.userdata} logout = 
+        {()=>
+          AsyncStorage.removeItem('userdata').then(()=>this.props.navigation.replace('login'))
+         
+        }/>}>
       
       <Drawer.Screen name="MainScreenStack" component={MainScreenStack} />
       <Drawer.Screen name="AdsScreenStack" component={AdScreenStack} />

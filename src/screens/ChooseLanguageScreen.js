@@ -31,6 +31,9 @@ const setI18nConfig = (lang) => {
 const resetAction = StackActions.reset({
   index: 0,
   actions: [NavigationActions.navigate({ routeName: 'dashBoard' })],
+},{
+  index: 1,
+  actions: [NavigationActions.navigate({ routeName: 'login' })],
 });
 export default class ChooseLanguageScreen extends React.Component {
 
@@ -118,6 +121,7 @@ export default class ChooseLanguageScreen extends React.Component {
                                     //`console.log('----:', this.state.lang)
                                     //console.log("this is language code::::",this.state.langCode)
                                     //this.props.navigation.navigate('bookDetailScreen', { data: { detail: {}} });
+                                    AsyncStorage.setItem('langCode',this.state.langCode)
                                     this.props.navigation.navigate('countrySelectScreen', { data: { code: this.state.langCode} })
                                 }}
                             />
