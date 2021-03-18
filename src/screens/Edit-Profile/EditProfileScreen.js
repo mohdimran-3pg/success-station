@@ -15,8 +15,11 @@ import {translate} from '.././../util/TranslationUtils';
 import BorderButton from '../../../components/BorderButton';
 import ButtonView from '../../../components/ButtonView';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import {userType} from '.././../util/DataUtil';
+import ApiService from '../../network/ApiService';
+import Loader from '../Loader';
 import CalendarPicker from 'react-native-calendar-picker';
+import ImagePicker from "react-native-customized-image-picker";
+import ImgToBase64 from 'react-native-image-base64'
 
 export default class EditProfileScreen extends React.Component {
   static navigationOptions = ({navigation, navigationOptions}) => {
@@ -34,9 +37,116 @@ export default class EditProfileScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.data = props.route.params.data
-    console.log(this.data)
+    this.state = {date_of_birth: '',
+    countries: [],
+    regions: [],
+    cities: [],
+    universities: [],
+    colleges: [],
+    selectedCountry: '',
+    selectedCountryId: 0,
+    selectedRegionId: 0,
+    selectedRegion: '',
+    selectedCity: '',
+    selectedCityId: 0,
+    isLoading:false,
+    selectedUniversity: '',
+    selectedUniversityId: 0,
+    selectedCollege: '',
+    selectedCollegeId: 0,
+    userName: '',
+    email: '',
+    mobileNumber: '',
+    crNo: '',
+    iqamaNo: '',
+    img:'',
+    mime:''
+      };
+    this.data = props.route.params.data;
+    console.log(this.data);
+    this.type = 'Student';
+
+    if (this.data.user_type == 3) {
+      this.type = 'Individual';
+    } else if (this.data.user_type == 4) {
+      this.type = 'Company';
+    }
   }
+  getUniversities() {
+    this.setState({isLoading: true});
+    ApiService.get('universities', {
+      country: this.state.selectedCountryId,
+    })
+      .then((response) => {
+        this.setState({universities: response.data});
+        this.setState({isLoading: false});
+        this.universitySheet.open();
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error))
+        alert(error.data);
+      });
+  }
+
+  getCollegeByUniversities = () => {
+    this.setState({isLoading: true});
+    ApiService.get('colleges', {
+      university: this.state.selectedUniversityId,
+    })
+      .then((response) => {
+        this.setState({isLoading: false});
+        this.setState({colleges: response.data});
+        this.collegeSheet.open();
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        alert(error.data.message);
+      });
+  };
+  getCountries= () =>{
+    this.setState({isLoading: true});
+    ApiService.get('countries')
+      .then((response) => {
+        this.setState({isLoading: false});
+        this.setState({countries: response.data});
+        this.countriesSheet.open()
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        alert(error.data);
+      });
+  }
+  getRegionByCountry = () => {
+    this.setState({isLoading: true});
+    ApiService.get('regions', {
+      country: this.state.selectedCountryId,
+    })
+      .then((response) => {
+        this.setState({isLoading: false});
+        this.setState({regions: response.data});
+        this.regionSheet.open();
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        alert(error.data.message);
+      });
+  };
+
+  getCityByRegion = () => {
+    this.setState({isLoading: true});
+    ApiService.get('cities', {
+      region: this.state.selectedRegionId,
+    })
+      .then((response) => {
+        this.setState({isLoading: false});
+        this.setState({cities: response.data});
+        this.citySheet.open();
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        alert(error.data.message);
+      });
+  };
 
   componentDidMount() {}
 
@@ -53,24 +163,34 @@ export default class EditProfileScreen extends React.Component {
                   flex: 1,
                   alignItems: 'stretch',
                   backgroundColor: '#F2F2F2',
-                  justifyContent: 'space-around',
                   width: 320,
+                  marginBottom: 100,
                   alignSelf: 'center',
-                  height: 700,
                 }}>
                 <View
                   style={{
                     width: 120,
                     height: 120,
                     borderRadius: 60,
-                    backgroundColor: 'red',
+                    
                     alignSelf: 'center',
                     marginTop: 25,
                   }}>
-                  <Image
-                    source={require('../../../assets/Edit-Profile/avatar-Image.png')}
-                    resizeMode="contain"
-                  />
+                    {console.log("kkkdkdkkdkd",this.state.img.trim())}
+                  {this.state.img.trim() == ""?  <Image
+                    source={ require('../../../assets/Edit-Profile/avatar-Image.png')}
+                    
+                    style = {{width: 120,
+                      height: 120,
+                      borderRadius: 60,}}
+                  /> :  <Image
+                  source={{uri:`data:${this.state.mime};base64,${this.state.img}`}}
+                  
+                  style = {{width: 120,
+                    height: 120,
+                    borderRadius: 60,}}
+                />}
+                 
                   <View
                     style={{
                       width: 40,
@@ -80,187 +200,363 @@ export default class EditProfileScreen extends React.Component {
                       right: 0,
                     }}>
                     <TouchableOpacity
-                      onPress={() => {}}
-                      style={{bottom: 0, right: 0, position: 'absolute'}}>
+                      onPress={() => {
+                      
+                        ImagePicker.openPicker({}).then(image => {
+                         
+                          ImgToBase64.getBase64String(image[0].path)
+                          .then(base64String => {
+                            this.setState({img:base64String })
+                            this.setState({mime: image[0].mime })})
+                            .catch(err => console.log(err)); 
+                        
+                        });
+                      }}
+                      style={{ width: 40,
+                        height: 40,bottom: 0, right: 0, position: 'absolute'}}>
                       <Image
                         source={require('../../../assets/Edit-Profile/camera-icon.png')}
                         resizeMode="contain"
                         style={{
                           width: 40,
                           height: 40,
-                          position: 'absolute',
-                          bottom: 0,
-                          right: 0,
                         }}
                       />
                     </TouchableOpacity>
                   </View>
                 </View>
-                <View style={{width: 320, height: 50}}>
+                <View style={{width: 320, height: 50, marginTop: 10}}>
                   <InputView
-                 
-                    changeTextEvent={(newValue) => {
-                     
-                    }}
+                    changeTextEvent={(newValue) => {}}
                     imageSource={require('../../../assets/SignUp/user-icon.png')}
-                    placeholderText={this.data!=null ?this.data.name :translate('user_name_placeholder')}
+                    value={
+                      this.data != null
+                        ? this.data.name
+                        : translate('user_name_placeholder')
+                    }
                     isSecureField={false}
-                    t
+                    isEnable={false}
                     isFullWidth={true}
                   />
                 </View>
-                <View style={{height: 50}}>
+                <View style={{height: 50, marginTop: 10}}>
                   <InputView
-                    
-                    changeTextEvent={(newValue) => {
-                    
-                    }}
+                    changeTextEvent={(newValue) => {}}
                     imageSource={require('../../../assets/SignUp/email-icon.png')}
-                    placeholderText={this.data!=null ?this.data.email :translate('email')}
                     isSecureField={false}
                     isFullWidth={true}
+                    value={
+                      this.data != null ? this.data.email : translate('email')
+                    }
+                    isEnable={false}
                   />
                 </View>
-                <View style={{height: 50}}>
+                <View style={{height: 50, marginTop: 10}}>
                   <InputView
-                   
                     changeTextEvent={(newValue) => {
-                        this.data.phone
+                      this.data.phone;
                     }}
                     imageSource={require('../../../assets/SignUp/phone.png')}
-                    placeholderText={this.data!=null ?this.data.mobile :translate('mobile_number')}
                     isSecureField={false}
+                    value={
+                      this.data != null
+                        ? this.data.mobile
+                        : translate('mobile_number')
+                    }
                     isFullWidth={true}
+                    isEnable={false}
                   />
                 </View>
-                <View style={{height: 50}}>
+                <View style={{height: 50, marginTop: 10}}>
                   <DropDownSelectBox
                     placeholderText={translate('user_type')}
-                    selectedText={ this.data.userType}
+                    selectedText={this.type}
                     imageSource={require('../../../assets/SignUp/user-type.png')}
                     isFullWidth={true}
-                    onPressEvent={() => {
-                      this.Standard.open();
-                    }}
+                    disabled={true}
                   />
                 </View>
-                <View style={{height: 50}}>
+                <View style={{height: 50, marginTop: 10}}>
                   <DropDownSelectBox
                     placeholderText={translate('dob')}
                     imageSource={require('../../../assets/SignUp/dob.png')}
                     isFullWidth={true}
-                    selectedText={''}
+                    selectedText={this.state.date_of_birth}
                     onPressEvent={() => {
                       this.calendar.open();
                     }}
                   />
                 </View>
-                <View
-                  style={{
-                    height: 50,
-                    width: 320,
-                    justifyContent: 'space-between',
-                    flexDirection: 'row',
-                  }}>
-                  <InputView
-                    changeTextEvent={(newValue) => {
-                      console.log('Inputtting something .....', newValue);
-                    }}
-                    imageSource={require('../../../assets/SignUp/region.png')}
-                    placeholderText={translate('region')}
-                    isFullWidth={false}
-                  />
-                  <InputView
-                    changeTextEvent={(newValue) => {
-                      console.log('Inputtting something .....', newValue);
-                    }}
-                    imageSource={require('../../../assets/SignUp/city.png')}
-                    placeholderText={translate('city')}
-                    isFullWidth={false}
-                  />
+                <View style={{marginTop: 10}}>
+                  <View
+                    style={{
+                      width: 320,
+                    }}>
+                    <View
+                      style={{
+                        height: 50,
+                        width: 320,
+                      }}>
+                      <DropDownSelectBox
+                        placeholderText={translate('country')}
+                        imageSource={require('../../../assets/SignUp/country.png')}
+                        isFullWidth={true}
+                        selectedText={this.state.selectedCountry}
+                        onPressEvent={() => {
+                          this.getCountries();
+                        }}
+                      />
+                    </View>
+                  </View>
                 </View>
-                <View
-                  style={{
-                    height: 50,
-                    width: 320,
-                    justifyContent: 'space-between',
-                    flexDirection: 'row',
-                  }}>
-                  <DropDownSelectBox
-                    placeholderText={translate('country')}
-                    imageSource={require('../../../assets/SignUp/country.png')}
-                    isFullWidth={false}
-                    selectedText={''}
-                    onPressEvent={() => {
-                      console.log('Country Drop Down Clicked.......');
-                    }}
-                  />
-                  <InputView
-                    changeTextEvent={(newValue) => {
-                      console.log('Inputtting something .....', newValue);
-                    }}
-                    imageSource={require('../../../assets/SignUp/graduate.png')}
-                    placeholderText={translate('college')}
-                    isFullWidth={false}
-                  />
+
+                <View style={{marginTop: 10}}>
+                  <View
+                    style={{
+                      width: 320,
+                    }}>
+                    <View
+                      style={{
+                        height: 50,
+                        width: 320,
+                      }}>
+                      <DropDownSelectBox
+                        placeholderText={translate('region')}
+                        imageSource={require('../../../assets/SignUp/region.png')}
+                        isFullWidth={true}
+                        selectedText={this.state.selectedRegion}
+                        onPressEvent={() => {
+                          this.getRegionByCountry();
+                        }}
+                      />
+                    </View>
+                  </View>
                 </View>
-                <View style={{height: 50}}>
-                  <InputView
-                    changeTextEvent={(newValue) => {
-                      console.log('Inputtting something .....', newValue);
-                    }}
-                    imageSource={require('../../../assets/Edit-Profile/central-capital.png')}
-                    placeholderText={translate('email')}
-                    isSecureField={false}
-                    isFullWidth={true}
-                  />
+
+                <View style={{marginTop: 10}}>
+                  <View
+                    style={{
+                      width: 320,
+                    }}>
+                    <View
+                      style={{
+                        height: 50,
+                        width: 320,
+                      }}>
+                      <DropDownSelectBox
+                        placeholderText={translate('city')}
+                        imageSource={require('../../../assets/SignUp/city.png')}
+                        isFullWidth={true}
+                        selectedText={this.state.selectedCity}
+                        onPressEvent={() => {
+                          this.getCityByRegion();
+                        }}
+                      />
+                    </View>
+                  </View>
+                  {this.data.user_type == 2 ? (
+                    <View>
+                      <View style={{height: 50, width: 320, marginTop: 10}}>
+                        <DropDownSelectBox
+                          placeholderText={translate('university')}
+                          imageSource={require('../../../assets/SignUp/university.png')}
+                          isFullWidth={true}
+                          selectedText={this.state.selectedUniversity}
+                          onPressEvent={() => {
+                            if (this.state.selectedCountryId == 0) {
+                              alert('Please select country');
+                            } else {
+                              this.getUniversities();
+                            }
+                          }}
+                        />
+                      </View>
+                      <View
+                        style={{
+                          height: 50,
+                          width: 320,
+                          marginTop: 10,
+                          flexDirection: 'row',
+                        }}>
+                        <DropDownSelectBox
+                          placeholderText={translate('college')}
+                          imageSource={require('../../../assets/SignUp/graduate.png')}
+                          isFullWidth={true}
+                          selectedText={this.state.selectedCollege}
+                          onPressEvent={() => {
+                            if (this.state.selectedUniversityId == 0) {
+                              alert('Please select university');
+                            } else {
+                              this.getCollegeByUniversities();
+                            }
+                          }}
+                        />
+                      </View>
+                    </View>
+                  ) : null}
+
+                  {this.data.user_type == 3 ? (
+                    <View style={{marginTop: 10}}>
+                      <View style={{height: 50, width: 320}}>
+                        <InputView
+                          changeTextEvent={(newValue) => {
+                            this.setState({iqamaNo: newValue});
+                          }}
+                          imageSource={require('../../../assets/SignUp/university.png')}
+                          placeholderText={translate('Iqama_number')}
+                          style={{width: 150}}
+                          isFullWidth={true}
+                        />
+                      </View>
+                    </View>
+                  ) : null}
+                  {this.data.user_type == 4 ? (
+                    <View style={{marginTop: 10}}>
+                      <View style={{height: 50, width: 320}}>
+                        <InputView
+                          changeTextEvent={(newValue) => {
+                            this.setState({crNo: newValue});
+                          }}
+                          imageSource={require('../../../assets/SignUp/university.png')}
+                          placeholderText={translate('cr_no')}
+                          style={{width: 150}}
+                          isFullWidth={true}
+                        />
+                      </View>
+                    </View>
+                  ) : null}
                 </View>
               </View>
               <RBSheet
                 ref={(ref) => {
-                  this.Standard = ref;
-                }}
-                height={150}>
-                <View>
-                  <FlatList
-                    data={userType}
-                    renderItem={({item}) => {
-                      return (
-                        <TouchableOpacity
+                  this.countriesSheet = ref;
+                }}>
+                <FlatList
+                  data={this.state.countries}
+                  renderItem={({item}) => {
+                    return (
+                      <TouchableOpacity
+                        style={{
+                          height: 50,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          borderBottomWidth: 1,
+                          borderColor: '#D3D3D3',
+                        }}
+                        onPress={() => {
+                          this.setState({selectedCountry: item.name});
+                          this.setState({selectedCountryId: item.id});
+                          this.countriesSheet.close();
+                        }}>
+                        <View
                           style={{
-                            height: 50,
+                            flex: 1,
                             justifyContent: 'center',
-                            alignItems: 'center',
-                            borderBottomWidth: 1,
-                            borderColor: '#D3D3D3',
-                            backgroundColor: '#F2F2F2',
-                          }}
-                          onPress={() => {
-                            this.Standard.close();
+                            alignItems: 'stretch',
                           }}>
-                          <View
+                          <Text
                             style={{
-                              flex: 1,
-                              justifyContent: 'center',
-                              alignItems: 'stretch',
+                              color: 'black',
+                              fontWeight: '500',
+                              alignSelf: 'center',
+                              fontSize: 18,
                             }}>
-                            <Text
-                              style={{
-                                color: 'black',
-                                fontWeight: '500',
-                                alignSelf: 'center',
-                                fontSize: 18,
-                              }}>
-                              {item.label}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      );
-                    }}
-                    keyExtractor={(item) => item.id}
-                  />
-                </View>
+                            {item.name}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  }}
+                  keyExtractor={(item) => item.id}
+                />
               </RBSheet>
+              <RBSheet
+                ref={(ref) => {
+                  this.regionSheet = ref;
+                }}>
+                <FlatList
+                  data={this.state.regions}
+                  renderItem={({item}) => {
+                    return (
+                      <TouchableOpacity
+                        style={{
+                          height: 50,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          borderBottomWidth: 1,
+                          borderColor: '#D3D3D3',
+                        }}
+                        onPress={() => {
+                          this.setState({selectedRegion: item.region});
+                          this.setState({selectedRegionId: item.id});
+                          this.regionSheet.close();
+                        }}>
+                        <View
+                          style={{
+                            flex: 1,
+                            justifyContent: 'center',
+                            alignItems: 'stretch',
+                          }}>
+                          <Text
+                            style={{
+                              color: 'black',
+                              fontWeight: '500',
+                              alignSelf: 'center',
+                              fontSize: 18,
+                            }}>
+                            {item.region}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  }}
+                  keyExtractor={(item) => item.id}
+                />
+              </RBSheet>
+              <RBSheet
+                ref={(ref) => {
+                  this.citySheet = ref;
+                }}>
+                <FlatList
+                  data={this.state.cities}
+                  renderItem={({item}) => {
+                    return (
+                      <TouchableOpacity
+                        style={{
+                          height: 50,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          borderBottomWidth: 1,
+                          borderColor: '#D3D3D3',
+                        }}
+                        onPress={() => {
+                          this.setState({selectedCity: item.city});
+                          this.setState({selectedCityId: item.id});
+                          this.citySheet.close();
+                        }}>
+                        <View
+                          style={{
+                            flex: 1,
+                            justifyContent: 'center',
+                            alignItems: 'stretch',
+                          }}>
+                          <Text
+                            style={{
+                              color: 'black',
+                              fontWeight: '500',
+                              alignSelf: 'center',
+                              fontSize: 18,
+                            }}>
+                            {item.city}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  }}
+                  keyExtractor={(item) => item.id}
+                />
+              </RBSheet>
+
               <RBSheet
                 ref={(ref) => {
                   this.calendar = ref;
@@ -283,16 +579,103 @@ export default class EditProfileScreen extends React.Component {
                     selectedDayTextColor="#FFFFFF"
                     scrollable={true}
                     onDateChange={(STATE_DATE, END_DATE) => {
-                      console.log('STATE_DATE:::', STATE_DATE.toObject());
                       var str = `${STATE_DATE.toObject().date}-${
                         STATE_DATE.toObject().months + 1
                       }-${STATE_DATE.toObject().years}`;
-                      this.setDateOfBirth(str);
-                      console.log('END_DATE:::', str);
+                      this.setState({date_of_birth: str});
+                      this.calendar.close();
                     }}
                   />
                 </View>
               </RBSheet>
+              <RBSheet
+              ref={(ref) => {
+                this.universitySheet = ref;
+              }}>
+              <FlatList
+                data={this.state.universities}
+                renderItem={({item}) => {
+                  return (
+                    <TouchableOpacity
+                      style={{
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderBottomWidth: 1,
+                        borderColor: '#D3D3D3',
+                      
+                      }}
+                      onPress={() => {
+                        this.setState({selectedUniversity: item.name});
+                        this.setState({selectedUniversityId: item.id});
+                        this.universitySheet.close();
+                      }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          justifyContent: 'center',
+                          alignItems: 'stretch',
+                        }}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            fontWeight: '500',
+                            alignSelf: 'center',
+                            fontSize: 18,
+                          }}>
+                          {item.name}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                }}
+                keyExtractor={(item) => item.id}
+              />
+            </RBSheet>
+            <RBSheet
+              ref={(ref) => {
+                this.collegeSheet = ref;
+              }}>
+              <FlatList
+                data={this.state.colleges}
+                renderItem={({item}) => {
+                  return (
+                    <TouchableOpacity
+                      style={{
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderBottomWidth: 1,
+                        borderColor: '#D3D3D3',
+                   
+                      }}
+                      onPress={() => {
+                        this.setState({selectedCollege: item.college});
+                        this.setState({selectedCollegeId: item.id});
+                        this.collegeSheet.close();
+                      }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          justifyContent: 'center',
+                          alignItems: 'stretch',
+                        }}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            fontWeight: '500',
+                            alignSelf: 'center',
+                            fontSize: 18,
+                          }}>
+                          {item.college}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                }}
+                keyExtractor={(item) => item.id}
+              />
+            </RBSheet>
             </KeyboardAwareScrollView>
           </View>
           <View
@@ -300,8 +683,8 @@ export default class EditProfileScreen extends React.Component {
               backgroundColor: '#FFFFFF',
               position: 'absolute',
               bottom: 0,
-              left:0,
-              right:0,
+              left: 0,
+              right: 0,
               paddingBottom: 10,
               alignitems: 'center',
               justifyContent: 'center',
@@ -317,7 +700,7 @@ export default class EditProfileScreen extends React.Component {
               }}>
               <View style={{width: '48%', height: '100%'}}>
                 <BorderButton
-                  clickEvent={() => {}}
+                  clickEvent={() => {this.props.navigation.goBack()}}
                   name={translate('cancel')}
                 />
               </View>
@@ -330,6 +713,7 @@ export default class EditProfileScreen extends React.Component {
                 />
               </View>
             </View>
+            {this.state.isLoading ? <Loader loading={this.state.loading} /> : null}
           </View>
         </View>
       </SafeAreaView>

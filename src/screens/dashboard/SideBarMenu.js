@@ -97,6 +97,7 @@ const SidebarMenu = ({props,data,logout}) => {
   return (
     <View style={{flex: 1}}>
       {/*Top Large Image */}
+ 
       <DrawerProfile data={data} {...props} />
       <DrawerContentScrollView {...props}>
         <DrawerItem

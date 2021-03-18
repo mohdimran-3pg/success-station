@@ -125,6 +125,7 @@ export default class UserSignUpForm extends React.Component {
   };
 
   getUniversities() {
+    this.setState({isLoading: true});
     ApiService.get('universities', {
       country: this.state.selectedCountryId,
     })

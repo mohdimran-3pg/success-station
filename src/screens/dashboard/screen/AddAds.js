@@ -331,7 +331,7 @@ export default class AddAdsScreen extends React.Component {
                   <TouchableOpacity 
                       style={{width: "100%", height: "100%", justifyContent: "center", alignItems: 'center'}}
                       onPress={() => {
-                    
+                        
                         ImagePicker.openPicker({}).then(image => {
                           console.log(image)
                           this.imagePath = image[0].path

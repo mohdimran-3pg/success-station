@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { View, Text, Image, StyleSheet, TextInput ,I18nManager} from "react-native";
 
-const InputView = ({ changeTextEvent , imageSource, placeholderText, isSecureField, isFullWidth, keyboardTypeValue = "default"}) => {
+const InputView = ({ changeTextEvent , imageSource, placeholderText, isSecureField, isFullWidth, keyboardTypeValue = "default" ,value = '',isEnable = true}) => {
     const [borderWidth, setBorderWidth] = useState(0);
     return (
         <View style={[isFullWidth ? style.inputFullViewStyle : style.inputHalfViewStyle, {borderWidth: borderWidth}]}>
@@ -15,6 +15,8 @@ const InputView = ({ changeTextEvent , imageSource, placeholderText, isSecureFie
                 <TextInput
                     autoCapitalize="none"
                     autoCorrect={false}
+                    editable={isEnable} 
+                    selectTextOnFocus={isEnable}
                     style={isFullWidth ? style.inputFullFieldStyle : style.inputHalfFieldStyle,{textAlign: I18nManager.isRTL ? 'right' : 'left'}}
                     onChangeText = {(newValue) => {
                         changeTextEvent(newValue)
@@ -23,6 +25,8 @@ const InputView = ({ changeTextEvent , imageSource, placeholderText, isSecureFie
                     onFocus = {(newValue) => {
                         setBorderWidth(1);
                     }}
+                    
+                    defaultValue = {value}
                     keyboardType={keyboardTypeValue}
                     placeholder={placeholderText}
                     secureTextEntry={isSecureField}

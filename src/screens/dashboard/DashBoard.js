@@ -494,7 +494,7 @@ constructor(props) {
           iconStyle :{margin:3}
         }} 
     
-        drawerContent={(props) => <SidebarMenu {...props} data= {this.state.userdata} logout = 
+        drawerContent={(props) => <SidebarMenu props= {props} data= {this.state.userdata} logout = 
         {()=>
           AsyncStorage.removeItem('userdata').then(()=>this.props.navigation.replace('login'))
          
