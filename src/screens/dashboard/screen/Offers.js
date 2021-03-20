@@ -69,7 +69,7 @@ export default class OffersScreen extends React.Component {
         var tempArray = []
         tempArray.push({
           key: 0,
-          title : "All"
+          title :translate('all')
         })
         for (var key in response.data) {
          var temp = {

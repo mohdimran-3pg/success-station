@@ -104,6 +104,7 @@ export default class MyLoacationScreen extends React.Component {
       phone: '',
       website: '',
       email: '',
+      borderWidth:0
     }
   }
 
@@ -209,13 +210,17 @@ export default class MyLoacationScreen extends React.Component {
         <KeyboardAwareScrollView>
            
           <View style={{width: 120, height: 120, borderRadius: 60, backgroundColor: "red", alignSelf: "center", marginTop: 25}}>
-          {this.state.base64Data != '' ? (
-          <Image style={{flex: 1, borderRadius: 60, width: 120, height: 120}} 
-          resizeMode="contain"
-          source={{
-            uri : `data:${this.state.mime};base64,${this.state.base64Data}` }}
-          />
-          ): null}
+          {this.state.base64Data.trim() == ""?  <Image
+                    source={ require('../../../../assets/Edit-Profile/avatar-Image.png')}
+                    style = {{width: 120,
+                      height: 120,
+                      borderRadius: 60,}}
+                  /> :  <Image
+                  source={{uri:"data:image/png;base64,"+this.state.img}}
+                  style = {{width: 120,
+                    height: 120,
+                    borderRadius: 60,}}
+                />}
             <View style={{width: 40, height: 40, position: "absolute", bottom: 0, right: 0}}>
                 <TouchableOpacity onPress={() => {
                     ImagePicker.openPicker({}).then(image => {
@@ -303,12 +308,12 @@ export default class MyLoacationScreen extends React.Component {
                   <TextInput
                       autoCapitalize="none"
                       autoCorrect={false}
-                      style={{textAlign: I18nManager.isRTL ? 'right' : 'left', borderColor: "#0A878A", borderRadius:4, height: 90,textAlignVertical: 'top', backgroundColor: '#FFFFFF'}}
+                      style={{textAlign: I18nManager.isRTL ? 'right' : 'left', borderWidth: this.state.borderWidth, borderColor: "#0A878A", borderRadius:4, height: 90,textAlignVertical: 'top', backgroundColor: '#FFFFFF'}}
                       placeholder={`  `+translate('description')}
                       multiline={true}
                       onChangeText={text => this.setState({desc: text})}
                       onFocus = {(newValue) => {
-                      
+                        this.setState({borderWidth:1})
                       }}
                   />
                 </View>

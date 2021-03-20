@@ -71,6 +71,7 @@ const CardItem = ({item,...props}) => {
                     fontSize: 10,
                     color: 'rgba(0, 0, 0, 0.6)',
                     marginStart: 5,
+                    marginEnd: 5,
                   }}>
                   {fullAddress}
                 </Text>
@@ -126,7 +127,7 @@ export default class StudentProfile extends React.Component {
         var tempArray = []
         tempArray.push({
           key: 0,
-          title : "All"
+          title : translate('all')
         })
         for (var key in response.data) {
          var temp = {
@@ -195,7 +196,7 @@ export default class StudentProfile extends React.Component {
               height: 30,
               fontSize: 18,
             }}>
-            Book List
+            {translate('book_list')}
           </Text>
           <View style={{flex: 1, alignItems: 'flex-end'}}>
             <TouchableOpacity

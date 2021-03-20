@@ -1,5 +1,6 @@
 {
   "choose_language": "Choose the Language",
+  "choose_country": "Choose the Country",
   "welcome_back": "Welcome Back!",
   "sign_continue":"Sign in to continue",
   "remember_me": "Remember me",
@@ -99,5 +100,9 @@
   "student": "Student",
   "individual": "Individual",
   "company": "Company",
-  "website": "موقع الكتروني"
+  "website": "website",
+  "book_list": "Book List",
+  "all": "All",
+  "my_location": "My Location",
+  "logout": "Logout"
 }
