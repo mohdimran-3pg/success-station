@@ -303,11 +303,12 @@ export default class MyLoacationScreen extends React.Component {
                   <TextInput
                       autoCapitalize="none"
                       autoCorrect={false}
-                      style={{textAlign: I18nManager.isRTL ? 'right' : 'left', borderColor: "#0A878A", borderRadius:4, height: 90,textAlignVertical: 'top', backgroundColor: '#FFFFFF'}}
+                      style={{textAlign: I18nManager.isRTL ? 'right' : 'left', borderWidth: this.state.borderWidth, borderColor: "#0A878A", borderRadius:4, height: 90,textAlignVertical: 'top', backgroundColor: '#FFFFFF'}}
                       placeholder={`  `+translate('description')}
                       multiline={true}
                       onChangeText={text => this.setState({desc: text})}
                       onFocus = {(newValue) => {
+                        this.setState({borderWidth:1})
                       
                       }}
                   />

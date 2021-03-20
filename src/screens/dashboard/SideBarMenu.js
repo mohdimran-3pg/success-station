@@ -117,7 +117,7 @@ const SidebarMenu = ({props,data,logout}) => {
 
         <DrawerItem 
           icon={({color, size}) => <DrawerIcon src={cardLocation} />}
-          label={'My Location'}
+          label={translate('my_location')}
           onPress={() => {
             props.navigation.navigate('MyLocation');
           }}
@@ -190,7 +190,7 @@ const SidebarMenu = ({props,data,logout}) => {
            <DrawerItem
            
           icon={({color, size}) => <DrawerIcon src={notificationIcon} />}
-          label='Logout'
+          label={translate('logout')}
           onPress={() => logout()}
         />
       </DrawerContentScrollView>

@@ -40,7 +40,7 @@ export default class CountrySelectScreen extends React.Component {
 
     static navigationOptions = ({ navigation, navigationOptions }) => {
         return {
-            title: translate('choose_language')
+            title: translate('choose_country')
         };
     };
 

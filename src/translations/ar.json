@@ -1,5 +1,6 @@
 {
     "choose_language": "اختر اللغة",
+    "choose_country": "اختر الدولة",
     "welcome_back": "مرحبا بعودتك!",
     "sign_continue":"تسجيل الدخول للمتابعة",
     "remember_me": "تذكرنى",
@@ -80,7 +81,7 @@
     "status": "الحالة",
     "section": "الجزء",
     "write_comment_here": "اكتب تعليق هنا",
-    "add_to_favourites": "Add to Favourites",
+    "add_to_favourites": "أضف إلى المفضلة",
     "contact": "اتصل",
     "connect": "الاتصال",
     "read_more": "اقرأ أكثر",
@@ -100,5 +101,10 @@
     "student": "طالب علم",
     "individual": "فرد",
     "company": "شركة",
-    "website": "Website"
+    "website": "موقع الكتروني",
+    "all": "الجميع",
+    "my_location": "موقعي",
+    "logout": "تسجيل خروج",
+    "hello": "",
+    "hello2": ""
   }  
