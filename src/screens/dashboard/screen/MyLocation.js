@@ -209,13 +209,19 @@ export default class MyLoacationScreen extends React.Component {
         <KeyboardAwareScrollView>
            
           <View style={{width: 120, height: 120, borderRadius: 60, backgroundColor: "red", alignSelf: "center", marginTop: 25}}>
-          {this.state.base64Data != '' ? (
-          <Image style={{flex: 1, borderRadius: 60, width: 120, height: 120}} 
-          resizeMode="contain"
-          source={{
-            uri : `data:${this.state.mime};base64,${this.state.base64Data}` }}
-          />
-          ): null}
+          {this.state.base64Data.trim() == ""?  <Image
+                    source={ require('../../../../assets/Edit-Profile/avatar-Image.png')}
+                    
+                    style = {{width: 120,
+                      height: 120,
+                      borderRadius: 60,}}
+                  /> :  <Image
+                  source={{uri:"data:image/png;base64,"+this.state.base64Data}}
+                  
+                  style = {{width: 120,
+                    height: 120,
+                    borderRadius: 60,}}
+                />}
             <View style={{width: 40, height: 40, position: "absolute", bottom: 0, right: 0}}>
                 <TouchableOpacity onPress={() => {
                     ImagePicker.openPicker({}).then(image => {
