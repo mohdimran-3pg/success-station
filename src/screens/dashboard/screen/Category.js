@@ -89,6 +89,12 @@ const CardItem = ({item,...props}) => {
               </View>
             </View>
           </View>
+          <View style={{right: 5, top: 5, position: "absolute", borderRadius: 11, width: 22, height: 22, backgroundColor: "#ffffff", justifyContent: 'center'}}>
+              <Image 
+                style={{width: 11, height: 11, alignSelf: "center"}}
+                source={ require('../../../../assets/heart.png') }
+              />
+          </View>
         </View>
       </Card>
     </TouchableOpacity>
