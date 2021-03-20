@@ -1,13 +1,14 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity,I18nManager } from "react-native";
 
-const DropDownSelectBox = ({imageSource, placeholderText,selectedText, isFullWidth, onPressEvent}) => {
+const DropDownSelectBox = ({imageSource, placeholderText,selectedText, isFullWidth,disabled=false, onPressEvent}) => {
     
     return (
         <TouchableOpacity style={ isFullWidth ? style.inputFullViewStyle :style.inputHalfViewStyle}
             onPress = {() =>{
                 onPressEvent();
             }}
+            disabled ={disabled}
         >
             <View style={{ width: 18, justifyContent: "center"}}>
                 <Image 

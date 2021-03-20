@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-
 import {
   adsIcon,
   userAgreementIcon,
@@ -43,7 +42,7 @@ const DrawerProfile = ({data, ...props}) => {
           marginTop: 20,
         }}
         onPress={() => {
-          props.navigation.navigate('EditProfile');
+          props.navigation.navigate('EditProfile',{data:data});
         }}>
         <Image
           source={require('./../../../assets/drawer/edit.png')}
@@ -59,14 +58,15 @@ const DrawerProfile = ({data, ...props}) => {
             marginStart: 20,
             justifyContent: 'center',
           }}>
-          <Text style={styles.name} ellipsizeMode='tail' numberOfLines={1}>{data.name}</Text>
-          <Text style={styles.email} ellipsizeMode='tail' numberOfLines={1}>{data.email}</Text>
+          
+          <Text style={styles.name} ellipsizeMode='tail' numberOfLines={1}>{data!=null ?data.name :""}</Text>
+          <Text style={styles.email} ellipsizeMode='tail' numberOfLines={1}>{data!=null ?data.email:""}</Text>
         </View>
       </View>
 
       <View
         style={{
-          marginTop: 30,
+          marginTop: 16,
           height: 1,
           borderBottomColor: '#E2E2E2',
           borderBottomWidth: 1,
@@ -91,11 +91,13 @@ const LinkMenuItem = ({title, src, link}) => {
   );
 };
 
-const SidebarMenu = (props,data) => {
+ 
+const SidebarMenu = ({props,data,logout}) => {
 
   return (
     <View style={{flex: 1}}>
       {/*Top Large Image */}
+ 
       <DrawerProfile data={data} {...props} />
       <DrawerContentScrollView {...props}>
         <DrawerItem
@@ -185,6 +187,12 @@ const SidebarMenu = (props,data) => {
           title={translate('cntact_us')}
           src={contactIcon}
           link="https://www.google.com"></LinkMenuItem>
+           <DrawerItem
+           
+          icon={({color, size}) => <DrawerIcon src={notificationIcon} />}
+          label='Logout'
+          onPress={() => logout()}
+        />
       </DrawerContentScrollView>
     </View>
   );
