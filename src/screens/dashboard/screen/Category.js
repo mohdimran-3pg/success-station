@@ -29,6 +29,11 @@ const
 
 
 const CardItem = ({item,...props}) => {
+  var city = item.city.city != null ? item.city.city+", ": ""
+  var region = item.region.region != null ? item.region.region+", ": ""
+  var country = item.country.name != null ? item.country.name: ""
+  var fullAddress = `${city+region+country}`
+
   var header_View = (
     <TouchableOpacity style={{flex: 1}} onPress= {()=>{
     
@@ -67,7 +72,7 @@ const CardItem = ({item,...props}) => {
                     color: 'rgba(0, 0, 0, 0.6)',
                     marginStart: 5,
                   }}>
-                  {item.cities[0].city}
+                  {fullAddress}
                 </Text>
               </View>
               <View style={{flexDirection: 'row'}}>
@@ -132,7 +137,6 @@ export default class StudentProfile extends React.Component {
         }
         this.setState({categories: tempArray})
         this.getBooks();
-        console.log(response)
       })
       .catch((error) => {
         this.setState({isLoading: false});
@@ -143,12 +147,10 @@ export default class StudentProfile extends React.Component {
     ApiService.get('listings')
       .then((response) => {
         this.setState({isLoading: false});
-        console.log("Books Data is:::", response.data)
         this.setState({books: response.data})
       })
       .catch((error) => {
         this.setState({isLoading: false});
-        console.log("Error of Book is :::", error)
       });
   }
 
@@ -165,8 +167,6 @@ export default class StudentProfile extends React.Component {
     } else {
       this.getBooks()
     }
-
-    
   }
 
   componentDidMount() {

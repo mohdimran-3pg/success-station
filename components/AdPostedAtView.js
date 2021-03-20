@@ -5,25 +5,17 @@ import i18n from 'i18n-js';
 import {translate} from "../src/util/TranslationUtils";
 import BorderButton from './BorderButton';
 import MapView, { Marker } from "react-native-maps";
-const AdPostedAtView = () => {
+const AdPostedAtView = ({clickEvent}) => {
     const [region, setRegion] = useState({
         latitude: 21.487301,
         longitude: 39.181339,
         latitudeDelta: 0.009,
         longitudeDelta: 0.009
       });
+    const [comment, setComment] = useState('');
     return (
-        <View style={{width: "100%", height: 270}}>
-            <View style={{width: "90%", alignSelf: "center", height: 150}}>
-                <Text style={{fontSize: 20, fontWeight: "700", fontStyle: "normal", marginTop: 10}}>Ad Posted at</Text>
-                <MapView
-      style={{ flex: 1 }}
-      region={region}
-      onRegionChangeComplete={region => setRegion(region)}
-    >
-      <Marker coordinate={{ latitude: 21.487301, longitude:39.181339 }} />
-    </MapView>
-            </View>
+        <View style={{width: "100%", height: 200}}>
+            <Text style={{fontSize: 20, fontWeight: "700", fontStyle: "normal", marginTop: 10, marginLeft: 15}}>{translate('ad_posted_at')}</Text>
             <View style={{width: "90%", alignSelf: "center"}}>
                 <TextInput
                     autoCapitalize="none"
@@ -33,6 +25,11 @@ const AdPostedAtView = () => {
                     multiline={true}
                     onFocus = {(newValue) => {
                     }}
+                    onChangeText = {(newValue) => {
+                        setComment(newValue);
+                    }}
+                    clearButtonMode="always"
+                    selectedText={comment}
                 />
             </View>
             <View style={{width: "90%", alignSelf: "center"}}>
@@ -40,7 +37,8 @@ const AdPostedAtView = () => {
                     <BorderButton
                         name={translate("add_a_comment")}
                         clickEvent={() => {
-                            
+                            clickEvent(comment)
+                            setComment('')
                         }}
                     />  
                 </View>

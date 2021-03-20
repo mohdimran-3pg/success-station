@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
-  ScrollView
+  ScrollView,
+  FlatList
 } from 'react-native';
 
 import DisplayBookInformation from '../../../../../components/DisplayBookInformation';
@@ -17,8 +18,7 @@ import CommentView from '../../../../../components/CommentView';
 import ButtonViewWithImage from '../../../../../components/ButtonViewWithImage';
 import ApiService from '../../../../network/ApiService';
 import Loader from '../../../Loader';
-
-
+import AsyncStorage from '@react-native-community/async-storage'
 
 export default class BookDetailScreen extends React.Component {
 
@@ -26,15 +26,26 @@ export default class BookDetailScreen extends React.Component {
         this.setState({isLoading: true});
         ApiService.get(`listings?id=${this.props.route.params.data.bookId}`)
         .then((response) => {
-            this.setState({isLoading: false});
-            console.log("Book Data is ::::: ",response.data.category.category);
-            console.log("Image is this :::: ", response.data.media[0].url)
             this.setState({book: response.data})
+            var city = response.data.city.city != null ? response.data.city.city+", ": ""
+            var region = response.data.region.region != null ? response.data.region.region+", ": ""
+            var country = response.data.country.name != null ? response.data.country.name: ""
+            var fullAddress = `${city+region+country}`
+            this.setState({fullAddress: fullAddress})
+            this.getBookComments();
         })
         .catch((error) => {
             this.setState({isLoading: false});
-        console.log("Error of Book is :::", error)
         });
+    }
+
+    getBookComments = () => {
+
+        ApiService.get(`comments?listing=${this.props.route.params.data.bookId}`)
+        .then((response) => {
+            this.setState({isLoading: false});
+            this.setState({comments: response.data})
+        })
     }
 
     static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -50,9 +61,18 @@ export default class BookDetailScreen extends React.Component {
         
         this.state = {
             isLoading: false,
-            book: {}
+            book: {},
+            userId: 0,
+            comments: [],
+            fullAddress: ''
         }
         
+        AsyncStorage.getItem('userdata').then((value)=> {
+            if(!value || 0 != value.length){ 
+                this.setState({userId : JSON.parse(value).user_id})
+            }
+        }).catch(()=> {
+        })
     }
 
     componentDidMount() {
@@ -68,7 +88,7 @@ export default class BookDetailScreen extends React.Component {
         return (
             <SafeAreaView style={{flex: 1}}>
                 <View style={{flex: 1}}>
-                    <View style={{width: '100%'}}>
+                    <View style={{width: '100%', marginBottom: 90}}>
                         <ScrollView style={{}}>
                         <View style={{height: 280, width: "100%"}}>
                             {this.state.book.media != null?
@@ -110,7 +130,7 @@ export default class BookDetailScreen extends React.Component {
                                     <View style={{width: "25%", marginLeft: 15}}>
                                         <DisplayBookInformation 
                                             heading={translate("city")}
-                                            headingValue={this.state.book.cities != null && this.state.book.cities.length > 0 ? this.state.book.cities[0].city: "N/A"}
+                                            headingValue={this.state.fullAddress != '' ? this.state.fullAddress: "N/A"}
                                         />
                                     </View>
                                     <View style={{width: "25%", marginLeft: 15}}>
@@ -162,38 +182,54 @@ export default class BookDetailScreen extends React.Component {
                                 />
                             </View>
                             <View style={{width: "100%", height: 6, backgroundColor: "#F4F7FC", marginTop: 15}}></View>
-                            <View style={{width: "100%", height: 290}}>
-                                <AdPostedAtView />
+                            <View style={{width: "100%", height: 200}}>
+                                <AdPostedAtView
+                                    clickEvent={(comment) => {
+                                        this.setState({isLoading: true});
+                                        if (comment.length > 0) {
+                                            var data = {
+                                                "user_name_id": this.state.userId,
+                                                "listing_id": this.props.route.params.data.bookId,
+                                                "comment": comment,
+                                                "parent_comment": "0"
+                                              }
+                                            ApiService.post('add-comment', data)
+                                            .then((response) => {
+                                                this.setState({isLoading: false});
+                                                this.getBookComments();
+                                                console.log("API response is:::::", response)
+                                            })
+                                            .catch((error) => {
+                                                this.setState({isLoading: false});
+                                                alert(error.data.message);
+                                            });
+                                        } else {
+                                            alert('Please enter comment');
+                                        }
+                                    }}
+                                />
 
                             </View>
                             <View style={{width: "100%", height: 6, backgroundColor: "#F4F7FC", marginTop: 15}}></View>
-                            <View style={{width: "100%"}}>
+                            <FlatList
+                                style={{marginTop:10,marginBottom:10}}
+                                data={this.state.comments}
+                                renderItem={({item}) => <View style={{width: "100%"}}>
                                 <CommentView
                                     clickEvent={() => {
 
                                     }}
+                                    data = {item}
                                 />
-                            </View>
-                            <View style={{width: "100%"}}>
-                                <CommentView
-                                    clickEvent={() => {
-
-                                    }}
-                                />
-                            </View>
-                            <View style={{width: "100%", marginBottom: 80}}>
-                                <CommentView
-                                    clickEvent={() => {
-
-                                    }}
-                                />
-                            </View>
+                            </View>} 
+                                numColumns={2}
+                            />
                         </ScrollView>
                     </View>
-                    <View style={{width: "100%", backgroundColor: "white", position: "absolute", bottom: 0}}>
-                        <View style={{height: 80, width: "100%"}}>
-                            <View style={{width: "95%", flexDirection: 'row', justifyContent: 'space-between', height: "100%", alignSelf: "center"}}>
-                                <View style={{width: "42%", height: "100%"}}>
+                    <View style={{width: "100%", backgroundColor: "white", position: "absolute", bottom: 0, justifyContent: "center",}}>
+                        <View style={{height: 80, width: "100%", justifyContent: "center", alignContent: "center",}}>
+                            <View style={{flex: 1,flexDirection: 'row', justifyContent: 'space-around', height: "100%"}}>
+                                <View style={{width: "42%", height: "100%", justifyContent: "center"}}>
                                     <ButtonViewWithImage 
                                         name={translate('contact')}
                                         clickEvent={() => {
@@ -202,10 +238,19 @@ export default class BookDetailScreen extends React.Component {
                                         isBackground={true}
                                     />    
                                 </View>
-                                <View style={{width: "52%", height: "100%"}}>
+                                <View style={{width: "52%", height: "100%", justifyContent: "center"}}>
                                     <ButtonViewWithImage 
                                         name={translate('add_to_favourites')}
                                         clickEvent={() => {
+                                            this.setState({isLoading: true});
+                                            ApiService.post('mark-favorite', {
+                                                "user_name_id": this.state.userId,
+                                                "listing_id": this.props.route.params.data.bookId
+                                              }).then(() => {
+                                                this.setState({isLoading: false});
+                                              }).catch(() => {
+                                                this.setState({isLoading: false});
+                                              })
                                         }}
                                         imgSource={require('../../../../../assets/book/heart-icon.png')}
                                         isBackground={false}
