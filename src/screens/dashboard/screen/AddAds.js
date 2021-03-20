@@ -332,9 +332,8 @@ export default class AddAdsScreen extends React.Component {
                       style={{width: "100%", height: "100%", justifyContent: "center", alignItems: 'center'}}
                       onPress={() => {
                         
-                        ImagePicker.openPicker({}).then(image => {
-                          console.log(image)
-                          this.imagePath = image[0].path
+                        ImagePicker.openPicker({includeBase64:true}).then(image => {
+                          this.imagePath = image[0].data
                           this.mime = image[0].mime
                         });
                       }

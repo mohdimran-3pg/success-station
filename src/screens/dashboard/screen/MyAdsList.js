@@ -25,6 +25,7 @@ import {translate} from '../../../util/TranslationUtils';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
 const CardItem = ({item,...props}) => {
+ 
   let imageurl = item.image.length > 0 ? item.image[0].url: ""
   var header_View = (
     <TouchableOpacity style={{flex: 1}} onPress= {()=>props.navigation.navigate('BookDetailScreen', { data: { bookId: item.id} })}>
@@ -92,6 +93,11 @@ export default class MyAdsListScreen extends React.Component {
   componentDidMount() {
     this.getBooks();
   }
+ 
+
+  
+  
+  
 
   getBooks = () => {
     this.setState({isLoading : true})
@@ -104,6 +110,7 @@ export default class MyAdsListScreen extends React.Component {
         .then((response) => {
           this.setState({isLoading: false});
           this.setState({books: response.data})
+          
         })
         .catch((error) => {
           this.setState({isLoading: false});
@@ -122,11 +129,11 @@ export default class MyAdsListScreen extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1,backgroundColor:'white'}}>
        
        
         <FlatList
-          style={{marginTop:10,marginBottom:10,backgroundColor:'white'}}
+          style={{marginTop:10,marginBottom:10}}
           data={this.state.books}
           renderItem={({item}) => <CardItem item = {item} {...this.props}/>} 
           numColumns={2}

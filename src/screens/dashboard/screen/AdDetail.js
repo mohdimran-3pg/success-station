@@ -31,7 +31,7 @@ import Loader from './../../Loader';
       super(props);
       this.state = {isLoading: false,
         borderWidth:0,
-        img:''
+        
       }
   
     
@@ -39,10 +39,7 @@ import Loader from './../../Loader';
       console.log(JSON.stringify(this.adsData))
       this.userData =''
        
-      ImgToBase64.getBase64String(this.adsData.imagePath)
-        .then(base64String => {
-          this.setState({img:base64String})})
-          .catch(err => console.log(err));  
+
               
       AsyncStorage.getItem('userdata').then((value)=> {
         
@@ -57,13 +54,13 @@ import Loader from './../../Loader';
     }
 
     postAds =()=>{
-      this.adsData.image = `data:${this.adsData.mime};base64,${this.state.img}`
+      this.adsData.image = `data:${this.adsData.mime};base64,${this.adsData.imagePath}`
       this.adsData.user_name_id = this.userData.user_id
       this.setState({isLoading: true});
       ApiService.post('listings-create',this.adsData)
     .then((response) => {
         this.setState({isLoading: false});
-        this.props.navigation.navigate('MyAdsList')
+        this.props.navigation.navigate('MyAdsList' ,{data:{update:true}})
     })
     .catch ((error)=> {
         this.setState({isLoading : false})
@@ -141,7 +138,7 @@ import Loader from './../../Loader';
                         <Image style={{width: "100%",height:280}}
                             resizeMode="contain"
                             source={{
-                              uri : `data:${this.adsData.mime};base64,${this.state.img}` }} 
+                              uri : `data:${this.adsData.mime};base64,${this.adsData.imagePath}` }} 
                         />
                     </View>
                     <View style={{width: "100%"}}>

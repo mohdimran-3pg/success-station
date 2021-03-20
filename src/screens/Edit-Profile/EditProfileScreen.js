@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   FlatList,
+  ImageBase,
 } from 'react-native';
 import InputView from '../../../components/InputView';
 import DropDownSelectBox from '../../../components/DropDownSelectBox';
@@ -18,8 +19,9 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import ApiService from '../../network/ApiService';
 import Loader from '../Loader';
 import CalendarPicker from 'react-native-calendar-picker';
+
 import ImagePicker from "react-native-customized-image-picker";
-import ImgToBase64 from 'react-native-image-base64'
+
 
 export default class EditProfileScreen extends React.Component {
   static navigationOptions = ({navigation, navigationOptions}) => {
@@ -63,7 +65,6 @@ export default class EditProfileScreen extends React.Component {
     mime:''
       };
     this.data = props.route.params.data;
-    console.log(this.data);
     this.type = 'Student';
 
     if (this.data.user_type == 3) {
@@ -85,6 +86,62 @@ export default class EditProfileScreen extends React.Component {
       .catch((error) => {
         console.log(JSON.stringify(error))
         alert(error.data);
+      });
+  }
+  imageLibrary = () => {
+    let options = {
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    launchImageLibrary(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else {
+        const source = { uri: response.uri };
+        console.log('response', JSON.stringify(response));
+        this.setState({
+          filePath: response,
+          fileData: response.data,
+          fileUri: response.uri
+        });
+      }
+    });
+
+  }
+
+  updateProfile() {
+    this.setState({isLoading: true});
+    ApiService.post('update-profile',{
+      name: this.data.name,
+    email: this.data.email,
+    mobile: this.data.mobile,
+    country_id: this.state.selectedCountryId,
+    city_id: this.state.selectedCityId,
+    region_id: this.state.selectedRegionId,
+    user_id: this.data.user_id,
+    user_type: this.data.user_type,
+    date_of_birth: this.state.date_of_birth,
+    college_id: this.state.selectedCollegeId,
+    university_id: this.state.selectedUniversityId,
+    image: "data:image/png;base64,"+this.state.img
+    })
+      .then((response) => {
+        this.setState({isLoading: false});
+        this.props.navigation.goBack()
+      })
+      .catch((error) => {
+       
+        alert(error.data.message);
+        this.setState({isLoading: false});
       });
   }
 
@@ -176,7 +233,7 @@ export default class EditProfileScreen extends React.Component {
                     alignSelf: 'center',
                     marginTop: 25,
                   }}>
-                    {console.log("kkkdkdkkdkd",this.state.img.trim())}
+                    
                   {this.state.img.trim() == ""?  <Image
                     source={ require('../../../assets/Edit-Profile/avatar-Image.png')}
                     
@@ -184,7 +241,7 @@ export default class EditProfileScreen extends React.Component {
                       height: 120,
                       borderRadius: 60,}}
                   /> :  <Image
-                  source={{uri:`data:${this.state.mime};base64,${this.state.img}`}}
+                  source={{uri:"data:image/png;base64,"+this.state.img}}
                   
                   style = {{width: 120,
                     height: 120,
@@ -202,15 +259,13 @@ export default class EditProfileScreen extends React.Component {
                     <TouchableOpacity
                       onPress={() => {
                       
-                        ImagePicker.openPicker({}).then(image => {
-                         
-                          ImgToBase64.getBase64String(image[0].path)
-                          .then(base64String => {
-                            this.setState({img:base64String })
-                            this.setState({mime: image[0].mime })})
-                            .catch(err => console.log(err)); 
+                        ImagePicker.openPicker({includeBase64:true}).then(image => {
                         
-                        });
+                          
+                            this.setState({img:image[0].data,mime: image[0].mime })
+                        })
+                          
+                        
                       }}
                       style={{ width: 40,
                         height: 40,bottom: 0, right: 0, position: 'absolute'}}>
@@ -254,7 +309,7 @@ export default class EditProfileScreen extends React.Component {
                 <View style={{height: 50, marginTop: 10}}>
                   <InputView
                     changeTextEvent={(newValue) => {
-                      this.data.phone;
+                      
                     }}
                     imageSource={require('../../../assets/SignUp/phone.png')}
                     isSecureField={false}
@@ -579,9 +634,9 @@ export default class EditProfileScreen extends React.Component {
                     selectedDayTextColor="#FFFFFF"
                     scrollable={true}
                     onDateChange={(STATE_DATE, END_DATE) => {
-                      var str = `${STATE_DATE.toObject().date}-${
+                      var str = `${STATE_DATE.toObject().years}-${
                         STATE_DATE.toObject().months + 1
-                      }-${STATE_DATE.toObject().years}`;
+                      }-${STATE_DATE.toObject().date}`;
                       this.setState({date_of_birth: str});
                       this.calendar.close();
                     }}
@@ -707,7 +762,7 @@ export default class EditProfileScreen extends React.Component {
               <View style={{width: '48%', height: '100%'}}>
                 <ButtonView
                   clickEvent={() => {
-                    console.log('Sign Up Clicked ......', navigation);
+                    this.updateProfile()
                   }}
                   name={translate('save')}
                 />
