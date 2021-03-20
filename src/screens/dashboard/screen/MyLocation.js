@@ -216,7 +216,7 @@ export default class MyLoacationScreen extends React.Component {
                       height: 120,
                       borderRadius: 60,}}
                   /> :  <Image
-                  source={{uri:"data:image/png;base64,"+this.state.base64Data}}
+                  source={{uri: `data:${this.state.mime};base64,${this.state.base64Data}`}}
                   
                   style = {{width: 120,
                     height: 120,
@@ -224,14 +224,12 @@ export default class MyLoacationScreen extends React.Component {
                 />}
             <View style={{width: 40, height: 40, position: "absolute", bottom: 0, right: 0}}>
                 <TouchableOpacity onPress={() => {
-                    ImagePicker.openPicker({}).then(image => {
-                      this.setState({imagePath: image[0].path, mime: image[0].mime})
-                      ImgToBase64.getBase64String(this.state.imagePath)
-                      .then(base64String => {
-                        this.setState({base64Data:base64String})})
-                        .catch(err => console.log(err)); 
+                    ImagePicker.openPicker({includeBase64:true}).then(image => {
+
+                      this.setState({base64Data:image[0].data,mime: image[0].mime })
+                      
                     });
-                }} style={{bottom:0, right:0, position: "absolute"}}>
+                }} style={{bottom:0, right:0, position: "absolute",width: 40, height: 40}}>
                     <Image
                       source={require('../../../../assets/Edit-Profile/camera-icon.png')}
                       resizeMode="contain" 
@@ -305,7 +303,7 @@ export default class MyLoacationScreen extends React.Component {
                   />
                 </View>
   
-                <View style={{height: 115, marginTop:10, width: 320, alignSelf: 'center'}}>
+                <View style={{height: 90, marginTop:10, width: 320, alignSelf: 'center'}}>
                   <TextInput
                       autoCapitalize="none"
                       autoCorrect={false}
@@ -320,7 +318,7 @@ export default class MyLoacationScreen extends React.Component {
                   />
                 </View>
 
-                <View style={{height: 80, marginTop: 10}}>
+                <View style={{ marginTop: 10}}>
                 <DropDownSelectBoxWithoutImage
                   placeholderText={translate('category')}
                   selectedText={this.state.selectedCategory}
@@ -331,7 +329,7 @@ export default class MyLoacationScreen extends React.Component {
                 />
               </View>
 
-              <View style={{ marginTop:10 }}>
+              <View style={{ marginTop:10}}>
               <View style={{
                   width: 320,
                   alignSelf: 'center',
@@ -405,7 +403,7 @@ export default class MyLoacationScreen extends React.Component {
 
               
               </View>
-              <View style={{height: 50, width: 320, alignSelf: 'center', marginTop: 10}}>
+              <View style={{height: 50, width: 320, alignSelf: 'center', marginTop: 10,marginBottom:10}}>
                 <ButtonView
                   clickEvent={() => {
                      this.validateForm();

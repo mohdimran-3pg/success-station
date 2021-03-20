@@ -97,7 +97,7 @@ const SidebarMenu = ({props,data,logout}) => {
   return (
     <View style={{flex: 1}}>
       {/*Top Large Image */}
- 
+
       <DrawerProfile data={data} {...props} />
       <DrawerContentScrollView {...props}>
         <DrawerItem
@@ -114,14 +114,14 @@ const SidebarMenu = ({props,data,logout}) => {
             props.navigation.navigate('MyAdsList');
           }}
         />
-
+        {data.user_type == 4 ?
         <DrawerItem 
           icon={({color, size}) => <DrawerIcon src={cardLocation} />}
           label={translate('my_location')}
           onPress={() => {
             props.navigation.navigate('MyLocation');
-          }}
-        />
+          }} 
+        />: null}
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={messageIcon} />}
           label={translate('messeges')}

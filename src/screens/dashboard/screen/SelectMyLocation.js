@@ -18,7 +18,9 @@ export default class SelectMyLocation extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {isLoading: false}
+        this.state = {isLoading: false, latlog:{ latitude: 40.7128, longitude:74.0060 ,latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,}}
+        
     }
 
     componentDidMount() {
@@ -31,14 +33,25 @@ export default class SelectMyLocation extends React.Component {
         return (
             <SafeAreaView style={{flex: 1}}>
                 <View style={{flex: 1}}>
-                    <View style={{width: '100%', height: '25%'}}>
+                    <View style={{width: '100%', height:'40%'}}>
                         <GooglePlacesAutocomplete
                             placeholder='Search'
+                            currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
+                            currentLocationLabel="Current location"
+                            nearbyPlacesAPI="GooglePlacesSearch"
+                            GoogleReverseGeocodingQuery={{
+                                // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
+                              }}
+                              fetchDetails = {true}
                             onPress={(data, details = null) => {
-                                console.log(JSON.stringify(data))
-                                alert(`${JSON.stringify(details)}`)
-                                console.log("----------------------------")
-                                console.log(JSON.stringify(details))
+                                
+                                this.setState({latlog:{
+                                    latitude: details.geometry.location.lat, 
+                                    longitude: details.geometry.location.lng,
+                                    latitudeDelta: 0.0922,
+                                     longitudeDelta: 0.0421,
+                                }})
+                            
                                 
                             }}
                             query={{
@@ -51,22 +64,28 @@ export default class SelectMyLocation extends React.Component {
                             
                         />
                     </View>
-                    <View style={{width: '100%', height: '65%'}}>
+                    <View style={{width: '100%', height: '60%'}}>
                         <MapView
                             style={{ flex: 1 }}
-                            region={this.state.region}
-                            onRegionChangeComplete={region => this.state.region}>
-                        <Marker coordinate={{ latitude: 40.7128, longitude:74.0060 }} />
+                            region={this.state.latlog}
+
+                            onRegionChangeComplete={region => this.state.latlog}>
+                        <Marker coordinate={this.state.latlog} />
                         </MapView>
                     </View>
-                    <View style={{width: '80%', alignSelf: "center", marginTop:10}}>
+                    <View style={{width: '80%', alignSelf: "center",position:'absolute',bottom:10 }}>
                     <ButtonView
                         clickEvent={() => {
                             this.setState({isLoading: true});
-                            ApiService.post('location-create', this.props.route.params.data)
+                            let data = this.props.route.params.data
+                            data.lat = this.state.latlog.latitude
+                            data.long = this.state.latlog.longitude
+                            ApiService.post('location-create', data)
                             .then((response) => {
                                 this.setState({isLoading: false});
-                                console.log("API response is:::::", JSON.stringify(response))
+
+                                this.props.navigation.pop(2)
+                                
                             })
                             .catch((error) => {
                                 this.setState({isLoading: false});
