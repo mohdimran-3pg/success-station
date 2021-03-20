@@ -31,11 +31,15 @@ export default class SelectMyLocation extends React.Component {
         return (
             <SafeAreaView style={{flex: 1}}>
                 <View style={{flex: 1}}>
-                    <View style={{width: '100%', height: '95%'}}>
+                    <View style={{width: '100%', height: '25%'}}>
                         <GooglePlacesAutocomplete
                             placeholder='Search'
                             onPress={(data, details = null) => {
-                                console.log(data, details);
+                                console.log(JSON.stringify(data))
+                                alert(`${JSON.stringify(details)}`)
+                                console.log("----------------------------")
+                                console.log(JSON.stringify(details))
+                                
                             }}
                             query={{
                                 key: 'AIzaSyA-8PqMvsgO8pwbV9wD9gzFEggUhG4px6Y',
@@ -44,16 +48,25 @@ export default class SelectMyLocation extends React.Component {
                             onFail={(error) => 
                                 console.error("this is after fail", error)
                             }
+                            
                         />
                     </View>
-                    <View style={{width: '80%', alignSelf: "center"}}>
+                    <View style={{width: '100%', height: '65%'}}>
+                        <MapView
+                            style={{ flex: 1 }}
+                            region={this.state.region}
+                            onRegionChangeComplete={region => this.state.region}>
+                        <Marker coordinate={{ latitude: 40.7128, longitude:74.0060 }} />
+                        </MapView>
+                    </View>
+                    <View style={{width: '80%', alignSelf: "center", marginTop:10}}>
                     <ButtonView
                         clickEvent={() => {
                             this.setState({isLoading: true});
                             ApiService.post('location-create', this.props.route.params.data)
                             .then((response) => {
                                 this.setState({isLoading: false});
-                                console.log("API response is:::::", response)
+                                console.log("API response is:::::", JSON.stringify(response))
                             })
                             .catch((error) => {
                                 this.setState({isLoading: false});

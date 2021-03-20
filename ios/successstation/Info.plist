@@ -39,8 +39,12 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>1</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Application use location of user to locate location while booking ride and let driver know about user location</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Application use location of user to locate location while booking ride and let driver know about user location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Application use location of user to locate location while booking ride and let driver know about user location</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>1</string>
 	<key>NSPhotoLibraryUsageDescription</key>

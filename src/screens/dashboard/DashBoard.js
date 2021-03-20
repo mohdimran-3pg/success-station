@@ -174,6 +174,11 @@ const BottomTabStack = () => {
 
 
 const MainScreenStack = ({navigation}) => {
+  this.userType = 0
+  AsyncStorage.getItem('userdata').then((value)=> { 
+    this.userType = JSON.parse(value).user_type;
+    console.log("User Type ------- ", this.userType);
+  });
   return (
     <Stack.Navigator >
       <Stack.Screen
@@ -326,6 +331,7 @@ const MainScreenStack = ({navigation}) => {
           },
         }}
       />
+ {false ?     
  <Stack.Screen
         name="MyLocation"
         component={MyLocationScreen}
@@ -342,6 +348,7 @@ const MainScreenStack = ({navigation}) => {
         }}
         
       />
+      : null}
 
 <Stack.Screen
         name="SelectMyLocation"

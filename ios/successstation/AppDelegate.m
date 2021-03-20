@@ -12,6 +12,8 @@
 #import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
+@import GooglePlaces;
+@import GoogleMaps;
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -32,6 +34,8 @@ static void InitializeFlipper(UIApplication *application) {
   InitializeFlipper(application);
 #endif
 
+  [GMSPlacesClient provideAPIKey:@"AIzaSyA-8PqMvsgO8pwbV9wD9gzFEggUhG4px6Y"];
+  [GMSServices provideAPIKey:@"AIzaSyA-8PqMvsgO8pwbV9wD9gzFEggUhG4px6Y"];
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"successstation"
