@@ -115,6 +115,12 @@ export default class BookDetailScreen extends React.Component {
                                 source={require('../../../../../assets/book/share-icon.png')}
                             />
                             </TouchableOpacity>
+                            <View style={{right: 5, top: 5, position: "absolute", borderRadius: 12.5, width: 25, height: 25, backgroundColor: "#ffffff", justifyContent: 'center'}}>
+                                <Image 
+                                    style={{width: 10, height: 10, alignSelf: "center"}}
+                                    source={ require('../../../../../assets/heart.png') }
+                                />
+                            </View>
                         </View>
                         <View style={{width: "100%"}}>
                             <Text style={{marginLeft: 15, marginTop: 15, marginRight: 15, fontSize: 20, fontStyle: "normal", color: "#000"}}>
