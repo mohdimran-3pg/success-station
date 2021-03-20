@@ -104,5 +104,7 @@
   "book_list": "Book List",
   "all": "All",
   "my_location": "My Location",
-  "logout": "Logout"
+  "logout": "Logout",
+  "hello": ""
+  
 }
