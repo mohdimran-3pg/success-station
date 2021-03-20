@@ -67,7 +67,7 @@ const CardItem = ({item,...props}) => {
                     color: 'rgba(0, 0, 0, 0.6)',
                     marginStart: 5,
                   }}>
-                  {item.cities[0].city}
+                  {item.cities != null && item.cities.length > 0 ? item.cities[0].city : "N/A"}
                 </Text>
               </View>
               <View style={{flexDirection: 'row'}}>
@@ -165,8 +165,6 @@ export default class StudentProfile extends React.Component {
     } else {
       this.getBooks()
     }
-
-    
   }
 
   componentDidMount() {

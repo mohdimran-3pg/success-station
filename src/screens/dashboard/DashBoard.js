@@ -34,6 +34,7 @@ import {translate} from '../../util/TranslationUtils'
 import MyAdsListScreen from './screen/MyAdsList';
 import AddAds from './screen/AddAds'
 import MyLocationScreen from './screen/MyLocation';
+import SelectMyLocation from './screen/SelectMyLocation';
 import AsyncStorage from '@react-native-community/async-storage'
 
 
@@ -330,6 +331,23 @@ const MainScreenStack = ({navigation}) => {
         component={MyLocationScreen}
         options={{
           title: 'My Location', //Set Header Title
+          
+          headerStyle: {
+            backgroundColor: '#0A878A', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+        
+      />
+
+<Stack.Screen
+        name="SelectMyLocation"
+        component={SelectMyLocation}
+        options={{
+          title: 'Select Location', //Set Header Title
           
           headerStyle: {
             backgroundColor: '#0A878A', //Set Header color

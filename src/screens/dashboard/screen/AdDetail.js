@@ -194,21 +194,13 @@ import Loader from './../../Loader';
                     </View>
                     <View style={{width: "100%", height: 6, backgroundColor: "#F4F7FC"}}></View>
                     <View style={{width: "100%", height: 250, justifyContent: "space-between", flexDirection: "column"}}>
-                    <Text style={{marginLeft: 15, fontSize: 20, fontStyle: "normal", color: "#000", fontweight: "700"}}>
-                          {translate('ad_posted_at')}
-                    </Text>
-                    <Image
-                        source={require('../../../../assets/map-image.png')}
-                        style={{width: "90%", alignSelf: "center"}}
-                        resizeMode="contain"
-                    />
                     <View style={{height: 80, width: 320, flexDirection: 'row', justifyContent: 'space-between', alignSelf: "center"}}>
                         <View style={{width: "48%", height: "100%"}}>
                         <BorderButton
                             clickEvent={() => {
                             navigation.pop();
                             }}
-                            name={translate('save_as_draft')}
+                            name={translate('previous')}
                         />
                         </View>
 

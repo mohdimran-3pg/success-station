@@ -98,5 +98,6 @@
   "service_provider": "Service Provider",
   "student": "Student",
   "individual": "Individual",
-  "company": "Company"
+  "company": "Company",
+  "website": "موقع الكتروني"
 }
