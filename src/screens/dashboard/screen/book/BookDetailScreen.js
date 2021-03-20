@@ -27,6 +27,11 @@ export default class BookDetailScreen extends React.Component {
         ApiService.get(`listings?id=${this.props.route.params.data.bookId}`)
         .then((response) => {
             this.setState({book: response.data})
+            var city = response.data.city.city != null ? response.data.city.city+", ": ""
+            var region = response.data.region.region != null ? response.data.region.region+", ": ""
+            var country = response.data.country.name != null ? response.data.country.name: ""
+            var fullAddress = `${city+region+country}`
+            this.setState({fullAddress: fullAddress})
             this.getBookComments();
         })
         .catch((error) => {
@@ -58,7 +63,8 @@ export default class BookDetailScreen extends React.Component {
             isLoading: false,
             book: {},
             userId: 0,
-            comments: []
+            comments: [],
+            fullAddress: ''
         }
         
         AsyncStorage.getItem('userdata').then((value)=> {
@@ -124,7 +130,7 @@ export default class BookDetailScreen extends React.Component {
                                     <View style={{width: "25%", marginLeft: 15}}>
                                         <DisplayBookInformation 
                                             heading={translate("city")}
-                                            headingValue={this.state.book.cities != null && this.state.book.cities.length > 0 ? this.state.book.cities[0].city: "N/A"}
+                                            headingValue={this.state.fullAddress != '' ? this.state.fullAddress: "N/A"}
                                         />
                                     </View>
                                     <View style={{width: "25%", marginLeft: 15}}>

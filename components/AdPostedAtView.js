@@ -26,9 +26,7 @@ const AdPostedAtView = ({clickEvent}) => {
                     onFocus = {(newValue) => {
                     }}
                     onChangeText = {(newValue) => {
-                        console.log("this is value||||||", newValue)
                         setComment(newValue);
-                        console.log("this.comment is:::::", newValue)
                     }}
                     clearButtonMode="always"
                     selectedText={comment}
