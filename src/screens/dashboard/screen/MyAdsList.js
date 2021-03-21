@@ -91,9 +91,21 @@ export default class MyAdsListScreen extends React.Component {
   }
 
   componentDidMount() {
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      let shouldRefresh = this.props.route.params;
+      if(typeof shouldRefresh === "undefined"){
+        
+      }else{
+        this.getBooks();
+      }
+
+    });
     this.getBooks();
   }
  
+  componentWillUnmount() {
+    this._unsubscribe();
+  }
 
   
   

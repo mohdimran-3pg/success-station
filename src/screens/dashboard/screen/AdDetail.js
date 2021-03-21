@@ -19,7 +19,6 @@ import ButtonView from '../../../../components/ButtonView';
 import BorderButton from '../../../../components/BorderButton';
 import AdsStepView from '../../../../components/AdsStepView'
 import ArrowView from '../../../../components/ArrowView'
-import ImgToBase64 from 'react-native-image-base64'
 import ApiService from '../../../network/ApiService';
 import AsyncStorage from '@react-native-community/async-storage'
 import Loader from './../../Loader';
@@ -74,7 +73,7 @@ import Loader from './../../Loader';
         <SafeAreaView style={{flex: 1, backgroundColor: '#F2F2F2'}}>
           <View style={{flex: 1, backgroundColor: '#F2F2F2'}}>
             <KeyboardAwareScrollView>
-                <View style={{backgroundColor: '#F2F2F2', flexDirection: 'column', justifyContent: 'space-between', height: 1150}}>
+                <View style={{backgroundColor: '#F2F2F2', flexDirection: 'column'}}>
                 <View style={{backgroundColor: "#0A878A", height:200, width: "100%"}}>
                 <View style={{backgroundColor:"#0A878A", height: 80, alignItems: 'center'}}>
               <View style={{height: 40, width:"95%", flexDirection: 'row', top: 10}}>
@@ -136,7 +135,7 @@ import Loader from './../../Loader';
                     <View style={{height: 280, width: "100%"}}>
             
                         <Image style={{width: "100%",height:280}}
-                            resizeMode="contain"
+                          
                             source={{
                               uri : `data:${this.adsData.mime};base64,${this.adsData.imagePath}` }} 
                         />
@@ -190,14 +189,15 @@ import Loader from './../../Loader';
                         </Text>
                     </View>
                     <View style={{width: "100%", height: 6, backgroundColor: "#F4F7FC"}}></View>
-                    <View style={{width: "100%", height: 250, justifyContent: "space-between", flexDirection: "column"}}>
-                    <View style={{height: 80, width: 320, flexDirection: 'row', justifyContent: 'space-between', alignSelf: "center"}}>
+                    <View style={{flex:1,justifyContent:"center"}}>
+                  
+                    <View style={{ width: 320, marginTop:10,marginBottom:10, justifyContent:'space-between', flexDirection: 'row',  alignSelf: "center"}}>
                         <View style={{width: "48%", height: "100%"}}>
                         <BorderButton
                             clickEvent={() => {
                             navigation.pop();
                             }}
-                            name={translate('previous')}
+                            name={translate('save_as_draft')}
                         />
                         </View>
 
