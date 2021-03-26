@@ -10,10 +10,15 @@ import {
   Image,
   StyleSheet,
   Dimensions,
+  Linking,
+  FlatList
 } from 'react-native';
 
 import {Card, Paragraph} from 'react-native-paper';
 import DynamicTabView from 'react-native-dynamic-tab-view';
+import { render } from 'react-dom';
+import ApiService from '../../../../network/ApiService';
+import Loader from '../../../Loader';
 
 const UserCardHeader = ({profile, ...props}) => {
   return (
@@ -95,80 +100,116 @@ const UserCardHeader = ({profile, ...props}) => {
   );
 };
 
-const ADDRESS = ({data}) => (
-  <View style={{flex: 1, background: 'white', margin: 16}}>
-    <Text style={{fontSize: 15, lineHeight: 19}}>
-      {' '}
-      Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in
-      laying out print, graphic or web designs. The passage is attributed to an
-      unknown typesetter in the 15th century who is thought to have scrambled
-      parts Lorem ipsum, or lipsum as it is sometimes known, is dummy text used
-      in laying out print, graphic or web designs. The passage is attributed to
-      an unknown typesetter in the 15th century who is thought to have scrambled
-      parts century who is thought to have scrambled partscentury who is thought
-      to have scrambled parts
-    </Text>
-  </View>
-);
+const CONTACTS = ({data}) => {
+    var user = data
+    var city = user.city.city != null ? user.city.city+", ": ""
+    var country = user.country.name != null ? user.country.name: ""
+    var fullAddress = `${city+country}`
+    var isHttps = user.website.includes('https') || user.website.includes('http') 
+    var link = isHttps ? user.website :'https://'+user.website
 
-const OFFERS = ({data}) => (
-  <View style={{flex: 1, background: 'white', margin: 16}}>
-    <Text style={{fontSize: 15, lineHeight: 19}}>
-      {' '}
-      Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in
-      laying out print, graphic or web designs. The passage is attributed to an
-      unknown typesetter in the 15th century who is thought to have scrambled
-      parts Lorem ipsum, or lipsum as it is sometimes known, is dummy text used
-      in laying out print, graphic or web designs. The passage is attributed to
-      an unknown typesetter in the 15th century who is thought to have scrambled
-      parts century who is thought to have scrambled partscentury who is thought
-      to have scrambled parts
+ return(
+ <View style={{flex: 1, background: 'white', margin: 16}}>
+    <Text style={{fontSize: 20, lineHeight: 19}}>
+      {`Name : `+ user.contact_name}
     </Text>
-  </View>
-);
-const SERVICES = ({data}) => (
-  <View style={{flex: 1, background: 'white', margin: 16}}>
-    <Text style={{fontSize: 15, lineHeight: 19}}>
-      {' '}
-      Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in
-      laying out print, graphic or web designs. The passage is attributed to an
-      unknown typesetter in the 15th century who is thought to have scrambled
-      parts Lorem ipsum, or lipsum as it is sometimes known, is dummy text used
-      in laying out print, graphic or web designs. The passage is attributed to
-      an unknown typesetter in the 15th century who is thought to have scrambled
-      parts century who is thought to have scrambled partscentury who is thought
-      to have scrambled parts
+    <Text style={{fontSize: 20, lineHeight: 19 ,marginTop:4}}>
+      {`Email : `+ user.email}
     </Text>
-  </View>
-);
-const PRODUCTS = ({data}) => (
-  <View style={{flex: 1, background: 'white', margin: 16}}>
-    <Text style={{fontSize: 15, lineHeight: 19}}>
-      {' '}
-      Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in
-      laying out print, graphic or web designs. The passage is attributed to an
-      unknown typesetter in the 15th century who is thought to have scrambled
-      parts Lorem ipsum, or lipsum as it is sometimes known, is dummy text used
-      in laying out print, graphic or web designs. The passage is attributed to
-      an unknown typesetter in the 15th century who is thought to have scrambled
-      parts century who is thought to have scrambled partscentury who is thought
-      to have scrambled parts
+    <Text style={{fontSize: 20, lineHeight: 19,marginTop:4}}>
+      {`Mobile : `+ user.mobile_number}
     </Text>
+    <Text style={{fontSize: 20, lineHeight: 19,marginTop:4}}>
+      {`Phone : `+ user.phone_number}
+    </Text>
+    <Text style={{fontSize: 20, lineHeight: 19,marginTop:4}}>
+      {`Addresss : `+ fullAddress}
+    </Text>
+<TouchableOpacity onPress={() => Linking.openURL(link)}>
+    <Text style={{fontSize: 20, lineHeight: 19,marginTop:4,color:'blue'}}>
+      {`Website : `+ user.website}
+    </Text>
+    </TouchableOpacity>
   </View>
-);
+ )
+};
 
-const ABOUT = ({data}) => (
+const BookCard = ({book}) => {
+
+  return (
+    <TouchableOpacity
+      style={{
+        width:'47%',margin:'1.5%', 
+        
+        borderColor: '#00000030',
+        borderWidth: 1,
+        borderRadius: 4,
+        
+      }}
+      onPress={() => props.navigation.navigate('ServiceProfileScreen', {book})}>
+      <View style={{}}>
+        <View style={{width: '100%', height: 140}}>
+          <Image
+          
+            
+            style={{width: '100%', height: '100%'}}
+          />
+        </View>
+        <View style={{width: '100%'}}>
+          <View style={{marginLeft: 10}}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontStyle: 'normal',
+                fontWeight: '500',
+                color: '#000000',
+                marginTop: 10,
+              }}>
+             
+            </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                fontStyle: 'normal',
+                fontWeight: '500',
+                color: '#000000',
+                marginTop: 5,
+                marginBottom:5
+              }}>
+             
+            </Text>
+           
+          </View>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const PRODUCTS = ({data}) =>{
+  return(
   <View style={{flex: 1, background: 'white', margin: 16}}>
-    <Text style={{fontSize: 15, lineHeight: 19}}>
-      {' '}
-      Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in
-      laying out print, graphic or web designs. The passage is attributed to an
-      unknown typesetter in the 15th century who is thought to have scrambled
-      parts Lorem ipsum, or lipsum as it is sometimes known, is dummy text used
-      in laying out print, graphic or web designs. The passage is attributed to
-      an unknown typesetter in the 15th century who is thought to have scrambled
-      parts century who is thought to have scrambled partscentury who is thought
-      to have scrambled parts
+     <View style={{flex: 1}}>
+              <FlatList
+                
+                keyExtractor={(item) => item.id}
+                data={data}
+                numColumns={2}
+                renderItem={({item}) => (
+                  <BookCard book={item} />
+                )}
+              />
+            </View>
+  </View>
+)
+};
+
+const DESCRIPTION = ({data}) => (
+  
+  <View style={{flex: 1, background: 'white', margin: 16}}>
+    <Text style={{fontSize: 20, lineHeight: 19}}>
+      {data.description}
+     
     </Text>
   </View>
 );
@@ -179,30 +220,51 @@ export default class ServiceDetails extends React.Component {
     super(props);
     this.state = {
       index: 0,
+      isLoading:false,
+      products : []
     };
+  
 
     this.data = [
-      {key: '1', title: 'ADDRESS'},
-      {key: '2', title: 'OFFERS'},
-      {key: '3', title: 'SERVICES'},
+      {key: '1', title: 'CONTACTS'},
       {key: '4', title: 'PRODUCTS'},
-      {key: '5', title: 'ABOUT US'},
+      {key: '5', title: 'DESCRIPTION'},
     ];
   }
 
-  onChangeTab = (index) => {};
+  getServiceList = (id) => {
+
+    
+      let path = `listings?user_id=${id}`;
+      this.setState({isLoading: true});
+    ApiService.get(path)
+      .then((response) => {
+        this.setState({products: response.data})
+        
+        this.setState({isLoading: false});
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        alert(error.data);
+      });
+  };
+  componentDidMount(){
+    this.getServiceList(this.props.route.params.book.user_name_id)
+  }
+  
+
+  onChangeTab = (index) => {
+    console.log("dkdldj",index)
+  };
   _renderScene = (item, index) => {
+  console.log("hhhhehehe",this.state.products,item)
     switch (item['key']) {
       case '1':
-        return <ADDRESS data={this.props.route.params.book.avgStar} />;
-      case '2':
-        return <OFFERS data={this.props.route.params.book.avgStar} />;
-      case '3':
-        return <SERVICES data={this.props.route.params.book.avgStar} />;
+        return <CONTACTS data={this.props.route.params.book} />;
       case '4':
-        return <OFFERS data={this.props.route.params.book.avgStar} />;
+        return <PRODUCTS data={this.state.products} />;
       case '5':
-        return <ABOUT data={this.props.route.params.book.avgStar} />;
+        return <DESCRIPTION data={this.props.route.params.book} />;
       default:
         return null;
     }
@@ -225,19 +287,22 @@ export default class ServiceDetails extends React.Component {
               {backgroundColor: 'yellow', alignSelf: 'center', marginTop: -40},
               styles.image,
             ]}
-            source={{uri: data.src}}
+            source={{uri: data.image[0].url}}
           />
           <UserCardHeader profile={data} {...this.props} />
-          <DynamicTabView
-            data={this.data}
-            renderTab={this._renderScene}
-            defaultIndex={this.state.index}
-            containerStyle={styles.container}
-            headerBackgroundColor={'white'}
-            headerTextStyle={styles.headerText}
-            onChangeTab={this.onChangeTab}
-            headerUnderlayColor={'#F78A3A'}
-          />
+          {this.state.isLoading ? null
+             
+           :   <DynamicTabView
+          data={this.data}
+          renderTab={this._renderScene}
+          defaultIndex={this.state.index}
+          containerStyle={styles.container}
+          headerBackgroundColor={'white'}
+          headerTextStyle={styles.headerText}
+          onChangeTab={this.onChangeTab}
+          headerUnderlayColor={'#F78A3A'}
+        />}
+        
         </View>
         <View
           style={{
@@ -273,6 +338,9 @@ export default class ServiceDetails extends React.Component {
             Profile
           </Text>
           </View>
+          {this.state.isLoading ? (
+            <Loader loading={this.state.loading} />
+          ) : null}
         </View>
       </SafeAreaView>
     );

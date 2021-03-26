@@ -148,6 +148,7 @@ const RatingView = ({avgRating, totalStar}) => {
 };
 
 const BookCard = ({book, ...props}) => {
+  console.log("book url",book)
   return (
     <TouchableOpacity
       style={{
@@ -156,18 +157,18 @@ const BookCard = ({book, ...props}) => {
         borderColor: '#00000030',
         borderWidth: 1,
         borderRadius: 4,
-        height: 230,
+        
       }}
       onPress={() => props.navigation.navigate('ServiceProfileScreen', {book})}>
       <View style={{}}>
-        <View style={{width: '100%', height: '50%'}}>
+        <View style={{width: '100%', height: 140}}>
           <Image
             source={{uri: book.image[0].url}}
-            resizeMode="contain"
-            style={{borderRadius: 4}}
+            
+            style={{width: '100%', height: '100%'}}
           />
         </View>
-        <View style={{width: '100%', height: '50%'}}>
+        <View style={{width: '100%'}}>
           <View style={{marginLeft: 10}}>
             <Text
               style={{
@@ -185,19 +186,12 @@ const BookCard = ({book, ...props}) => {
                 fontStyle: 'normal',
                 fontWeight: '500',
                 color: '#000000',
-                marginTop: 10,
+                marginTop: 5,
+                marginBottom:5
               }}>
-              {book.description.trim()}
+              {book.email.trim()}
             </Text>
-            <View style={{width: 85, height: 12, marginTop: 10}}>
-              <View style={styles.buttonView}>
-                <TouchableOpacity onPress={() => {}}>
-                  <Text style={styles.buttonStyle}>
-                    {translate('read_more')}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+           
           </View>
         </View>
       </View>

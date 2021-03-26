@@ -15,6 +15,8 @@ const UserProfile =({user,...props}) => {
   var fullAddress = `${city+region+country}`
   var url ='https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg'
   
+
+
   return (
     <TouchableOpacity style={{ width:'47%',margin:'1.5%', borderColor: "#00000030", borderWidth: 1, borderRadius: 4}} onPress = {()=> props.navigation.navigate('ProfileDetail',{  
       user: user

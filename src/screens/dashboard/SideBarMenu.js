@@ -114,7 +114,7 @@ const SidebarMenu = ({props,data,logout}) => {
             props.navigation.navigate('MyAdsList');
           }}
         />
-        {data.user_type == 2 ?
+        {(data!=null && data.user_type == 2) ?
         <DrawerItem 
           icon={({color, size}) => <DrawerIcon src={cardLocation} />}
           label={translate('my_location')}
