@@ -128,7 +128,7 @@ export default class FreindsScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={{flex: 1,backgroundColor:'white'}}>
-        <View style={{flex: 1 ,marginBottom:50}}>
+        <View style={{flex: 1 ,marginBottom:0}}>
           <View
             style={{
               flex: 1,
@@ -151,7 +151,6 @@ export default class FreindsScreen extends React.Component {
                     user = {item} {...this.props}
                     clickEvent={(friendId, myId) => {
                       this.sendFriendRequest(friendId, myId)
-                      console.log("------ clickEvent ===", friendId, ">>>>", myId);
                     }}
                     profileOpenEvent={() => {
                       let userType = item.roles != null && item.roles.length > 0 ? item.roles[0].id: 2
@@ -191,10 +190,11 @@ export default class FreindsScreen extends React.Component {
                 </View>
             </View>
             </View>
-            {this.state.isLoading ? (
+            
+        </View>
+        {this.state.isLoading ? (
             <Loader loading={this.state.loading} />
           ) : null}
-        </View>
       </SafeAreaView>
     );
   }

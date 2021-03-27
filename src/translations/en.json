@@ -111,5 +111,7 @@
   "address": "Address",
   "name": "Name",
   "mobile": "Mobile",
-  "phone": "Phone"
+  "phone": "Phone",
+  "accept": "Accept",
+  "reject": "Reject"
 }

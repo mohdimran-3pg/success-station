@@ -8,9 +8,9 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 const UserProfile =({user, acceptRequestEvent, rejectRequestEvent,...props}) => {
     var url = (user.requister.image != null && user.requister.image.preview != null) ? user.requister.image.preview  :'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg'
-    
     return (
-      <TouchableOpacity style={{ borderColor: "#00000030", borderWidth: 1, borderRadius: 4, height: 250}} onPress = {()=> 
+      <View style={{width: '100%'}}>
+        <TouchableOpacity style={{ borderColor: "#00000030", borderWidth: 1, borderRadius: 4, height: 250, width: "49%",margin:"1%"}} onPress = {()=> 
         {
           let userType = user.roles != null && user.roles.length > 0 ? user.roles[0].id: 2
           if (userType == 4) {
@@ -35,43 +35,39 @@ const UserProfile =({user, acceptRequestEvent, rejectRequestEvent,...props}) => 
           <View style={{width: "80%", alignSelf: "center", height: 35, marginBottom: 10, marginTop: 25}}>
           <View style={styles.mainView}>
               <TouchableOpacity onPress = {()=> {
-                
                 AsyncStorage.getItem('userdata').then((value)=> {
                   if(!value || 0 != value.length){ 
                     let user_id = JSON.parse(value).user_id;
                     acceptRequestEvent(user.requister.id, user_id, user.id)
                   }
                 })  
-                
               }
-                 
               }>
                 <Text style={styles.buttonStyle}>
-                {translate('add_friend')}
+                {translate('accept')}
                 </Text>
               </TouchableOpacity>
           </View>
 
           <View style={styles.mainView}>
               <TouchableOpacity onPress = {()=> {
-                
                 AsyncStorage.getItem('userdata').then((value)=> {
                   if(!value || 0 != value.length){ 
                     let user_id = JSON.parse(value).user_id;
                     rejectRequestEvent(user.requister.id, user_id, user.id)
                   }
                 })  
-                
               }
-                 
               }>
                 <Text style={styles.buttonStyle}>
-                {translate('add_friend')}
+                {translate('reject')}
                 </Text>
               </TouchableOpacity>
           </View>
           </View>
       </TouchableOpacity>
+      </View>
+      
     )
   }
 
@@ -163,11 +159,9 @@ export default class FriendRequest extends React.Component {
                         user = {item} {...this.props}
                         acceptRequestEvent={(friendId, myId, requestId) => {
                             this.acceptRejectFriendRequest(requestId, "accepted")
-                            console.log("Accept ------ friendId ===", friendId, " === MyId ===", myId, " === Request ID ===",requestId);
                         }}
                         rejectRequestEvent={(friendId, myId, requestId) => {
                             this.acceptRejectFriendRequest(requestId, "rejected")
-                            console.log("Accept ------ friendId ===", friendId, " === MyId ===", myId, " === Request ID ===",requestId);
                         }}
                         />
                       } 

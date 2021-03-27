@@ -20,6 +20,7 @@ import { render } from 'react-dom';
 import ApiService from '../../../../network/ApiService';
 import Loader from '../../../Loader';
 import {translate} from '../../../../util/TranslationUtils';
+import BookDetailView from '../../../../../components/BookDetailView';
 
 const UserCardHeader = ({profile, ...props}) => {
   return (
@@ -158,57 +159,6 @@ const CONTACTS = ({data}) => {
  )
 };
 
-const BookCard = ({book}) => {
-  let url = (book.image != null && book.image.length > 0) ? book.image[0].url: "";
-  return (
-    <TouchableOpacity
-      style={{
-        width:'47%',margin:'1.5%', 
-        
-        borderColor: '#00000030',
-        borderWidth: 1,
-        borderRadius: 4,
-        
-      }}
-      onPress={() => props.navigation.navigate('ServiceProfileScreen', {book})}>
-      <View style={{}}>
-        <View style={{width: '100%', height: 140}}>
-          <Image
-            source={{uri: url}}
-            style={{width: '100%', height: '100%'}}
-          />
-        </View>
-        <View style={{width: '100%'}}>
-          <View style={{marginLeft: 10}}>
-            <Text
-              style={{
-                fontSize: 15,
-                fontStyle: 'normal',
-                fontWeight: '500',
-                color: '#000000',
-                marginTop: 10,
-              }}>
-            {book.title}
-            </Text>
-            <Text
-              style={{
-                fontSize: 15,
-                fontStyle: 'normal',
-                fontWeight: '500',
-                color: '#0A878A',
-                marginTop: 5,
-                marginBottom:5
-              }}>
-             SR {book.price}
-            </Text>
-           
-          </View>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-};
-
 const PRODUCTS = ({data}) =>{
   return(
   <View style={{flex: 1, background: 'white', margin: 16}}>
@@ -219,7 +169,7 @@ const PRODUCTS = ({data}) =>{
                 data={data}
                 numColumns={2}
                 renderItem={({item}) => (
-                  <BookCard book={item} />
+                  <BookDetailView book={item} />
                 )}
               />
             </View>
