@@ -63,7 +63,7 @@ export default class ChooseLanguageScreen extends React.Component {
       this.setState({isLoading :  Platform.OS != 'android'})
       
       AsyncStorage.getItem('userdata').then((value)=> {
-        
+        console.log("this is user Data ---- Language Screen ---- ", value)
         if(!value || 0 != value.length){ 
           ApiService.setToken(JSON.parse(value).access_token)
           this.props.navigation.dispatch(resetAction)

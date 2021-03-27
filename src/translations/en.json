@@ -105,6 +105,11 @@
   "all": "All",
   "my_location": "My Location",
   "logout": "Logout",
-  "hello": ""
-  
+  "hello": "",
+  "add_friend": "Add Friend",
+  "follow": "Follow",
+  "address": "Address",
+  "name": "Name",
+  "mobile": "Mobile",
+  "phone": "Phone"
 }

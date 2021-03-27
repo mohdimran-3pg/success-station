@@ -114,7 +114,7 @@ const SidebarMenu = ({props,data,logout}) => {
             props.navigation.navigate('MyAdsList');
           }}
         />
-        {(data!=null && data.user_type == 2) ?
+        {(data!=null && data.user_type == 4) ?
         <DrawerItem 
           icon={({color, size}) => <DrawerIcon src={cardLocation} />}
           label={translate('my_location')}
@@ -122,6 +122,14 @@ const SidebarMenu = ({props,data,logout}) => {
             props.navigation.navigate('MyLocation');
           }} 
         />: null}
+
+        <DrawerItem 
+          icon={({color, size}) => <DrawerIcon src={cardLocation} />}
+          label={"Friend Request"}
+          onPress={() => {
+            props.navigation.navigate('FriendRequest');
+          }} 
+        />
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={messageIcon} />}
           label={translate('messeges')}

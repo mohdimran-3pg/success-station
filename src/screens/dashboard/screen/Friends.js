@@ -7,20 +7,23 @@ import { Searchbar ,DefaultTheme} from 'react-native-paper';
 import {translate} from '../../../util/TranslationUtils';
 import ApiService from '../../../network/ApiService';
 import Loader from '../../Loader';
-//
-const UserProfile =({user,...props}) => {
+import AsyncStorage from '@react-native-community/async-storage'
+
+const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
   var city = user.city.city != null ? user.city.city+", ": ""
   var region = user.region.region != null ? user.region.region+", ": ""
   var country = user.country.name != null ? user.country.name: ""
   var fullAddress = `${city+region+country}`
-  var url ='https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg'
+  var url = (user.image != null && user.image.preview != null) ? user.image.preview  :'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg'
   
 
 
   return (
-    <TouchableOpacity style={{ width:'47%',margin:'1.5%', borderColor: "#00000030", borderWidth: 1, borderRadius: 4}} onPress = {()=> props.navigation.navigate('ProfileDetail',{  
-      user: user
-     })} >
+    <TouchableOpacity style={{ width:'47%',margin:'1.5%', borderColor: "#00000030", borderWidth: 1, borderRadius: 4}} onPress = {()=> 
+      {
+        profileOpenEvent()
+        
+      }} >
         <View style={{width: 60, height: 60, borderRadius: 30, alignSelf: "center", marginTop: 21}}>
             <Image style={{width: 60, height: 60, borderRadius: 30}} 
                   source={{uri: url}}
@@ -38,10 +41,21 @@ const UserProfile =({user,...props}) => {
         </View>
         <View style={{width: "80%", alignSelf: "center", height: 35, marginBottom: 10,marginTop:13}}>
         <View style={styles.mainView}>
-            <TouchableOpacity>
-            <Text style={styles.buttonStyle}>
-            Add Friend
-            </Text>
+            <TouchableOpacity onPress = {()=> {
+              
+              AsyncStorage.getItem('userdata').then((value)=> {
+                if(!value || 0 != value.length){ 
+                  let user_id = JSON.parse(value).user_id;
+                  clickEvent(user.id, user_id)
+                }
+              })  
+              
+            }
+               
+            }>
+              <Text style={styles.buttonStyle}>
+              {translate('add_friend')}
+              </Text>
             </TouchableOpacity>
         </View>
         </View>
@@ -89,6 +103,23 @@ export default class FreindsScreen extends React.Component {
       });
   };
 
+  sendFriendRequest(friendId, myId) {
+    this.setState({isLoading: true})
+    ApiService.post('friendship-request',{
+      "requister_id": `${myId}`,
+      "user_requisted_id": `${friendId}`,
+      "status": "new"
+    })
+    .then((response) => {
+      console.log("This is reponse :::: ", response)
+      this.setState({isLoading: false})
+    })
+    .catch((error) => {
+      alert(error.data.message);
+      this.setState({isLoading: false});
+    });
+  }
+
   componentDidMount() {
    this.getFriendList()
   }
@@ -116,7 +147,46 @@ export default class FreindsScreen extends React.Component {
                     keyExtractor = {(item) => item.id} 
                     data = {this.friendList}
                     numColumns={2}
-                    renderItem={({item}) => <UserProfile user = {item} {...this.props}/>} 
+                    renderItem={({item}) => <UserProfile 
+                    user = {item} {...this.props}
+                    clickEvent={(friendId, myId) => {
+                      this.sendFriendRequest(friendId, myId)
+                      console.log("------ clickEvent ===", friendId, ">>>>", myId);
+                    }}
+                    profileOpenEvent={() => {
+                      let userType = item.roles != null && item.roles.length > 0 ? item.roles[0].id: 2
+                      if (userType == 4) {
+                        this.props.navigation.navigate('ServiceDetails',{  
+                          user: item
+                        })
+                      } else {
+                        this.setState({isLoading: true});
+                        ApiService.get(`user-profile?user_id=${item.id}`)
+                            .then((response) => {
+                              let userData = response.data
+                              ApiService.get(`listings?user_id=${item.id}`)
+                              .then((response) => {
+                                this.setState({isLoading: false});
+                                console.log("this is my books:::::", response.data)
+                                console.log("this is my books::::: END")
+                                this.props.navigation.navigate('ProfileDetail',{  
+                                  user: userData, ads: response.data
+                                })
+                              })
+                              .catch((error) => {
+                                this.setState({isLoading: false});
+                              });
+                              
+                            })
+                            .catch((error) => {
+                              this.setState({isLoading: false});
+                              alert(error.data.message);
+                            });
+                            
+                      }
+                    }}
+                    />
+                  } 
                 />
                 </View>
             </View>

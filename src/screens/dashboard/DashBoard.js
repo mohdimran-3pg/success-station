@@ -27,7 +27,7 @@ import ProfileDetail from './screen/profileDetails/ProfileDetails';
 import Category from './screen/Category';
 import Membership from './screen/membership/Membership';
 import EditProfile from './../Edit-Profile/EditProfileScreen';
-
+import FriendRequest from '../../screens/dashboard/screen/FriendRequest';
 import BookDetailScreen from "./screen/book/BookDetailScreen";
 import {adsTabIcon,offerTabIcon,serviceTabIcon,friendTabIcon} from './../../util/ImageConstant'
 import {translate} from '../../util/TranslationUtils'
@@ -260,6 +260,23 @@ const MainScreenStack = ({navigation}) => {
       />
 
 <Stack.Screen
+        name="ServiceDetails"
+        component={ServiceDetails}
+        options={{
+          title: 'Profile', //Set Header Title
+          
+          headerStyle: {
+            backgroundColor: '#0A878A', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+        
+      />
+
+<Stack.Screen
         name="MyAdsList"
         component={MyAdsListScreen}
         options={{
@@ -333,6 +350,23 @@ const MainScreenStack = ({navigation}) => {
         component={MyLocationScreen}
         options={{
           title: 'My Location', //Set Header Title
+          
+          headerStyle: {
+            backgroundColor: '#0A878A', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+        
+      />
+
+<Stack.Screen
+        name="FriendRequest"
+        component={FriendRequest}
+        options={{
+          title: 'Friend Request', //Set Header Title
           
           headerStyle: {
             backgroundColor: '#0A878A', //Set Header color

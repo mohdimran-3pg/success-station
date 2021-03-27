@@ -21,7 +21,7 @@ import Loader from '../Loader';
 import CalendarPicker from 'react-native-calendar-picker';
 
 import ImagePicker from "react-native-customized-image-picker";
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class EditProfileScreen extends React.Component {
   static navigationOptions = ({navigation, navigationOptions}) => {
@@ -62,11 +62,13 @@ export default class EditProfileScreen extends React.Component {
     crNo: '',
     iqamaNo: '',
     img:'',
-    mime:''
+    mime:'',
+    image: {}
       };
     this.data = props.route.params.data;
     this.type = 'Student';
-
+    this.profileData = {};
+    this.profilePicURL = '';  
     if (this.data.user_type == 3) {
       this.type = 'Individual';
     } else if (this.data.user_type == 4) {
@@ -84,7 +86,6 @@ export default class EditProfileScreen extends React.Component {
         this.universitySheet.open();
       })
       .catch((error) => {
-        console.log(JSON.stringify(error))
         alert(error.data);
       });
   }
@@ -96,8 +97,7 @@ export default class EditProfileScreen extends React.Component {
       },
     };
     launchImageLibrary(options, (response) => {
-      console.log('Response = ', response);
-
+      
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -107,7 +107,6 @@ export default class EditProfileScreen extends React.Component {
         alert(response.customButton);
       } else {
         const source = { uri: response.uri };
-        console.log('response', JSON.stringify(response));
         this.setState({
           filePath: response,
           fileData: response.data,
@@ -118,22 +117,57 @@ export default class EditProfileScreen extends React.Component {
 
   }
 
+  updateProfileInformation = (profileData) => {
+    var userType = 2
+    
+    if (profileData.roles != null && profileData.roles.length > 0) {
+      userType = profileData.roles[0].id
+    }
+    var selectedImage = ""
+    if (profileData.image != null && profileData.image.preview != null) {
+      selectedImage = profileData.image.preview
+    }
+    this.setState({userName: profileData.name == null ? "": profileData.name,
+      email: profileData.email == null ? "": profileData.email,
+      mobile: profileData.mobile == null ? "": profileData.mobile ,
+      title: profileData.roles[0].title,
+      userType: userType,
+      crNo: profileData.cr_number == null ? "": profileData.cr_number ,
+      iqamaNo: profileData.iqama_number == null ? "": profileData.iqama_number ,
+      iqama_number: profileData.iqama_number == null ? "": profileData.iqama_number,
+      selectedCountry: profileData.country.name == null ? "": profileData.country.name,
+      selectedCountryId: profileData.country_id == null ? null: profileData.country_id,
+      selectedRegion: profileData.region.region == null ? "": profileData.region.region,
+      selectedRegionId: profileData.region_id == null ? null: profileData.region_id,
+      selectedCity: profileData.city.city == null ? "": profileData.city.city,
+      selectedCityId: profileData.city_id == null ? null: profileData.city_id,
+      selectedCollege: profileData.college == null ? "": profileData.college.region,
+      selectedCollegeId: profileData.college_id == null ? null: profileData.college_id,
+      selectedUniversity: profileData.university == null ? "": profileData.university.name,
+      selectedUniversityId: profileData.university_id == null ? null: profileData.university_id,
+      selectedImage: selectedImage,
+      date_of_birth: profileData.date_of_birth == null ? "" : profileData.date_of_birth
+    })
+  }
+
   updateProfile() {
     this.setState({isLoading: true});
     ApiService.post('update-profile',{
-      name: this.data.name,
-    email: this.data.email,
-    mobile: this.data.mobile,
-    country_id: this.state.selectedCountryId,
-    city_id: this.state.selectedCityId,
-    region_id: this.state.selectedRegionId,
-    user_id: this.data.user_id,
-    user_type: this.data.user_type,
-    date_of_birth: this.state.date_of_birth,
-    college_id: this.state.selectedCollegeId,
-    university_id: this.state.selectedUniversityId,
-    image: "data:image/png;base64,"+this.state.img
-    })
+      name: this.state.userName,
+      email: this.state.email,
+      mobile: this.state.mobile,
+      country_id: this.state.selectedCountryId,
+      city_id: this.state.selectedCityId,
+      region_id: this.state.selectedRegionId,
+      user_id: this.data.user_id,
+      user_type: this.data.user_type,
+      date_of_birth: this.state.date_of_birth,
+      college_id: this.state.selectedCollegeId,
+      university_id: this.state.selectedUniversityId,
+      cr_number: this.state.crNo,
+      iqama_number: this.state.iqamaNo,
+      image: this.state.img != "" ? "data:image/png;base64,"+this.state.img: ""
+      })
       .then((response) => {
         this.setState({isLoading: false});
         this.props.navigation.goBack()
@@ -144,6 +178,20 @@ export default class EditProfileScreen extends React.Component {
         this.setState({isLoading: false});
       });
   }
+
+  getProfileDetail = () => {
+    this.setState({isLoading: true});
+    ApiService.get(`user-profile?user_id=${this.data.user_id}`)
+      .then((response) => {
+        this.profileData = response.data;
+        this.updateProfileInformation(response.data);
+        this.setState({isLoading: false});
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        alert(error.data.message);
+      });
+  };
 
   getCollegeByUniversities = () => {
     this.setState({isLoading: true});
@@ -205,9 +253,26 @@ export default class EditProfileScreen extends React.Component {
       });
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+
+    AsyncStorage.getItem('userdata').then((value)=> {
+    }).catch(()=> {
+      this.setState({isLoading : false})
+    })
+
+    this.getProfileDetail();
+  }
 
   componentWillUnmount() {}
+
+  getImage = (img, imageURL) => {
+
+    if (img != null) {
+      return (<Image />)
+    } else {
+
+    }
+  }
 
   render() {
     return (
@@ -234,19 +299,35 @@ export default class EditProfileScreen extends React.Component {
                     marginTop: 25,
                   }}>
                     
-                  {this.state.img.trim() == ""?  <Image
-                    source={ require('../../../assets/Edit-Profile/avatar-Image.png')}
                     
+                  {this.state.img.trim() != "" ?  
+                    <View style={{width: 120,
+                      height: 120,
+                      borderRadius: 60,}}>
+                      <Image
+                      source={{uri: "data:image/png;base64,"+this.state.img}}
+                      style = {{width: 120,
+                        height: 120,
+                        borderRadius: 60,}}
+                    />
+                    </View>
+                  : 
+                    this.state.selectedImage != "" ?
+                    <Image
+                    source={{uri: this.state.selectedImage}}
                     style = {{width: 120,
                       height: 120,
                       borderRadius: 60,}}
-                  /> :  <Image
-                  source={{uri:"data:image/png;base64,"+this.state.img}}
-                  
-                  style = {{width: 120,
-                    height: 120,
-                    borderRadius: 60,}}
-                />}
+                  />
+                  :
+                  <Image
+                    source={ require('../../../assets/Edit-Profile/avatar-Image.png')}
+                    style = {{width: 120,
+                      height: 120,
+                      borderRadius: 60,}}
+                  />
+                    
+                }
                  
                   <View
                     style={{
@@ -282,15 +363,17 @@ export default class EditProfileScreen extends React.Component {
                 </View>
                 <View style={{width: 320, height: 50, marginTop: 10}}>
                   <InputView
-                    changeTextEvent={(newValue) => {}}
+                    changeTextEvent={(newValue) => {
+                      this.setState({userName: newValue})
+                    }}
                     imageSource={require('../../../assets/SignUp/user-icon.png')}
                     value={
-                      this.data != null
-                        ? this.data.name
+                      this.state.userName != null
+                        ? this.state.userName
                         : translate('user_name_placeholder')
                     }
                     isSecureField={false}
-                    isEnable={false}
+                    isEnable={true}
                     isFullWidth={true}
                   />
                 </View>
@@ -301,7 +384,7 @@ export default class EditProfileScreen extends React.Component {
                     isSecureField={false}
                     isFullWidth={true}
                     value={
-                      this.data != null ? this.data.email : translate('email')
+                      this.state.email != null ? this.state.email : translate('email')
                     }
                     isEnable={false}
                   />
@@ -314,8 +397,8 @@ export default class EditProfileScreen extends React.Component {
                     imageSource={require('../../../assets/SignUp/phone.png')}
                     isSecureField={false}
                     value={
-                      this.data != null
-                        ? this.data.mobile
+                      this.state.mobile != null
+                        ? this.state.mobile
                         : translate('mobile_number')
                     }
                     isFullWidth={true}
@@ -325,12 +408,13 @@ export default class EditProfileScreen extends React.Component {
                 <View style={{height: 50, marginTop: 10}}>
                   <DropDownSelectBox
                     placeholderText={translate('user_type')}
-                    selectedText={this.type}
+                    selectedText={this.state.title}
                     imageSource={require('../../../assets/SignUp/user-type.png')}
                     isFullWidth={true}
                     disabled={true}
                   />
                 </View>
+                {this.state.userType != 4 ?
                 <View style={{height: 50, marginTop: 10}}>
                   <DropDownSelectBox
                     placeholderText={translate('dob')}
@@ -342,6 +426,7 @@ export default class EditProfileScreen extends React.Component {
                     }}
                   />
                 </View>
+                : null}
                 <View style={{marginTop: 10}}>
                   <View
                     style={{
@@ -409,7 +494,7 @@ export default class EditProfileScreen extends React.Component {
                       />
                     </View>
                   </View>
-                  {this.data.user_type == 2 ? (
+                  {this.state.userType == 2 ? (
                     <View>
                       <View style={{height: 50, width: 320, marginTop: 10}}>
                         <DropDownSelectBox
@@ -450,7 +535,7 @@ export default class EditProfileScreen extends React.Component {
                     </View>
                   ) : null}
 
-                  {this.data.user_type == 3 ? (
+                  {this.state.userType == 3 ? (
                     <View style={{marginTop: 10}}>
                       <View style={{height: 50, width: 320}}>
                         <InputView
@@ -461,11 +546,12 @@ export default class EditProfileScreen extends React.Component {
                           placeholderText={translate('Iqama_number')}
                           style={{width: 150}}
                           isFullWidth={true}
+                          value={this.state.iqama_number}
                         />
                       </View>
                     </View>
                   ) : null}
-                  {this.data.user_type == 4 ? (
+                  {this.state.userType == 4 ? (
                     <View style={{marginTop: 10}}>
                       <View style={{height: 50, width: 320}}>
                         <InputView
@@ -476,6 +562,7 @@ export default class EditProfileScreen extends React.Component {
                           placeholderText={translate('cr_no')}
                           style={{width: 150}}
                           isFullWidth={true}
+                          value={this.state.crNo}
                         />
                       </View>
                     </View>

@@ -19,6 +19,7 @@ import DynamicTabView from 'react-native-dynamic-tab-view';
 import { render } from 'react-dom';
 import ApiService from '../../../../network/ApiService';
 import Loader from '../../../Loader';
+import {translate} from '../../../../util/TranslationUtils';
 
 const UserCardHeader = ({profile, ...props}) => {
   return (
@@ -34,7 +35,7 @@ const UserCardHeader = ({profile, ...props}) => {
             color: '#151522',
             fontSize: 20,
             alignSelf: 'center',
-            marginTop: 25,
+            marginTop: 0,
             fontWeight: 'bold',
           }}>
           {profile.name}
@@ -56,17 +57,9 @@ const UserCardHeader = ({profile, ...props}) => {
             flexDirection: 'row',
             justifyContent: 'center',
             justifyContent: 'space-evenly',
-            marginTop: 10,
+            marginTop: 0,
             marginBottom: 24,
           }}>
-          <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-            <Text style={styles.countTextStye}>{profile.follower}</Text>
-            <Text style={styles.titleCountTextStye}>Follower</Text>
-          </View>
-          <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-            <Text style={styles.countTextStye}>{profile.following}</Text>
-            <Text style={styles.titleCountTextStye}>Following</Text>
-          </View>
         </View>
         <View
           style={{
@@ -91,7 +84,7 @@ const UserCardHeader = ({profile, ...props}) => {
                 textAlign: 'center',
                 fontWeight: 'bold',
               }}>
-              Follow
+              {translate('follow')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -110,32 +103,63 @@ const CONTACTS = ({data}) => {
 
  return(
  <View style={{flex: 1, background: 'white', margin: 16}}>
-    <Text style={{fontSize: 20, lineHeight: 19}}>
-      {`Name : `+ user.contact_name}
-    </Text>
-    <Text style={{fontSize: 20, lineHeight: 19 ,marginTop:4}}>
-      {`Email : `+ user.email}
-    </Text>
-    <Text style={{fontSize: 20, lineHeight: 19,marginTop:4}}>
-      {`Mobile : `+ user.mobile_number}
-    </Text>
-    <Text style={{fontSize: 20, lineHeight: 19,marginTop:4}}>
-      {`Phone : `+ user.phone_number}
-    </Text>
-    <Text style={{fontSize: 20, lineHeight: 19,marginTop:4}}>
-      {`Addresss : `+ fullAddress}
-    </Text>
-<TouchableOpacity onPress={() => Linking.openURL(link)}>
-    <Text style={{fontSize: 20, lineHeight: 19,marginTop:4,color:'blue'}}>
-      {`Website : `+ user.website}
+   <View style={{width: '100%'}}>
+      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+      {translate('name')}
+      </Text>
+      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+          {user.contact_name}
+      </Text>
+   </View>
+
+   <View style={{width: '100%',marginTop: 10}}>
+      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+      {translate('email')}
+      </Text>
+      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+          {user.email}
+      </Text>
+   </View>
+
+   <View style={{width: '100%',marginTop: 10}}>
+      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+      {translate('mobile')}
+      </Text>
+      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+          {user.mobile_number}
+      </Text>
+   </View>
+
+   <View style={{width: '100%',marginTop: 10}}>
+      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+      {translate('phone')}
+      </Text>
+      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+          {user.phone_number}
+      </Text>
+   </View>
+
+   <View style={{width: '100%',marginTop: 10}}>
+      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+      {translate('address')}
+      </Text>
+      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+          {fullAddress}
+      </Text>
+   </View>
+    
+   <TouchableOpacity onPress={() => Linking.openURL(link)}>
+    <Text style={{fontSize: 15, lineHeight: 19,marginTop:10,color:'blue'}}>
+      {user.website}
     </Text>
     </TouchableOpacity>
+
   </View>
  )
 };
 
 const BookCard = ({book}) => {
-
+  let url = (book.image != null && book.image.length > 0) ? book.image[0].url: "";
   return (
     <TouchableOpacity
       style={{
@@ -150,8 +174,7 @@ const BookCard = ({book}) => {
       <View style={{}}>
         <View style={{width: '100%', height: 140}}>
           <Image
-          
-            
+            source={{uri: url}}
             style={{width: '100%', height: '100%'}}
           />
         </View>
@@ -165,18 +188,18 @@ const BookCard = ({book}) => {
                 color: '#000000',
                 marginTop: 10,
               }}>
-             
+            {book.title}
             </Text>
             <Text
               style={{
                 fontSize: 15,
                 fontStyle: 'normal',
                 fontWeight: '500',
-                color: '#000000',
+                color: '#0A878A',
                 marginTop: 5,
                 marginBottom:5
               }}>
-             
+             SR {book.price}
             </Text>
            
           </View>
@@ -232,15 +255,34 @@ export default class ServiceDetails extends React.Component {
     ];
   }
 
-  getServiceList = (id) => {
+  startFollow = () => {
+    this.setState({isLoading: true});
+    AsyncStorage.getItem('userdata').then((value)=> {
+        
+      if(!value || 0 != value.length){ 
+        let user_id = JSON.parse(value).user_id;
+        ApiService.post('friendship-request',{
+          "requister_id": `${user_id}`,
+          "user_requisted_id": `${this.props.route.params.book.user_name_id}`,
+          "status": "new"
+        })
+        .then((response) => {
+          this.setState({isLoading: false});
+        })
+        .catch((error) => {
+          alert(error.data.message);
+          this.setState({isLoading: false});
+        });
+      }
+    })
+  }
 
-    
-      let path = `listings?user_id=${id}`;
-      this.setState({isLoading: true});
+  getServiceList = (id) => {
+    let path = `listings?user_id=${id}`;
+    this.setState({isLoading: true});
     ApiService.get(path)
       .then((response) => {
         this.setState({products: response.data})
-        
         this.setState({isLoading: false});
       })
       .catch((error) => {
@@ -248,16 +290,15 @@ export default class ServiceDetails extends React.Component {
         alert(error.data);
       });
   };
+
   componentDidMount(){
     this.getServiceList(this.props.route.params.book.user_name_id)
   }
   
-
   onChangeTab = (index) => {
     console.log("dkdldj",index)
   };
   _renderScene = (item, index) => {
-  console.log("hhhhehehe",this.state.products,item)
     switch (item['key']) {
       case '1':
         return <CONTACTS data={this.props.route.params.book} />;
