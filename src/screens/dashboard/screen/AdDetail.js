@@ -32,20 +32,11 @@ import Loader from './../../Loader';
         borderWidth:0,
         
       }
-  
-    
       this.adsData = this.props.route.params.data
-      console.log(JSON.stringify(this.adsData))
       this.userData =''
-       
-
-              
       AsyncStorage.getItem('userdata').then((value)=> {
-        
         if(!value || 0 != value.length){ 
-          console.log(value)
           this.userData = JSON.parse(value)
-          console.log(this.userData)
         }
       } )
       

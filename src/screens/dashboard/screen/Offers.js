@@ -65,7 +65,6 @@ export default class OffersScreen extends React.Component {
     ApiService.get('ads-categories')
       .then((response) => {
       
-        console.log(response)
         var tempArray = []
         tempArray.push({
           key: 0,
@@ -138,8 +137,6 @@ export default class OffersScreen extends React.Component {
   };
   
   onChangeTab = (index) => {
-    console.log('this is id:::', this.categoryData[index].key)
-
     this.getBannersByCategory(this.categoryData[index].key)
   };
 

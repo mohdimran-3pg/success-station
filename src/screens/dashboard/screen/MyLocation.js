@@ -171,9 +171,7 @@ export default class MyLoacationScreen extends React.Component {
     } else {
 
       AsyncStorage.getItem('userdata').then((value)=> {
-        
         if(!value || 0 != value.length){ 
-          console.log("this is my user id ", JSON.stringify(value))
           var data = {
             "location": "Dubai",
             "catogrey_id": this.state.selectedCategoryId,

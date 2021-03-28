@@ -2,7 +2,6 @@ import React from 'react'
 import {View, Text, Image, StyleSheet} from 'react-native'
 
 const ArrowView = ({isSelected}) => {
-    console.log("isSelected:::::", isSelected)
     return (<View style={{width: "100%", height: 6, justifyContent: "center"}}>
                 <View style={{height:6, width:39, justifyContent: "center"}}>
                     {isSelected ?

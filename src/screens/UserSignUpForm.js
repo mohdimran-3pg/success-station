@@ -98,7 +98,6 @@ export default class UserSignUpForm extends React.Component {
     })
       .then((response) => {
         this.setState({isLoading: false});
-        console.log("This is Region Data:::::", response.data)
         this.setState({regions: response.data});
         this.regionSheet.open();
       })

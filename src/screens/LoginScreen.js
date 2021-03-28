@@ -88,7 +88,6 @@ export default class LoginScreen extends React.Component {
                         <View style={{height: 50}}>
                             <InputView 
                                         changeTextEvent = {(newValue) => {
-                                            console.log("Inputtting something .....", newValue);
                                             this.setState({email: newValue})
                                         }} 
                                         imageSource={require('../../assets/SignUp/email-icon.png')}
@@ -129,7 +128,6 @@ export default class LoginScreen extends React.Component {
                         </View>
                         <View style={style.dontHaveAccountViewStyle}>
                             <TouchableOpacity onPress={() => {
-                                console.log("Don;t have account clicked ....")
                                 this.props.navigation.navigate('userSignUpForm')
                             }}>
                                 <View style={{flexDirection: "row"}}>

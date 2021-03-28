@@ -63,7 +63,6 @@ export default class ChooseLanguageScreen extends React.Component {
       this.setState({isLoading :  Platform.OS != 'android'})
       
       AsyncStorage.getItem('userdata').then((value)=> {
-        console.log("this is user Data ---- Language Screen ---- ", value)
         if(!value || 0 != value.length){ 
           ApiService.setToken(JSON.parse(value).access_token)
           this.props.navigation.dispatch(resetAction)
@@ -118,9 +117,6 @@ export default class ChooseLanguageScreen extends React.Component {
                             <ButtonView
                                 name={translate('next')}
                                 clickEvent = { () => {
-                                    //`console.log('----:', this.state.lang)
-                                    //console.log("this is language code::::",this.state.langCode)
-                                    //this.props.navigation.navigate('bookDetailScreen', { data: { detail: {}} });
                                     AsyncStorage.setItem('langCode',this.state.langCode)
                                     this.props.navigation.navigate('countrySelectScreen', { data: { code: this.state.langCode} })
                                 }}

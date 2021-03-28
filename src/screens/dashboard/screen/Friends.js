@@ -166,8 +166,6 @@ export default class FreindsScreen extends React.Component {
                               ApiService.get(`listings?user_id=${item.id}`)
                               .then((response) => {
                                 this.setState({isLoading: false});
-                                console.log("this is my books:::::", response.data)
-                                console.log("this is my books::::: END")
                                 this.props.navigation.navigate('ProfileDetail',{  
                                   user: userData, ads: response.data
                                 })
