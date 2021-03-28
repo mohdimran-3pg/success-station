@@ -172,56 +172,56 @@ export default class UserSignUpForm extends React.Component {
   startSignUp() {
     let errorArray = [];
     if (this.state.userName == '') {
-      errorArray.push('Enter User Name');
+      errorArray.push(translate('enter_user_name'));
     }
 
     if (this.state.email == '') {
-      errorArray.push('Enter Email');
+      errorArray.push(translate('enter_email'));
     }
 
     if (Helper.isEmailValid(this.state.email)) {
-      errorArray.push('Enter valid Email');
+      errorArray.push(translate('enter_valid_email'));
     }
 
     if (this.state.mobileNumber == '') {
-      errorArray.push('Enter Mobile');
+      errorArray.push(translate('enter_mobile'));
     }
 
     if (this.state.selectedCountryId == 0) {
-      errorArray.push('Select Country');
+      errorArray.push(translate('select_country'));
     }
 
     if (this.state.selectedCityId == 0) {
-      errorArray.push('Select City');
+      errorArray.push(translate('select_city'));
     }
 
     if (this.state.selectedRegionId == 0) {
-      errorArray.push('Select Region');
+      errorArray.push(translate('select_region'));
     }
 
     if (this.state.selectedUserType == 'student') {
       if (this.state.dateOfBirth == '') {
-        errorArray.push('Select Date of Birth');
+        errorArray.push(translate('select_date_of_birth'));
       }
 
       if (this.state.selectedCollegeId == '') {
-        errorArray.push('Select college');
+        errorArray.push(translate('select_college'));
       }
 
       if (this.state.selectedUniversityId == 0) {
-        errorArray.push('Select University');
+        errorArray.push(translate('select_university'));
       }
     } else if (this.state.selectedUserType == 'company') {
       if (this.state.crNo == '') {
-        errorArray.push('Enter CR Number');
+        errorArray.push(translate('enter_cr_number'));
       }
     } else if (this.state.selectedUserType == 'individual') {
       if (this.state.dateOfBirth == '') {
-        errorArray.push('Select Date of Birth');
+        errorArray.push(translate('select_date_of_birth'));
       }
 
       if (this.state.iqamaNo == '') {
-        errorArray.push('Enter Iqama Number');
+        errorArray.push(translate('enter_iqama_number'));
       }
     }
 

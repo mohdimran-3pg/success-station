@@ -129,39 +129,39 @@ export default class AddAdsScreen extends React.Component {
   validateForm = () => {
     let errorArray = [];
     if (this.state.selectedCategory == '') {
-      errorArray.push('Enter Category Name');
+      errorArray.push(translate('select_category'));
     }
 
     if (this.state.selectedAdTypeId == 0) {
-      errorArray.push('Select Type');
+      errorArray.push(translate('select_type'));
     }
 
     if (this.title == '') {
-      errorArray.push('Enter Title');
+      errorArray.push(translate('enter_title'));
     }
 
     if (this.description == '') {
-      errorArray.push('Enter Description');
+      errorArray.push(translate('enter_description'));
     }
 
     if (this.price == '') {
-      errorArray.push('Enter Price');
+      errorArray.push(translate('enter_price'));
     }
 
     if (this.imagePath == '') {
-      errorArray.push('Select Image');
+      errorArray.push(translate('select_image'));
     }
 
     if (this.state.selectedCountryId == 0) {
-      errorArray.push('Select Country');
+      errorArray.push(translate('select_country'));
     }
 
     if (this.state.selectedRegionId == 0) {
-      errorArray.push('Select Region');
+      errorArray.push(translate('select_region'));
     }
 
     if (this.state.selectedCityId == 0) {
-      errorArray.push('Select City');
+      errorArray.push(translate('select_city'));
     }
 
     if (errorArray.length > 0) {

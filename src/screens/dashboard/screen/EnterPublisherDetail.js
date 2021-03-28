@@ -40,19 +40,19 @@ import ArrowView from '../../../../components/ArrowView'
     validateForm = () => {
       let errorArray = [];
       if (this.name == '') {
-        errorArray.push('Enter User Name');
+        errorArray.push(translate('enter_user_name'));
       }
   
       if (this.email == '') {
-        errorArray.push('Enter Email');
+        errorArray.push(translate('enter_email'));
       }
   
       if (Helper.isEmailValid(this.email)) {
-        errorArray.push('Enter valid Email');
+        errorArray.push(translate('enter_valid_email'));
       }
   
       if (this.mobileNo == '') {
-        errorArray.push('Enter Mobile');
+        errorArray.push(translate('enter_mobile'));
       }
 
       if (errorArray.length > 0) {
