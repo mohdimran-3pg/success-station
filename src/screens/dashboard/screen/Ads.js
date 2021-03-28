@@ -28,7 +28,6 @@ const CarouselCardItem = ({ item, index }) => {
 const CarouselCards = (carouselData) => {
   const [index, setIndex] = React.useState(0)
   const isCarousel = React.useRef(null)
-  console.log("carouselData is ::: ", carouselData)
   return (
     <View>
           <Carousel
@@ -97,20 +96,15 @@ export default class AdsScreen extends React.Component {
   getBookCategories = () => {
     ApiService.get('listing-categories')
       .then((response) => {
-        console.log("Categories Data is:::", response)
         this.setState({categories: response.data})
-        console.log(response)
       })
       .catch((error) => {
-        console.log("Error of Category is :::", error)
       });
   }
 
   getBanners = () => {
     ApiService.get('banners')
       .then((response) => {
-        console.log("Banners Data is:::", response)
-
         var tempArray = []
         for (var key in response.data) {
          var temp = {
@@ -121,10 +115,8 @@ export default class AdsScreen extends React.Component {
 
         this.setState({bannerData: tempArray})
         this.getBookCategories();
-        console.log(response)
       })
       .catch((error) => {
-        console.log("Error of Banner is :::", error)
       });
   }
 

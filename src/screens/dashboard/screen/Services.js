@@ -89,7 +89,6 @@ const SearchBar = ({displayType, clickEvent}) => {
 };
 
 const RatingView = ({avgRating, totalStar}) => {
-  console.log('this is', avgRating, totalStar);
   return (
     <View
       style={{width: '100%', height: 15, flexDirection: 'row', marginTop: 15}}>
@@ -148,7 +147,6 @@ const RatingView = ({avgRating, totalStar}) => {
 };
 
 const BookCard = ({book, ...props}) => {
-  console.log("book url",book)
   return (
     <TouchableOpacity
       style={{

@@ -2,7 +2,6 @@ import React from 'react'
 import {View, Text, Image, StyleSheet} from 'react-native'
 
 const AdsStepView = ({isSelected, displayText, stepNo}) => {
-    console.log("isSelected:::::", isSelected)
     imageName = isSelected ? '../assets/Ads/ads-enable-arrow.png' : '../assets/Ads/ads-disable-arrow.png'
     return (<View style={{width: "100%", height: 65, flexDirection: "row", alignitems: "space-between"}}>
                 <View style={{width: 80, height: 65, flexDirection: "column", alignitems: "space-between"}}>

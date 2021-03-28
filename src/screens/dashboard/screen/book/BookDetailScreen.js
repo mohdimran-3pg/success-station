@@ -203,7 +203,6 @@ export default class BookDetailScreen extends React.Component {
                                             .then((response) => {
                                                 this.setState({isLoading: false});
                                                 this.getBookComments();
-                                                console.log("API response is:::::", response)
                                             })
                                             .catch((error) => {
                                                 this.setState({isLoading: false});

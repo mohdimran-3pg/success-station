@@ -169,7 +169,6 @@ export default class StudentProfile extends React.Component {
         this.setState({books: response.data})
       })
       .catch((error) => {
-        console.log("Error of Book is :::", error)
       });
     } else {
       this.getBooks()

@@ -111,7 +111,6 @@ export default class FreindsScreen extends React.Component {
       "status": "new"
     })
     .then((response) => {
-      console.log("This is reponse :::: ", response)
       this.setState({isLoading: false})
     })
     .catch((error) => {

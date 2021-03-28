@@ -125,7 +125,6 @@ export default class FriendRequest extends React.Component {
             "status": `${status}`
         })
         .then((response) => {
-            console.log("This is reponse :::: ", response)
             this.setState({isLoading: false})
         })
         .catch((error) => {

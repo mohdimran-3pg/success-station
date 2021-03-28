@@ -33,7 +33,6 @@ const profileData = {
 import BookDetailView from '../../../../../components/BookDetailView';
 
 const UserCardHeader = ({profile,...props}) => {
-  console.log("this is profile ----- ", JSON.stringify(profile))
   let imageURL = profile.image != null && profile.image.url != null ? profile.image.url: ""
   return (
     <Card style={{margin: 14, elevation: 10}}>
