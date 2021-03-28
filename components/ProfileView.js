@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { View, Text, Image, StyleSheet, TextInput ,I18nManager, TouchableOpacity} from "react-native";
 import {translate} from "../src/util/TranslationUtils";
 const ProfileView = ({data, clickEvent}) => {
-
+    let image = data.user_name != null ? data.user_name.image: {}
     return (
         <View style={{width: "100%", height: 70}}>
             <TouchableOpacity style={{}}
@@ -12,13 +12,19 @@ const ProfileView = ({data, clickEvent}) => {
             >
             <View style={{marginLeft: 15, height: 40, flexDirection: "row", marginVertical: 30}}>
                 <View style={{width: 40, height: 40, alignItems: "center"}}>
-                    <Image style={{borderRadius: 20}}
-                        source={require('../assets/book/profile-pic-lady.png')}
+                    {image != null && image.thumbnail != null?(
+                    <Image style={{borderRadius: 20,width: 40, height: 40}}
+                    source={{ uri: image.thumbnail}} 
                         resizeMode="contain" 
                     />
+                    ): <Image style={{borderRadius: 20}}
+                    source={require('../assets/book/profile-pic-lady.png')}
+                    
+                    resizeMode="contain" 
+                />}
                 </View>
                 <View style={{marginLeft: 15}}>
-                    <Text style={{fontSize: 15, fontWeight: "500", fontStyle: "normal", color: "#000000"}}>{data.name}</Text>
+                    <Text style={{fontSize: 15, fontWeight: "500", fontStyle: "normal", color: "#000000"}}>{data.contact_name}</Text>
                     <Text style={{fontSize: 11, fontWeight: "400", fontStyle: "normal", color: "#0A878A"}}>Owner</Text>
                 </View>
                 <View style={{flexDirection: "row", marginLeft: 125}}>

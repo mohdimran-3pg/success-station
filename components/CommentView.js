@@ -6,20 +6,26 @@ import {translate} from "../src/util/TranslationUtils";
 import BorderButton from './BorderButton';
 
 const CommentView = ({data, clickEvent}) => {
+    let avatar = data.user_name.image != null && data.user_name.image.thumbnail != null ? data.user_name.image.thumbnail: ""
     this.comment = '';
     return (
         <View style={{width: "100%", backgroundColor: "white"}}>
             <View style={{width: "90%", alignSelf: "center", flexDirection: "row"}}>
                 <View style={{marginTop: 10}}>
+                    {avatar == ""?(
                     <Image style={{width: 40, height: 40, borderRadius: 20}}
                         resizeMode="contain"
                         source={require('../assets/book/profile-pic-lady.png')}
                     />
+                    ): <Image style={{width: 40, height: 40, borderRadius: 20}}
+                    resizeMode="contain"
+                    source={{ uri: avatar}} 
+                />}
                 </View>
-                <Image style={{width: 8, height: 7, position: "absolute", right: 0, marginTop: 10}}
+                {/*<Image style={{width: 8, height: 7, position: "absolute", right: 0, marginTop: 10}}
                             resizeMode="contain"
                             source={require('../assets/book/flag-button.png')}
-                        />
+    /> */}
                 <View style={{marginLeft: 10, marginTop: 10, marginBottom: 10, flex: 1}}>
                     <View>
                         <Text style={{fontSize:15, fontWeight: "500", fontStyle: "normal", color: "#000000"}}>{data.user_name.name}</Text>

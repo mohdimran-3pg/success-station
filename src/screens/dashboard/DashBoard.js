@@ -36,6 +36,7 @@ import AddAds from './screen/AddAds'
 import MyLocationScreen from './screen/MyLocation';
 import SelectMyLocation from './screen/SelectMyLocation';
 import AsyncStorage from '@react-native-community/async-storage'
+import ApiService from '../../network/ApiService';
 
 
 const Stack = createStackNavigator();
@@ -536,8 +537,34 @@ constructor(props) {
   super(props)
   this.state = {userdata:{}}
 }
+
+getMyData() {
+
+  this.setState({isLoading: true});
+  AsyncStorage.getItem('userdata').then((value)=> {
+    if(!value || 0 != value.length){ 
+      let user_id = JSON.parse(value).user_id;
+      this.getMyProfileData(user_id)
+    }
+  })
+}
+
+getMyProfileData(userId) {
+
+  ApiService.get(`user-profile?user_id=${userId}`)
+  .then((response) => {
+    this.setState({profileData: response.data});
+    this.getMyAds(userId)
+  })
+  .catch((error) => {
+    this.setState({isLoading: false});
+    alert(error.data.message);
+  });
+}
   render() {
-    AsyncStorage.getItem('userdata').then((value)=> this.setState({userdata: JSON.parse(value)}));
+    AsyncStorage.getItem('userdata').then((value)=> {
+      this.setState({userdata: JSON.parse(value)})
+    });
   return (
     <NavigationContainer >
       <Drawer.Navigator

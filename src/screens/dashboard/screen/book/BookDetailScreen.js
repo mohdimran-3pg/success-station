@@ -64,7 +64,8 @@ export default class BookDetailScreen extends React.Component {
             book: {},
             userId: 0,
             comments: [],
-            fullAddress: ''
+            fullAddress: '',
+            user: {}
         }
         
         AsyncStorage.getItem('userdata').then((value)=> {
@@ -115,12 +116,13 @@ export default class BookDetailScreen extends React.Component {
                                 source={require('../../../../../assets/book/share-icon.png')}
                             />
                             </TouchableOpacity>
+                            {this.state.book.if_favorite == true ? (
                             <View style={{right: 5, top: 5, position: "absolute", borderRadius: 12.5, width: 25, height: 25, backgroundColor: "#ffffff", justifyContent: 'center'}}>
                                 <Image 
                                     style={{width: 10, height: 10, alignSelf: "center"}}
                                     source={ require('../../../../../assets/heart.png') }
                                 />
-                            </View>
+                            </View>): null}
                         </View>
                         <View style={{width: "100%"}}>
                             <Text style={{marginLeft: 15, marginTop: 15, marginRight: 15, fontSize: 20, fontStyle: "normal", color: "#000"}}>
@@ -181,9 +183,9 @@ export default class BookDetailScreen extends React.Component {
                             <View style={{width: "100%", height: 6, backgroundColor: "#F4F7FC", marginTop: 15}}></View>
                             <View style={{width: "100%"}}>
                                 <ProfileView 
-                                    data = {{name: this.state.book.contact_name}}
+                                    data = {this.state.book}
                                     clickEvent={() => {
-
+                                    
                                     }}
                                 />
                             </View>
@@ -253,6 +255,7 @@ export default class BookDetailScreen extends React.Component {
                                                 "listing_id": this.props.route.params.data.bookId
                                               }).then(() => {
                                                 this.setState({isLoading: false});
+                                                this.getBookDetail()
                                               }).catch(() => {
                                                 this.setState({isLoading: false});
                                               })

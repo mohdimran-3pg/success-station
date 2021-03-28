@@ -125,7 +125,7 @@ const SidebarMenu = ({props,data,logout}) => {
 
         <DrawerItem 
           icon={({color, size}) => <DrawerIcon src={cardLocation} />}
-          label={"Friend Request"}
+          label={translate('friend_requests')}
           onPress={() => {
             props.navigation.navigate('FriendRequest');
           }} 
