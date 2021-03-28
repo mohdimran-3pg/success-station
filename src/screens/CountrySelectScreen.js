@@ -25,18 +25,20 @@ import AsyncStorage from '@react-native-community/async-storage'
   
   
 
-const countryData= [
-    {name: 'Saudi Arabia', id: 1, image: require('../../assets/Flags/saudi-arab-flag.png'), isHidden: true, 'lang': 'ar'},
-    {name: 'UAE', id: 2, image: require('../../assets/Flags/uae-flag.png'), isHidden: true, 'lang': 'ar'},
-    {name: 'Egypt', id: 3, image: require('../../assets/Flags/egypt-flag.png'), isHidden: true, 'lang': 'ar'},
-    {name: 'Kuwait', id: 4, image: require('../../assets/Flags/kuwait-flag.png'), isHidden: true, 'lang': 'en'},
-    {name: 'Amman', id: 5, image: require('../../assets/Flags/damman-flag.png'), isHidden: true, 'lang': 'ar'},
-    {name: 'Jordan', id: 6, image: require('../../assets/Flags/jordan-flag.png'), isHidden: true, 'lang': 'ar'},
-    {name: 'Bahrain', id: 7, image: require('../../assets/Flags/bahrain-flag.png'), isHidden: true, 'lang': 'ar'},
-];
+
 
 
 export default class CountrySelectScreen extends React.Component {
+
+    countryData = [
+        {name: this.getLanguageCode() == 'en' ? 'Saudi Arabia': 'المملكة العربية السعودية', id: 1, image: require('../../assets/Flags/saudi-arab-flag.png'), isHidden: true, 'lang': 'ar'},
+        {name: this.getLanguageCode() == 'en' ? 'UAE': 'الإمارات العربية المتحدة', id: 2, image: require('../../assets/Flags/uae-flag.png'), isHidden: true, 'lang': 'ar'},
+        {name: this.getLanguageCode() == 'en' ? 'Egypt': 'مصر', id: 3, image: require('../../assets/Flags/egypt-flag.png'), isHidden: true, 'lang': 'ar'},
+        {name: this.getLanguageCode() == 'en' ? 'Kuwait': 'الكويت', id: 4, image: require('../../assets/Flags/kuwait-flag.png'), isHidden: true, 'lang': 'en'},
+        {name: this.getLanguageCode() == 'en' ? 'Amman': 'عمان', id: 5, image: require('../../assets/Flags/damman-flag.png'), isHidden: true, 'lang': 'ar'},
+        {name: this.getLanguageCode() == 'en' ? 'Jordan': 'الأردن', id: 6, image: require('../../assets/Flags/jordan-flag.png'), isHidden: true, 'lang': 'ar'},
+        {name: this.getLanguageCode() == 'en' ? 'Bahrain': 'البحرين', id: 7, image: require('../../assets/Flags/bahrain-flag.png'), isHidden: true, 'lang': 'ar'},
+    ];
 
     static navigationOptions = ({ navigation, navigationOptions }) => {
         return {
@@ -46,13 +48,13 @@ export default class CountrySelectScreen extends React.Component {
 
     constructor(props) {
         super(props);
-       
         AsyncStorage.getItem('langCode').then((code)=> {
             setI18nConfig(code)
             }).catch(()=> {
                 setI18nConfig('en')
             })
-        this.state = {country : countryData}
+        this.state = {country : this.countryData}
+        this.langCode = props.navigation.state.params.data.code
       }
   
     componentDidMount() {
@@ -67,6 +69,9 @@ export default class CountrySelectScreen extends React.Component {
         // setI18nConfig(lang);
     };
 
+    getLanguageCode (){
+        return this.props.navigation.state.params.data.code
+    }
   
 render(){
     var data = this.state.country

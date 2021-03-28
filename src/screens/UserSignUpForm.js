@@ -27,13 +27,8 @@ import ApiService from '../network/ApiService';
 import Helper from '../util/Helper';
 import Loader from './Loader';
 
-
-var radio_props = [
-  {label: translate('company'), value: 'company'},
-  {label: translate('individual'), value: 'individual'},
-];
-
 export default class UserSignUpForm extends React.Component {
+
   static navigationOptions = ({navigation, navigationOptions}) => {
     return {
       title: '',
@@ -373,7 +368,10 @@ export default class UserSignUpForm extends React.Component {
                 <View
                   style={{height: 50, width: 320, justifyContent: 'flex-end'}}>
                   <RadioForm
-                    radio_props={radio_props}
+                    radio_props={[
+                      {label: translate('company'), value: 'company'},
+                      {label: translate('individual'), value: 'individual'},
+                    ]}
                     initial={0}
                     formHorizontal={true}
                     selectedButtonColor={'#F78A3A'}
