@@ -16,95 +16,13 @@ import {
 
 import {Card, Paragraph} from 'react-native-paper';
 import {cardFollower, cardLocation} from './../../../../util/ImageConstant';
+import ApiService from '../../../../network/ApiService';
+import Loader from '../../../Loader';
+import AsyncStorage from '@react-native-community/async-storage'
+import {translate} from '../../../../util/TranslationUtils';
 
-const profileData = {
-  name: 'Rahul Pandey',
-  src:
-    'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg',
-  ads: 100,
-  follower: 40,
-  following: 100,
-  profileMsg:
-    'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
-};
-
-const FlatListItems = [
-  {
-    id: 1,
-    src:
-      'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    location: 'Dubai UAE',
-    follower: 'Imran',
-  },
-  {
-    id: 2,
-    src:
-      'https://cbsnews2.cbsistatic.com/hub/i/r/2015/12/11/7f3c9843-adb1-4022-be13-82515641a9fc/thumbnail/1200x630/5af2e16fd2ecd02f06637db5ca110a43/open-book.jpg',
-    price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    location: '3/4 Block 3 Dubai UAE',
-    follower: 'Ramesh',
-  },
-  {
-    id: 3,
-    src:
-    'https://cbsnews2.cbsistatic.com/hub/i/r/2015/12/11/7f3c9843-adb1-4022-be13-82515641a9fc/thumbnail/1200x630/5af2e16fd2ecd02f06637db5ca110a43/open-book.jpg',
-
-        price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    location: '2 lane Dubai UAE',
-    follower: 'Imran',
-  },
-  {
-    id: 4,
-    src:
-    'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    title: 'Medicine book on Internal Medicine ',
-    location: 'Dubai 9 /3 street UAE',
-    follower: 'Rahul',
-    price: 'AED 1100',
-  },
-  {
-    id: 5,
-    src:
-    'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-   price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    location: 'Dubai 4 block UAE',
-    follower: 'Mohd',
-  },
-  {
-    id: 6,
-    src:
-     'https://cbsnews2.cbsistatic.com/hub/i/r/2015/12/11/7f3c9843-adb1-4022-be13-82515641a9fc/thumbnail/1200x630/5af2e16fd2ecd02f06637db5ca110a43/open-book.jpg',    price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    price: 'AED 20',
-    location: 'Dubai 4 street UAE',
-    follower: 'Raman',
-  },
-  {
-    id: 7,
-    src:
-    'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    price: 'AED 100',
-    title: 'Medicine book on Internal Medicine ',
-    location: 'Dubai 2 street UAE',
-    follower: 'Imran',
-  },
-  {
-    id: 8,
-    src:
-    'https://phlearn.com/wp-content/uploads/2019/04/Top-20-Photog-Books-no-text.jpg?fit=1400%2C628&quality=99&strip=all',
-    price: 'AED 130',
-    title: 'Medicine book on Internal Medicine  Test book',
-    location: 'Dubai UAE',
-    follower: 'Rahul',
-  },
-
-];
 const UserCardHeader = ({profile,...props}) => {
+  let image = profile.image != null && profile.image.url != null ? profile.image.url :""
   return (
     <View style={{flex: 1}}>
       <View style={[styles.parent, {position: 'absolute'}]} />
@@ -132,7 +50,7 @@ const UserCardHeader = ({profile,...props}) => {
               {backgroundColor: 'yellow', alignSelf: 'center', marginTop: 5},
               styles.image,
             ]}
-            source={{uri: profile.src}}
+            source={{uri: image}}
           />
           <Text
             style={{
@@ -189,20 +107,24 @@ const UserCardHeader = ({profile,...props}) => {
         </View>
       </Card>
 
-      <Text style={{fontSize:15,marginStart:14,marginTop:28}}>MY ADS</Text>
+      <Text style={{fontSize:15,marginStart:14,marginTop:28}}>{translate('my_ads')}</Text>
     </View>
   );
 
 };
 
 const CardItem = (item) => {
+  let image = item.image != null && item.image.length > 0 ? item.image[0].url: "";
+  var city = item.city.city != null ? item.city.city+", ": ""
+  var country = item.country.name != null ? item.country.name: ""
+  var fullAddress = `${city+country}`
   var header_View = (
     <View style={{flex: 1}}>
       <Card style={{margin: 7, elevation: 10}}>
         <View style={{flexDirection: 'column', justifyContent: 'center'}}>
           <Image
             style={styles.cardImageItem}
-            source={{uri : item.src}}          />
+            source={{uri : image}}          />
           <View style={{flexDirection: 'column', marginStart: 10}}>
             <Text
               style={{
@@ -227,13 +149,13 @@ const CardItem = (item) => {
               <View style={{flexDirection: 'row'}}>
                 <Image style={{width: 11, height: 12}} source={cardLocation} />
                 <Text style={{fontSize: 10, color: 'rgba(0, 0, 0, 0.6)',marginStart:5}}>
-                  {item.location}
+                  {fullAddress}
                 </Text>
               </View>
               <View style={{flexDirection: 'row'}}>
                 <Image style={{width: 11, height: 12}} source={cardFollower} />
                 <Text style={{fontSize: 10, color: 'rgba(0, 0, 0, 0.6)' ,marginStart:5}}>
-                  {item.follower}
+                  {item.contact_name}
                 </Text>
               </View>
             </View>
@@ -246,20 +168,69 @@ const CardItem = (item) => {
   return header_View;
 };
 export default class StudentProfile extends React.Component {
+  
+  getMyData() {
+
+    this.setState({isLoading: true});
+    AsyncStorage.getItem('userdata').then((value)=> {
+      if(!value || 0 != value.length){ 
+        let user_id = JSON.parse(value).user_id;
+        this.getMyProfileData(user_id)
+      }
+    })
+  }
+
+  getMyAds(userId) {
+
+    ApiService.get(`listings?user_id=${userId}`)
+    .then((response) => {
+      this.setState({FlatListItems: response.data});
+      this.setState({isLoading: false});
+    })
+    .catch((error) => {
+      this.setState({isLoading: false});
+    });
+  }
+
+  getMyProfileData(userId) {
+
+    ApiService.get(`user-profile?user_id=${userId}`)
+    .then((response) => {
+      this.setState({profileData: response.data});
+      this.getMyAds(userId)
+    })
+    .catch((error) => {
+      this.setState({isLoading: false});
+      alert(error.data.message);
+    });
+  }
+
   constructor(props) {
     super(props);
-    }
+    this.state = { isLoading :false, FlatListItems: [], profileData: {}}
+  }
+
+  componentDidMount() {
+    this.getMyData()
+  }
+
+  componentWillUnmount() {
+
+  }
 
   render() {
     return (
       <SafeAreaView style={{flex: 1}}>
         <FlatList
           style={{}}
-          data={FlatListItems}
+          data={this.state.FlatListItems}
           renderItem={({item}) => CardItem(item)}
           numColumns={2}
-          ListHeaderComponent={<UserCardHeader profile = {profileData} {...this.props}/>}
+          ListHeaderComponent={<UserCardHeader profile = {this.state.profileData} {...this.props}/>}
         />
+        {this.state.isLoading ? (
+            <Loader loading={this.state.loading} />
+          ) : null}
       </SafeAreaView>
     );
   }
@@ -267,9 +238,9 @@ export default class StudentProfile extends React.Component {
 
 const styles = StyleSheet.create({
   image: {
-    width: 60,
-    height: 60,
-    borderRadius: 60 / 2,
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2,
     overflow: 'hidden',
   },
   parent: {
