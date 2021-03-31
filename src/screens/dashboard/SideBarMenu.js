@@ -27,7 +27,7 @@ const BASE_PATH =
   'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg';
 
 const user = {name: 'Rahul', email: 'rahul@gmal.com', src: BASE_PATH};
-const DrawerProfile = ({data, ...props}) => {
+const DrawerProfile = ({data,url, ...props}) => {
 
 
   return (
@@ -51,7 +51,7 @@ const DrawerProfile = ({data, ...props}) => {
       </TouchableOpacity>
 
       <View style={{flexDirection: 'row', marginTop: 20, marginStart: 20}}>
-        <Image source={{uri: BASE_PATH}} style={styles.image} />
+        <Image source={{uri: url}} style={styles.image} />
         <View
           style={{
             flexDirection: 'column',
@@ -92,13 +92,13 @@ const LinkMenuItem = ({title, src, link}) => {
 };
 
  
-const SidebarMenu = ({props,data,logout}) => {
+const SidebarMenu = ({props,data,logout,icon}) => {
 
   return (
     <View style={{flex: 1}}>
       {/*Top Large Image */}
 
-      <DrawerProfile data={data} {...props} />
+      <DrawerProfile data={data} url={icon} {...props} />
       <DrawerContentScrollView {...props}>
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={profileIcon} />}
