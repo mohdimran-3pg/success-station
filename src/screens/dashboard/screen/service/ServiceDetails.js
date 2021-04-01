@@ -263,6 +263,7 @@ export default class ServiceDetails extends React.Component {
 
   render() {
     const data = this.props.route.params.book;
+    let avatar = data.image != null && data.image.length > 0 ? data.image[0].url: ""
     return (
       <SafeAreaView
         style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
@@ -278,7 +279,7 @@ export default class ServiceDetails extends React.Component {
               {backgroundColor: 'yellow', alignSelf: 'center', marginTop: -40},
               styles.image,
             ]}
-            source={{uri: data.image[0].url}}
+            source={{uri: avatar}}
           />
           <UserCardHeader profile={data} {...this.props} />
           {this.state.isLoading ? null
