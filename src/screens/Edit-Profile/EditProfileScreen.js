@@ -170,7 +170,9 @@ export default class EditProfileScreen extends React.Component {
       })
       .then((response) => {
         this.setState({isLoading: false});
+      
         this.props.navigation.goBack()
+        
       })
       .catch((error) => {
        

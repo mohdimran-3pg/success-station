@@ -21,7 +21,8 @@ import Loader from '../../../Loader';
 import AsyncStorage from '@react-native-community/async-storage'
 import {translate} from '../../../../util/TranslationUtils';
 
-const UserCardHeader = ({profile,...props}) => {
+const UserCardHeader = ({profile,data,...props}) => { 
+
   let image = profile.image != null && profile.image.url != null ? profile.image.url :""
   return (
     <View style={{flex: 1}}>
@@ -30,7 +31,7 @@ const UserCardHeader = ({profile,...props}) => {
       <Card style={{margin: 14, elevation: 10}}>
         <View style={{flexDirection: 'column', justifyContent: 'center'}}>
         <TouchableOpacity onPress={() => {
-              props.navigation.navigate('EditProfile');
+              props.navigation.navigate('EditProfile',{data:data});
 
             }}>
           <Image
@@ -47,7 +48,7 @@ const UserCardHeader = ({profile,...props}) => {
           </TouchableOpacity>
           <Image
             style={[
-              {backgroundColor: 'yellow', alignSelf: 'center', marginTop: 5},
+              { alignSelf: 'center', marginTop: 5},
               styles.image,
             ]}
             source={{uri: image}}
@@ -174,6 +175,7 @@ export default class StudentProfile extends React.Component {
     this.setState({isLoading: true});
     AsyncStorage.getItem('userdata').then((value)=> {
       if(!value || 0 != value.length){ 
+        this.setState({data:JSON.parse(value)})
         let user_id = JSON.parse(value).user_id;
         this.getMyProfileData(user_id)
       }
@@ -207,7 +209,7 @@ export default class StudentProfile extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { isLoading :false, FlatListItems: [], profileData: {}}
+    this.state = { isLoading :false, FlatListItems: [], profileData: {},data:{}}
   }
 
   componentDidMount() {
@@ -226,7 +228,7 @@ export default class StudentProfile extends React.Component {
           data={this.state.FlatListItems}
           renderItem={({item}) => CardItem(item)}
           numColumns={2}
-          ListHeaderComponent={<UserCardHeader profile = {this.state.profileData} {...this.props}/>}
+          ListHeaderComponent={<UserCardHeader profile = {this.state.profileData} data = {this.state.data} {...this.props}/>}
         />
         {this.state.isLoading ? (
             <Loader loading={this.state.loading} />

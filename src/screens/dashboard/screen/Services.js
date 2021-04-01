@@ -15,9 +15,10 @@ import {
 } from 'react-native';
 import {translate} from '../../../util/TranslationUtils';
 import DynamicTabView from 'react-native-dynamic-tab-view';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, {Callout, Marker} from 'react-native-maps';
 import ApiService from '../../../network/ApiService';
 import Loader from '../../Loader';
+import WebView from 'react-native-webview';
 
 const SearchBar = ({displayType, clickEvent}) => {
   return (
@@ -150,19 +151,18 @@ const BookCard = ({book, ...props}) => {
   return (
     <TouchableOpacity
       style={{
-        width:'47%',margin:'1.5%', 
-        
+        width: '47%',
+        margin: '1.5%',
+
         borderColor: '#00000030',
         borderWidth: 1,
         borderRadius: 4,
-        
       }}
       onPress={() => props.navigation.navigate('ServiceProfileScreen', {book})}>
       <View style={{}}>
         <View style={{width: '100%', height: 140}}>
           <Image
             source={{uri: book.image[0].url}}
-            
             style={{width: '100%', height: '100%'}}
           />
         </View>
@@ -185,11 +185,10 @@ const BookCard = ({book, ...props}) => {
                 fontWeight: '500',
                 color: '#000000',
                 marginTop: 5,
-                marginBottom:5
+                marginBottom: 5,
               }}>
               {book.email.trim()}
             </Text>
-           
           </View>
         </View>
       </View>
@@ -202,7 +201,6 @@ export default class ServicesScreen extends React.Component {
     this.setState({isLoading: true});
     ApiService.get('location-categories')
       .then((response) => {
-
         var tempArray = [];
         tempArray.push({
           key: 0,
@@ -335,23 +333,46 @@ export default class ServicesScreen extends React.Component {
                 style={{flex: 1}}
                 region={region}
                 onRegionChangeComplete={(region) => region}>
-                {this.locationList.map((item) => (
+                {this.locationList.map((book, index) => (
                   <Marker
-                    key={item.id}
+                    key={index}
                     coordinate={{
-                      latitude: parseFloat(item.lat),
+                      latitude: parseFloat(book.lat),
                       longitude:
-                        item.long === 'undefined' ? 0.0 : parseFloat(item.long),
-                    }}
-                    title={item.location}
-                    description={item.description}></Marker>
+                        book.long === 'undefined' ? 0.0 : parseFloat(book.long),
+                    }}>
+                    <Callout
+                      style={{height: 90, width: 200}}
+                      onPress={() =>
+                        this.props.navigation.navigate('ServiceProfileScreen', {
+                          book,
+                        })
+                      }>
+                      <View
+                        style={{
+                          backgroundColor: 'white',
+                          flexDirection: 'row',
+                          
+                        }}>
+                        <View style={{margin:10,marginStart:5,height: 70, width: 100,}}>
+                          <WebView
+                            style={{height: 70, width: 100}}
+                            source={{uri: book.image[0].url}}
+                          />
+                        </View>
+                        <View style={{marginTop:15,}}>
+                          <Text>{book.location}</Text>
+                          <Text>{book.description}</Text>
+                        </View>
+                      </View>
+                    </Callout>
+                  </Marker>
                 ))}
               </MapView>
             </View>
           ) : (
             <View style={{flex: 1}}>
               <FlatList
-                
                 keyExtractor={(item) => item.id}
                 data={this.locationList}
                 numColumns={2}

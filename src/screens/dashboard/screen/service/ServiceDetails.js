@@ -275,7 +275,7 @@ export default class ServiceDetails extends React.Component {
         <View style={{flex: 1, backgroundColor: 'white'}}>
           <Image
             style={[
-              {backgroundColor: 'yellow', alignSelf: 'center', marginTop: -40},
+              { alignSelf: 'center', marginTop: -40},
               styles.image,
             ]}
             source={{uri: data.image[0].url}}

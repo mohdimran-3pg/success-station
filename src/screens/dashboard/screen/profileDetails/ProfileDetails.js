@@ -39,7 +39,7 @@ const UserCardHeader = ({profile,...props}) => {
         <View style={{flexDirection: 'column', justifyContent: 'center'}}>
           <Image
             style={[
-              {backgroundColor: 'yellow', alignSelf: 'center', marginTop: 5},
+              { alignSelf: 'center', marginTop: 5},
               styles.image,
             ]}
             source={{uri: imageURL}}
