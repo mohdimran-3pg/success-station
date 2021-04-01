@@ -33,7 +33,7 @@ const CardItem = ({item,...props}) => {
   var region = item.region.region != null ? item.region.region+", ": ""
   var country = item.country.name != null ? item.country.name: ""
   var fullAddress = `${city+region+country}`
-
+  var imageURL = item.image != null && item.image.length > 0 ? item.image[0].url: "";
   var header_View = (
     <TouchableOpacity style={{flex: 1}} onPress= {()=>{
     
@@ -42,7 +42,7 @@ const CardItem = ({item,...props}) => {
     }>
       <Card style={{margin: 7, elevation: 5}} >
         <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-          <Image style={styles.cardImageItem} source={{uri: item.image[0].url}} />
+          <Image style={styles.cardImageItem} source={{uri: imageURL}} />
           <View style={{flexDirection: 'column', marginStart: 10}}>
             <Text
               style={{

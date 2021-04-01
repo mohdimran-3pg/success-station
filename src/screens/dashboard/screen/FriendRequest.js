@@ -149,6 +149,7 @@ export default class FriendRequest extends React.Component {
                 </View>
                 <View style={{ backgroundColor: "white", height: "90%"}}>
                     <View style={{alignSelf: "center", height: "100%"}}>
+                    {this.friendList.length > 0 ? 
                     <FlatList
                         style = {{margin:5}}
                         keyExtractor = {(item) => item.id} 
@@ -164,7 +165,8 @@ export default class FriendRequest extends React.Component {
                         }}
                         />
                       } 
-                    />
+                    />:
+                    <Text style={{flex: 1, height: 50}}>No Friend Request found</Text>}
                     </View>
                 </View>
                 </View>

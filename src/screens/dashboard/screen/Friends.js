@@ -23,7 +23,7 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
       {
         profileOpenEvent()
         
-      }} >
+      }}>
         <View style={{width: 60, height: 60, borderRadius: 30, alignSelf: "center", marginTop: 21}}>
             <Image style={{width: 60, height: 60, borderRadius: 30}} 
                   source={{uri: url}}
@@ -51,10 +51,13 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
               })  
               
             }
-               
-            }>
+            }
+            disabled={true}
+            >
               <Text style={styles.buttonStyle}>
-              {translate('add_friend')}
+              {user.Friendship != null && user.Friendship.status == "accepted"  
+                ? translate('remove_friend')
+                : translate('add_friend')}
               </Text>
             </TouchableOpacity>
         </View>
@@ -104,6 +107,7 @@ export default class FreindsScreen extends React.Component {
   };
 
   sendFriendRequest(friendId, myId) {
+    console.log('sendFriendRequest.......')
     this.setState({isLoading: true})
     ApiService.post('friendship-request',{
       "requister_id": `${myId}`,
@@ -111,6 +115,7 @@ export default class FreindsScreen extends React.Component {
       "status": "new"
     })
     .then((response) => {
+      this.getFriendList()
       this.setState({isLoading: false})
     })
     .catch((error) => {
@@ -154,9 +159,27 @@ export default class FreindsScreen extends React.Component {
                     profileOpenEvent={() => {
                       let userType = item.roles != null && item.roles.length > 0 ? item.roles[0].id: 2
                       if (userType == 4) {
-                        this.props.navigation.navigate('ServiceDetails',{  
-                          user: item
-                        })
+                        let path = 'locations';
+                        this.setState({isLoading: true});
+                        ApiService.get(path)
+                          .then((response) => {
+                            var profileData = {};
+                            console.log("name::::", JSON.stringify(response))
+                            for (var key in response.data) {
+                              console.log("id is ::::: ", item.id , "name::::", item.name, " name ::::", response.data[key].contact_name, " id::::", response.data[key].id)
+                              if (response.data[key].id == item.id) {
+                                profileData = response.data[key]
+                              }
+                            }
+                            this.props.navigation.navigate('ServiceDetails',{  
+                              book: profileData
+                            })
+                            this.setState({isLoading: false});
+                          })
+                          .catch((error) => {
+                            this.setState({isLoading: false});
+                            alert(error.data);
+                          });
                       } else {
                         this.setState({isLoading: true});
                         ApiService.get(`user-profile?user_id=${item.id}`)
