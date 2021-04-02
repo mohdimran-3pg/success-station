@@ -25,7 +25,6 @@ import {drawerIconStyle} from './../../styles/CommonStyleSheet';
 import {translate} from './../../util/TranslationUtils';
 
 const DrawerProfile = ({data,url, ...props}) => {
-console.log("DrawerProfile",data)
 
   return (
     <View style={{flexDirection: 'column', height: 142, marginTop: 24}}>
