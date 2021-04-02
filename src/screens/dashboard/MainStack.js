@@ -1,5 +1,3 @@
-
-
 // React Navigate Drawer with Bottom Tab
 // https://aboutreact.com/bottom-tab-view-inside-navigation-drawer/
 
@@ -13,8 +11,8 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  useFocusEffect,
 } from 'react-native';
-
 
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -35,6 +33,10 @@ import Membership from './screen/membership/Membership';
 import EditProfile from './../Edit-Profile/EditProfileScreen';
 import FriendRequest from '../../screens/dashboard/screen/FriendRequest';
 import BookDetailScreen from './screen/book/BookDetailScreen';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+
+import * as Action from '../../redux/ReduxAction';
 
 import {
   adsTabIcon,
@@ -50,8 +52,8 @@ import SelectMyLocation from './screen/SelectMyLocation';
 import AsyncStorage from '@react-native-community/async-storage';
 import ApiService from '../../network/ApiService';
 
-
 const NavigationRight = (props) => {
+
   return (
     <View style={{flexDirection: 'row', justifyContent: 'center'}}>
       <Image
@@ -88,17 +90,18 @@ const NavigationDrawerStructure = (props) => {
           />
         </TouchableOpacity>
 
-        {props.location.length !=0 ?
-        <Image
-          source={require('../../../assets/card/location.png')}
-          style={{
-            width: 14,
-            height: 14,
-            marginLeft: 5,
-            alignSelf: 'center',
-            tintColor: 'white',
-          }}
-        /> :null}
+        {props.location.length != 0 ? (
+          <Image
+            source={require('../../../assets/card/location.png')}
+            style={{
+              width: 14,
+              height: 14,
+              marginLeft: 5,
+              alignSelf: 'center',
+              tintColor: 'white',
+            }}
+          />
+        ) : null}
 
         <Text style={{color: 'white', marginLeft: 5, alignSelf: 'center'}}>
           {props.location}
@@ -168,49 +171,45 @@ const BottomTabStack = () => {
     </Tab.Navigator>
   );
 };
-export  const AdScreenStack = ({navigation}) => {
-    return (
-      <Stack.Navigator
-        initialRouteName="AdsScreen"
-        screenOptions={{
-          headerStyle: null,
-          headerTintColor: '#fff', //Set Header text color
-          headerTitleStyle: null,
+export const AdScreenStack = ({navigation}) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="AdsScreen"
+      screenOptions={{
+        headerStyle: null,
+        headerTintColor: '#fff', //Set Header text color
+        headerTitleStyle: null,
+        headerShown: false,
+      }}>
+      <Stack.Screen
+        name="AdsScreen"
+        component={AdsScreen}
+        options={{
           headerShown: false,
-        }}>
-        <Stack.Screen
-          name="AdsScreen"
-          component={AdsScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="EnterPublisherDetail"
-          component={EnterPublisherDetail}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="AdDetail"
-          component={AdDetail}
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack.Navigator>
-    );
-  };
-  
-
-
+        }}
+      />
+      <Stack.Screen
+        name="EnterPublisherDetail"
+        component={EnterPublisherDetail}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="AdDetail"
+        component={AdDetail}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-
-export default class MainScreenStack extends React.Component {
+class MainScreenStack extends React.Component {
   static navigationOptions = ({navigation, navigationOptions}) => {
     return {
       header: null,
@@ -219,12 +218,16 @@ export default class MainScreenStack extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {userdata: {}, 
-    url: 'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg',
-    address:'',
-     isLoading: false
+    this.state = {
+      userdata: {},
+      url:
+        'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg',
+      address: '',
+      isLoading: false,
     };
   }
+
+  
 
   componentDidMount() {
     AsyncStorage.getItem('userdata').then((value) => {
@@ -240,33 +243,33 @@ export default class MainScreenStack extends React.Component {
     this.setState({isLoading: true});
     ApiService.get(`user-profile?user_id=${userId}`)
       .then((response) => {
-          let data = response.data
-        var city = data.city.city != null ? data.city.city+", ": ""
-        var country = data.country.name != null ? data.country.name: ""
-        var fullAddress = `${city+country}`
-        let url= (data.image!=null && data.image.url.length!=0)?data.image.url :'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg'
-
-        this.setState({url: url,address: fullAddress});
- 
-         console.log("MAINSTACK",this.state)
-
+        let data = response.data;
+        var city = data.city.city != null ? data.city.city + ', ' : '';
+        var country = data.country.name != null ? data.country.name : '';
+        var fullAddress = `${city + country}`;
+        let url =
+          data.image != null && data.image.url.length != 0
+            ? data.image.url
+            : 'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg';
+            this.props.actions.updateUrl(response.data.image.url)
+        this.setState({address: fullAddress});
       })
       .catch((error) => {
         this.setState({isLoading: false});
-        console.log("MAINSTACK",error)
+
         alert(error.data);
       });
   }
   render() {
+      
+      if(this.state.url != this.props.state.url)  this.setState({url:this.props.state.url})
 
     return (
-        <Stack.Navigator>
+      <Stack.Navigator>
         <Stack.Screen
           name=" "
           component={BottomTabStack}
-          options={({route}) => (
-            {
-          
+          options={({route}) => ({
             headerLeft: () => (
               <NavigationDrawerStructure
                 navigationProps={this.props.navigation}
@@ -274,10 +277,10 @@ export default class MainScreenStack extends React.Component {
               />
             ),
             headerRight: () => (
+            
               <NavigationRight
                 navigationProps={this.props.navigation}
-                url={this.state.url
-                                  }
+                url={this.state.url}
               />
             ),
             headerStyle: {
@@ -288,15 +291,14 @@ export default class MainScreenStack extends React.Component {
             headerTitleStyle: {
               fontWeight: 'bold', //Set Header text style
             },
-          }
-          )}
+          })}
         />
         <Stack.Screen
           name="StudentProfile"
           component={StudentProfile}
           options={{
             title: 'Profile', //Set Header Title
-  
+
             headerStyle: {
               backgroundColor: '#0A878A', //Set Header color
             },
@@ -311,7 +313,7 @@ export default class MainScreenStack extends React.Component {
           component={EditProfile}
           options={{
             title: 'Edit Profile', //Set Header Title
-  
+
             headerStyle: {
               backgroundColor: '#0A878A', //Set Header color
             },
@@ -341,7 +343,7 @@ export default class MainScreenStack extends React.Component {
           component={ProfileDetail}
           options={{
             title: 'Profile', //Set Header Title
-  
+
             headerStyle: {
               backgroundColor: '#0A878A', //Set Header color
             },
@@ -351,13 +353,13 @@ export default class MainScreenStack extends React.Component {
             },
           }}
         />
-  
+
         <Stack.Screen
           name="ServiceDetails"
           component={ServiceDetails}
           options={{
             title: 'Profile', //Set Header Title
-  
+
             headerStyle: {
               backgroundColor: '#0A878A', //Set Header color
             },
@@ -367,7 +369,7 @@ export default class MainScreenStack extends React.Component {
             },
           }}
         />
-  
+
         <Stack.Screen
           name="MyAdsList"
           component={MyAdsListScreen}
@@ -397,7 +399,7 @@ export default class MainScreenStack extends React.Component {
           component={AddAds}
           options={{
             title: 'Add Ads', //Set Header Title
-  
+
             headerStyle: {
               backgroundColor: '#0A878A', //Set Header color
             },
@@ -412,7 +414,7 @@ export default class MainScreenStack extends React.Component {
           component={EnterPublisherDetail}
           options={{
             title: 'Add Ads', //Set Header Title
-  
+
             headerStyle: {
               backgroundColor: '#0A878A', //Set Header color
             },
@@ -427,7 +429,7 @@ export default class MainScreenStack extends React.Component {
           component={AdDetail}
           options={{
             title: 'Add Ads', //Set Header Title
-  
+
             headerStyle: {
               backgroundColor: '#0A878A', //Set Header color
             },
@@ -437,13 +439,13 @@ export default class MainScreenStack extends React.Component {
             },
           }}
         />
-  
+
         <Stack.Screen
           name="MyLocation"
           component={MyLocationScreen}
           options={{
             title: 'My Location', //Set Header Title
-  
+
             headerStyle: {
               backgroundColor: '#0A878A', //Set Header color
             },
@@ -453,13 +455,13 @@ export default class MainScreenStack extends React.Component {
             },
           }}
         />
-  
+
         <Stack.Screen
           name="FriendRequest"
           component={FriendRequest}
           options={{
             title: 'Friend Request', //Set Header Title
-  
+
             headerStyle: {
               backgroundColor: '#0A878A', //Set Header color
             },
@@ -469,13 +471,13 @@ export default class MainScreenStack extends React.Component {
             },
           }}
         />
-  
+
         <Stack.Screen
           name="SelectMyLocation"
           component={SelectMyLocation}
           options={{
             title: 'Select Location', //Set Header Title
-  
+
             headerStyle: {
               backgroundColor: '#0A878A', //Set Header color
             },
@@ -485,13 +487,13 @@ export default class MainScreenStack extends React.Component {
             },
           }}
         />
-  
+
         <Stack.Screen
           name="Category"
           component={Category}
           options={{
             title: '', //Set Header Title
-  
+
             headerStyle: {
               backgroundColor: '#0A878A', //Set Header color
             },
@@ -516,7 +518,7 @@ export default class MainScreenStack extends React.Component {
             },
           }}
         />
-  
+
         <Stack.Screen
           name="ServiceProfileScreen"
           component={ServiceDetails}
@@ -533,11 +535,18 @@ export default class MainScreenStack extends React.Component {
           }}
         />
       </Stack.Navigator>
-      
     );
   }
 }
 
+  
+  
+  export default connect((state) => (
+  {
+    state: state.updateProfile,
+  }),(dispatch) => ({
+    actions: bindActionCreators(Action, dispatch)
+  }))(MainScreenStack);
 const TabIcon = ({src, focused}) => {
   return (
     <Image

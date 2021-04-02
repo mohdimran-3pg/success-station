@@ -25,12 +25,17 @@ import SidebarMenu from './SideBarMenu';
 import AsyncStorage from '@react-native-community/async-storage';
 import ApiService from '../../network/ApiService';
 import MainScreenStack ,{AdScreenStack} from "./MainStack";
+import { connect } from 'react-redux';
+
+import * as Action from '../../redux/ReduxAction';
+
+import {bindActionCreators} from 'redux';
 
 const Drawer = createDrawerNavigator();
 
 
 
-export default class DashBoard extends React.Component {
+ class DashBoard extends React.Component {
   static navigationOptions = ({navigation, navigationOptions}) => {
     return {
       header: null,
@@ -70,6 +75,8 @@ export default class DashBoard extends React.Component {
       });
   }
   render() {
+    if(this.state.url != this.props.state.url)  this.setState({url:this.props.state.url})
+
     return (
       <NavigationContainer>
         <Drawer.Navigator
@@ -98,6 +105,16 @@ export default class DashBoard extends React.Component {
     );
   }
 }
+
+
+
+
+export default connect((state) => (
+  {
+    state: state.updateProfile,
+  }),(dispatch) => ({
+    actions: bindActionCreators(Action, dispatch)
+  }))(DashBoard);
 
 const TabIcon = ({src, focused}) => {
   return (

@@ -22,8 +22,13 @@ import CalendarPicker from 'react-native-calendar-picker';
 
 import ImagePicker from "react-native-customized-image-picker";
 import AsyncStorage from '@react-native-community/async-storage';
+import {bindActionCreators} from 'redux';
 
-export default class EditProfileScreen extends React.Component {
+import * as Action from '../../redux/ReduxAction';
+import { connect } from 'react-redux';
+
+
+ class EditProfileScreen extends React.Component {
   static navigationOptions = ({navigation, navigationOptions}) => {
     return {
       title: 'Edit Profile',
@@ -170,7 +175,8 @@ export default class EditProfileScreen extends React.Component {
       })
       .then((response) => {
         this.setState({isLoading: false});
-      
+        console.log(response.data)
+        this.props.actions.updateUrl(response.data.image.url)
         this.props.navigation.goBack()
         
       })
@@ -864,3 +870,14 @@ export default class EditProfileScreen extends React.Component {
     );
   }
 }
+
+
+
+
+
+
+export default connect(state => ({
+  state: state.profileReducer
+}),(dispatch) => ({
+  actions: bindActionCreators(Action, dispatch)
+}))(EditProfileScreen);
