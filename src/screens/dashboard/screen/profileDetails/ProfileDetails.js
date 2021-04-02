@@ -20,6 +20,7 @@ import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
 import ApiService from '../../../../network/ApiService';
 import Loader from '../../../Loader';
 import {translate} from '../../../../util/TranslationUtils';
+import AsyncStorage from '@react-native-community/async-storage'
 const profileData = {
   name: 'Rahul Pandey',
   src:
@@ -32,8 +33,10 @@ const profileData = {
 };
 import BookDetailView from '../../../../../components/BookDetailView';
 
-const UserCardHeader = ({profile,...props}) => {
+const UserCardHeader = ({profile,clickEvent,...props}) => {
   let imageURL = profile.image != null && profile.image.url != null ? profile.image.url: ""
+  var friendshipStatus = profile.Friendship != null && profile.Friendship.status != null ? profile.Friendship.status: ""
+  var roleId = profile.roles != null && profile.roles.length > 0 ? profile.roles[0].id: 2
   return (
     <Card style={{margin: 14, elevation: 10}}>
         <View style={{flexDirection: 'column', justifyContent: 'center'}}>
@@ -41,6 +44,7 @@ const UserCardHeader = ({profile,...props}) => {
             style={[
               { alignSelf: 'center', marginTop: 5},
               styles.image,
+              
             ]}
             source={{uri: imageURL}}
           />
@@ -73,6 +77,7 @@ const UserCardHeader = ({profile,...props}) => {
               marginStart: 28,
               borderBottomColor: '#E2E2E2',
               borderBottomWidth: 1,
+              
             }}
           />
           
@@ -85,9 +90,30 @@ const UserCardHeader = ({profile,...props}) => {
               marginBottom: 12,
             }}>
           
-            <TouchableOpacity style={{height:50,width:'35%',backgroundColor:'white',borderRadius:5,justifyContent:'center',borderColor:'#0A878A',borderWidth:1}}>
+            <TouchableOpacity 
+              style={{height:50, 
+                      width:'35%',
+                      backgroundColor: friendshipStatus == "new" ? '#cecece': "#ffffff",
+                      borderRadius:5,
+                      justifyContent:'center',
+                      borderColor:'#0A878A',
+                      borderWidth:1}}
+                      onPress = {()=> {
+              
+                        AsyncStorage.getItem('userdata').then((value)=> {
+                          if(!value || 0 != value.length){ 
+                            let user_id = JSON.parse(value).user_id;
+                            clickEvent(profile.id, user_id)
+                          }
+                        })  
+                      }
+                      }
+                      disabled={friendshipStatus == "new" ? true: false}
+            >
             <Text style={{color:'#151522',fontSize:17,textAlign:'center',fontWeight:'bold'}}>
-            Add Friend
+            {profile.Friendship != null && profile.Friendship.status == "accepted"  
+                ? roleId == 4 ? translate("Unfollow"): translate('remove_friend')
+                : roleId == 4 ? translate("follow") : translate('add_friend')}
             </Text>
             </TouchableOpacity>
             </View>
@@ -218,6 +244,22 @@ export default class ProfileDetails extends React.Component {
     };
     }
 
+    sendFriendRequest(friendId, myId) {
+      console.log('sendFriendRequest.......')
+      this.setState({isLoading: true})
+      ApiService.post('friendship-request',{
+        "requister_id": `${myId}`,
+        "user_requisted_id": `${friendId}`,
+        "status": "new"
+      })
+      .then((response) => {
+        this.setState({isLoading: false})
+      })
+      .catch((error) => {
+        alert(error.data.message);
+        this.setState({isLoading: false});
+      });
+    }
 
   _handleIndexChange = index => this.setState({ index });
      renderTabBar = props => (
@@ -258,7 +300,10 @@ export default class ProfileDetails extends React.Component {
       <SafeAreaView style={{flex: 1,flexDirection:'column'}}>
            <View style={[styles.parent, {position: 'absolute'}]} />
            <View style={{flex:1}}>
-       <UserCardHeader profile = {data} {...this.props}/>
+       <UserCardHeader profile = {data} {...this.props} clickEvent={(friendId, myId) => {
+                      this.sendFriendRequest(friendId, myId)
+                      console.log(" friendId is ", friendId, " myId is ", myId)
+                    }}/>
        <TabView 
      navigationState={this.state}
      renderScene={this.renderScene}

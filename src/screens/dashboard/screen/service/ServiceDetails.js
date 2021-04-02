@@ -99,8 +99,12 @@ const CONTACTS = ({data}) => {
     var city = user.city.city != null ? user.city.city+", ": ""
     var country = user.country.name != null ? user.country.name: ""
     var fullAddress = `${city+country}`
-    var isHttps = user.website.includes('https') || user.website.includes('http') 
-    var link = isHttps ? user.website :'https://'+user.website
+    var link = "";
+    if (user.website != null) {
+      var isHttps = user.website.includes('https') || user.website.includes('http') 
+      var link = isHttps ? user.website :'https://'+user.website
+    }
+    
 
  return(
  <View style={{flex: 1, background: 'white', margin: 16}}>

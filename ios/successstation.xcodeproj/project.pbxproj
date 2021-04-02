@@ -19,6 +19,12 @@
 		355B3D3B103C2F0FC75FDBCB /* libPods-successstation-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 340C93B97203506B09BFF961 /* libPods-successstation-tvOSTests.a */; };
 		5A44AC4E439B1AE2B8D3549D /* libPods-successstation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4020B2877FE2640B6730E86D /* libPods-successstation.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9B0CDC272617038700AC961E /* DMSans-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9B0CDC212617038600AC961E /* DMSans-Italic.otf */; };
+		9B0CDC282617038700AC961E /* DMSans-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9B0CDC222617038700AC961E /* DMSans-BoldItalic.otf */; };
+		9B0CDC292617038700AC961E /* DMSans-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9B0CDC232617038700AC961E /* DMSans-MediumItalic.otf */; };
+		9B0CDC2A2617038700AC961E /* DMSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9B0CDC242617038700AC961E /* DMSans-Bold.otf */; };
+		9B0CDC2B2617038700AC961E /* DMSans-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9B0CDC252617038700AC961E /* DMSans-Regular.otf */; };
+		9B0CDC2C2617038700AC961E /* DMSans-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9B0CDC262617038700AC961E /* DMSans-Medium.otf */; };
 		FA469471319A07CD06AE3FF3 /* libPods-successstation-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 080507CF61B2A07A9821DEFD /* libPods-successstation-tvOS.a */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +69,12 @@
 		5540EA39FC8B32692A0B647C /* Pods-successstation-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-successstation-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-successstation-tvOSTests/Pods-successstation-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = successstation/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8A54B6E06D07B07FA3794AEA /* Pods-successstation-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-successstation-tvOS.release.xcconfig"; path = "Target Support Files/Pods-successstation-tvOS/Pods-successstation-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		9B0CDC212617038600AC961E /* DMSans-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Italic.otf"; sourceTree = "<group>"; };
+		9B0CDC222617038700AC961E /* DMSans-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-BoldItalic.otf"; sourceTree = "<group>"; };
+		9B0CDC232617038700AC961E /* DMSans-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-MediumItalic.otf"; sourceTree = "<group>"; };
+		9B0CDC242617038700AC961E /* DMSans-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Bold.otf"; sourceTree = "<group>"; };
+		9B0CDC252617038700AC961E /* DMSans-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Regular.otf"; sourceTree = "<group>"; };
+		9B0CDC262617038700AC961E /* DMSans-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Medium.otf"; sourceTree = "<group>"; };
 		A44F1A08BCC214FC891C8226 /* Pods-successstation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-successstation.debug.xcconfig"; path = "Target Support Files/Pods-successstation/Pods-successstation.debug.xcconfig"; sourceTree = "<group>"; };
 		E30947B9F217A6E61646FCFD /* Pods-successstation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-successstation.release.xcconfig"; path = "Target Support Files/Pods-successstation/Pods-successstation.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -201,6 +213,12 @@
 		9EA3A8D54D254CEF9B1D4C44 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9B0CDC242617038700AC961E /* DMSans-Bold.otf */,
+				9B0CDC222617038700AC961E /* DMSans-BoldItalic.otf */,
+				9B0CDC212617038600AC961E /* DMSans-Italic.otf */,
+				9B0CDC262617038700AC961E /* DMSans-Medium.otf */,
+				9B0CDC232617038700AC961E /* DMSans-MediumItalic.otf */,
+				9B0CDC252617038700AC961E /* DMSans-Regular.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -349,6 +367,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				9B0CDC272617038700AC961E /* DMSans-Italic.otf in Resources */,
+				9B0CDC282617038700AC961E /* DMSans-BoldItalic.otf in Resources */,
+				9B0CDC2B2617038700AC961E /* DMSans-Regular.otf in Resources */,
+				9B0CDC2C2617038700AC961E /* DMSans-Medium.otf in Resources */,
+				9B0CDC292617038700AC961E /* DMSans-MediumItalic.otf in Resources */,
+				9B0CDC2A2617038700AC961E /* DMSans-Bold.otf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -731,7 +755,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = R5KF9M84U9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = successstation/Info.plist;
@@ -755,7 +779,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = R5KF9M84U9;
 				INFOPLIST_FILE = successstation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

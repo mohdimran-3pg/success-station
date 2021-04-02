@@ -31,6 +31,15 @@
 		<key>NSExceptionDomains</key>
 		<dict/>
 	</dict>
+  <key>UIAppFonts</key>
+  <array>
+    <string>DMSans-Bold.otf</string>
+    <string>DMSans-BoldItalic.otf</string>
+    <string>DMSans-Italic.otf</string>
+    <string>DMSans-Medium.otf</string>
+    <string>DMSans-MediumItalic.otf</string>
+    <string>DMSans-Regular.otf</string>
+  </array>
 	<key>NSCameraUsageDescription</key>
 	<string>1</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

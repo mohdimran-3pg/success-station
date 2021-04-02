@@ -15,7 +15,7 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
   var country = user.country.name != null ? user.country.name: ""
   var fullAddress = `${city+region+country}`
   var url = (user.image != null && user.image.preview != null) ? user.image.preview  :'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg'
-  
+  var friendshipStatus = user.Friendship != null && user.Friendship.status != null ? user.Friendship.status: ""
 
 
   return (
@@ -40,7 +40,7 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
           <Text style={{fontSize: 11, fontWeight: "400",marginStart:4, color: "#9EA6BE", fontStyle: "normal"}}>{fullAddress}</Text>
         </View>
         <View style={{width: "80%", alignSelf: "center", height: 35, marginBottom: 10,marginTop:13}}>
-        <View style={styles.mainView}>
+        <View style={friendshipStatus == "new" ? styles.disableMainView: styles.mainView}>
             <TouchableOpacity onPress = {()=> {
               
               AsyncStorage.getItem('userdata').then((value)=> {
@@ -52,7 +52,7 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
               
             }
             }
-            disabled={true}
+            disabled={friendshipStatus == "new" ? false: true}
             >
               <Text style={styles.buttonStyle}>
               {user.Friendship != null && user.Friendship.status == "accepted"  
@@ -97,6 +97,7 @@ export default class FreindsScreen extends React.Component {
     this.setState({isLoading: true});
     ApiService.get('users')
       .then((response) => {
+        console.log("this is API Response :::: ", JSON.stringify(response.data))
         this.friendList = response.data;
         this.setState({isLoading: false});
       })
@@ -127,7 +128,9 @@ export default class FreindsScreen extends React.Component {
   componentDidMount() {
    this.getFriendList()
   }
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    console.log("componentWillUnmount")
+  }
 
   render() {
     return (
@@ -158,19 +161,19 @@ export default class FreindsScreen extends React.Component {
                     }}
                     profileOpenEvent={() => {
                       let userType = item.roles != null && item.roles.length > 0 ? item.roles[0].id: 2
-                      if (userType == 4) {
-                        let path = 'locations';
+                      if (userType == 7) {
+                        let path = `user-profile?user_id=${item.id}`;
                         this.setState({isLoading: true});
                         ApiService.get(path)
                           .then((response) => {
-                            var profileData = {};
+                            var profileData = response.data;
                             console.log("name::::", JSON.stringify(response))
-                            for (var key in response.data) {
-                              console.log("id is ::::: ", item.id , "name::::", item.name, " name ::::", response.data[key].contact_name, " id::::", response.data[key].id)
-                              if (response.data[key].id == item.id) {
-                                profileData = response.data[key]
-                              }
-                            }
+                            // for (var key in response.data) {
+                            //   console.log("id is ::::: ", item.id , "name::::", item.name, " name ::::", response.data[key].contact_name, " id::::", response.data[key].id)
+                            //   if (response.data[key].id == item.id) {
+                            //     profileData = response.data[key]
+                            //   }
+                            // }
                             this.props.navigation.navigate('ServiceDetails',{  
                               book: profileData
                             })
@@ -233,5 +236,17 @@ const styles = StyleSheet.create({
       borderColor: "#F78A3A",
       borderWidth: 1
   },
+  disableMainView: {
+
+    width: "100%",
+    height: 35,
+    borderRadius: 4,
+    backgroundColor: "#cecece",
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "stretch",
+    borderColor: "#F78A3A",
+    borderWidth: 1
+},
   buttonStyle: {color: "#F78A3A", fontSize: 17, fontWeight: "700", textAlign: "center"}
 });
