@@ -133,5 +133,6 @@
   "enter_price": "Enter Price",
   "select_image": "Select Image",
   "friend_requests": "Friend Requests",
-  "remove_friend": "Remove Friend"
+  "remove_friend": "Remove Friend",
+  "unfollow": "Unfollow"
 }
