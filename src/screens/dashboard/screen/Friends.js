@@ -8,6 +8,7 @@ import {translate} from '../../../util/TranslationUtils';
 import ApiService from '../../../network/ApiService';
 import Loader from '../../Loader';
 import AsyncStorage from '@react-native-community/async-storage'
+import _ from 'lodash';
 
 const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
   var city = user.city.city != null ? user.city.city+", ": ""
@@ -89,15 +90,23 @@ export default class FreindsScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    this.onChangeTextDelayed = _.debounce(this.onChangeText, 1000);
     this.state = { isLoading :false}
     this.friendList = []
   }
 
-  getFriendList = () => {
+  onChangeText = (text) => {
+    this.getFriendList(`?search=${text}`)
+  }
+
+  getFriendList = (searchData = '') => {
     this.setState({isLoading: true});
-    ApiService.get('users')
+    var path = 'users'
+    if (searchData != "") {
+      path += searchData
+    }
+    ApiService.get(path)
       .then((response) => {
-        console.log("this is API Response :::: ", JSON.stringify(response.data))
         this.friendList = response.data;
         this.setState({isLoading: false});
       })
@@ -108,7 +117,6 @@ export default class FreindsScreen extends React.Component {
   };
 
   sendFriendRequest(friendId, myId) {
-    console.log('sendFriendRequest.......')
     this.setState({isLoading: true})
     ApiService.post('friendship-request',{
       "requister_id": `${myId}`,
@@ -142,7 +150,8 @@ export default class FreindsScreen extends React.Component {
             }}>
             <View style={{height: 70, width: "100%" ,backgroundColor:"rgba(10, 135, 138, 1)"}}>
             <Searchbar style ={{marginStart:10,marginEnd:10}} 
-              placeholder={translate('search_book')}
+              placeholder={translate('search_friend')}
+              onChangeText={this.onChangeTextDelayed}
               icon={()=><Image source = {require('./../../../../assets/search.png')} />}
             />
             </View>

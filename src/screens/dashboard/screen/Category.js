@@ -23,6 +23,7 @@ import {translate} from '../../../util/TranslationUtils';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import ApiService from '../../../network/ApiService';
 import Loader from '../../Loader';
+import _ from 'lodash';
 
 const 
     multiSliderValue= [0, 100]
@@ -107,14 +108,16 @@ const CardItem = ({item,...props}) => {
 export default class StudentProfile extends React.Component {
   constructor(props) {
     super(props);
+    this.onChangeTextDelayed = _.debounce(this.onChangeText, 1000);
     this.state = {
      
       index: 0,
       books: [],
       categories: [],
       isLoading: false,
+      types: []
     };
-
+    this.searchText = props.route != null && props.route.params != null && props.route.params.searchText != null ? props.route.params.searchText: ""; 
     this.data = [
       {title: 'ALL', key: '1'},
       {title: 'CLOTHES', key: '2'},
@@ -127,6 +130,19 @@ export default class StudentProfile extends React.Component {
   onChangeTab = (index) => {
     this.getBooksByCategory(this.state.categories[index].key)
   };
+
+  onChangeText = (text) => {
+    this.getBooks(`?search=${text}`)
+  }
+
+  getAddType= () =>{
+    ApiService.get('listing-types')
+      .then((response) => {
+        this.setState({types: response.data}) 
+      })
+      .catch((error) => {
+      });
+  }
 
   getBookCategories = () => {
     this.setState({isLoading: true});
@@ -145,15 +161,23 @@ export default class StudentProfile extends React.Component {
           tempArray.push(temp)
         }
         this.setState({categories: tempArray})
-        this.getBooks();
+        var searchString = ""
+        if (this.searchText != null && this.searchText != "") {
+          searchString = "?search="+ this.searchText
+        }
+        this.getBooks(searchString);
       })
       .catch((error) => {
         this.setState({isLoading: false});
       });
   }
 
-  getBooks = () => {
-    ApiService.get('listings')
+  getBooks = (searchData = "") => {
+    var path = 'listings'
+    if (searchData != "") {
+      path += searchData
+    }
+    ApiService.get(path)
       .then((response) => {
         this.setState({isLoading: false});
         this.setState({books: response.data})
@@ -173,11 +197,16 @@ export default class StudentProfile extends React.Component {
       .catch((error) => {
       });
     } else {
-      this.getBooks()
+      var searchString = ""
+      if (this.searchText != null && this.searchText != "") {
+        searchString = "?search="+ this.searchText
+      }
+      this.getBooks(searchString)
     }
   }
 
   componentDidMount() {
+    this.getAddType()
     this.getBookCategories();
   }
 
@@ -189,9 +218,11 @@ export default class StudentProfile extends React.Component {
           <Searchbar
             style={{marginStart: 10, marginEnd: 10}}
             placeholder={translate('search_book')}
+            onChangeText={this.onChangeTextDelayed}
             icon={() => (
               <Image source={require('./../../../../assets/search.png')} />
             )}
+            value={this.searchText}
           />
         </View>
         <View style={{flexDirection: 'row', margin: 7, height: 30}}>
@@ -275,10 +306,10 @@ export default class StudentProfile extends React.Component {
                 margin: 16,
         
               }}>
-              <Text style={{color: 'black'}}>Reset</Text>
+              <Text style={{color: 'black'}}>{translate('reset')}</Text>
               <Text>Filter</Text>
               <TouchableOpacity style={{padding: 0}}>
-                <Text style={{color: '#F78A3A'}}>Done</Text>
+                <Text style={{color: '#F78A3A'}}>{translate('done')}</Text>
               </TouchableOpacity>
             </View>
             <View
@@ -288,42 +319,20 @@ export default class StudentProfile extends React.Component {
                 width: '100%',
               }}></View>
             <Text style={{fontSize: 21, marginStart: 16, marginTop: 13}}>
-              Sub Categories
+              {translate('type')}
             </Text>
 
-            <View
+            <FlatList style={{}}
+              data={this.state.types}
+              renderItem={({item}) => <View
               style={{
-                flexDirection: 'row',
-               
-                margin: 8,
               }}>
-              <CheckBox
-               
-              />
-              <Text style={{textAlignVertical:'center'}}>Medical1 books</Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-               
-                margin: 8,
-              }}>
-              <CheckBox
-               
-              />
-              <Text style={{textAlignVertical:'center'}}>Medical2 books</Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-               
-                margin: 8,
-              }}>
-              <CheckBox
-               
-              />
-              <Text style={{textAlignVertical:'center'}}>Medical3 books</Text>
-            </View>
+              <CheckBox />
+              <Text style={{textAlignVertical:'center'}}>{item.type}</Text>
+            </View>} 
+              numColumns={1}
+            />
+            
             <Text style={{fontSize: 21, marginStart: 16, marginTop: 13}}>
               Condition
             </Text>

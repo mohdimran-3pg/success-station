@@ -19,8 +19,8 @@ import MapView, {Callout, Marker} from 'react-native-maps';
 import ApiService from '../../../network/ApiService';
 import Loader from '../../Loader';
 import WebView from 'react-native-webview';
-
-const SearchBar = ({displayType, clickEvent}) => {
+import DelayInput from "react-native-debounce-input";
+const SearchBar = ({displayType, clickEvent, onChangeTextEvent}) => {
   return (
     <View
       style={{
@@ -78,12 +78,16 @@ const SearchBar = ({displayType, clickEvent}) => {
           style={{width: 23, height: 23, marginLeft: 18}}
           source={require('../../../../assets/search.png')}
         />
-        <TextInput
-          autoCapitalize="none"
-          autoCorrect={false}
-          style={{width: 100, height: 25, marginLeft: 18}}
-          placeholder={translate('search_book')}
-        />
+        <DelayInput
+        placeholder={translate('search_service')}
+        minLength={2}
+        onChangeText={(text)=>{
+          onChangeTextEvent(text)
+        }}
+        delayTimeout={1000}
+        style={{ width: 100, height: 25, marginLeft: 18 }}
+      />
+
       </View>
     </View>
   );
@@ -222,11 +226,21 @@ export default class ServicesScreen extends React.Component {
       });
   };
 
-  getServiceList = (id) => {
+  getServiceList = (id, searchData = '') => {
     let path = 'locations';
     if (id != 0) {
       path = `locations?category=${id}`;
     }
+
+    if (searchData != "") {
+      if (path.includes("?")) {
+        path += "&"
+      } else {
+        path += "?"
+      }
+      path += searchData
+    }
+    
     ApiService.get(path)
       .then((response) => {
         this.locationList = response.data;
@@ -303,6 +317,9 @@ export default class ServicesScreen extends React.Component {
                 displayType={this.state.isMap}
                 clickEvent={() => {
                   this.setState({isMap: !this.state.isMap});
+                }}
+                onChangeTextEvent={(text) => {
+                  this.getServiceList(0, `search=${text}`)
                 }}
               />
             </View>

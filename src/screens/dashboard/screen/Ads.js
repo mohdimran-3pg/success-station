@@ -8,6 +8,7 @@ import Carousel, { Pagination } from 'react-native-snap-carousel'
 import {translate} from '../../../util/TranslationUtils';
 import ApiService from '../../../network/ApiService';
 import Loader from '../../Loader';
+import _ from 'lodash';
 const SLIDER_WIDTH = Dimensions.get('window').width 
 const ITEM_WIDTH = Dimensions.get('window').width
 
@@ -129,6 +130,7 @@ export default class AdsScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    this.onChangeTextDelayed = _.debounce(this.onChangeText, 1000);
     this.state = {
       images: [
         "https://source.unsplash.com/1024x768/?nature",
@@ -143,7 +145,7 @@ export default class AdsScreen extends React.Component {
   }
 
   onChangeText = (text) => {
-    console.log("debouncing");
+    this.props.navigation.navigate('Category', {searchText: text});
   }
 
 
@@ -165,10 +167,10 @@ export default class AdsScreen extends React.Component {
             <View style={{height: 60, width: "100%" ,backgroundColor:"rgba(10, 135, 138, 1)"}}>
             <Searchbar style ={{marginStart:10,marginEnd:10}} 
               placeholder={translate('search_book')}
-              onChangeText={value=>{
-                console.log("value");
-             
-              }}
+              onChangeText={this.onChangeTextDelayed}
+              icon={() => (
+                <Image source={require('./../../../../assets/search.png')} />
+              )}
               
             />
             </View>

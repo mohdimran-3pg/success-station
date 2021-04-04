@@ -174,7 +174,7 @@ export default class OffersScreen extends React.Component {
               }}>
               <Searchbar 
                 style={{marginStart: 10, marginEnd: 10}}
-                placeholder={translate('search_book')}
+                placeholder={translate('search_offer')}
                 onChangeText={this.onChangeTextDelayed}
                 icon={() => (
                   <Image source={require('./../../../../assets/search.png')} />
