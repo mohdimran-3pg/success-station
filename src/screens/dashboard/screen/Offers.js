@@ -19,6 +19,7 @@ import {translate} from '../../../util/TranslationUtils';
 import DynamicTabView from 'react-native-dynamic-tab-view';
 import ApiService from '../../../network/ApiService';
 import Loader from '../../Loader';
+import _ from 'lodash';
 
 const ITEM_WIDTH = Dimensions.get('window').width;
 
@@ -87,9 +88,13 @@ export default class OffersScreen extends React.Component {
       });
   }
   
-  getAllBanners = () =>{
+  getAllBanners = (searchdata = "") =>{
+    let path = 'all-ads'
+    if(searchdata!= ""){
+        path += searchdata
+    }
     this.setState({isLoading: true});
-    ApiService.get('all-ads')
+    ApiService.get(path)
       .then((response) => {
        this.bannersData = response.data
        this.setState({isLoading: false});
@@ -120,6 +125,7 @@ export default class OffersScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    this.onChangeTextDelayed = _.debounce(this.onChangeText, 1000);
     this.state = {
        isLoading: false,
       index: 0,
@@ -139,6 +145,10 @@ export default class OffersScreen extends React.Component {
   onChangeTab = (index) => {
     this.getBannersByCategory(this.categoryData[index].key)
   };
+
+  onChangeText = (text) => {
+    this.getAllBanners(`?search=${text}`)
+  }
 
   componentDidMount() {
     this.getCategories()
@@ -165,6 +175,7 @@ export default class OffersScreen extends React.Component {
               <Searchbar 
                 style={{marginStart: 10, marginEnd: 10}}
                 placeholder={translate('search_book')}
+                onChangeText={this.onChangeTextDelayed}
                 icon={() => (
                   <Image source={require('./../../../../assets/search.png')} />
                 )}

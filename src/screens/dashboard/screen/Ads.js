@@ -142,7 +142,10 @@ export default class AdsScreen extends React.Component {
     
   }
 
-  
+  onChangeText = (text) => {
+    console.log("debouncing");
+  }
+
 
   componentDidMount() {
     this.getBanners();
@@ -162,7 +165,11 @@ export default class AdsScreen extends React.Component {
             <View style={{height: 60, width: "100%" ,backgroundColor:"rgba(10, 135, 138, 1)"}}>
             <Searchbar style ={{marginStart:10,marginEnd:10}} 
               placeholder={translate('search_book')}
-              icon={()=><Image source = {require('./../../../../assets/search.png')} />}
+              onChangeText={value=>{
+                console.log("value");
+             
+              }}
+              
             />
             </View>
             <ScrollView style={{marginBottom:50}}>
