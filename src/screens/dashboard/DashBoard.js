@@ -64,9 +64,13 @@ const Drawer = createDrawerNavigator();
     ApiService.get(`user-profile?user_id=${userId}`)
       .then((response) => {
         let url= (response.data.image!=null && response.data.image.url.length!=0)?response.data.image.url :'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg'
-
-        this.setState({url: url});
- 
+        this.props.actions.updateUrl(url)
+        let data = response.data;
+        var city = data.city.city != null ? data.city.city + ', ' : '';
+        var country = data.country.name != null ? data.country.name : '';
+        var fullAddress = `${city + country}`;
+        console.log(fullAddress)
+        this.props.actions.updateAddress(fullAddress)
         this.setState({isLoading: false});
       })
       .catch((error) => {
@@ -75,7 +79,7 @@ const Drawer = createDrawerNavigator();
       });
   }
   render() {
-    if(this.state.url != this.props.state.url)  this.setState({url:this.props.state.url})
+   
 
     return (
       <NavigationContainer>
@@ -90,7 +94,7 @@ const Drawer = createDrawerNavigator();
             <SidebarMenu
               props={props}
               data={this.state.userdata}
-              icon= {this.state.url}
+              icon= { this.props.state.url}
               logout={() =>
                 AsyncStorage.removeItem('userdata').then(() =>
                   this.props.navigation.replace('login'),
@@ -112,6 +116,7 @@ const Drawer = createDrawerNavigator();
 export default connect((state) => (
   {
     state: state.updateProfile,
+   
   }),(dispatch) => ({
     actions: bindActionCreators(Action, dispatch)
   }))(DashBoard);
