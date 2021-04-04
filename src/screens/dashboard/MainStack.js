@@ -346,7 +346,7 @@ class MainScreenStack extends React.Component {
             headerRight: () => (
               <TouchableOpacity
                 style={{marginRight: 10}}
-                onPress={() => navigation.navigate('AddAds')}>
+                onPress={() => this.props.navigation.navigate('AddAds')}>
                 <Image
                   source={require('./../../../assets/plus.png')}
                   style={{width: 35, height: 35, tintColor: 'white'}}
