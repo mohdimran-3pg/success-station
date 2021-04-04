@@ -78,14 +78,15 @@ const SearchBar = ({displayType, clickEvent, onChangeTextEvent}) => {
           style={{width: 23, height: 23, marginLeft: 18}}
           source={require('../../../../assets/search.png')}
         />
-        <DelayInput
+        <DelayInput 
+      
         placeholder={translate('search_service')}
         minLength={2}
         onChangeText={(text)=>{
           onChangeTextEvent(text)
         }}
         delayTimeout={1000}
-        style={{ width: 100, height: 25, marginLeft: 18 }}
+        style={{ marginLeft: 18 }}
       />
 
       </View>

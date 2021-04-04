@@ -115,24 +115,22 @@ export default class StudentProfile extends React.Component {
       books: [],
       categories: [],
       isLoading: false,
-      types: []
+      types: [],
+      searchText:props.route != null && props.route.params != null && props.route.params.searchText != null ? props.route.params.searchText: ""
+  
     };
-    this.searchText = props.route != null && props.route.params != null && props.route.params.searchText != null ? props.route.params.searchText: ""; 
-    this.data = [
-      {title: 'ALL', key: '1'},
-      {title: 'CLOTHES', key: '2'},
-      {title: 'ELECTRONICS', key: '3'},
-      {title: 'BOOKS', key: '4'},
-      {title: 'COMPUTER', key: '5'},
-      {title: 'MOBILE', key: '6'},
-    ];
+    
   }
   onChangeTab = (index) => {
     this.getBooksByCategory(this.state.categories[index].key)
   };
 
   onChangeText = (text) => {
-    this.getBooks(`?search=${text}`)
+    this.setState({searchText:text})
+    setTimeout( () => {
+      this.getBooks(`?search=${text}`)
+   },1000);
+    
   }
 
   getAddType= () =>{
@@ -209,7 +207,7 @@ export default class StudentProfile extends React.Component {
     this.getAddType()
     this.getBookCategories();
   }
-
+  
   render() {
     return (
       <SafeAreaView style={{flex: 1,backgroundColor:'white'}}>
@@ -218,11 +216,15 @@ export default class StudentProfile extends React.Component {
           <Searchbar
             style={{marginStart: 10, marginEnd: 10}}
             placeholder={translate('search_book')}
-            onChangeText={this.onChangeTextDelayed}
+            onChangeText={(value)=>{
+        
+              this.onChangeText(value)
+
+            }}
             icon={() => (
               <Image source={require('./../../../../assets/search.png')} />
             )}
-            value={this.searchText}
+            value={this.state.searchText}
           />
         </View>
         <View style={{flexDirection: 'row', margin: 7, height: 30}}>
@@ -327,7 +329,7 @@ export default class StudentProfile extends React.Component {
               renderItem={({item}) => <View
               style={{
               }}>
-              <CheckBox />
+              <CheckBox value={true} />
               <Text style={{textAlignVertical:'center'}}>{item.type}</Text>
             </View>} 
               numColumns={1}

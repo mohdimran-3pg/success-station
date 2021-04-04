@@ -20,7 +20,9 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
 
 
   return (
-    <TouchableOpacity style={{ width:'47%',margin:'1.5%', borderColor: "#00000030", borderWidth: 1, borderRadius: 4}}>
+   
+    <View style={{ width:'47%',margin:'1.5%', borderColor: "#00000030", borderWidth: 1, borderRadius: 4}}>
+     
         <View style={{width: 60, height: 60, borderRadius: 30, alignSelf: "center", marginTop: 21}}>
             <Image style={{width: 60, height: 60, borderRadius: 30}} 
                   source={{uri: url}}
@@ -49,7 +51,7 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
               
             }
             }
-            disabled={friendshipStatus == "new" ? false: true}
+            disabled={friendshipStatus == "new" ? true: false}
             >
               <Text style={styles.buttonStyle}>
               {user.Friendship != null && user.Friendship.status == "accepted"  
@@ -66,7 +68,7 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
         profileOpenEvent()
         
       }}
-            disabled={friendshipStatus == "new" ? false: true}
+           
             >
               <Text style={styles.buttonStyle}>
               {translate('view_profile')}
@@ -74,7 +76,9 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
             </TouchableOpacity>
         </View>
         </View>
-    </TouchableOpacity>
+    
+    </View>
+  
   )
 }
 
@@ -166,11 +170,10 @@ export default class FreindsScreen extends React.Component {
               icon={()=><Image source = {require('./../../../../assets/search.png')} />}
             />
             </View>
-            <View style={{ backgroundColor: "white", height: "90%"}}>
-                <View style={{alignSelf: "center", height: "100%"}}>
+            <View style={{ backgroundColor: "white",marginBottom:70}}>
+               
                 <FlatList
 
-                    style = {{margin:5}}
                     keyExtractor = {(item) => item.id} 
                     data = {this.friendList}
                     numColumns={2}
@@ -187,13 +190,7 @@ export default class FreindsScreen extends React.Component {
                         ApiService.get(path)
                           .then((response) => {
                             var profileData = response.data;
-                            console.log("name::::", JSON.stringify(response))
-                            // for (var key in response.data) {
-                            //   console.log("id is ::::: ", item.id , "name::::", item.name, " name ::::", response.data[key].contact_name, " id::::", response.data[key].id)
-                            //   if (response.data[key].id == item.id) {
-                            //     profileData = response.data[key]
-                            //   }
-                            // }
+                          
                             this.props.navigation.navigate('ServiceDetails',{  
                               book: profileData
                             })
@@ -232,7 +229,7 @@ export default class FreindsScreen extends React.Component {
                 />
                 </View>
             </View>
-            </View>
+          
             
         </View>
         {this.state.isLoading ? (
