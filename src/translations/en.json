@@ -137,5 +137,6 @@
   "select_image": "Select Image",
   "friend_requests": "Friend Requests",
   "remove_friend": "Remove Friend",
-  "unfollow": "Unfollow"
+  "unfollow": "Unfollow",
+  "view_profile": "View Profile"
 }

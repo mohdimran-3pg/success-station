@@ -20,11 +20,7 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
 
 
   return (
-    <TouchableOpacity style={{ width:'47%',margin:'1.5%', borderColor: "#00000030", borderWidth: 1, borderRadius: 4}} onPress = {()=> 
-      {
-        profileOpenEvent()
-        
-      }}>
+    <TouchableOpacity style={{ width:'47%',margin:'1.5%', borderColor: "#00000030", borderWidth: 1, borderRadius: 4}} disabled={true}>
         <View style={{width: 60, height: 60, borderRadius: 30, alignSelf: "center", marginTop: 21}}>
             <Image style={{width: 60, height: 60, borderRadius: 30}} 
                   source={{uri: url}}
@@ -59,6 +55,21 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
               {user.Friendship != null && user.Friendship.status == "accepted"  
                 ? translate('remove_friend')
                 : translate('add_friend')}
+              </Text>
+            </TouchableOpacity>
+        </View>
+        </View>
+        <View style={{width: "80%", alignSelf: "center", height: 35, marginBottom: 10,marginTop:5}}>
+        <View style={styles.mainView}>
+            <TouchableOpacity onPress = {()=> 
+      {
+        profileOpenEvent()
+        
+      }}
+            disabled={friendshipStatus == "new" ? false: true}
+            >
+              <Text style={styles.buttonStyle}>
+              {translate('view_profile')}
               </Text>
             </TouchableOpacity>
         </View>
