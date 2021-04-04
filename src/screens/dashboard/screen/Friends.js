@@ -20,7 +20,7 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
 
 
   return (
-    <TouchableOpacity style={{ width:'47%',margin:'1.5%', borderColor: "#00000030", borderWidth: 1, borderRadius: 4}} disabled={true}>
+    <TouchableOpacity style={{ width:'47%',margin:'1.5%', borderColor: "#00000030", borderWidth: 1, borderRadius: 4}}>
         <View style={{width: 60, height: 60, borderRadius: 30, alignSelf: "center", marginTop: 21}}>
             <Image style={{width: 60, height: 60, borderRadius: 30}} 
                   source={{uri: url}}
