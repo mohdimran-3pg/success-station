@@ -90,7 +90,7 @@ const NavigationDrawerStructure = (props) => {
           />
         </TouchableOpacity>
 
-        {props.location.length != 0 ? (
+        { (props.location!=null &&props.location.length != 0) ? (
           <Image
             source={require('../../../assets/card/location.png')}
             style={{
@@ -229,40 +229,8 @@ class MainScreenStack extends React.Component {
 
   
 
-  componentDidMount() {
-    AsyncStorage.getItem('userdata').then((value) => {
-      this.setState({userdata: JSON.parse(value)});
-      if (!value || 0 != value.length) {
-        let user_id = JSON.parse(value).user_id;
-        this.getMyProfileData(user_id);
-      }
-    });
-  }
-
-  getMyProfileData(userId) {
-    this.setState({isLoading: true});
-    ApiService.get(`user-profile?user_id=${userId}`)
-      .then((response) => {
-        let data = response.data;
-        var city = data.city.city != null ? data.city.city + ', ' : '';
-        var country = data.country.name != null ? data.country.name : '';
-        var fullAddress = `${city + country}`;
-        let url =
-          data.image != null && data.image.url.length != 0
-            ? data.image.url
-            : 'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg';
-            this.props.actions.updateUrl(response.data.image.url)
-        this.setState({address: fullAddress});
-      })
-      .catch((error) => {
-        this.setState({isLoading: false});
-
-        alert(error.data);
-      });
-  }
+  
   render() {
-      
-      if(this.state.url != this.props.state.url)  this.setState({url:this.props.state.url})
 
     return (
       <Stack.Navigator>
@@ -273,14 +241,14 @@ class MainScreenStack extends React.Component {
             headerLeft: () => (
               <NavigationDrawerStructure
                 navigationProps={this.props.navigation}
-                location={this.state.address}
+                location={this.props.state.address}
               />
             ),
             headerRight: () => (
             
               <NavigationRight
                 navigationProps={this.props.navigation}
-                url={this.state.url}
+                url={this.props.state.url}
               />
             ),
             headerStyle: {

@@ -1,1 +1,2 @@
 export const PROFILE_IMAGE = 'PROFILE_IMAGE'
+export const PROFILE_ADDRESS = 'PROFILE_ADDRESS'

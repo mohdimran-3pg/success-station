@@ -167,9 +167,9 @@ export default class AdsScreen extends React.Component {
               placeholder={translate('search_book')}
               onChangeText={value=>{
                 console.log("value");
-             
+                _.debounce(this.onChangeText(value), 200)
               }}
-              
+              icon={()=><Image source = {require('./../../../../assets/search.png')} />}
             />
             </View>
             <ScrollView style={{marginBottom:50}}>
