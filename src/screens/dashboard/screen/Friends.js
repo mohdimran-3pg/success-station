@@ -17,7 +17,7 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
   var fullAddress = `${city+region+country}`
   var url = (user.image != null && user.image.preview != null) ? user.image.preview  :'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg'
   var friendshipStatus = user.Friendship != null && user.Friendship.status != null ? user.Friendship.status: ""
-
+  var roleId = user.roles != null && user.roles.length > 0 ? user.roles[0].id: 2
 
   return (
    
@@ -55,8 +55,8 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
             >
               <Text style={styles.buttonStyle}>
               {user.Friendship != null && user.Friendship.status == "accepted"  
-                ? translate('remove_friend')
-                : translate('add_friend')}
+                ? roleId == 4 ? translate("unfollow"): translate('remove_friend')
+                : roleId == 4 ? translate("follow") : translate('add_friend')}
               </Text>
             </TouchableOpacity>
         </View>
@@ -209,7 +209,7 @@ export default class FreindsScreen extends React.Component {
                               .then((response) => {
                                 this.setState({isLoading: false});
                                 this.props.navigation.navigate('ProfileDetail',{  
-                                  user: userData, ads: response.data
+                                  user: userData, ads: response.data, Friendship: item.Friendship
                                 })
                               })
                               .catch((error) => {

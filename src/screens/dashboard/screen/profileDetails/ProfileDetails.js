@@ -21,21 +21,11 @@ import ApiService from '../../../../network/ApiService';
 import Loader from '../../../Loader';
 import {translate} from '../../../../util/TranslationUtils';
 import AsyncStorage from '@react-native-community/async-storage'
-const profileData = {
-  name: 'Rahul Pandey',
-  src:
-    'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg',
-  ads: 100,
-  follower: 40,
-  following: 100,
-  profileMsg:
-    'Must go faster. Must go faster... go, go, go, go, go! I was part of something special.',
-};
 import BookDetailView from '../../../../../components/BookDetailView';
 
 const UserCardHeader = ({profile,clickEvent,...props}) => {
   let imageURL = profile.image != null && profile.image.url != null ? profile.image.url: ""
-  var friendshipStatus = profile.Friendship != null && profile.Friendship.status != null ? profile.Friendship.status: ""
+  var friendshipStatus = props.route.params.Friendship != null && props.route.params.Friendship.status != null ? props.route.params.Friendship.status: ""
   var roleId = profile.roles != null && profile.roles.length > 0 ? profile.roles[0].id: 2
   return (
     <Card style={{margin: 14, elevation: 10}}>

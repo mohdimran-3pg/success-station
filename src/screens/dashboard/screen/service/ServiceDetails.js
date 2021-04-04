@@ -246,7 +246,7 @@ export default class ServiceDetails extends React.Component {
   };
 
   componentDidMount(){
-    this.getServiceList(this.props.route.params.book.user_name_id)
+    this.getServiceList(this.props.route.params.book.user_name_id);
   }
   
   onChangeTab = (index) => {

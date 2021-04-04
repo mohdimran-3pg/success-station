@@ -9,20 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 const UserProfile =({user, acceptRequestEvent, rejectRequestEvent,...props}) => {
     var url = (user.requister.image != null && user.requister.image.preview != null) ? user.requister.image.preview  :'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg'
     return (
-      <View style={{width: '100%'}}>
-        <TouchableOpacity style={{ borderColor: "#00000030", borderWidth: 1, borderRadius: 4, height: 250, width: "49%",margin:"1%"}} onPress = {()=> 
-        {
-          let userType = user.roles != null && user.roles.length > 0 ? user.roles[0].id: 2
-          if (userType == 4) {
-            props.navigation.navigate('ServiceDetails',{  
-              user: user
-             })
-          } else {
-            props.navigation.navigate('ProfileDetail',{  
-              user: user
-             })
-          }
-        }}>
+      <View style={{ width:'47%',margin:'1.5%', borderColor: "#00000030", borderWidth: 1, borderRadius: 4}}>
           <View style={{width: 60, height: 60, borderRadius: 30, alignSelf: "center", marginTop: 21}}>
               <Image style={{width: 60, height: 60, borderRadius: 30}} 
                     source={{uri: url}}
@@ -65,9 +52,7 @@ const UserProfile =({user, acceptRequestEvent, rejectRequestEvent,...props}) => 
               </TouchableOpacity>
           </View>
           </View>
-      </TouchableOpacity>
       </View>
-      
     )
   }
 
@@ -141,17 +126,10 @@ export default class FriendRequest extends React.Component {
                 style={{
                   flex: 1,
                 }}>
-                <View style={{height: 70, width: "100%" ,backgroundColor:"rgba(10, 135, 138, 1)"}}>
-                <Searchbar style ={{marginStart:10,marginEnd:10}} 
-                  placeholder={translate('search_book')}
-                  icon={()=><Image source = {require('./../../../../assets/search.png')} />}
-                />
-                </View>
                 <View style={{ backgroundColor: "white", height: "90%"}}>
                     <View style={{alignSelf: "center", height: "100%"}}>
                     {this.friendList.length > 0 ? 
                     <FlatList
-                        style = {{margin:5}}
                         keyExtractor = {(item) => item.id} 
                         data = {this.friendList}
                         numColumns={2}
