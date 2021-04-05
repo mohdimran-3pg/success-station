@@ -26,7 +26,7 @@ import Loader from '../../Loader';
 import _ from 'lodash';
 
 const 
-    multiSliderValue= [0, 100]
+    multiSliderValue= [0, 5000]
 
 
 const CardItem = ({item,...props}) => {
@@ -116,10 +116,11 @@ export default class StudentProfile extends React.Component {
       categories: [],
       isLoading: false,
       types: [],
-      searchText:props.route != null && props.route.params != null && props.route.params.searchText != null ? props.route.params.searchText: ""
-  
+      searchText:props.route != null && props.route.params != null && props.route.params.searchText != null ? props.route.params.searchText: "",
+      
     };
-    
+   
+  
   }
   onChangeTab = (index) => {
     this.getBooksByCategory(this.state.categories[index].key)
@@ -202,7 +203,7 @@ export default class StudentProfile extends React.Component {
       this.getBooks(searchString)
     }
   }
-
+ 
   componentDidMount() {
     this.getAddType()
     this.getBookCategories();
@@ -292,7 +293,7 @@ export default class StudentProfile extends React.Component {
           ref={(ref) => {
             this.Standard = ref;
           }}
-          height={500}
+          height={400}
           customStyles={{
             container: {
               borderTopLeftRadius: 20,
@@ -300,42 +301,53 @@ export default class StudentProfile extends React.Component {
             },
           }}
           >
-          <View style={{flex: 1}}>
+          <View style={{flex: 1, margin: 16,}}>
             <View
               style={{
                 flexDirection: 'row',
-                justifyContent: 'space-between',
-                margin: 16,
+           
+               
+        
+              }}>
+              <View  style={{
+                flex:1,
+                flexDirection: 'row',
+                justifyContent:'space-between'
+               
         
               }}>
               <Text style={{color: 'black'}}>{translate('reset')}</Text>
-              <Text>Filter</Text>
+              <Text >Filter</Text>
               <TouchableOpacity style={{padding: 0}}>
                 <Text style={{color: '#F78A3A'}}>{translate('done')}</Text>
               </TouchableOpacity>
+              </View>
             </View>
             <View
               style={{
                 height: 1,
+                marginTop: 16,
                 backgroundColor: '#EAECEF',
                 width: '100%',
-              }}></View>
-            <Text style={{fontSize: 21, marginStart: 16, marginTop: 13}}>
-              {translate('type')}
-            </Text>
 
+              }}></View>
+            <Text style={{fontSize: 21, marginTop: 13}}>
+              Sub Categories
+            </Text>
             <FlatList style={{}}
               data={this.state.types}
               renderItem={({item}) => <View
-              style={{
+              style={{ flexDirection:'row'
               }}>
-              <CheckBox value={true} />
+              <CheckBox    
+                />
+                
               <Text style={{textAlignVertical:'center'}}>{item.type}</Text>
             </View>} 
               numColumns={1}
             />
             
-            <Text style={{fontSize: 21, marginStart: 16, marginTop: 13}}>
+            <Text style={{fontSize: 21}}>
               Condition
             </Text>
 
@@ -343,7 +355,6 @@ export default class StudentProfile extends React.Component {
               style={{
                 flexDirection: 'row',
                
-                margin: 8,
               }}>
               <CheckBox
                
@@ -353,8 +364,7 @@ export default class StudentProfile extends React.Component {
             <View
               style={{
                 flexDirection: 'row',
-               
-                margin: 8,
+              
               }}>
               <CheckBox
                
@@ -362,20 +372,20 @@ export default class StudentProfile extends React.Component {
               <Text style={{textAlignVertical:'center'}}>Old</Text>
             </View>
 
-            <Text style={{fontSize: 21, marginStart: 16, marginTop: 13}}>
+            <Text style={{fontSize: 21, marginTop: 13}}>
               Price
             </Text>
             <View
               style={{
-                marginStart:20,
+               
               }}>
              <MultiSlider
           values={[multiSliderValue[0], multiSliderValue[1]]}
           sliderLength={Dimensions.get('window').width-40}
           onValuesChange={(i)=>{console.log(i)}}
           min={0}
-          max={10}
-          step={.1}
+          max={5000}
+          step={1}
           allowOverlap
           snapped
         
