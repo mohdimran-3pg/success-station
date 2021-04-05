@@ -99,6 +99,7 @@ const NavigationDrawerStructure = (props) => {
               marginLeft: 5,
               alignSelf: 'center',
               tintColor: 'white',
+              
             }}
           />
         ) : null}
