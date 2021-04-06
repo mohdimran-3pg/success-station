@@ -694,7 +694,6 @@
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = R5KF9M84U9;
 				ENABLE_BITCODE = NO;
-				EXCLUDED_ARCHS = arm64;
 				INFOPLIST_FILE = successstation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -718,7 +717,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = R5KF9M84U9;
-				EXCLUDED_ARCHS = arm64;
 				INFOPLIST_FILE = successstation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (

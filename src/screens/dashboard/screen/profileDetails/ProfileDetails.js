@@ -44,7 +44,8 @@ const UserCardHeader = ({profile,clickEvent,...props}) => {
               fontSize: 20,
               alignSelf: 'center',
               marginTop: 25,
-              fontWeight: 'bold',
+              fontWeight: '700',
+              fontFamily: "DMSans-Regular",
             }}>
             {profile.name}
           </Text>
@@ -124,34 +125,34 @@ const CONTACT = ({data}) => {
   return (
     <View style={{flex: 1, background: 'white', margin: 16}}>
       <View style={{width: '100%'}}>
-        <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+        <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE', fontFamily: "DMSans-Regular"}}>
         {translate('name')}
         </Text>
-        <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+        <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948', fontFamily: "DMSans-Regular"}}>
             {user.name != null ? user.name : "N/A"}
         </Text>
       </View>
       <View style={{width: '100%',marginTop: 10}}>
-        <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+        <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE', fontFamily: "DMSans-Regular"}}>
         {translate('email')}
         </Text>
-        <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+        <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948', fontFamily: "DMSans-Regular"}}>
             {user.email != null ? user.email : "N/A"}
         </Text>
       </View>
       <View style={{width: '100%',marginTop: 10}}>
-        <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+        <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE', fontFamily: "DMSans-Regular"}}>
         {translate('mobile')}
         </Text>
-        <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+        <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948', fontFamily: "DMSans-Regular"}}>
             {user.mobile != null? user.mobile: "N/A"}
         </Text>
       </View>
       <View style={{width: '100%',marginTop: 10}}>
-        <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+        <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE', fontFamily: "DMSans-Regular"}}>
         {translate('address')}
         </Text>
-        <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+        <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948', fontFamily: "DMSans-Regular"}}>
             {fullAddress}
         </Text>
       </View>
@@ -176,27 +177,27 @@ const CONTACT = ({data}) => {
     return (
       <View style={{flex: 1, background: 'white', margin: 16}}>
       <View style={{width: '100%'}}>
-        <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+        <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE', fontFamily: "DMSans-Regular"}}>
           {translate('college')}
         </Text>
-        <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+        <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948', fontFamily: "DMSans-Regular"}}>
             {user.college != null && user.college.region != null ? user.college.region: "N/A"}
         </Text>
       </View>
       <View style={{width: '100%',marginTop: 10}}>
-        <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+        <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE', fontFamily: "DMSans-Regular"}}>
         {translate('university')}
         </Text>
-        <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+        <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948', fontFamily: "DMSans-Regular"}}>
             {user.university != null && user.university.name != null? user.university.name: "N/A"}
         </Text>
       </View>
       {user.iqama_number != null ?(
       <View style={{width: '100%',marginTop: 10}}>
-        <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+        <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE', fontFamily: "DMSans-Regular"}}>
           {translate('Iqama_number')}
         </Text>
-        <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+        <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948', fontFamily: "DMSans-Regular"}}>
             {user.iqama_number}
         </Text>
       </View>
@@ -258,7 +259,7 @@ export default class ProfileDetails extends React.Component {
         {...props}
         
         renderLabel={({ route, focused, color }) => (
-          <Text style={{ color:'black', margin: 8 }}>
+          <Text style={{ color:'black', margin: 8, fontFamily: "DMSans-Regular", fontSize: 15}}>
             {route.title}
           </Text>
         )}

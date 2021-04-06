@@ -60,6 +60,7 @@ const UserCardHeader = ({profile,data,...props}) => {
               alignSelf: 'center',
               marginTop: 25,
               fontWeight: 'bold',
+              fontFamily: "DMSans-Regular"
             }}>
             {profile.name}
           </Text>
@@ -70,6 +71,7 @@ const UserCardHeader = ({profile,data,...props}) => {
                 color: '#666666',
                 lineHeight: 18,
                 textAlign: 'center',
+                fontFamily: "DMSans-Regular"
               }}>
               {profile.profileMsg}
             </Paragraph>
@@ -132,12 +134,13 @@ const CardItem = (item) => {
                 fontSize: 15,
                 color: 'rgba(0, 0, 0, 1)',
                 lineHeight: 20,
+                fontFamily: "DMSans-Regular"
               }}>
               {item.title}
             </Text>
 
-            <Text style={{color: '#0A878A', fontSize: 15, marginTop: 11}}>
-              {item.price}
+            <Text style={{color: '#0A878A', fontSize: 15, marginTop: 11, fontFamily: "DMSans-Regular"}}>
+              SR {item.price}
             </Text>
             <View
               style={{
@@ -149,13 +152,13 @@ const CardItem = (item) => {
               }}>
               <View style={{flexDirection: 'row'}}>
                 <Image style={{width: 11, height: 12}} source={cardLocation} />
-                <Text style={{fontSize: 10, color: 'rgba(0, 0, 0, 0.6)',marginStart:5}}>
+                <Text style={{fontSize: 10, color: 'rgba(0, 0, 0, 0.6)',marginStart:5, fontFamily: "DMSans-Regular"}}>
                   {fullAddress}
                 </Text>
               </View>
               <View style={{flexDirection: 'row'}}>
                 <Image style={{width: 11, height: 12}} source={cardFollower} />
-                <Text style={{fontSize: 10, color: 'rgba(0, 0, 0, 0.6)' ,marginStart:5}}>
+                <Text style={{fontSize: 10, color: 'rgba(0, 0, 0, 0.6)' ,marginStart:5, fontFamily: "DMSans-Regular"}}>
                   {item.contact_name}
                 </Text>
               </View>
@@ -286,17 +289,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#fff',
     fontSize: 21,
+    fontFamily: "DMSans-Regular"
   },
   countTextStye: {
     color: '#151522',
     fontSize: 17,
     fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: "DMSans-Regular"
   },
   titleCountTextStye: {
     color: '#666666',
     fontSize: 13,
     textAlign: 'center',
+    fontFamily: "DMSans-Regular"
   },
   cardImageItem: {
     width: 'auto',

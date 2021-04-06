@@ -54,7 +54,7 @@ const CardItem = ({item,...props}) => {
               {item.title}
             </Text>
 
-            <Text style={{color: '#0A878A', fontSize: 15, marginTop: 11}}>
+            <Text style={{color: '#0A878A', fontSize: 15, marginTop: 11, fontFamily: "DMSans-Regular"}}>
               SR {item.price}
             </Text>
             <View
@@ -73,6 +73,7 @@ const CardItem = ({item,...props}) => {
                     color: 'rgba(0, 0, 0, 0.6)',
                     marginStart: 5,
                     marginEnd: 5,
+                    fontFamily: "DMSans-Regular"
                   }}>
                   {fullAddress}
                 </Text>
@@ -84,6 +85,7 @@ const CardItem = ({item,...props}) => {
                     fontSize: 10,
                     color: 'rgba(0, 0, 0, 0.6)',
                     marginStart: 5,
+                    fontFamily: "DMSans-Regular"
                   }}>
                   {item.contact_name}
                 </Text>

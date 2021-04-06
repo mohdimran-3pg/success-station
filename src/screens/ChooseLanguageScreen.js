@@ -99,10 +99,10 @@ export default class ChooseLanguageScreen extends React.Component {
                             />
                     </View>
                     <View style={{height: 32, alignSelf: "center", marginTop: 10}}>
-                        <Text style={{fontSize: 29, fontWeight: "bold", fontStyle: "normal", color: "#1C1939"}}>{translate('choose_language')}</Text>
+                        <Text style={{fontSize: 29, fontWeight: "bold", fontStyle: "normal", color: "#1C1939", fontFamily: "DMSans-Regular"}}>{translate('choose_language')}</Text>
                     </View>
                     <View style={{height: 18, alignSelf: "center", marginTop: 10}}>
-                        <Text style={{fontSize: 14, fontWeight: "normal", fontStyle: "normal", color: "#1C1939"}}>{translate('choose_language')}</Text>
+                        <Text style={{fontSize: 14, fontWeight: "normal", fontStyle: "normal", color: "#1C1939", fontFamily: "DMSans-Regular"}}>{translate('please_select_your_language')}</Text>
                     </View>
                     <View style={{width: 320, height: 50, marginTop: 10}}>
                         <DropDownSelectBox 

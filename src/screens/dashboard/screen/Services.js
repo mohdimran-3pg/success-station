@@ -180,6 +180,7 @@ const BookCard = ({book, ...props}) => {
                 fontWeight: '500',
                 color: '#000000',
                 marginTop: 10,
+                fontFamily: "DMSans-Regular", 
               }}>
               {book.contact_name.trim()}
             </Text>
@@ -191,6 +192,7 @@ const BookCard = ({book, ...props}) => {
                 color: '#000000',
                 marginTop: 5,
                 marginBottom: 5,
+                fontFamily: "DMSans-Regular", 
               }}>
               {book.email.trim()}
             </Text>
@@ -438,6 +440,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '400',
     fontStyle: 'normal',
+    fontFamily: "DMSans-Regular"
   },
   tabItemContainer: {
     backgroundColor: '#cf6bab',
