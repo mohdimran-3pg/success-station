@@ -104,7 +104,7 @@ const NavigationDrawerStructure = (props) => {
           />
         ) : null}
 
-        <Text style={{color: 'white', marginLeft: 5, alignSelf: 'center'}}>
+        <Text style={{color: 'white', marginLeft: 5, alignSelf: 'center', fontFamily: "DMSans-Bold"}}>
           {props.location}
         </Text>
       </View>

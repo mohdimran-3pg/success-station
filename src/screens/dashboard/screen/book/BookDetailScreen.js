@@ -110,12 +110,12 @@ export default class BookDetailScreen extends React.Component {
                                 source={require('../../../../../assets/book/back-icon.png')}
                             />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{width: 22, height: 22, position: 'absolute', marginTop: 55, right:10}}>
+                            {/*<TouchableOpacity style={{width: 22, height: 22, position: 'absolute', marginTop: 55, right:10}}>
                             <Image  
                                 resizeMode="contain"
                                 source={require('../../../../../assets/book/share-icon.png')}
                             />
-                            </TouchableOpacity>
+                            </TouchableOpacity>*/}
                             {this.state.book.if_favorite == true ? (
                             <View style={{right: 5, top: 5, position: "absolute", borderRadius: 12.5, width: 25, height: 25, backgroundColor: "#ffffff", justifyContent: 'center'}}>
                                 <Image 
