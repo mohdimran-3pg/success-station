@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     fontSize: 22,
     fontWeight: '400',
-    fontStyle: 'normal',
+    fontFamily: "DMSans-Regular",
     color: '#0B0B0B',
     alignSelf: 'center',
   },

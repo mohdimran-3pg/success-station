@@ -299,7 +299,7 @@ export default class UserSignUpForm extends React.Component {
                 />
               </View>
               <View style={{height: 50, width: 320}}>
-                <Text style={{textAlign: 'center'}}>
+                <Text style={{textAlign: 'center', fontFamily: "DMSans-Regular", fontWeight: "400"}}>
                   {translate('sign_up_desc')}
                 </Text>
               </View>
@@ -914,15 +914,15 @@ const style = StyleSheet.create({
   dontHaveAccountTextStyle: {
     textAlignVertical: 'center',
     fontSize: 15,
-    fontWeight: '400',
-    fontStyle: 'normal',
+    fontFamily: "DMSans-Regular", 
+    fontWeight: "700",
     color: '#2C2948',
   },
   dontHaveSignUpTextStyle: {
     textAlignVertical: 'center',
     fontSize: 15,
     fontWeight: '700',
-    fontStyle: 'normal',
+    fontFamily: "DMSans-Regular", 
     color: '#F78A3A',
   },
   container2: {},

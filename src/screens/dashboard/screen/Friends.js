@@ -29,14 +29,14 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
             />
         </View>
         <View style={{height: 40, marginTop:7}}>
-          <Text style={{fontSize: 15, fontWeight: "700", textAlign: "center", color: "#000000"}}>{user.name}</Text>
-          <Text style={{fontSize: 15, fontWeight: "400", textAlign: "center", color: "#9EA6BE",marginTop:9}}>{user.email}</Text>
+          <Text style={{fontSize: 15, fontWeight: "700", textAlign: "center", color: "#000000", fontFamily: "DMSans-Regular",}}>{user.name}</Text>
+          <Text style={{fontSize: 15, fontWeight: "400", textAlign: "center", color: "#9EA6BE",marginTop:9, fontFamily: "DMSans-Regular",}}>{user.email}</Text>
         </View>
         <View style={{width: "70%", alignSelf: "center",marginTop:15, justifyContent: "space-between", flexDirection: "row", height: 30}}>
           <Image style={{width: 24, height:24}}
               source={require('../../../../assets/friends/graduation-icon.png')}
           />
-          <Text style={{fontSize: 11, fontWeight: "400",marginStart:4, color: "#9EA6BE", fontStyle: "normal"}}>{fullAddress}</Text>
+          <Text style={{fontSize: 11, fontWeight: "400",marginStart:4, color: "#9EA6BE" , fontFamily: "DMSans-Regular",}}>{fullAddress}</Text>
         </View>
         <View style={{width: "80%", alignSelf: "center", height: 35, marginBottom: 10,marginTop:13}}>
         <View style={friendshipStatus == "new" ? styles.disableMainView: styles.mainView}>
@@ -265,5 +265,5 @@ const styles = StyleSheet.create({
     borderColor: "#F78A3A",
     borderWidth: 1
 },
-  buttonStyle: {color: "#F78A3A", fontSize: 17, fontWeight: "700", textAlign: "center"}
+  buttonStyle: {color: "#F78A3A", fontSize: 17, fontWeight: "700", textAlign: "center", fontFamily: "DMSans-Regular"}
 });

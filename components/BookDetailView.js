@@ -29,6 +29,7 @@ const BookDetailView = ({book}) => {
                   fontWeight: '500',
                   color: '#000000',
                   marginTop: 10,
+                  fontFamily: "DMSans-Regular", 
                 }}>
               {book.title}
               </Text>
@@ -39,7 +40,8 @@ const BookDetailView = ({book}) => {
                   fontWeight: '500',
                   color: '#0A878A',
                   marginTop: 5,
-                  marginBottom:5
+                  marginBottom:5,
+                  fontFamily: "DMSans-Regular", 
                 }}>
                SR {book.price}
               </Text>

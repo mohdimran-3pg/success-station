@@ -237,12 +237,14 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 20,
     color: '#181725',
-    width: 170
+    width: 170,
+    fontFamily: 'DMSans-Regular',
   },
   email: {
     fontSize: 16,
     color: '#7C7C7C',
-    width: 170
+    width: 170,
+    fontFamily: 'DMSans-Regular',
 
   },
 

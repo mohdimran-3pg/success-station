@@ -166,15 +166,15 @@ const style = StyleSheet.create({
     welcomeTextViewStyle: {
         fontSize: 30,
         fontWeight: "700",
-        fontStyle: "normal",
         lineHeight: 40,
         alignSelf: "center",
         color: "#000",
+        fontFamily: "DMSans-Regular",
     },
     signInTextViewStyle: {
         fontSize: 15,
         fontWeight: "400",
-        fontStyle: "normal",
+        fontFamily: "DMSans-Regular",
         lineHeight: 40,
         alignSelf: "center",
         color: "#1C1939",
@@ -198,15 +198,15 @@ const style = StyleSheet.create({
     dontHaveAccountTextStyle: { 
         textAlignVertical: "center", 
         fontSize: 15, 
-        fontWeight: "400", 
-        fontStyle: "normal", 
+        fontWeight: "700", 
         color: "#2C2948",
+        fontFamily: "DMSans-Regular",
     },
     dontHaveSignUpTextStyle: { 
         textAlignVertical: "center", 
         fontSize: 15, 
         fontWeight: "700", 
-        fontStyle: "normal", 
+        fontFamily: "DMSans-Regular",
         color: "#F78A3A"
     }
 

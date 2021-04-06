@@ -146,14 +146,14 @@ const styles = StyleSheet.create({
         borderColor: "white"
     },
     countryNameTextStyle: {
-        fontWeight: "bold",
-        fontStyle: "normal",
         fontSize: 18,
         lineHeight: 38,
         textAlign: "left",
         flex: 1,
         position: "absolute",
-        left: 82
+        left: 82,
+        fontFamily: "DMSans-Regular",
+        fontWeight: "500"
     },
     headingStyle: {
         fontWeight: "bold",

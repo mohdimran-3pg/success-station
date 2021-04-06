@@ -85,6 +85,7 @@
   "section": "Section",
   "write_comment_here": "Write Comment Here",
   "add_to_favourites": "Add to Favourites",
+  "remove_from_favourites": "Remove Favourite",
   "contact": "Contact",
   "connect": "Connect",
   "read_more": "Read More",
@@ -138,5 +139,6 @@
   "friend_requests": "Friend Requests",
   "remove_friend": "Remove Friend",
   "unfollow": "Unfollow",
-  "view_profile": "View Profile"
+  "view_profile": "View Profile",
+  "please_select_your_language": "Please select your language"
 }

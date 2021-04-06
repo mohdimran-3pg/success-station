@@ -84,7 +84,7 @@ const CategoryCard =({category,...props}) => {
             />
         </View>
         <View style={{height: 40, marginTop:7}}>
-          <Text style={{fontSize: 16, fontWeight: "500", textAlign: "center", color: "#000000"}}>{category.category}</Text>
+          <Text style={{fontSize: 15, fontWeight: "500", textAlign: "center", color: "#000000", fontFamily: "DMSans-Regular"}}>{category.category}</Text>
         </View>
     </TouchableOpacity>
   )

@@ -109,46 +109,46 @@ const CONTACTS = ({data}) => {
  return(
  <View style={{flex: 1, background: 'white', margin: 16}}>
    <View style={{width: '100%'}}>
-      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE',fontFamily: "DMSans-Regular", }}>
       {translate('name')}
       </Text>
-      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948',fontFamily: "DMSans-Regular", }}>
           {user.contact_name}
       </Text>
    </View>
 
    <View style={{width: '100%',marginTop: 10}}>
-      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE',fontFamily: "DMSans-Regular", }}>
       {translate('email')}
       </Text>
-      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948',fontFamily: "DMSans-Regular", }}>
           {user.email}
       </Text>
    </View>
 
    <View style={{width: '100%',marginTop: 10}}>
-      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE',fontFamily: "DMSans-Regular", }}>
       {translate('mobile')}
       </Text>
-      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948',fontFamily: "DMSans-Regular", }}>
           {user.mobile_number}
       </Text>
    </View>
 
    <View style={{width: '100%',marginTop: 10}}>
-      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE',fontFamily: "DMSans-Regular", }}>
       {translate('phone')}
       </Text>
-      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948',fontFamily: "DMSans-Regular", }}>
           {user.phone_number}
       </Text>
    </View>
 
    <View style={{width: '100%',marginTop: 10}}>
-      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE'}}>
+      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE',fontFamily: "DMSans-Regular", }}>
       {translate('address')}
       </Text>
-      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948'}}>
+      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948',fontFamily: "DMSans-Regular", }}>
           {fullAddress}
       </Text>
    </View>
@@ -184,7 +184,7 @@ const PRODUCTS = ({data}) =>{
 const DESCRIPTION = ({data}) => (
   
   <View style={{flex: 1, background: 'white', margin: 16}}>
-    <Text style={{fontSize: 20, lineHeight: 19}}>
+    <Text style={{fontSize: 15, lineHeight: 19}}>
       {data.description}
      
     </Text>
@@ -417,6 +417,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '400',
     fontStyle: 'normal',
+    fontFamily: "DMSans-Regular", 
   },
   tabItemContainer: {
     backgroundColor: '#cf6bab',

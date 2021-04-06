@@ -80,7 +80,7 @@ export default class OtpScreen extends React.Component {
                 style={{
                   alignSelf: 'center',
                   fontSize: 22,
-                  fontStyle: 'normal',
+                  fontFamily: "DMSans-Regular",
                   fontWeight: '400',
                   color: 'black',
                 }}>
@@ -92,7 +92,7 @@ export default class OtpScreen extends React.Component {
                 style={{
                   alignSelf: 'center',
                   fontSize: 12,
-                  fontStyle: 'normal',
+                  fontFamily: "DMSans-Regular",
                   fontWeight: '400',
                   color: '#4A4A4A',
                 }}>

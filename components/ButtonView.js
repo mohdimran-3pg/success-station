@@ -18,7 +18,7 @@ const ButtonView = ({name, clickEvent}) => {
 const styles = StyleSheet.create({
 
     mainView: {
-
+        fontFamily: "DMSans-Regular",
         width: "100%",
         height: 50,
         borderRadius: 4,

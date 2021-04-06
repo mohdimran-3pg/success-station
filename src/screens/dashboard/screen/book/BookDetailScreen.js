@@ -7,7 +7,9 @@ import {
   StyleSheet,
   Image,
   ScrollView,
-  FlatList
+  FlatList,
+  Platform,
+  Linking
 } from 'react-native';
 
 import DisplayBookInformation from '../../../../../components/DisplayBookInformation';
@@ -240,6 +242,14 @@ export default class BookDetailScreen extends React.Component {
                                     <ButtonViewWithImage 
                                         name={translate('contact')}
                                         clickEvent={() => {
+                                            let phoneNumber = '';
+                                            if (Platform.OS === 'android') {
+                                                phoneNumber = `tel:${this.state.book.phone}`;
+                                            }
+                                            else {
+                                                phoneNumber = `telprompt:${this.state.book.phone}`;
+                                            }
+                                            Linking.openURL(phoneNumber);
                                         }}
                                         imgSource={require('../../../../../assets/book/phone-icon.png')}
                                         isBackground={true}
@@ -247,7 +257,7 @@ export default class BookDetailScreen extends React.Component {
                                 </View>
                                 <View style={{width: "52%", height: "100%", justifyContent: "center"}}>
                                     <ButtonViewWithImage 
-                                        name={translate('add_to_favourites')}
+                                        name={this.state.book.if_favorite == true ? translate('remove_from_favourites'): translate('add_to_favourites')}
                                         clickEvent={() => {
                                             this.setState({isLoading: true});
                                             ApiService.post('mark-favorite', {

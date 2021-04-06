@@ -24,11 +24,11 @@ const ProfileView = ({data, clickEvent}) => {
                 />}
                 </View>
                 <View style={{marginLeft: 15}}>
-                    <Text style={{fontSize: 15, fontWeight: "500", fontStyle: "normal", color: "#000000"}}>{data.contact_name}</Text>
-                    <Text style={{fontSize: 11, fontWeight: "400", fontStyle: "normal", color: "#0A878A"}}>Owner</Text>
+                    <Text style={{fontSize: 15, fontWeight: "500", fontStyle: "normal", color: "#000000", fontFamily: "DMSans-Regular"}}>{data.contact_name}</Text>
+                    <Text style={{fontSize: 11, fontWeight: "400", fontStyle: "normal", color: "#0A878A", fontFamily: "DMSans-Regular"}}>Owner</Text>
                 </View>
                 <View style={{flexDirection: "row", marginLeft: 125}}>
-                    <Text style={{fontSize: 13, fontWeight: "500", fontStyle: "normal", color: "#F78A3A", marginRight: 5}}>{translate('see_profile')}</Text>
+                    <Text style={{fontSize: 13, fontWeight: "500", fontStyle: "normal", color: "#F78A3A", marginRight: 5, fontFamily: "DMSans-Regular"}}>{translate('see_profile')}</Text>
                     <Image style={{}}
                         source={require('../assets/right-arrow.png')}
                     />
