@@ -24,7 +24,10 @@ import AsyncStorage from '@react-native-community/async-storage'
 import BookDetailView from '../../../../../components/BookDetailView';
 
 const UserCardHeader = ({profile,clickEvent,...props}) => {
-  let imageURL = profile.image != null && profile.image.url != null ? profile.image.url: ""
+
+  console.log("FriendShip Status ----- ", props.route.params.Friendship)
+
+  let imageURL = profile.image != null && profile.image.url != null ? profile.image.url: "https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg"
   var friendshipStatus = props.route.params.Friendship != null && props.route.params.Friendship.status != null ? props.route.params.Friendship.status: ""
   var roleId = profile.roles != null && profile.roles.length > 0 ? profile.roles[0].id: 2
   return (
@@ -83,8 +86,8 @@ const UserCardHeader = ({profile,clickEvent,...props}) => {
           
             <TouchableOpacity 
               style={{height:50, 
-                      width:'35%',
-                      backgroundColor: friendshipStatus == "new" ? '#cecece': "#ffffff",
+                      width:'45%',
+                      backgroundColor: friendshipStatus == "new" ? '#ffffff': "#ffffff",
                       borderRadius:5,
                       justifyContent:'center',
                       borderColor:'#0A878A',
@@ -102,7 +105,7 @@ const UserCardHeader = ({profile,clickEvent,...props}) => {
                       disabled={friendshipStatus == "new" ? true: false}
             >
             <Text style={{color:'#151522',fontSize:17,textAlign:'center',fontWeight:'bold'}}>
-            {profile.Friendship != null && profile.Friendship.status == "accepted"  
+            {friendshipStatus == "new" ? translate("request_pending"): friendshipStatus == "accepted"  
                 ? roleId == 4 ? translate("Unfollow"): translate('remove_friend')
                 : roleId == 4 ? translate("follow") : translate('add_friend')}
             </Text>
@@ -244,6 +247,10 @@ export default class ProfileDetails extends React.Component {
         "status": "new"
       })
       .then((response) => {
+        if (this.props.route.params.callBack !== undefined) {
+          this.props.route.params.callBack()
+        }
+        
         this.setState({isLoading: false})
       })
       .catch((error) => {

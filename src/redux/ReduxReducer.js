@@ -1,4 +1,4 @@
-import { PROFILE_ADDRESS, PROFILE_IMAGE } from './ReduxConstants';
+import { PROFILE_ADDRESS, PROFILE_IMAGE, REFRESH_FRIEND, REFRESH_FAVORITE } from './ReduxConstants';
 const initialState = {
 url: '',
 address:''
@@ -17,6 +17,12 @@ return {
 ...state,
 address:action.payload
 };
+case REFRESH_FRIEND:
+console.log("redu",action.payload)
+return {
+...state,
+address:action.payload
+};    
 default:
 return state;
 }

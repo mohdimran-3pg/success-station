@@ -12,3 +12,11 @@ type: PROFILE_ADDRESS,
 payload: address
 }
 }
+
+
+export function refreshFriendList(address) {
+    return {
+    type: REFRESH_FRIEND,
+    payload: address
+    }
+    }

@@ -30,6 +30,7 @@ const AdPostedAtView = ({clickEvent}) => {
                     }}
                     clearButtonMode="always"
                     selectedText={comment}
+                    value={comment}
                 />
             </View>
             <View style={{width: "90%", alignSelf: "center"}}>
@@ -37,8 +38,9 @@ const AdPostedAtView = ({clickEvent}) => {
                     <BorderButton
                         name={translate("add_a_comment")}
                         clickEvent={() => {
-                            clickEvent(comment)
                             setComment('')
+                            clickEvent(comment)
+                            
                         }}
                     />  
                 </View>

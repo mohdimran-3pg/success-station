@@ -141,5 +141,7 @@
     "remove_friend": "أزالة صديق",
     "unfollow": "الغاء المتابعة",
     "view_profile": "انظر الملف الشخصي",
-    "please_select_your_language": "الرجاء اختيار لغتك"
+    "please_select_your_language": "الرجاء اختيار لغتك",
+    "please_enter_comment": "الرجاء إدخال تعليق",
+    "request_pending": "الطلب معلق"
   }  

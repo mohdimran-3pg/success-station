@@ -29,7 +29,7 @@ const
     multiSliderValue= [0, 5000]
 
 
-const CardItem = ({item,...props}) => {
+const CardItem = ({item,refreshCallBack,...props}) => {
   var city = item.city.city != null ? item.city.city+", ": ""
   var region = item.region.region != null ? item.region.region+", ": ""
   var country = item.country.name != null ? item.country.name: ""
@@ -38,7 +38,9 @@ const CardItem = ({item,...props}) => {
   var header_View = (
     <TouchableOpacity style={{flex: 1}} onPress= {()=>{
     
-    props.navigation.navigate('BookDetailScreen', { data: { bookId: item.id} }) 
+    props.navigation.navigate('BookDetailScreen', { data: { bookId: item.id, callBack: ()=> {
+      refreshCallBack()
+    }} }) 
   }
     }>
       <Card style={{margin: 7, elevation: 5}} >
@@ -288,7 +290,15 @@ export default class StudentProfile extends React.Component {
         <FlatList
           style={{marginTop:10,marginBottom:10}}
           data={this.state.books}
-          renderItem={({item}) => <CardItem item = {item} {...this.props}/>} 
+          renderItem={({item}) => <CardItem 
+                                  item = {item}
+                                  refreshCallBack = { () =>{
+                                      console.log("Refresh Page CallBack")
+                                      this.getBooks()
+                                  }
+
+                                  }
+                                  {...this.props}/>} 
           numColumns={2}
         />
         <RBSheet

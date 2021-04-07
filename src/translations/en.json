@@ -140,5 +140,7 @@
   "remove_friend": "Remove Friend",
   "unfollow": "Unfollow",
   "view_profile": "View Profile",
-  "please_select_your_language": "Please select your language"
+  "please_select_your_language": "Please select your language",
+  "please_enter_comment": "Please enter comment",
+  "request_pending": "Request Pending"
 }

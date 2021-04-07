@@ -7,7 +7,7 @@ const ProfileView = ({data, clickEvent}) => {
         <View style={{width: "100%", height: 70}}>
             <TouchableOpacity style={{}}
                 onPress={() => {
-                    clickEvent()
+                    clickEvent(data.user_name.id)
                 }}
             >
             <View style={{marginLeft: 15, height: 40, flexDirection: "row", marginVertical: 30}}>
@@ -17,9 +17,8 @@ const ProfileView = ({data, clickEvent}) => {
                     source={{ uri: image.thumbnail}} 
                         resizeMode="contain" 
                     />
-                    ): <Image style={{borderRadius: 20}}
-                    source={require('../assets/book/profile-pic-lady.png')}
-                    
+                    ): <Image style={{borderRadius: 20,width: 40, height: 40}}
+                    source={{ uri: 'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg'}}
                     resizeMode="contain" 
                 />}
                 </View>

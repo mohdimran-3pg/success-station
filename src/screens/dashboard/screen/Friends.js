@@ -39,7 +39,7 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
           <Text style={{fontSize: 11, fontWeight: "400",marginStart:4, color: "#9EA6BE" , fontFamily: "DMSans-Regular",}}>{fullAddress}</Text>
         </View>
         <View style={{width: "80%", alignSelf: "center", height: 35, marginBottom: 10,marginTop:13}}>
-        <View style={friendshipStatus == "new" ? styles.disableMainView: styles.mainView}>
+        <View style={friendshipStatus == "new" ? styles.mainView: styles.mainView}>
             <TouchableOpacity onPress = {()=> {
               
               AsyncStorage.getItem('userdata').then((value)=> {
@@ -54,7 +54,8 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
             disabled={friendshipStatus == "new" ? true: false}
             >
               <Text style={styles.buttonStyle}>
-              {user.Friendship != null && user.Friendship.status == "accepted"  
+              { friendshipStatus == "new" ? translate("request_pending"):
+              user.Friendship != null && user.Friendship.status == "accepted"  
                 ? roleId == 4 ? translate("unfollow"): translate('remove_friend')
                 : roleId == 4 ? translate("follow") : translate('add_friend')}
               </Text>
@@ -209,7 +210,10 @@ export default class FreindsScreen extends React.Component {
                               .then((response) => {
                                 this.setState({isLoading: false});
                                 this.props.navigation.navigate('ProfileDetail',{  
-                                  user: userData, ads: response.data, Friendship: item.Friendship
+                                  user: userData, ads: response.data, Friendship: item.Friendship, callBack: ()=>{
+                                    console.log("I am getting callBack here........")
+                                    this.getFriendList()
+                                  }
                                 })
                               })
                               .catch((error) => {

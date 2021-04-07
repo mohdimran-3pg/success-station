@@ -136,36 +136,36 @@ export default class BookDetailScreen extends React.Component {
                         </View>
                         <View style={{width: "100%", height: 6, backgroundColor: "#F4F7FC", marginTop: 15}}></View>
                         <View style={{width: "100%", height: 115, justifyContent: 'space-between', flexDirection: "column"}}>
-                                <View style={{width: "80%", height: 40, justifyContent: 'space-between', flexDirection: "row", marginTop: 15}}>
-                                    <View style={{width: "25%", marginLeft: 15}}>
+                                <View style={{width: "100%", height: 40, justifyContent: 'space-between', flexDirection: "row", marginTop: 15}}>
+                                    <View style={{width: "45%", marginLeft: 5}}>
                                         <DisplayBookInformation 
                                             heading={translate("city")}
                                             headingValue={this.state.fullAddress != '' ? this.state.fullAddress: "N/A"}
                                         />
                                     </View>
-                                    <View style={{width: "25%", marginLeft: 15}}>
+                                    <View style={{width: "45%", marginLeft: 10}}>
                                         <DisplayBookInformation 
                                             heading={translate("type")}
                                             headingValue={this.state.book.category != null ? this.state.book.category.category: "N/A"}
                                         />
                                     </View>
                                 </View>
-                                <View style={{width: "80%", height: 40, justifyContent: 'space-between', flexDirection: "row"}}>
-                                    <View style={{width: 100, marginLeft: 15}}>
+                                <View style={{width: "100%", height: 40, justifyContent: 'space-between', flexDirection: "row"}}>
+                                    <View style={{width: "45%", marginLeft: 5}}>
                                         <DisplayBookInformation 
                                             heading={translate("ad_number")}
                                             headingValue={this.state.book.phone != null ? this.state.book.phone: "N/A"}
                                         />
                                     </View>
-                                    <View style={{width: "25%", marginLeft: 15}}>
+                                    <View style={{width: "45%", marginLeft: 15}}>
                                         <DisplayBookInformation 
                                             heading={translate("status")}
                                             headingValue={this.state.book.status != null? this.state.book.status: "N/A"}
                                         />
                                     </View>
                                 </View>
-                                <View style={{width: "80%", height: 40, justifyContent: 'space-between', flexDirection: "row", marginBottom: 15}}>
-                                    <View style={{width: "25%", marginLeft: 15}}>
+                                <View style={{width: "100%", height: 40, justifyContent: 'space-between', flexDirection: "row", marginBottom: 15}}>
+                                    <View style={{width: "100%", marginLeft: 5}}>
                                         <DisplayBookInformation 
                                             heading={translate("section")}
                                             headingValue="Books"
@@ -186,8 +186,22 @@ export default class BookDetailScreen extends React.Component {
                             <View style={{width: "100%"}}>
                                 <ProfileView 
                                     data = {this.state.book}
-                                    clickEvent={() => {
-                                    
+                                    clickEvent={(userId) => {
+                                        this.setState({isLoading: true});
+                                        ApiService.get(`user-profile?user_id=${userId}`)
+                                            .then((response) => {
+                                            let userData = response.data
+                                            console.log("####4")
+                                            this.setState({isLoading: false});
+                                            this.props.navigation.navigate('ProfileDetail',{  
+                                            user: userData, ads: response.data, Friendship: {}
+                                            })
+                                            })
+                                            .catch((error) => {
+                                                console.log("####1  Error ---------", error)
+                                            this.setState({isLoading: false});
+                                            alert(error.data.message);
+                                            });
                                     }}
                                 />
                             </View>
@@ -195,8 +209,9 @@ export default class BookDetailScreen extends React.Component {
                             <View style={{width: "100%", height: 200}}>
                                 <AdPostedAtView
                                     clickEvent={(comment) => {
-                                        this.setState({isLoading: true});
+                                        
                                         if (comment.length > 0) {
+                                            this.setState({isLoading: true});
                                             var data = {
                                                 "user_name_id": this.state.userId,
                                                 "listing_id": this.props.route.params.data.bookId,
@@ -213,7 +228,7 @@ export default class BookDetailScreen extends React.Component {
                                                 alert(error.data.message);
                                             });
                                         } else {
-                                            alert('Please enter comment');
+                                            alert(translate('please_enter_comment'));
                                         }
                                     }}
                                 />
@@ -265,7 +280,8 @@ export default class BookDetailScreen extends React.Component {
                                                 "listing_id": this.props.route.params.data.bookId
                                               }).then(() => {
                                                 this.setState({isLoading: false});
-                                                this.getBookDetail()
+                                                this.getBookDetail();
+                                                this.props.route.params.data.callBack();
                                               }).catch(() => {
                                                 this.setState({isLoading: false});
                                               })
