@@ -169,6 +169,7 @@ const SidebarMenu = ({props,data,logout,icon}) => {
             marginStart: 25,
             color: '#181725',
             fontSize: 18,
+            fontFamily: 'DMSans-Regular'
           }}>
           Success Station
         </Text>
