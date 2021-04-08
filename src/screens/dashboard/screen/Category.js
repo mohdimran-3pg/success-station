@@ -229,6 +229,7 @@ export default class StudentProfile extends React.Component {
             icon={() => (
               <Image source={require('./../../../../assets/search.png')} />
             )}
+            style={{fontStyle: "DMSans-Regular", fontSize:15}}
             value={this.state.searchText}
           />
         </View>

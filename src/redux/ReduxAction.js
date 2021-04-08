@@ -1,4 +1,4 @@
-import { PROFILE_IMAGE,PROFILE_ADDRESS } from './ReduxConstants';
+import { PROFILE_IMAGE,PROFILE_ADDRESS,LOGOUT } from './ReduxConstants';
 export function updateUrl(url) {
 return {
 type: PROFILE_IMAGE,
@@ -14,9 +14,3 @@ payload: address
 }
 
 
-export function refreshFriendList(address) {
-    return {
-    type: REFRESH_FRIEND,
-    payload: address
-    }
-    }

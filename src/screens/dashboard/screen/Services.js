@@ -86,7 +86,8 @@ const SearchBar = ({displayType, clickEvent, onChangeTextEvent}) => {
           onChangeTextEvent(text)
         }}
         delayTimeout={1000}
-        style={{ marginLeft: 18 }}
+        style={{ marginLeft: 18, fontSize: 15 }}
+        
       />
 
       </View>

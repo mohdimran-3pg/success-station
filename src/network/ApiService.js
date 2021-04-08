@@ -1,7 +1,6 @@
 import axios from 'axios'
-
-
-
+import { LOGOUT } from '../redux/ReduxConstants';
+import AsyncStorage from '@react-native-community/async-storage'
 
 const client = axios.create({
   baseURL: 'http://eshgksa.com/success_station/api/v1/',
@@ -9,6 +8,27 @@ const client = axios.create({
 });
 
 
+export const interceptor = (store) => {
+  client.interceptors.response.use(
+    async (response) => {
+      return response;
+    },
+    async (error) => {
+      console.log('hhhh',error)
+      if(error.response.status === 401){
+        console.log("invalid refresh token");
+        console.log(error.response)
+        store.dispatch({
+          type:LOGOUT,
+          isLogout : true
+        });
+        AsyncStorage.removeItem('userdata')
+        
+      }
+      return error.response;
+    }
+  )
+};
 
 /**
  * Request Wrapper with default success/error actions
@@ -63,7 +83,7 @@ function post(endPoint, postData) {
         client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
        } else {
         delete client.defaults.headers.common['Authorization'];
-       }
+       } 
   
    }
   

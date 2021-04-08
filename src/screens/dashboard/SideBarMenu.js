@@ -166,31 +166,47 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           Success Station
         </Text>
 
-        <LinkMenuItem
-          title={translate('about_us')}
-          src={profileIcon}
-          link="https://www.google.com"
-          {...props}></LinkMenuItem>
+        <DrawerItem
+          icon={({color, size}) => <DrawerIcon src={profileIcon} />}
+          label={translate('about_us')}
+          onPress={() => {
+            props.navigation.navigate('CMSScreen',{cms: 'about-us'});
+          }}
+        />
 
-        <LinkMenuItem
-          title={translate('advertise_with_us')}
-          src={adsIcon}
-          link="https://www.google.com"></LinkMenuItem>
+<DrawerItem
+          icon={({color, size}) => <DrawerIcon src={adsIcon} />}
+          label={translate('advertise_with_us')}
+          onPress={() => {
+            props.navigation.navigate('CMSScreen',{cms: 'advertise'});
+          }}
+        />
 
-        <LinkMenuItem
-          title={translate('privacy')}
-          src={privacyIcon}
-          link="https://www.google.com"></LinkMenuItem>
+<DrawerItem
+          icon={({color, size}) => <DrawerIcon src={privacyIcon} />}
+          label={translate('privacy')}
+          onPress={() => {
+            props.navigation.navigate('CMSScreen',{cms: 'privacy'});
+          }}
+        />
 
-        <LinkMenuItem
-          title={translate('user_agreement')}
-          src={userAgreementIcon}
-          link="https://www.google.com"></LinkMenuItem>
+<DrawerItem
+          icon={({color, size}) => <DrawerIcon src={userAgreementIcon} />}
+          label={translate('user_agreement')}
+          onPress={() => {
+            props.navigation.navigate('CMSScreen',{cms: 'user-agreement'});
+          }}
+        />
 
-        <LinkMenuItem
-          title={translate('cntact_us')}
-          src={contactIcon}
-          link="https://www.google.com"></LinkMenuItem>
+<DrawerItem
+          icon={({color, size}) => <DrawerIcon src={contactIcon} />}
+          label={translate('cntact_us')}
+          onPress={() => {
+            props.navigation.navigate('CMSScreen',{cms: 'contact-us'});
+          }}
+        />
+
+        
            <DrawerItem
            
           icon={({color, size}) => <DrawerIcon src={notificationIcon} />}

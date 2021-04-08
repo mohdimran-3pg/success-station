@@ -179,6 +179,7 @@ export default class OffersScreen extends React.Component {
                 icon={() => (
                   <Image source={require('./../../../../assets/search.png')} />
                 )}
+                style={{fontStyle: "DMSans-Regular", fontSize:15}}
               />
             </View>
             <View style={{width: "100%", height: 60}}>

@@ -28,6 +28,9 @@ import {languageArray} from './src/util/DataUtil'
 import i18n from 'i18n-js';
 import * as RNLocalize from 'react-native-localize';
 import {translate} from "./../success-station/src/util/TranslationUtils";
+import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import * as Action from '../success-station/src/redux/ReduxAction';
 
 
 const translationGetters = {
@@ -84,6 +87,30 @@ const IntroNavigationStack = createStackNavigator(
   },
 );
 
+const LoginNavigationStack = createStackNavigator(
+  {
+    login: LoginScreen,
+    forgetPassword: ForgetPassword,
+    otpScreen: OtpScreen,
+    recoveredPassword : RecoveredPassword,
+    resetPassword : ResetPassword,
+    userSignUpForm: UserSignUpForm,
+    dashBoard:DashBoard
+  }, 
+  {
+    initialRouteName: 'login',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#F2F2F2',
+      },
+      headerTintColor: '#000',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    },
+  },
+);
+
 
 
 const DashBoardNavigationStack = createStackNavigator(
@@ -112,7 +139,8 @@ const DashBoardNavigationStack = createStackNavigator(
 
  const IntroStack =  createAppContainer(IntroNavigationStack );
  const DashBoradStack =  createAppContainer(DashBoardNavigationStack);
-export default class App extends React.Component {
+ const SignInStack =  createAppContainer(LoginNavigationStack);
+ class App extends React.Component {
 
   constructor(props) {
     super(props);
@@ -162,9 +190,16 @@ export default class App extends React.Component {
 
 
   render() {
+    console.log("LOGOUT",this.props.state.isLogout)
     const {isSigned} = this.state
     return (
-      isSigned ? <DashBoradStack/>:<IntroStack/>
+      this.props.state.isLogout?<SignInStack/> : isSigned ? <DashBoradStack/>:<IntroStack/>
     );
   }
 }
+export default connect((state) => ( 
+  {
+    state: state.updateProfile,
+  }),(dispatch) => ({
+    actions: bindActionCreators(Action, dispatch)
+  }))(App);

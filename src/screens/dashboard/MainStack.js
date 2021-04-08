@@ -51,6 +51,7 @@ import MyLocationScreen from './screen/MyLocation';
 import SelectMyLocation from './screen/SelectMyLocation';
 import AsyncStorage from '@react-native-community/async-storage';
 import ApiService from '../../network/ApiService';
+import CMSScreen from './screen/CMSScreen';
 
 const NavigationRight = (props) => {
 
@@ -363,6 +364,22 @@ class MainScreenStack extends React.Component {
             },
           }}
         />
+
+<Stack.Screen
+          name="CMSScreen"
+          component={CMSScreen}
+          options={{
+            title: '', //Set Header Title
+            headerStyle: {
+              backgroundColor: '#0A878A', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+          }}
+        />
+        
         <Stack.Screen
           name="AddAds"
           component={AddAds}
