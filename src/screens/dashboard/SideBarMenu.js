@@ -102,6 +102,7 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           onPress={() => {
             props.navigation.navigate('StudentProfile');
           }}
+          labelStyle={styles.drawerLabelStyle}
         />
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={adsIcon} />}
@@ -109,6 +110,7 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           onPress={() => {
             props.navigation.navigate('MyAdsList');
           }}
+          labelStyle={styles.drawerLabelStyle}
         />
         {(data!=null && data.user_type == 4) ?
         <DrawerItem 
@@ -116,7 +118,8 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           label={translate('my_location')}
           onPress={() => {
             props.navigation.navigate('MyLocation');
-          }} 
+          }}
+          labelStyle={styles.drawerLabelStyle}
         />: null}
 
         <DrawerItem 
@@ -124,7 +127,8 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           label={translate('friend_requests')}
           onPress={() => {
             props.navigation.navigate('FriendRequest');
-          }} 
+          }}
+          labelStyle={styles.drawerLabelStyle} 
         />
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={messageIcon} />}
@@ -132,6 +136,7 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           onPress={() => {
             props.navigation.navigate('Messages');
           }}
+          labelStyle={styles.drawerLabelStyle}
         />
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={membershipIcon} />}
@@ -139,6 +144,7 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           onPress={() => {
             props.navigation.navigate('Membership');
           }}
+          labelStyle={styles.drawerLabelStyle}
         />
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={notificationIcon} />}
@@ -146,6 +152,7 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           onPress={() => {
             props.navigation.navigate('SupportScreen');
           }}
+          labelStyle={styles.drawerLabelStyle}
         />
 
         <View
@@ -172,6 +179,7 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           onPress={() => {
             props.navigation.navigate('CMSScreen',{cms: 'about-us'});
           }}
+          labelStyle={styles.drawerLabelStyle}
         />
 
 <DrawerItem
@@ -180,6 +188,7 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           onPress={() => {
             props.navigation.navigate('CMSScreen',{cms: 'advertise'});
           }}
+          labelStyle={styles.drawerLabelStyle}
         />
 
 <DrawerItem
@@ -188,6 +197,7 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           onPress={() => {
             props.navigation.navigate('CMSScreen',{cms: 'privacy'});
           }}
+          labelStyle={styles.drawerLabelStyle}
         />
 
 <DrawerItem
@@ -196,6 +206,7 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           onPress={() => {
             props.navigation.navigate('CMSScreen',{cms: 'user-agreement'});
           }}
+          labelStyle={styles.drawerLabelStyle}
         />
 
 <DrawerItem
@@ -204,14 +215,15 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           onPress={() => {
             props.navigation.navigate('CMSScreen',{cms: 'contact-us'});
           }}
+          labelStyle={styles.drawerLabelStyle}
         />
 
         
-           <DrawerItem
-           
+          <DrawerItem
           icon={({color, size}) => <DrawerIcon src={notificationIcon} />}
           label={translate('logout')}
           onPress={() => logout()}
+          labelStyle={styles.drawerLabelStyle}
         />
       </DrawerContentScrollView>
     </View>
@@ -307,6 +319,10 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
   },
+  drawerLabelStyle: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 15,
+  }
 });
 
 export default SidebarMenu;
