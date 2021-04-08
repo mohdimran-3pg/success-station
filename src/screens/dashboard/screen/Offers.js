@@ -173,13 +173,12 @@ export default class OffersScreen extends React.Component {
                 backgroundColor: 'rgba(10, 135, 138, 1)',
               }}>
               <Searchbar 
-                style={{marginStart: 10, marginEnd: 10}}
+                style={{marginStart: 10, marginEnd: 10, fontStyle: "DMSans-Regular", fontSize:15}}
                 placeholder={translate('search_offer')}
                 onChangeText={this.onChangeTextDelayed}
                 icon={() => (
                   <Image source={require('./../../../../assets/search.png')} />
                 )}
-                style={{fontStyle: "DMSans-Regular", fontSize:15}}
               />
             </View>
             <View style={{width: "100%", height: 60}}>

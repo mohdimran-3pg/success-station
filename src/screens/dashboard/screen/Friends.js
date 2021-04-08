@@ -187,11 +187,10 @@ export default class FreindsScreen extends React.Component {
               flex: 1,
             }}>
             <View style={{height: 72, width: "100%" ,backgroundColor:"rgba(10, 135, 138, 1)"}}>
-            <Searchbar style ={{marginStart:10,marginEnd:10}} 
+            <Searchbar style ={{marginStart:10,marginEnd:10, fontStyle: "DMSans-Regular", fontSize:15}} 
               placeholder={translate('search_friend')}
               onChangeText={this.onChangeTextDelayed}
               icon={()=><Image source = {require('./../../../../assets/search.png')} />}
-              style={{fontStyle: "DMSans-Regular", fontSize:15}}
             />
             </View>
             <View style={{ backgroundColor: "white",marginBottom:70}}>
