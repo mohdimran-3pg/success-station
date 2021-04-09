@@ -173,7 +173,7 @@ export default class OffersScreen extends React.Component {
                 backgroundColor: 'rgba(10, 135, 138, 1)',
               }}>
               <Searchbar 
-                style={{marginStart: 10, marginEnd: 10}}
+                style={{marginStart: 10, marginEnd: 10, fontStyle: "DMSans-Regular", fontSize:15}}
                 placeholder={translate('search_offer')}
                 onChangeText={this.onChangeTextDelayed}
                 icon={() => (

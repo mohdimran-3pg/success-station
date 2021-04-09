@@ -97,7 +97,11 @@ const UserCardHeader = ({profile,clickEvent,...props}) => {
                         AsyncStorage.getItem('userdata').then((value)=> {
                           if(!value || 0 != value.length){ 
                             let user_id = JSON.parse(value).user_id;
-                            clickEvent(profile.id, user_id)
+                            if (friendshipStatus == "accepted") {
+                              clickEvent(props.route.params.Friendship.requister_id, props.route.params.Friendship.user_requisted_id, friendshipStatus)
+                            } else {
+                              clickEvent(profile.id, user_id, friendshipStatus)
+                            }
                           }
                         })  
                       }
@@ -212,37 +216,34 @@ const CONTACT = ({data}) => {
   )
 }
    
-  const ABOUT = ({data}) => (
-    <View style={{flex:1,margin:16}} >
-        <Text style={{fontSize:15 ,lineHeight:19}}> {data}</Text>
-      </View>
-  );
+const ABOUT = ({data}) => (
+<View style={{flex:1,margin:16}} >
+    <Text style={{fontSize:15 ,lineHeight:19}}> {data}</Text>
+  </View>
+);
 
-
-  
-
-
-  
 const initialLayout = { width: Dimensions.get('window').width };
 export default class ProfileDetails extends React.Component {
 
-    
   constructor(props) {
     super(props);
+    
     this.state = {
+      userData: props.route.params.user,
+      ads: props.route.params.ads,
+      study: props.route.params.user,
       index: 0,
       routes: [
         { key: 'contact', title: 'CONTACT'  },
         { key: 'ads', title: 'ADS'},
         { key: 'study', title: 'STUDY' },
       ],
-      isLoading: false,
-      userData: {}
+      isLoading: false
     };
-    }
+    console.log("this is propsts data :::::", this.state.userData)
+  }
 
     sendFriendRequest(friendId, myId) {
-      console.log('sendFriendRequest.......')
       this.setState({isLoading: true})
       ApiService.post('friendship-request',{
         "requister_id": `${myId}`,
@@ -253,7 +254,22 @@ export default class ProfileDetails extends React.Component {
         if (this.props.route.params.callBack !== undefined) {
           this.props.route.params.callBack()
         }
-        
+        this.setState({isLoading: false})
+      })
+      .catch((error) => {
+        alert(error.data.message);
+        this.setState({isLoading: false});
+      });
+    }
+
+    removeFriendRequest(requisterId, userRequistedId) {
+      this.setState({isLoading: true})
+      ApiService.post('remove-friend',{
+        "requister_id": `${requisterId}`,
+        "user_requisted_id": `${userRequistedId}`
+      })
+      .then((response) => {
+        this.getFriendList()
         this.setState({isLoading: false})
       })
       .catch((error) => {
@@ -280,7 +296,7 @@ export default class ProfileDetails extends React.Component {
       />
     );
     renderScene = ({ route }) => {
-  
+      console.log("this is propsts data renderScene :::::", JSON.stringify(this.state.userData))
       switch (route.key) {
         case 'contact':
           return <CONTACT data={this.props.route.params.user}  />;
@@ -296,22 +312,29 @@ export default class ProfileDetails extends React.Component {
     };
 
   render() {
+    console.log("this is propsts data render :::::", JSON.stringify(this.state.userData))
     const data =  this.props.route.params.user
     return (
       <SafeAreaView style={{flex: 1,flexDirection:'column'}}>
            <View style={[styles.parent, {position: 'absolute'}]} />
            <View style={{flex:1}}>
-       <UserCardHeader profile = {data} {...this.props} clickEvent={(friendId, myId) => {
-                      this.sendFriendRequest(friendId, myId)
-                      console.log(" friendId is ", friendId, " myId is ", myId)
-                    }}/>
-       <TabView 
-     navigationState={this.state}
-     renderScene={this.renderScene}
-     renderTabBar={this.renderTabBar}
-     onIndexChange={this._handleIndexChange}
-    />
-      </View>
+              <UserCardHeader 
+                  profile = {data} {...this.props} 
+                  clickEvent={(friendId, myId, status) => {
+                              if (status == "accepted") {
+                                this.removeFriendRequest(friendId, myId)
+                              } else {
+                                this.sendFriendRequest(friendId, myId)  
+                              }
+                            }}
+              />
+              <TabView 
+              navigationState={this.state}
+              renderScene={this.renderScene}
+              renderTabBar={this.renderTabBar}
+              onIndexChange={this._handleIndexChange}
+              />
+          </View>
       {this.state.isLoading ? <Loader loading={this.state.loading} /> : null}
       </SafeAreaView>
     );

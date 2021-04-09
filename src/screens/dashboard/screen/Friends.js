@@ -45,7 +45,13 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
               AsyncStorage.getItem('userdata').then((value)=> {
                 if(!value || 0 != value.length){ 
                   let user_id = JSON.parse(value).user_id;
-                  clickEvent(user.id, user_id)
+                  console.log("Friendship ------ ", user.Friendship)
+                  if (user.Friendship.status == "accepted") {
+                    clickEvent(user.Friendship.requister_id, user.Friendship.user_requisted_id, user.Friendship.status)
+                  } else {
+                    clickEvent(user.id, user_id, user.Friendship.status)
+                  }
+                  
                 }
               })  
               
@@ -149,6 +155,22 @@ export default class FreindsScreen extends React.Component {
     });
   }
 
+  removeFriendRequest(requisterId, userRequistedId) {
+    this.setState({isLoading: true})
+    ApiService.post('remove-friend',{
+      "requister_id": `${requisterId}`,
+      "user_requisted_id": `${userRequistedId}`
+    })
+    .then((response) => {
+      this.getFriendList()
+      this.setState({isLoading: false})
+    })
+    .catch((error) => {
+      alert(error.data.message);
+      this.setState({isLoading: false});
+    });
+  }
+
   componentDidMount() {
    this.getFriendList()
   }
@@ -164,8 +186,8 @@ export default class FreindsScreen extends React.Component {
             style={{
               flex: 1,
             }}>
-            <View style={{height: 70, width: "100%" ,backgroundColor:"rgba(10, 135, 138, 1)"}}>
-            <Searchbar style ={{marginStart:10,marginEnd:10}} 
+            <View style={{height: 72, width: "100%" ,backgroundColor:"rgba(10, 135, 138, 1)"}}>
+            <Searchbar style ={{marginStart:10,marginEnd:10, fontStyle: "DMSans-Regular", fontSize:15}} 
               placeholder={translate('search_friend')}
               onChangeText={this.onChangeTextDelayed}
               icon={()=><Image source = {require('./../../../../assets/search.png')} />}
@@ -180,8 +202,13 @@ export default class FreindsScreen extends React.Component {
                     numColumns={2}
                     renderItem={({item}) => <UserProfile 
                     user = {item} {...this.props}
-                    clickEvent={(friendId, myId) => {
-                      this.sendFriendRequest(friendId, myId)
+                    clickEvent={(friendId, myId, status) => {
+                      if (status == "accepted") {
+                        this.removeFriendRequest(friendId, myId)
+                      } else {
+                        this.sendFriendRequest(friendId, myId)
+                      }
+                      
                     }}
                     profileOpenEvent={() => {
                       let userType = item.roles != null && item.roles.length > 0 ? item.roles[0].id: 2
@@ -211,7 +238,6 @@ export default class FreindsScreen extends React.Component {
                                 this.setState({isLoading: false});
                                 this.props.navigation.navigate('ProfileDetail',{  
                                   user: userData, ads: response.data, Friendship: item.Friendship, callBack: ()=>{
-                                    console.log("I am getting callBack here........")
                                     this.getFriendList()
                                   }
                                 })
