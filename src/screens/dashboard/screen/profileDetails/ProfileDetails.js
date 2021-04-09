@@ -163,18 +163,21 @@ const CONTACT = ({data}) => {
   );
 }
    
-  const ADS = ({data}) => (
-    <View style={{flex:1,margin:16}} >
+  const ADS = ({data}) => {
+
+    var adsData = data.route.params.ads
+   return <View style={{flex:1,margin:16}} >
     <FlatList
       keyExtractor={(item) => item.id}
-      data={data}
+      data={adsData}
       numColumns={2}
       renderItem={({item}) => (
-        <BookDetailView book={item} />
+        <BookDetailView book={item} props = {data} isBookDetail={true}  />
       )}
     />
     </View>
-  );
+  
+  }
   const STUDY = ({data}) => {
     var user = data
     return (
@@ -282,7 +285,7 @@ export default class ProfileDetails extends React.Component {
         case 'contact':
           return <CONTACT data={this.props.route.params.user}  />;
         case 'ads':
-          return <ADS data={this.props.route.params.ads} />;
+          return <ADS data={this.props} />;
           case 'study':
           return <STUDY data={this.props.route.params.user}  />;
         case 'about':

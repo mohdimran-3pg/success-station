@@ -1,4 +1,4 @@
-import { PROFILE_IMAGE, LOGOUT } from './ReduxConstants';
+import { PROFILE_IMAGE, LOGOUT, PROFILE_ADDRESS } from './ReduxConstants';
 const initialState = {
 url: '',
 address:'',
@@ -11,6 +11,12 @@ case PROFILE_IMAGE:
 return {
 ...state,
 url:action.payload
+};
+case PROFILE_ADDRESS:
+
+return {
+...state,
+address:action.payload
 };
 
 case LOGOUT:

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {View, Text, Image, FlatList, TouchableOpacity} from "react-native"
-const BookDetailView = ({book}) => {
+const BookDetailView = ({book,props,isBookDetail=false}) => {
     let url = (book.image != null && book.image.length > 0) ? book.image[0].url: "";
     return (
       <TouchableOpacity
@@ -12,7 +12,7 @@ const BookDetailView = ({book}) => {
           borderRadius: 4,
           
         }}
-        onPress={() => props.navigation.navigate('ServiceProfileScreen', {book})}>
+        onPress={() => isBookDetail?    props.navigation.navigate('BookDetailScreen', { data: { bookId: book.id }})  : props.navigation.navigate('ServiceProfileScreen', {book})}>
         <View style={{}}>
           <View style={{width: '100%', height: 140}}>
             <Image
