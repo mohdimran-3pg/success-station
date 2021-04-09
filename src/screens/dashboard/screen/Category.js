@@ -7,13 +7,12 @@ import {
   Image,
   StyleSheet,
   FlatList,
-  CheckBox,
-  ScrollView,
   Dimensions,
 } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import DynamicTabView from 'react-native-dynamic-tab-view';
 import {Card, Paragraph, Searchbar} from 'react-native-paper';
+import CheckBox from '@react-native-community/checkbox';
 import {
   cardFollower,
   cardLocation,
@@ -25,8 +24,7 @@ import ApiService from '../../../network/ApiService';
 import Loader from '../../Loader';
 import _ from 'lodash';
 
-const 
-    multiSliderValue= [0, 5000]
+
 
 
 const CardItem = ({item,refreshCallBack,...props}) => {
@@ -121,9 +119,14 @@ export default class StudentProfile extends React.Component {
       isLoading: false,
       types: [],
       searchText:props.route != null && props.route.params != null && props.route.params.searchText != null ? props.route.params.searchText: "",
-      
+      oldType : false,
+      newType :false,
+      multiSliderValue: [1, 500],
+      key:1,
+  
     };
    
+    this.range =''
   
   }
   onChangeTab = (index) => {
@@ -142,6 +145,12 @@ export default class StudentProfile extends React.Component {
     ApiService.get('listing-types')
       .then((response) => {
         this.setState({types: response.data}) 
+        let  data = this.state.types
+        for( i in data){
+          data[i].selected = false
+        }
+        this.setState({types: data}) 
+       
       })
       .catch((error) => {
       });
@@ -212,7 +221,7 @@ export default class StudentProfile extends React.Component {
     this.getAddType()
     this.getBookCategories();
   }
-  
+ 
   render() {
     return (
       <SafeAreaView style={{flex: 1,backgroundColor:'white'}}>
@@ -329,9 +338,31 @@ export default class StudentProfile extends React.Component {
                
         
               }}>
+                  <TouchableOpacity style={{padding: 0}} onPress={()=>{
+                       const newArray = [...this.state.types];
+                       for( i in newArray){
+                       newArray[i].selected = false;
+                       }
+                       this.setState({ types: newArray,newType:false,oldType:false,key:this.state.key+1});
+                       this.range =''
+                  }}>
               <Text style={{color: 'black'}}>{translate('reset')}</Text>
+              </TouchableOpacity>
               <Text >Filter</Text>
-              <TouchableOpacity style={{padding: 0}}>
+              <TouchableOpacity style={{padding: 0}} onPress={()=>{
+             // type=1,2&condition=new&range=1-100
+              // var type =''
+              // var data = this.state.types
+              // for(i in data){
+              //     if(data[i].selected){
+              //       console.log(data[i])
+              //       type +=`,${data[i].id}`
+              //     }
+              // }
+              // var condition = this.state.newType ? "new" :''
+              // condition +=this.state.oldType ? "old" :''
+
+              }}>
                 <Text style={{color: '#F78A3A'}}>{translate('done')}</Text>
               </TouchableOpacity>
               </View>
@@ -349,10 +380,17 @@ export default class StudentProfile extends React.Component {
             </Text>
             <FlatList style={{}}
               data={this.state.types}
-              renderItem={({item}) => <View
+              renderItem={({item,index}) => <View
               style={{ flexDirection:'row'
               }}>
               <CheckBox    
+                value={this.state.types[index].selected}
+                onValueChange={(newValue) => {
+                  const newArray = [...this.state.types];
+                  newArray[index].selected = newValue;
+                  this.setState({ types: newArray });
+                }
+              }
                 />
                 
               <Text style={{textAlignVertical:'center'}}>{item.type}</Text>
@@ -370,7 +408,12 @@ export default class StudentProfile extends React.Component {
                
               }}>
               <CheckBox
-               
+                  value= {this.state.newType}
+                 onValueChange={(newValue) => {
+                  this.setState({newType:newValue})
+                  
+                  }
+                 }
               />
               <Text style={{textAlignVertical:'center'}}>New</Text>
             </View>
@@ -380,7 +423,12 @@ export default class StudentProfile extends React.Component {
               
               }}>
               <CheckBox
-               
+                  value= {this.state.oldType}
+                 onValueChange={(newValue) => {
+                   this.setState({oldType:newValue})
+           
+                }  
+              }
               />
               <Text style={{textAlignVertical:'center'}}>Old</Text>
             </View>
@@ -391,21 +439,36 @@ export default class StudentProfile extends React.Component {
             <View
               style={{
                
-              }}>
+              }} key = {this.state.key}>
+               
              <MultiSlider
-          values={[multiSliderValue[0], multiSliderValue[1]]}
+          values={this.state.multiSliderValue}
           sliderLength={Dimensions.get('window').width-40}
-          onValuesChange={(i)=>{console.log(i)}}
-          min={0}
-          max={5000}
+          onValuesChange={(i)=>{this.range = i}}
+          min={this.state.multiSliderValue[0]}
+          max={this.state.multiSliderValue[1]}
           step={1}
+          isMarkersSeparated={true}
+          customMarkerLeft={(e) => {
+            return (<View style={{marginTop:20}}>
+              <View style= {{width:20,height:20,borderRadius:10,backgroundColor: 'rgba(10, 135, 138, 1)'}}/>
+              <Text style={{textAlign:'center'}}>{e.currentValue}</Text></View>)
+             
+       }}
+   
+       customMarkerRight={(e) => {
+            return  (<View style={{marginTop:20}}>
+              <View style= {{width:20,height:20,borderRadius:10,backgroundColor: 'rgba(10, 135, 138, 1)'}}/>
+              <Text style={{textAlign:'center'}}>{e.currentValue}</Text></View>)
+       }}
           allowOverlap
           snapped
         
         />
+        </View>
             </View>
       
-          </View>
+         
         </RBSheet>
         {this.state.isLoading ?   <Loader
                 loading={this.state.loading} /> :null}

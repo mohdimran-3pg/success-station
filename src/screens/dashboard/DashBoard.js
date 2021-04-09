@@ -69,7 +69,6 @@ const Drawer = createDrawerNavigator();
         var city = data.city.city != null ? data.city.city + ', ' : '';
         var country = data.country.name != null ? data.country.name : '';
         var fullAddress = `${city + country}`;
-        console.log("hhhhhhhhhhhhh",fullAddress)
         this.props.actions.updateAddress(fullAddress)
         this.setState({isLoading: false});
       })

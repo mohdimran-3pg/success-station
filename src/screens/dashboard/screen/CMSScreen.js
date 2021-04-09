@@ -11,11 +11,15 @@ import Loader from '../../Loader';
 
 export default class CMSScreen extends React.Component {
 
+ 
     getCMSPageContent = (page) => {
+      
         this.setState({isLoading: true});
         var path = page
+        console.log(page)
         ApiService.get(path)
           .then((response) => {
+            this.props.navigation.setOptions({ title: response.data.title })
             this.setState({pageContent: response.data.page_text, pageHeading: response.data.title});
             this.setState({isLoading: false});
           })
@@ -42,7 +46,6 @@ export default class CMSScreen extends React.Component {
         return (
                 <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
                     <View style={{flex: 1, backgroundColor: 'white'}}>
-                    <Text style={{paddingLeft: 15, paddingTop: 15, fontSize: 20, fontFamily: 'DMSans-Bold'}}>{this.state.pageHeading}</Text>    
                     <ScrollView style={{ flex: 1, paddingLeft: 15}}>
                         <HTML source={{ html: this.state.pageContent }} />
                     </ScrollView>
