@@ -23,6 +23,7 @@ export default class ResetPassword extends React.Component {
   };
 
   constructor(props) {
+    console.log("forgot_password value --- ", JSON.stringify(props.navigation))
     super(props);
     this.state= {isLoading:false}
     this.password = '';
@@ -42,7 +43,7 @@ export default class ResetPassword extends React.Component {
     ApiService.post('update-password', data)
       .then((response) => {
         this.setState({isLoading: false});
-        this.props.navigation.navigate('recoveredPassword', {data: response});
+        this.props.navigation.navigate('recoveredPassword', {data: response, forgot_password: this.props.navigation.state.params.forgot_password});
       })
       .catch((error) => {
         this.setState({isLoading: false});

@@ -24,6 +24,7 @@
   "submit": "Submit",
   "password_recovered": "Password Recovered",
   "password_recovered_desc": "Your password recovered successfully please login",
+  "password_created_desc": "Your password created successfully please login",
   "mobile_number": "Mobile number",
   "dob": "Date of Birth",
   "region": "Region",
@@ -142,5 +143,8 @@
   "view_profile": "View Profile",
   "please_select_your_language": "Please select your language",
   "please_enter_comment": "Please enter comment",
-  "request_pending": "Request Pending"
+  "request_pending": "Request Pending",
+  "new": "New",
+  "old": "Old",
+  "price": "Price"
 }

@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 const UserProfile =({user, acceptRequestEvent, rejectRequestEvent,...props}) => {
     var url = (user.requister.image != null && user.requister.image.preview != null) ? user.requister.image.preview  :'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg'
     return (
-      <View style={{ width:'47%',margin:'1.5%', borderColor: "#00000030", borderWidth: 1, borderRadius: 4}}>
+      <View style={{ width:'47%',margin:'1.5%', borderColor: "#00000030", borderWidth: 1, borderRadius: 4, height: 250}}>
           <View style={{width: 60, height: 60, borderRadius: 30, alignSelf: "center", marginTop: 21}}>
               <Image style={{width: 60, height: 60, borderRadius: 30}} 
                     source={{uri: url}}
@@ -17,7 +17,7 @@ const UserProfile =({user, acceptRequestEvent, rejectRequestEvent,...props}) => 
           </View>
           <View style={{height: 40, marginTop:7}}>
             <Text style={{fontSize: 15, fontWeight: "700", textAlign: "center", color: "#000000"}}>{user.requister.name}</Text>
-            <Text style={{fontSize: 15, fontWeight: "400", textAlign: "center", color: "#9EA6BE",marginTop:9}}>{user.requister.email}</Text>
+            <Text style={{fontSize: 15, fontWeight: "400", textAlign: "center", color: "#9EA6BE",marginTop:9,marginLeft: 10,}}>{user.requister.email}</Text>
           </View>
           <View style={{width: "80%", alignSelf: "center", height: 35, marginBottom: 10, marginTop: 25}}>
           <View style={styles.mainView}>
@@ -110,7 +110,8 @@ export default class FriendRequest extends React.Component {
             "status": `${status}`
         })
         .then((response) => {
-            this.setState({isLoading: false})
+            this.setState({isLoading: false});
+            this.friendList()
         })
         .catch((error) => {
             alert(error.data.message);
@@ -121,13 +122,13 @@ export default class FriendRequest extends React.Component {
     render() {
         return (
           <SafeAreaView style={{flex: 1,backgroundColor:'white'}}>
-            <View style={{flex: 1 ,marginBottom:50}}>
+            <View style={{flex: 1 ,marginBottom:0}}>
               <View
                 style={{
                   flex: 1,
                 }}>
-                <View style={{ backgroundColor: "white", height: "90%"}}>
-                    <View style={{alignSelf: "center", height: "100%"}}>
+                <View style={{ backgroundColor: "white", height: "90%", justifyContent: "center"}}>
+                    
                     {this.friendList.length > 0 ? 
                     <FlatList
                         keyExtractor = {(item) => item.id} 
@@ -144,8 +145,8 @@ export default class FriendRequest extends React.Component {
                         />
                       } 
                     />:
-                    <Text style={{flex: 1, height: 50}}>No Friend Request found</Text>}
-                    </View>
+                    <Text style={{ height: 50,alignSelf: 'center', fontFamily: "DMSans-Bold",fontSize:15, textAlign: 'center'}}>No Friend Request found</Text>}
+                    
                 </View>
                 </View>
                 {this.state.isLoading ? (

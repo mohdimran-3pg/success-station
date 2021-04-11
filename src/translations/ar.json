@@ -24,6 +24,7 @@
     "submit": "إرسال",
     "password_recovered": "استعادة كلمة المرور",
     "password_recovered_desc": "تم استرداد كلمة المرور الخاصة بك بنجاح الرجاء تسجيل الدخول",
+    "password_created_desc": "إنشاء كلمة المرور الخاصة بك بنجاح الرجاء تسجيل الدخول",
     "mobile_number": "رقم الهاتف المحمول",
     "dob": "تاريخ الولادة",
     "region": "منطقة",
@@ -143,5 +144,8 @@
     "view_profile": "انظر الملف الشخصي",
     "please_select_your_language": "الرجاء اختيار لغتك",
     "please_enter_comment": "الرجاء إدخال تعليق",
-    "request_pending": "الطلب معلق"
+    "request_pending": "الطلب معلق",
+    "new": "جديد",
+    "old": "قديم",
+    "price": "سعر"
   }  

@@ -199,6 +199,21 @@ export default class StudentProfile extends React.Component {
       });
   }
 
+  filterBooks = (filter) => {
+    this.setState({isLoading: true});
+    return
+    var path = 'listings'+filter
+    console.log("Filter URL:::::", path)
+    ApiService.get(path)
+      .then((response) => {
+        this.setState({isLoading: false});
+        this.setState({books: response.data})
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+      });
+  }
+
   getBooksByCategory = (id) => {
 
     if (id > 0) {
@@ -228,7 +243,7 @@ export default class StudentProfile extends React.Component {
         <View
           style={{backgroundColor: 'rgba(10, 135, 138, 1)', paddingBottom: 28}}>
           <Searchbar
-            style={{marginStart: 10, marginEnd: 10}}
+            style={{marginStart:10,marginEnd:10, fontStyle: "DMSans-Regular", fontSize:15}}
             placeholder={translate('search_book')}
             onChangeText={(value)=>{
         
@@ -267,7 +282,7 @@ export default class StudentProfile extends React.Component {
                 this.Standard.open();
               }}>
               <Image
-                style={{alignSelf: 'center', marginRight: 5}}
+                style={{alignSelf: 'center', marginRight: 10}}
                 source={filter}
               />
               <Text
@@ -275,6 +290,7 @@ export default class StudentProfile extends React.Component {
                   color: 'white',
                   fontSize: 15,
                   textAlignVertical: 'center',
+                  marginTop: 5
                 }}>
                 {translate('filter')}
               </Text>
@@ -348,20 +364,37 @@ export default class StudentProfile extends React.Component {
                   }}>
               <Text style={{color: 'black'}}>{translate('reset')}</Text>
               </TouchableOpacity>
-              <Text >Filter</Text>
+              <Text >{translate('filter')}</Text>
               <TouchableOpacity style={{padding: 0}} onPress={()=>{
-             // type=1,2&condition=new&range=1-100
-              // var type =''
-              // var data = this.state.types
-              // for(i in data){
-              //     if(data[i].selected){
-              //       console.log(data[i])
-              //       type +=`,${data[i].id}`
-              //     }
-              // }
-              // var condition = this.state.newType ? "new" :''
-              // condition +=this.state.oldType ? "old" :''
+              var data = this.state.types
+              var arrTypes = []
+              var arrCondition = []
+              var queryString = "?"
+              for(i in data){
+                  if(data[i].selected){
+                    arrTypes.push(data[i].id)
+                  }
+              }
 
+              queryString += `range=${this.state.multiSliderValue[0]}-${this.state.multiSliderValue[1]}`
+
+              if (this.state.newType != '') {
+                arrCondition.push("new")
+              }
+
+              if (this.state.oldType != '') {
+                arrCondition.push("old")
+              }
+
+              if (arrCondition.length > 0) {
+                queryString += `&condition=${arrCondition.join(",")}`
+              }
+
+              if (arrTypes.length > 0) {
+                queryString += `&type=${arrTypes.join(",")}`
+              }
+              //this.Standard.close();
+              this.filterBooks(queryString)
               }}>
                 <Text style={{color: '#F78A3A'}}>{translate('done')}</Text>
               </TouchableOpacity>
@@ -376,12 +409,12 @@ export default class StudentProfile extends React.Component {
 
               }}></View>
             <Text style={{fontSize: 21, marginTop: 13}}>
-              Sub Categories
+              {translate('type')}
             </Text>
             <FlatList style={{}}
               data={this.state.types}
               renderItem={({item,index}) => <View
-              style={{ flexDirection:'row'
+              style={{ flexDirection:'row', marginBottom: 10,
               }}>
               <CheckBox    
                 value={this.state.types[index].selected}
@@ -391,20 +424,22 @@ export default class StudentProfile extends React.Component {
                   this.setState({ types: newArray });
                 }
               }
+                
                 />
                 
-              <Text style={{textAlignVertical:'center'}}>{item.type}</Text>
+              <Text style={styles.checkBoxHeading}>{item.type}</Text>
             </View>} 
               numColumns={1}
             />
             
             <Text style={{fontSize: 21}}>
-              Condition
+              {translate('condition')}
             </Text>
 
             <View
               style={{
                 flexDirection: 'row',
+                marginBottom: 10
                
               }}>
               <CheckBox
@@ -413,9 +448,10 @@ export default class StudentProfile extends React.Component {
                   this.setState({newType:newValue})
                   
                   }
+                  
                  }
               />
-              <Text style={{textAlignVertical:'center'}}>New</Text>
+              <Text style={styles.checkBoxHeading}>{translate('new')}</Text>
             </View>
             <View
               style={{
@@ -430,11 +466,11 @@ export default class StudentProfile extends React.Component {
                 }  
               }
               />
-              <Text style={{textAlignVertical:'center'}}>Old</Text>
+              <Text style={styles.checkBoxHeading}>{translate('old')}</Text>
             </View>
 
             <Text style={{fontSize: 21, marginTop: 13}}>
-              Price
+              {translate('price')}
             </Text>
             <View
               style={{
@@ -557,4 +593,7 @@ const styles = StyleSheet.create({
   tabItemContainer: {
     backgroundColor: '#cf6bab',
   },
+  checkBoxHeading: {
+    textAlignVertical:'center', marginLeft: 5, fontFamily: "DMSans-Regular"
+  }
 });

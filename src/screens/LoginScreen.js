@@ -113,7 +113,7 @@ export default class LoginScreen extends React.Component {
                             <View style={{width: 160, height: 25}}>
                                 <View style={{alignContent: "flex-end", width: 110, height: 25}}>
                                 <TouchableOpacity onPress={() => {
-                                    this.props.navigation.navigate('forgetPassword')
+                                    this.props.navigation.navigate('forgetPassword',{data: {forgot_password: true}})
                                 }}>
                                     <Text style={{fontWeight: "400", fontSize: 12, lineHeight: 18, color: "#7165E3", textAlignVertical: "center"}}>{translate('forgot_password')}</Text>
                                 </TouchableOpacity>

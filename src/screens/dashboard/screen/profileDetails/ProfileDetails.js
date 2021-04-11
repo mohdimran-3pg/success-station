@@ -23,9 +23,11 @@ import {translate} from '../../../../util/TranslationUtils';
 import AsyncStorage from '@react-native-community/async-storage'
 import BookDetailView from '../../../../../components/BookDetailView';
 
-const UserCardHeader = ({profile,clickEvent,...props}) => {
+const UserCardHeader = ({profile,clickEvent, userData,...props}) => {
 
-  console.log("FriendShip Status ----- ", props.route.params.Friendship)
+  //console.log("UserCardHeader userData ----- ", JSON.stringify(profile))
+
+  const [friendState, setFriendState] = useState('add_friend');
 
   let imageURL = profile.image != null && profile.image.url != null ? profile.image.url: "https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg"
   var friendshipStatus = props.route.params.Friendship != null && props.route.params.Friendship.status != null ? props.route.params.Friendship.status: ""
@@ -100,6 +102,7 @@ const UserCardHeader = ({profile,clickEvent,...props}) => {
                             if (friendshipStatus == "accepted") {
                               clickEvent(props.route.params.Friendship.requister_id, props.route.params.Friendship.user_requisted_id, friendshipStatus)
                             } else {
+                              console.log("profile.id :::: ", profile.id, ":::::: user_id ::::: ", user_id)
                               clickEvent(profile.id, user_id, friendshipStatus)
                             }
                           }
@@ -240,8 +243,27 @@ export default class ProfileDetails extends React.Component {
       ],
       isLoading: false
     };
-    console.log("this is propsts data :::::", this.state.userData)
   }
+
+    getProfileDetails() {
+      ApiService.get(`user-profile?user_id=${this.state.profile.id}`)
+      .then((response) => {
+        let userData = response.data
+        this.setState({profile: userData});
+        ApiService.get(`listings?user_id=${this.state.profile.id}`)
+        .then((response) => {
+          this.setState({isLoading: false});
+        })
+        .catch((error) => {
+          this.setState({isLoading: false});
+        });
+        
+      })
+      .catch((error) => {
+        this.setState({isLoading: false});
+        alert(error.data.message);
+      });
+    }
 
     sendFriendRequest(friendId, myId) {
       this.setState({isLoading: true})
@@ -251,10 +273,11 @@ export default class ProfileDetails extends React.Component {
         "status": "new"
       })
       .then((response) => {
+        this.getProfileDetail()
         if (this.props.route.params.callBack !== undefined) {
           this.props.route.params.callBack()
         }
-        this.setState({isLoading: false})
+        
       })
       .catch((error) => {
         alert(error.data.message);
@@ -296,7 +319,7 @@ export default class ProfileDetails extends React.Component {
       />
     );
     renderScene = ({ route }) => {
-      console.log("this is propsts data renderScene :::::", JSON.stringify(this.state.userData))
+      //console.log("this is propsts data renderScene :::::", JSON.stringify(this.state.userData))
       switch (route.key) {
         case 'contact':
           return <CONTACT data={this.props.route.params.user}  />;
@@ -312,8 +335,9 @@ export default class ProfileDetails extends React.Component {
     };
 
   render() {
-    console.log("this is propsts data render :::::", JSON.stringify(this.state.userData))
-    const data =  this.props.route.params.user
+    
+    const data = this.state.userData.id != null? this.state.userData:  this.props.route.params.user
+    console.log("render this is propsts data :::::", JSON.stringify(data))
     return (
       <SafeAreaView style={{flex: 1,flexDirection:'column'}}>
            <View style={[styles.parent, {position: 'absolute'}]} />
@@ -327,6 +351,7 @@ export default class ProfileDetails extends React.Component {
                                 this.sendFriendRequest(friendId, myId)  
                               }
                             }}
+                  userData = {this.state.userData}
               />
               <TabView 
               navigationState={this.state}

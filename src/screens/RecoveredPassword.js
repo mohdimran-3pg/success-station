@@ -48,7 +48,7 @@ export default class RecoveredPassword extends React.Component {
           </View>
           <View>
             <Text style={styles.secondaryTextStyle}>
-            {translate('password_recovered_desc')}
+            {this.props.navigation.state.params.forgot_password ? translate('password_recovered_desc'): translate('password_created_desc')}
             </Text>
           </View>
           <View style={{ height: 50,marginTop:20, width: 320, alignSelf: "center"}}>

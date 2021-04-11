@@ -31,6 +31,7 @@ export default class ForgetPassword extends React.Component {
     componentWillUnmount() {
     }
     setPassword() {
+        //{data: {forgot_password: true}
         if (Helper.isEmailValid(this.email.trim())) {
             alert('Enter valid Email');
           }
@@ -42,11 +43,13 @@ export default class ForgetPassword extends React.Component {
         ApiService.post('forgot-password', data)
           .then((response) => {
             this.setState({isLoading: false});
-            this.props.navigation.navigate('otpScreen',{data: {email: this.email.trim()}})
+            console.log("this.props ;;;; ",JSON.stringify(this.props))
+            this.props.navigation.navigate('otpScreen',{data: {email: this.email.trim(), forgot_password: this.props.navigation.state.params.data.forgot_password}})
           })
           .catch((error) => {
+              console.log("error::::::", error)
             this.setState({isLoading: false});
-            alert(error.data.message);
+            //alert(error.data.message);
           });
       }
 

@@ -36,7 +36,7 @@ export default class OtpScreen extends React.Component {
     ApiService.post('verify-otp', data)
       .then((response) => {
         this.setState({isLoading: false});
-        this.props.navigation.navigate('resetPassword', {data: response});
+        this.props.navigation.navigate('resetPassword', {data: response, forgot_password: this.props.navigation.state.params.data.forgot_password});
       })
       .catch((error) => {
         this.setState({isLoading: false});
