@@ -23,6 +23,7 @@
   "confirm_password": "Confirm Password",
   "submit": "Submit",
   "password_recovered": "Password Recovered",
+  "password_created": "Password Created",
   "password_recovered_desc": "Your password recovered successfully please login",
   "password_created_desc": "Your password created successfully please login",
   "mobile_number": "Mobile number",

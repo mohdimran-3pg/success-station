@@ -208,7 +208,7 @@ export default class MyLoacationScreen extends React.Component {
            
           <View style={{width: 120, height: 120, borderRadius: 60, backgroundColor: "red", alignSelf: "center", marginTop: 25}}>
           {this.state.base64Data.trim() == ""?  <Image
-                    source={ require('../../../../assets/Edit-Profile/avatar-Image.png')}
+                    source={ {uri: 'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg'}}
                     
                     style = {{width: 120,
                       height: 120,

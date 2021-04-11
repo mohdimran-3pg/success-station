@@ -78,8 +78,7 @@ export default class FriendRequest extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { isLoading :false}
-        this.friendList = []
+        this.state = { isLoading :false, friendList: []}
     }
 
     componentDidMount() {
@@ -94,8 +93,8 @@ export default class FriendRequest extends React.Component {
         this.setState({isLoading: true});
         ApiService.get('my-requests')
         .then((response) => {
-        this.friendList = response.data;
-        this.setState({isLoading: false});
+          this.setState({friendList: response.data});
+          this.setState({isLoading: false});
         })
         .catch((error) => {
         this.setState({isLoading: false});
@@ -111,7 +110,7 @@ export default class FriendRequest extends React.Component {
         })
         .then((response) => {
             this.setState({isLoading: false});
-            this.friendList()
+            this.getFriendList()
         })
         .catch((error) => {
             alert(error.data.message);
@@ -129,10 +128,10 @@ export default class FriendRequest extends React.Component {
                 }}>
                 <View style={{ backgroundColor: "white", height: "90%", justifyContent: "center"}}>
                     
-                    {this.friendList.length > 0 ? 
+                    {this.state.friendList.length > 0 ? 
                     <FlatList
                         keyExtractor = {(item) => item.id} 
-                        data = {this.friendList}
+                        data = {this.state.friendList}
                         numColumns={2}
                         renderItem={({item}) => <UserProfile 
                         user = {item} {...this.props}

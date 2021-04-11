@@ -9,10 +9,7 @@ const SquareScreen = () => {
     const [blueColor, setBlueColor] = useState(0);
 
     const CONSTANT_VALUE = 15
-    console.log("Red Color:::", redColor);
-    console.log("Green Color:::", greenColor);
-    console.log("Blue Color:::", blueColor);
-
+    
     const setColor = (color, value) => {
 
         switch (color) {

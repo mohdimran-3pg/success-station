@@ -45,7 +45,6 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
               AsyncStorage.getItem('userdata').then((value)=> {
                 if(!value || 0 != value.length){ 
                   let user_id = JSON.parse(value).user_id;
-                  console.log("Friendship ------ ", user.Friendship)
                   if (user.Friendship.status == "accepted") {
                     clickEvent(user.Friendship.requister_id, user.Friendship.user_requisted_id, user.Friendship.status)
                   } else {

@@ -43,11 +43,9 @@ export default class ForgetPassword extends React.Component {
         ApiService.post('forgot-password', data)
           .then((response) => {
             this.setState({isLoading: false});
-            console.log("this.props ;;;; ",JSON.stringify(this.props))
             this.props.navigation.navigate('otpScreen',{data: {email: this.email.trim(), forgot_password: this.props.navigation.state.params.data.forgot_password}})
           })
           .catch((error) => {
-              console.log("error::::::", error)
             this.setState({isLoading: false});
             //alert(error.data.message);
           });

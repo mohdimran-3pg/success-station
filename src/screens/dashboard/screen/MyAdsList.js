@@ -25,8 +25,11 @@ import {translate} from '../../../util/TranslationUtils';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
 const CardItem = ({item,...props}) => {
- 
   let imageurl = item.image.length > 0 ? item.image[0].url: ""
+  var city = item.city.city != null ? item.city.city+", ": ""
+  var region = item.region.region != null ? item.region.region+", ": ""
+  var country = item.country.name != null ? item.country.name: ""
+  var fullAddress = `${city+region+country}`
   var header_View = (
     <TouchableOpacity style={{flex: 1}} onPress= {()=>props.navigation.navigate('BookDetailScreen', { data: { bookId: item.id} })}>
       <Card style={{margin: 7, elevation: 5}} >
@@ -61,9 +64,10 @@ const CardItem = ({item,...props}) => {
                     fontSize: 10,
                     color: 'rgba(0, 0, 0, 0.6)',
                     marginStart: 5,
+                    marginEnd: 10,
                     fontFamily: "DMSans-Regular"
                   }}>
-                  {item.cities != null && item.cities.length > 0 ? item.cities[0].city : "N/A"}
+                  {fullAddress}
                 </Text>
               </View>
               <View style={{flexDirection: 'row'}}>

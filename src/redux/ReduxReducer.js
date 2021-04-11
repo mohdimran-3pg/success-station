@@ -20,7 +20,6 @@ address:action.payload
 };
 
 case LOGOUT:
-console.log("reducer logout",action.isLogout)
 return {
 ...state,
 isLogout:action.isLogout

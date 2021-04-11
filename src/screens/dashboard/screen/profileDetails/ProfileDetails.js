@@ -25,8 +25,6 @@ import BookDetailView from '../../../../../components/BookDetailView';
 
 const UserCardHeader = ({profile,clickEvent, userData,...props}) => {
 
-  //console.log("UserCardHeader userData ----- ", JSON.stringify(profile))
-
   const [friendState, setFriendState] = useState('add_friend');
 
   let imageURL = profile.image != null && profile.image.url != null ? profile.image.url: "https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg"
@@ -102,7 +100,6 @@ const UserCardHeader = ({profile,clickEvent, userData,...props}) => {
                             if (friendshipStatus == "accepted") {
                               clickEvent(props.route.params.Friendship.requister_id, props.route.params.Friendship.user_requisted_id, friendshipStatus)
                             } else {
-                              console.log("profile.id :::: ", profile.id, ":::::: user_id ::::: ", user_id)
                               clickEvent(profile.id, user_id, friendshipStatus)
                             }
                           }
@@ -319,7 +316,6 @@ export default class ProfileDetails extends React.Component {
       />
     );
     renderScene = ({ route }) => {
-      //console.log("this is propsts data renderScene :::::", JSON.stringify(this.state.userData))
       switch (route.key) {
         case 'contact':
           return <CONTACT data={this.props.route.params.user}  />;
@@ -337,7 +333,6 @@ export default class ProfileDetails extends React.Component {
   render() {
     
     const data = this.state.userData.id != null? this.state.userData:  this.props.route.params.user
-    console.log("render this is propsts data :::::", JSON.stringify(data))
     return (
       <SafeAreaView style={{flex: 1,flexDirection:'column'}}>
            <View style={[styles.parent, {position: 'absolute'}]} />

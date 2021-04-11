@@ -381,9 +381,9 @@ export default class ServicesScreen extends React.Component {
                             source={{uri: book.image[0].url}}
                           />
                         </View>
-                        <View style={{marginTop:15,}}>
-                          <Text>{book.location}</Text>
-                          <Text>{book.description}</Text>
+                        <View style={{marginTop:15, width: 100,}}>
+                          <Text style={{fontFamily: "DMSans-Bold", fontSize: 15}}>{book.location}</Text>
+                          <Text style={{fontFamily: "DMSans-Regular", fontSize: 12, marginRight: 10}}>{book.description}</Text>
                         </View>
                       </View>
                     </Callout>

@@ -16,7 +16,6 @@ export default class CMSScreen extends React.Component {
       
         this.setState({isLoading: true});
         var path = page
-        console.log(page)
         ApiService.get(path)
           .then((response) => {
             this.props.navigation.setOptions({ title: response.data.title })

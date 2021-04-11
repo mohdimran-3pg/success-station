@@ -203,7 +203,6 @@ export default class StudentProfile extends React.Component {
     this.setState({isLoading: true});
     return
     var path = 'listings'+filter
-    console.log("Filter URL:::::", path)
     ApiService.get(path)
       .then((response) => {
         this.setState({isLoading: false});
@@ -319,7 +318,6 @@ export default class StudentProfile extends React.Component {
           renderItem={({item}) => <CardItem 
                                   item = {item}
                                   refreshCallBack = { () =>{
-                                      console.log("Refresh Page CallBack")
                                       this.getBooks()
                                   }
 

@@ -76,22 +76,8 @@ import ArrowView from '../../../../components/ArrowView'
       <View style={{flex: 1, backgroundColor: '#F2F2F2'}}>
         <KeyboardAwareScrollView>
         <View style={{backgroundColor: "#0A878A", height:200, width: "100%"}}>
-        <View style={{backgroundColor:"#0A878A", height: 80, alignItems: 'center'}}>
-              <View style={{height: 40, width:"95%", flexDirection: 'row', top: 10}}>
-                <View style={{width: "20%", justifyContent: "flex-start"}}>
-                
-                </View>
-                <View style={{width: "60%", justifyContent: "center"}}>
-                  <Text style={style.titleText}>{translate('ads')}</Text>
-                </View>
-                <View style={{width: "20%", alignItems: 'flex-end'}}>
-                  <Image 
-                    style={{width: 35, height: 35, borderRadius: 17.5}} 
-                    source={require('../../../../assets/Ads/profile-pic.jpg')}
-                  />
-                </View>
-              </View>
-          </View>
+        <View style={{backgroundColor:"#0A878A", height: 15, alignItems: 'center'}}>
+        </View>
         <View style={{height: 65, width:"85%", flexDirection: 'row', top: 25, justifyContent: "space-between", alignSelf: "center"}}>
                   <View style={{width: "32%", height: 65, flexDirection: "row", justifyContent: "space-between"}}>
                     <View>

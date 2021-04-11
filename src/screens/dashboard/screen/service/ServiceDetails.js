@@ -345,9 +345,9 @@ export default class ServiceDetails extends React.Component {
 
 const styles = StyleSheet.create({
   image: {
-    width: 60,
-    height: 60,
-    borderRadius: 60 / 2,
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2,
     overflow: 'hidden',
   },
   parent: {

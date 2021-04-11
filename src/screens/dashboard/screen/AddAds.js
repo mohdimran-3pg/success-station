@@ -199,20 +199,8 @@ export default class AddAdsScreen extends React.Component {
       <View style={{flex: 1}}>
             <KeyboardAwareScrollView>
             <View style={{flex: 1, flexDirection: "column"}}>
-            <View style={{backgroundColor:"#0A878A", height: 80, alignItems: 'center'}}>
-              <View style={{height: 40, width:"95%", flexDirection: 'row', top: 10}}>
-                <View style={{width: "20%", justifyContent: "flex-start"}}>
-                </View>
-                <View style={{width: "60%", justifyContent: "center"}}>
-                  <Text style={styles.titleText}>{translate('ads')}</Text>
-                </View>
-                <View style={{width: "20%", alignItems: 'flex-end'}}>
-                  <Image 
-                    style={{width: 35, height: 35, borderRadius: 17.5}} 
-                    source={require('../../../../assets/Ads/profile-pic.jpg')}
-                  />
-                </View>
-              </View>
+            <View style={{backgroundColor:"#0A878A", height: 15, alignItems: 'center'}}>
+              
           </View>  
             <View style={{backgroundColor:"#0A878A", height: 80}}>
             <View style={{width:"80%", flexDirection: 'row', justifyContent: "space-between", alignSelf: "center"}}>

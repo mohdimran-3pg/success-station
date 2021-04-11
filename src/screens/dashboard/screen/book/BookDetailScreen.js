@@ -102,7 +102,7 @@ export default class BookDetailScreen extends React.Component {
                                 source={require('../../../../../assets/book-image.png')} 
                             />)
     }
-                            <TouchableOpacity style={{width: 22, height: 22, position: "absolute", marginLeft: 15, marginTop: 55}} 
+                            <TouchableOpacity style={{width: 22, height: 22, position: "absolute", marginLeft: 15, marginTop: 5}} 
                                 onPress={() =>{
                                     this.props.navigation.pop();
                                 }}

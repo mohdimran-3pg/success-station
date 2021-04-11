@@ -23,6 +23,7 @@
     "confirm_password": "تأكيد كلمة المرور",
     "submit": "إرسال",
     "password_recovered": "استعادة كلمة المرور",
+    "password_created": "إنشاء كلمة المرور",
     "password_recovered_desc": "تم استرداد كلمة المرور الخاصة بك بنجاح الرجاء تسجيل الدخول",
     "password_created_desc": "إنشاء كلمة المرور الخاصة بك بنجاح الرجاء تسجيل الدخول",
     "mobile_number": "رقم الهاتف المحمول",

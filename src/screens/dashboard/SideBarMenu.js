@@ -130,6 +130,7 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           }}
           labelStyle={styles.drawerLabelStyle} 
         />
+        {/*
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={messageIcon} />}
           label={translate('messeges')}
@@ -138,6 +139,7 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           }}
           labelStyle={styles.drawerLabelStyle}
         />
+        */}
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={membershipIcon} />}
           label={translate('membership')}
@@ -146,6 +148,7 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           }}
           labelStyle={styles.drawerLabelStyle}
         />
+        {/*
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={notificationIcon} />}
           label={translate('notification')}
@@ -154,6 +157,7 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           }}
           labelStyle={styles.drawerLabelStyle}
         />
+        */}
 
         <View
           style={{

@@ -23,7 +23,6 @@ export default class ResetPassword extends React.Component {
   };
 
   constructor(props) {
-    console.log("forgot_password value --- ", JSON.stringify(props.navigation))
     super(props);
     this.state= {isLoading:false}
     this.password = '';

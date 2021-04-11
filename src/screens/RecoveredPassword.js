@@ -44,7 +44,7 @@ export default class RecoveredPassword extends React.Component {
           source={require('../../assets/tick.png')}/>
           </View>
           <View>
-            <Text style={styles.recoveredPasswordTextStyle}>{translate('password_recovered')}</Text>
+            <Text style={styles.recoveredPasswordTextStyle}>{this.props.navigation.state.params.forgot_password ? translate('password_recovered'): translate('password_created')}</Text>
           </View>
           <View>
             <Text style={styles.secondaryTextStyle}>
