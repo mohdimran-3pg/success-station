@@ -191,14 +191,12 @@ export default class BookDetailScreen extends React.Component {
                                         ApiService.get(`user-profile?user_id=${userId}`)
                                             .then((response) => {
                                             let userData = response.data
-                                            console.log("####4")
                                             this.setState({isLoading: false});
                                             this.props.navigation.navigate('ProfileDetail',{  
                                             user: userData, ads: response.data, Friendship: {}
                                             })
                                             })
                                             .catch((error) => {
-                                                console.log("####1  Error ---------", error)
                                             this.setState({isLoading: false});
                                             alert(error.data.message);
                                             });

@@ -175,7 +175,6 @@ import { connect } from 'react-redux';
       })
       .then((response) => {
         this.setState({isLoading: false});
-        console.log(response.data)
         this.props.actions.updateUrl(response.data.image.url)
         this.props.navigation.goBack()
         
