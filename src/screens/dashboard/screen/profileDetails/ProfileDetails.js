@@ -23,12 +23,10 @@ import {translate} from '../../../../util/TranslationUtils';
 import AsyncStorage from '@react-native-community/async-storage'
 import BookDetailView from '../../../../../components/BookDetailView';
 
-const UserCardHeader = ({profile,clickEvent, userData,...props}) => {
-
-  const [friendState, setFriendState] = useState('add_friend');
+const UserCardHeader = ({profile,clickEvent, userData, friendShip,...props}) => {
 
   let imageURL = profile.image != null && profile.image.url != null ? profile.image.url: "https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg"
-  var friendshipStatus = props.route.params.Friendship != null && props.route.params.Friendship.status != null ? props.route.params.Friendship.status: ""
+  var friendshipStatus = friendShip != null && friendShip.status != null ? friendShip.status: ""
   var roleId = profile.roles != null && profile.roles.length > 0 ? profile.roles[0].id: 2
   return (
     <Card style={{margin: 14, elevation: 10}}>
@@ -227,11 +225,11 @@ export default class ProfileDetails extends React.Component {
 
   constructor(props) {
     super(props);
-    
     this.state = {
       userData: props.route.params.user,
       ads: props.route.params.ads,
       study: props.route.params.user,
+      friendship: props.route.params.Friendship,
       index: 0,
       routes: [
         { key: 'contact', title: 'CONTACT'  },
@@ -240,9 +238,10 @@ export default class ProfileDetails extends React.Component {
       ],
       isLoading: false
     };
+    
   }
 
-    getProfileDetails() {
+  getProfileDetails() {
       ApiService.get(`user-profile?user_id=${this.state.profile.id}`)
       .then((response) => {
         let userData = response.data
@@ -270,11 +269,10 @@ export default class ProfileDetails extends React.Component {
         "status": "new"
       })
       .then((response) => {
-        this.getProfileDetail()
+        this.setState({friendship: response.data, isLoading: false});
         if (this.props.route.params.callBack !== undefined) {
           this.props.route.params.callBack()
         }
-        
       })
       .catch((error) => {
         alert(error.data.message);
@@ -331,8 +329,7 @@ export default class ProfileDetails extends React.Component {
     };
 
   render() {
-    
-    const data = this.state.userData.id != null? this.state.userData:  this.props.route.params.user
+    const data = this.props.route.params.user
     return (
       <SafeAreaView style={{flex: 1,flexDirection:'column'}}>
            <View style={[styles.parent, {position: 'absolute'}]} />
@@ -347,6 +344,7 @@ export default class ProfileDetails extends React.Component {
                               }
                             }}
                   userData = {this.state.userData}
+                  friendShip = {this.state.friendship}
               />
               <TabView 
               navigationState={this.state}

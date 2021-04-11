@@ -102,7 +102,7 @@ export default class BookDetailScreen extends React.Component {
                                 source={require('../../../../../assets/book-image.png')} 
                             />)
     }
-                            <TouchableOpacity style={{width: 22, height: 22, position: "absolute", marginLeft: 15, marginTop: 5}} 
+                            <TouchableOpacity style={{width: 22, height: 22, position: "absolute", marginLeft: 15, marginTop: 5, backgroundColor: 'rgba(52, 52, 52, 0.5)'}} 
                                 onPress={() =>{
                                     this.props.navigation.pop();
                                 }}
@@ -143,7 +143,7 @@ export default class BookDetailScreen extends React.Component {
                                             headingValue={this.state.fullAddress != '' ? this.state.fullAddress: "N/A"}
                                         />
                                     </View>
-                                    <View style={{width: "45%", marginLeft: 10}}>
+                                    <View style={{width: "45%", marginLeft: 10,}}>
                                         <DisplayBookInformation 
                                             heading={translate("type")}
                                             headingValue={this.state.book.category != null ? this.state.book.category.category: "N/A"}
