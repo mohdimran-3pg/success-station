@@ -66,9 +66,10 @@ const CarouselCards = (carouselData) => {
   )
 }
 
-const CategoryCard =({category,...props}) => {
+const CategoryCard =({category, categories,...props}) => {
+  var selectedIndex = categories.findIndex(x => x.id == category.id);
   return (
-    <TouchableOpacity style={{width:"31%",margin:'1%'}} onPress = {()=> {  props.navigation.navigate('Category');}}>
+    <TouchableOpacity style={{width:"31%",margin:'1%'}} onPress = {()=> {  props.navigation.navigate('Category', {id: category.id, selectedTab: selectedIndex+1});}}>
         <View style={{width: "100%", height: 90, borderRadius: 30, marginTop: 21,  borderWidth: 1,
     borderRadius: 4,
     borderColor: 'rgba(158, 166, 190, 0.12)',
@@ -145,7 +146,7 @@ export default class AdsScreen extends React.Component {
   }
 
   onChangeText = (text) => {
-    this.props.navigation.navigate('Category', {searchText: text});
+    this.props.navigation.navigate('Category', {searchText: text, id: 0, selectedTab: 0});
   }
 
 
@@ -188,7 +189,7 @@ export default class AdsScreen extends React.Component {
                     keyExtractor = {(item) => item.id} 
                     data = {this.state.categories}
                     numColumns={3}
-                    renderItem={({item}) => <CategoryCard {...this.props} category = {item}/>} 
+                    renderItem={({item}) => <CategoryCard {...this.props} category = {item} categories = {this.state.categories}/>} 
                 />
                 </View>
             </View>

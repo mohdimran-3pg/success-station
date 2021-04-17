@@ -123,7 +123,8 @@ export default class StudentProfile extends React.Component {
       newType :false,
       multiSliderValue: [1, 500],
       key:1,
-  
+      selectedCategoryId: props.route.params.selectedTab,
+      selectedTabIndex: props.route.params.selectedTab
     };
    
     this.range =''
@@ -174,10 +175,13 @@ export default class StudentProfile extends React.Component {
         }
         this.setState({categories: tempArray})
         var searchString = ""
-        if (this.searchText != null && this.searchText != "") {
-          searchString = "?search="+ this.searchText
+        if (this.state.searchText != null && this.state.searchText != "") {
+          searchString = "?search="+ this.state.searchText
+          this.getBooks(searchString);
+        } else if (this.state.selectedCategoryId > 0) {
+          this.getBooksByCategory(this.state.selectedCategoryId)
         }
-        this.getBooks(searchString);
+        
       })
       .catch((error) => {
         this.setState({isLoading: false});
@@ -216,9 +220,11 @@ export default class StudentProfile extends React.Component {
   getBooksByCategory = (id) => {
 
     if (id > 0) {
+      this.setState({isLoading: true});
       ApiService.get(`listings?category=${id}`)
       .then((response) => {
-        this.setState({books: response.data})
+
+        this.setState({books: response.data, isLoading: false})
       })
       .catch((error) => {
       });
@@ -303,7 +309,7 @@ export default class StudentProfile extends React.Component {
             style={{flex: 1, height: 1 }}
           />}
         
-            defaultIndex={this.state.defaultIndex}
+            defaultIndex={this.state.selectedTabIndex}
             containerStyle={styles.container2}
             headerBackgroundColor={'white'}
             headerTextStyle={styles.headerText}

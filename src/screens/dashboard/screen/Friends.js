@@ -30,7 +30,7 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
         </View>
         <View style={{height: 40, marginTop:7}}>
           <Text style={{fontSize: 15, fontWeight: "700", textAlign: "center", color: "#000000", fontFamily: "DMSans-Regular",}}>{user.name}</Text>
-          <Text style={{fontSize: 15, fontWeight: "400", textAlign: "center", color: "#9EA6BE",marginTop:9, fontFamily: "DMSans-Regular",}}>{user.email}</Text>
+          <Text style={{fontSize: 15, fontWeight: "400", textAlign: "center", color: "#9EA6BE",marginTop:9, fontFamily: "DMSans-Regular", marginleft: 10, marginRight: 10}}>{user.email}</Text>
         </View>
         <View style={{width: "70%", alignSelf: "center",marginTop:15, justifyContent: "space-between", flexDirection: "row", height: 30}}>
           <Image style={{width: 24, height:24}}
