@@ -33,7 +33,7 @@ export default class BookDetailScreen extends React.Component {
             var region = response.data.region.region != null ? response.data.region.region+", ": ""
             var country = response.data.country.name != null ? response.data.country.name: ""
             var fullAddress = `${city+region+country}`
-            this.setState({fullAddress: fullAddress})
+            this.setState({fullAddress: response.data.city.city != null ? response.data.city.city: ""})
             this.getBookComments();
         })
         .catch((error) => {

@@ -36,17 +36,17 @@ export default class LoginScreen extends React.Component {
     startLogin = () => {
 
         if (this.state.email == '') {
-            alert('Please enter email')
+            alert(translate('please_enter_email'))
             return;
         } 
           
         if (Helper.isEmailValid(this.state.email)) {
-            alert('Enter valid Email')
+            alert(translate('enter_valid_email'))
             return;
         } 
 
         if (this.state.password == '') {
-            alert('Please enter password')
+            alert(translate('please_enter_password'))
             return;
         }
 

@@ -147,5 +147,7 @@
   "request_pending": "Request Pending",
   "new": "New",
   "old": "Old",
-  "price": "Price"
+  "price": "Price",
+  "please_enter_password": "Please enter password",
+  "please_enter_email": "Please enter email"
 }
