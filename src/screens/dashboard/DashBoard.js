@@ -99,6 +99,11 @@ const Drawer = createDrawerNavigator();
                   this.props.navigation.replace('login'),
                 )
               }
+              langaugeChange={() =>
+                
+                  this.props.navigation.replace('chooseLanguageScreen' ,{data:{fromDashBoard : true}})
+                
+              }
             />
           )}>
           <Drawer.Screen name="MainScreenStack" component={MainScreenStack} />

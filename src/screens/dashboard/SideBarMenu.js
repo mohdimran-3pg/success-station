@@ -88,7 +88,7 @@ const LinkMenuItem = ({title, src, link}) => {
 };
 
  
-const SidebarMenu = ({props,data,logout,icon}) => {
+const SidebarMenu = ({props,data,logout,langaugeChange,icon}) => {
 
   return (
     <View style={{flex: 1}}>
@@ -148,6 +148,14 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           }}
           labelStyle={styles.drawerLabelStyle}
         />
+         <DrawerItem
+          icon={({color, size}) => <DrawerIcon src={membershipIcon} />}
+          label={translate('select_lang')}
+          onPress={() => {
+            langaugeChange()
+          }}
+          labelStyle={styles.drawerLabelStyle}
+        />
         {/*
         <DrawerItem
           icon={({color, size}) => <DrawerIcon src={notificationIcon} />}
@@ -195,6 +203,7 @@ const SidebarMenu = ({props,data,logout,icon}) => {
           }}
           labelStyle={styles.drawerLabelStyle}
         />
+
 
 <DrawerItem
           icon={({color, size}) => <DrawerIcon src={privacyIcon} />}

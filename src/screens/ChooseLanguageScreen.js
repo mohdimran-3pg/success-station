@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import Loader from './Loader';
 import SplashScreen from 'react-native-splash-screen'
 import ApiService from '../network/ApiService';
+import { NativeModules } from "react-native"
 const translationGetters = {
 
     en: () => require('../translations/en.json'),
@@ -31,9 +32,6 @@ const setI18nConfig = (lang) => {
 const resetAction = StackActions.reset({
   index: 0,
   actions: [NavigationActions.navigate({ routeName: 'dashBoard' })],
-},{
-  index: 1,
-  actions: [NavigationActions.navigate({ routeName: 'login' })],
 });
 export default class ChooseLanguageScreen extends React.Component {
 
@@ -52,6 +50,7 @@ export default class ChooseLanguageScreen extends React.Component {
         AsyncStorage.getItem('langCode').then((code)=> {
     
         setI18nConfig(code);
+        console.log(props)
         this.loadScreen()
         }).catch(()=> {
           setI18nConfig('en')
@@ -65,8 +64,7 @@ export default class ChooseLanguageScreen extends React.Component {
       AsyncStorage.getItem('userdata').then((value)=> {
         if(!value || 0 != value.length){ 
           ApiService.setToken(JSON.parse(value).access_token)
-          this.props.navigation.dispatch(resetAction)
-          Platform.OS == 'android' ?  SplashScreen.hide():null
+         Platform.OS == 'android' ?  SplashScreen.hide():null
          
         }
         this.setState({isLoading : false})
@@ -118,8 +116,21 @@ export default class ChooseLanguageScreen extends React.Component {
                                 name={translate('next')}
                                 clickEvent = { () => {
                                     AsyncStorage.setItem('langCode',this.state.langCode)
-                                    this.props.navigation.navigate('countrySelectScreen', { data: { code: this.state.langCode} })
-                                }}
+                                    setI18nConfig(this.state.langCode)
+                                    AsyncStorage.getItem('userdata').then((value)=> {
+                                      console.log(!value)
+                                      if ( 0 != value.length) {
+                                        this.props.navigation.dispatch(resetAction)
+                                      console.log(this.props.navigation)
+                                      }else{
+                                        this.props.navigation.navigate('countrySelectScreen', { data: { code: this.state.langCode} })
+
+                                      }
+                                      }).catch(()=> {
+                                        this.props.navigation.navigate('countrySelectScreen', { data: { code: this.state.langCode} })
+
+                                      })
+                                  }}
                             />
                     </View>
                 </View>

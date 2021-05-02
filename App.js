@@ -121,6 +121,7 @@ const DashBoardNavigationStack = createStackNavigator(
     recoveredPassword : RecoveredPassword,
     resetPassword : ResetPassword,
     userSignUpForm: UserSignUpForm,
+    chooseLanguageScreen: ChooseLanguageScreen,
     dashBoard:DashBoard
   }, 
   {

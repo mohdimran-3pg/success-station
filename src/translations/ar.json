@@ -151,5 +151,6 @@
     "price": "سعر",
     "please_enter_password": "الرجاء إدخال كلمة المرور",
     "please_enter_email": "الرجاء إدخال البريد الإلكتروني",
-    "success_station": "محطة النجاح"
+    "success_station": "محطة النجاح",
+    "select_lang": "اختر اللغة"
   }  

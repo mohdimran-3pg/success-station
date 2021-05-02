@@ -273,16 +273,30 @@ export default class BookDetailScreen extends React.Component {
                                         name={this.state.book.if_favorite == true ? translate('remove_from_favourites'): translate('add_to_favourites')}
                                         clickEvent={() => {
                                             this.setState({isLoading: true});
-                                            ApiService.post('mark-favorite', {
-                                                "user_name_id": this.state.userId,
-                                                "listing_id": this.props.route.params.data.bookId
-                                              }).then(() => {
-                                                this.setState({isLoading: false});
-                                                this.getBookDetail();
-                                                this.props.route.params.data.callBack();
-                                              }).catch(() => {
-                                                this.setState({isLoading: false});
-                                              })
+                                            if (this.state.book.if_favorite == true) {
+                                                ApiService.post('remove-favorite', {
+                                                    "user_name_id": this.state.userId,
+                                                    "listing_id": this.props.route.params.data.bookId
+                                                  }).then(() => {
+                                                    this.setState({isLoading: false});
+                                                    this.getBookDetail();
+                                                    this.props.route.params.data.callBack();
+                                                  }).catch(() => {
+                                                    this.setState({isLoading: false});
+                                                  })
+                                            } else {
+                                                ApiService.post('mark-favorite', {
+                                                    "user_name_id": this.state.userId,
+                                                    "listing_id": this.props.route.params.data.bookId
+                                                  }).then(() => {
+                                                    this.setState({isLoading: false});
+                                                    this.getBookDetail();
+                                                    this.props.route.params.data.callBack();
+                                                  }).catch(() => {
+                                                    this.setState({isLoading: false});
+                                                  })      
+                                            }
+                                            
                                         }}
                                         imgSource={require('../../../../../assets/book/heart-icon.png')}
                                         isBackground={false}
