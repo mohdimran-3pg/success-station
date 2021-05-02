@@ -339,6 +339,8 @@ class MainScreenStack extends React.Component {
             },
           }}
         />
+        
+       
 
         <Stack.Screen
           name="MyAdsList"
