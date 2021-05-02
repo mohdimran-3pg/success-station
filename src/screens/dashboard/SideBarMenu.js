@@ -175,7 +175,7 @@ const SidebarMenu = ({props,data,logout,icon}) => {
             fontSize: 18,
             fontFamily: 'DMSans-Regular'
           }}>
-          Success Station
+          {translate('success_station')}
         </Text>
 
         <DrawerItem

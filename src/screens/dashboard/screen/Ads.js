@@ -98,13 +98,16 @@ export default class AdsScreen extends React.Component {
   getBookCategories = () => {
     ApiService.get('listing-categories')
       .then((response) => {
+        this.setState({isLoading: false})
         this.setState({categories: response.data})
       })
       .catch((error) => {
+        this.setState({isLoading: false})
       });
   }
 
   getBanners = () => {
+    this.setState({isLoading: true})
     ApiService.get('banners')
       .then((response) => {
         var tempArray = []
@@ -119,6 +122,7 @@ export default class AdsScreen extends React.Component {
         this.getBookCategories();
       })
       .catch((error) => {
+        this.setState({isLoading: false})
       });
   }
 
@@ -140,7 +144,8 @@ export default class AdsScreen extends React.Component {
         "https://source.unsplash.com/1024x768/?tree", // Network image
       ],
       bannerData: [],
-      categories: []
+      categories: [],
+      isLoading: false
     };
     
   }
