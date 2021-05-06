@@ -36,7 +36,7 @@ const UserProfile =({user, clickEvent, profileOpenEvent,...props}) => {
           <Image style={{width: 24, height:24}}
               source={require('../../../../assets/friends/graduation-icon.png')}
           />
-          <Text style={{fontSize: 11, fontWeight: "400",marginStart:4, color: "#9EA6BE" , fontFamily: "DMSans-Regular",}}>{fullAddress}</Text>
+          <Text style={{fontSize: 11, fontWeight: "400",marginStart:4, color: "#9EA6BE" , fontFamily: "DMSans-Regular", textAlign: 'left'}}>{fullAddress}</Text>
         </View>
         <View style={{width: "80%", alignSelf: "center", height: 35, marginBottom: 10,marginTop:13}}>
         <View style={friendshipStatus == "new" ? styles.mainView: styles.mainView}>

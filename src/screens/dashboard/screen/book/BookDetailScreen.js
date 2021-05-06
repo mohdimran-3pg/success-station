@@ -21,6 +21,7 @@ import ButtonViewWithImage from '../../../../../components/ButtonViewWithImage';
 import ApiService from '../../../../network/ApiService';
 import Loader from '../../../Loader';
 import AsyncStorage from '@react-native-community/async-storage'
+import * as RNLocalize from 'react-native-localize';
 
 export default class BookDetailScreen extends React.Component {
 
@@ -80,6 +81,7 @@ export default class BookDetailScreen extends React.Component {
 
     componentDidMount() {
         this.getBookDetail()
+        console.log("Currency ::: ----" , RNLocalize.getCurrencies())
     }
 
     componentWillUnmount() {
@@ -94,7 +96,8 @@ export default class BookDetailScreen extends React.Component {
                     <View style={{width: '100%', marginBottom: 90}}>
                         <ScrollView style={{}}>
                         <View style={{height: 280, width: "100%"}}>
-                            {this.state.book.media != null?
+                            {this.state.book.media != null &&
+                            this.state.book.media.length > 0 ?
                             (<Image style={{width: "100%", height: 280}}
                             source={{ uri: this.state.book.media[0].url }} 
                                  />) : (
@@ -102,7 +105,7 @@ export default class BookDetailScreen extends React.Component {
                                 source={require('../../../../../assets/book-image.png')} 
                             />)
     }
-                            <TouchableOpacity style={{width: 22, height: 22, position: "absolute", marginLeft: 15, marginTop: 5, backgroundColor: 'rgba(52, 52, 52, 0.5)'}} 
+                            <TouchableOpacity style={{width: 22, height: 22, position: "absolute", marginLeft: 15, marginTop: 5}} 
                                 onPress={() =>{
                                     this.props.navigation.pop();
                                 }}
@@ -175,10 +178,10 @@ export default class BookDetailScreen extends React.Component {
                             </View>
                             <View style={{width: "100%", height: 6, backgroundColor: "#F4F7FC", marginTop: 15}}></View>
                             <View style={{width: "100%", flexDirection: "column", justifyContent: "space-between", marginTop: 15}}>
-                                <Text style={{marginLeft: 15, fontSize: 20, fontStyle: "normal", color: "#000", fontWeight: "700"}}>
+                                <Text style={{marginLeft: 15, fontSize: 20, fontStyle: "normal", color: "#000", fontWeight: "700", textAlign: "left"}}>
                                 {translate('details')}
                                 </Text>
-                                <Text style={{marginLeft: 15, fontSize: 12, fontStyle: "normal", color: "#000", fontWeight: "500", marginTop: 15}}>
+                                <Text style={{marginLeft: 15, fontSize: 12, fontStyle: "normal", color: "#000", fontWeight: "500", marginTop: 15, textAlign: "left"}}>
                                     {this.state.book.description}
                                 </Text>
                             </View>

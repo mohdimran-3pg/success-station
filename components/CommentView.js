@@ -28,11 +28,11 @@ const CommentView = ({data, clickEvent}) => {
     /> */}
                 <View style={{marginLeft: 10, marginTop: 10, marginBottom: 10, flex: 1}}>
                     <View>
-                        <Text style={{fontSize:15, fontWeight: "500", fontStyle: "normal", color: "#000000", fontFamily: "DMSans-Regular"}}>{data.user_name.name}</Text>
+                        <Text style={{fontSize:15, fontWeight: "500", fontStyle: "normal", color: "#000000", fontFamily: "DMSans-Regular", textAlign: 'left'}}>{data.user_name.name}</Text>
                         
                     </View>
-                    <Text style={{fontSize:12, fontWeight: "normal", fontStyle: "normal", color: "rgba(60, 60, 67, 0.6)", fontFamily: "DMSans-Regular"}}>{data.created_at}</Text>
-                    <Text style={{fontSize:12, fontWeight: "500", fontStyle: "normal", color: "#5D648A", marginRight: 20, fontFamily: "DMSans-Regular"}}>{data.comment}</Text>
+                    <Text style={{fontSize:12, fontWeight: "normal", fontStyle: "normal", color: "rgba(60, 60, 67, 0.6)", fontFamily: "DMSans-Regular", textAlign: 'left'}}>{data.created_at}</Text>
+                    <Text style={{fontSize:12, fontWeight: "500", fontStyle: "normal", color: "#5D648A", marginRight: 20, fontFamily: "DMSans-Regular", textAlign: 'left'}}>{data.comment}</Text>
                     
                     <View style={{backgroundColor:"rgba(158, 166, 190, 0.26)", height: 1, marginTop: 15}}></View>
                 </View>

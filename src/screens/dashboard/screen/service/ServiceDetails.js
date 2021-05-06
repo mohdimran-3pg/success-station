@@ -37,7 +37,8 @@ const UserCardHeader = ({profile, ...props}) => {
             fontSize: 20,
             alignSelf: 'center',
             marginTop: 0,
-            fontWeight: 'bold',
+            fontWeight: 'bold', 
+            textAlign: 'left'
           }}>
           {profile.name}
         </Text>
@@ -47,7 +48,8 @@ const UserCardHeader = ({profile, ...props}) => {
               fontSize: 13,
               color: '#666666',
               lineHeight: 18,
-              textAlign: 'center',
+              textAlign: 'center', 
+              textAlign: 'left'
             }}>
             {profile.profileMsg}
           </Paragraph>
@@ -109,52 +111,52 @@ const CONTACTS = ({data}) => {
  return(
  <View style={{flex: 1, background: 'white', margin: 16}}>
    <View style={{width: '100%'}}>
-      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE',fontFamily: "DMSans-Regular", }}>
+      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE',fontFamily: "DMSans-Regular", textAlign: 'left'}}>
       {translate('name')}
       </Text>
-      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948',fontFamily: "DMSans-Regular", }}>
+      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948',fontFamily: "DMSans-Regular", textAlign: 'left'}}>
           {user.contact_name}
       </Text>
    </View>
 
    <View style={{width: '100%',marginTop: 10}}>
-      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE',fontFamily: "DMSans-Regular", }}>
+      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE',fontFamily: "DMSans-Regular", textAlign: 'left'}}>
       {translate('email')}
       </Text>
-      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948',fontFamily: "DMSans-Regular", }}>
+      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948',fontFamily: "DMSans-Regular", textAlign: 'left'}}>
           {user.email}
       </Text>
    </View>
 
    <View style={{width: '100%',marginTop: 10}}>
-      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE',fontFamily: "DMSans-Regular", }}>
+      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE',fontFamily: "DMSans-Regular", textAlign: 'left'}}>
       {translate('mobile')}
       </Text>
-      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948',fontFamily: "DMSans-Regular", }}>
+      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948',fontFamily: "DMSans-Regular", textAlign: 'left'}}>
           {user.mobile_number}
       </Text>
    </View>
 
    <View style={{width: '100%',marginTop: 10}}>
-      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE',fontFamily: "DMSans-Regular", }}>
+      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE',fontFamily: "DMSans-Regular", textAlign: 'left'}}>
       {translate('phone')}
       </Text>
-      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948',fontFamily: "DMSans-Regular", }}>
+      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948',fontFamily: "DMSans-Regular", textAlign: 'left'}}>
           {user.phone_number}
       </Text>
    </View>
 
    <View style={{width: '100%',marginTop: 10}}>
-      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE',fontFamily: "DMSans-Regular", }}>
+      <Text style={{fontSize: 14, lineHeight: 19, fontWeight: '400', color: '#9EA6BE',fontFamily: "DMSans-Regular", textAlign: 'left'}}>
       {translate('address')}
       </Text>
-      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948',fontFamily: "DMSans-Regular", }}>
+      <Text style={{fontSize: 15, lineHeight: 19,fontWeight: 'bold', color: '#2C2948',fontFamily: "DMSans-Regular", textAlign: 'left'}}>
           {fullAddress}
       </Text>
    </View>
     
    <TouchableOpacity onPress={() => Linking.openURL(link)}>
-    <Text style={{fontSize: 15, lineHeight: 19,marginTop:10,color:'blue'}}>
+    <Text style={{fontSize: 15, lineHeight: 19,marginTop:10,color:'blue', textAlign: 'left'}}>
       {user.website}
     </Text>
     </TouchableOpacity>
@@ -163,7 +165,7 @@ const CONTACTS = ({data}) => {
  )
 };
 
-const PRODUCTS = ({data}) =>{
+const PRODUCTS = ({data, props}) =>{
   return(
   <View style={{flex: 1, background: 'white', margin: 16}}>
      <View style={{flex: 1}}>
@@ -173,7 +175,11 @@ const PRODUCTS = ({data}) =>{
                 data={data}
                 numColumns={2}
                 renderItem={({item}) => (
-                  <BookDetailView book={item} />
+                  <BookDetailView 
+                  book={item} 
+                  props={props}
+                  isBookDetail={true}
+                  />
                 )}
               />
             </View>
@@ -184,7 +190,7 @@ const PRODUCTS = ({data}) =>{
 const DESCRIPTION = ({data}) => (
   
   <View style={{flex: 1, background: 'white', margin: 16}}>
-    <Text style={{fontSize: 15, lineHeight: 19}}>
+    <Text style={{fontSize: 15, lineHeight: 19, textAlign: 'left'}}>
       {data.description}
      
     </Text>
@@ -253,11 +259,12 @@ export default class ServiceDetails extends React.Component {
     console.log("dkdldj",index)
   };
   _renderScene = (item, index) => {
+    console.log("props.....", this.props)
     switch (item['key']) {
       case '1':
         return <CONTACTS data={this.props.route.params.book} />;
       case '4':
-        return <PRODUCTS data={this.state.products} />;
+        return <PRODUCTS data={this.state.products} props={this.props} />;
       case '5':
         return <DESCRIPTION data={this.props.route.params.book} />;
       default:
@@ -328,10 +335,10 @@ export default class ServiceDetails extends React.Component {
           <Text
             style={{
               color: 'white',
-             
               fontSize: 26,
+              flex: 1,
             }}>
-            Profile
+            {translate('profile')}
           </Text>
           </View>
           {this.state.isLoading ? (

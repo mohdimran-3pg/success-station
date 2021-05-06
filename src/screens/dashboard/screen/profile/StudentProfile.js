@@ -110,36 +110,41 @@ const UserCardHeader = ({profile,data,...props}) => {
         </View>
       </Card>
 
-      <Text style={{fontSize:15,marginStart:14,marginTop:28}}>{translate('my_ads')}</Text>
+      <Text style={{fontSize:15,marginStart:14,marginTop:28, textAlign: 'left'}}>{translate('my_ads')}</Text>
     </View>
   );
 
 };
 
-const CardItem = (item) => {
+const CardItem = (item, props) => {
   let image = item.image != null && item.image.length > 0 ? item.image[0].url: "";
   var city = item.city.city != null ? item.city.city+", ": ""
   var country = item.country.name != null ? item.country.name: ""
   var fullAddress = `${city+country}`
   var header_View = (
     <View style={{flex: 1}}>
-      <Card style={{margin: 7, elevation: 10}}>
+      <Card style={{margin: 7, elevation: 10}} onPress= {()=> props.navigation.navigate('BookDetailScreen', { data: { bookId: item.id }})}>
         <View style={{flexDirection: 'column', justifyContent: 'center'}}>
+          {image != "" ?(
           <Image
             style={styles.cardImageItem}
-            source={{uri : image}}          />
+            source={{uri : image}}          />) : 
+            (<Image style={{width: "100%", height: 280}}
+            source={require('./../../../../../assets/book-image.png')} 
+        />)}
           <View style={{flexDirection: 'column', marginStart: 10}}>
             <Text
               style={{
                 fontSize: 15,
                 color: 'rgba(0, 0, 0, 1)',
                 lineHeight: 20,
-                fontFamily: "DMSans-Regular"
+                fontFamily: "DMSans-Regular",
+                textAlign: 'left',
               }}>
               {item.title}
             </Text>
 
-            <Text style={{color: '#0A878A', fontSize: 15, marginTop: 11, fontFamily: "DMSans-Regular"}}>
+            <Text style={{color: '#0A878A', fontSize: 15, marginTop: 11, fontFamily: "DMSans-Regular", textAlign: 'left'}}>
               SR {item.price}
             </Text>
             <View
@@ -167,6 +172,7 @@ const CardItem = (item) => {
         </View>
       </Card>
     </View>
+  
   );
 
   return header_View;
@@ -229,7 +235,7 @@ export default class StudentProfile extends React.Component {
         <FlatList
           style={{}}
           data={this.state.FlatListItems}
-          renderItem={({item}) => CardItem(item)}
+          renderItem={({item}) => CardItem(item, this.props)}
           numColumns={2}
           ListHeaderComponent={<UserCardHeader profile = {this.state.profileData} data = {this.state.data} {...this.props}/>}
         />

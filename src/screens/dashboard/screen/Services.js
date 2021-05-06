@@ -182,6 +182,7 @@ const BookCard = ({book, ...props}) => {
                 color: '#000000',
                 marginTop: 10,
                 fontFamily: "DMSans-Regular", 
+                textAlign: 'left',
               }}>
               {book.contact_name.trim()}
             </Text>
@@ -194,6 +195,7 @@ const BookCard = ({book, ...props}) => {
                 marginTop: 5,
                 marginBottom: 5,
                 fontFamily: "DMSans-Regular", 
+                textAlign: 'left'
               }}>
               {book.email.trim()}
             </Text>
@@ -293,7 +295,7 @@ export default class ServicesScreen extends React.Component {
 
   render() {
     let region = {latitude: 0.0, longitude: 0.0};
-    if (this.locationList.length != 0) {
+    if (this.locationList != null && this.locationList.length != 0) {
       region = {
         latitude: parseFloat(this.locationList[0].lat),
         longitude:

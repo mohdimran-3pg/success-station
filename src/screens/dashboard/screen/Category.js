@@ -50,11 +50,15 @@ const CardItem = ({item,refreshCallBack,...props}) => {
                 fontSize: 15,
                 color: 'rgba(0, 0, 0, 1)',
                 lineHeight: 20,
+                marginStart: 5,
+                marginEnd: 10,
+                textAlign: 'left',
               }}>
               {item.title}
             </Text>
 
-            <Text style={{color: '#0A878A', fontSize: 15, marginTop: 11, fontFamily: "DMSans-Regular"}}>
+            <Text style={{color: '#0A878A', fontSize: 15, marginTop: 11, fontFamily: "DMSans-Regular",marginStart: 5,
+                marginEnd: 10, textAlign: 'left'}}>
               SR {item.price}
             </Text>
             <View
@@ -72,8 +76,8 @@ const CardItem = ({item,refreshCallBack,...props}) => {
                     fontSize: 10,
                     color: 'rgba(0, 0, 0, 0.6)',
                     marginStart: 5,
-                    marginEnd: 5,
-                    fontFamily: "DMSans-Regular"
+                    marginEnd: 10,
+                    fontFamily: "DMSans-Regular",
                   }}>
                   {fullAddress}
                 </Text>
@@ -245,22 +249,24 @@ export default class StudentProfile extends React.Component {
   render() {
     return (
       <SafeAreaView style={{flex: 1,backgroundColor:'white'}}>
-        <View
-          style={{backgroundColor: 'rgba(10, 135, 138, 1)', paddingBottom: 28}}>
-          <Searchbar
-            style={{marginStart:10,marginEnd:10, fontStyle: "DMSans-Regular", fontSize:15}}
-            placeholder={translate('search_book')}
-            onChangeText={(value)=>{
-        
-              this.onChangeText(value)
+        <View style={{backgroundColor: 'rgba(10, 135, 138, 1)', paddingBottom: 28}}>
+          <View
+            style={{marginLeft: 10, marginRight: 10}}>
+            <Searchbar
+              style={{fontStyle: "DMSans-Regular", fontSize:15}}
+              placeholder={translate('search_book')}
+              onChangeText={(value)=>{
+          
+                this.onChangeText(value)
 
-            }}
-            icon={() => (
-              <Image source={require('./../../../../assets/search.png')} />
-            )}
-            style={{fontStyle: "DMSans-Regular", fontSize:15}}
-            value={this.state.searchText}
-          />
+              }}
+              icon={() => (
+                <Image source={require('./../../../../assets/search.png')} />
+              )}
+              style={{fontStyle: "DMSans-Regular", fontSize:15}}
+              value={this.state.searchText}
+            />
+          </View>
         </View>
         <View style={{flexDirection: 'row', margin: 7, height: 30}}>
           <Text
@@ -270,6 +276,7 @@ export default class StudentProfile extends React.Component {
               textAlignVertical: 'center',
               height: 30,
               fontSize: 18,
+              textAlign: 'left'
             }}>
             {translate('book_list')}
           </Text>

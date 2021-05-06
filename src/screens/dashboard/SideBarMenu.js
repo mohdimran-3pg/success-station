@@ -178,10 +178,11 @@ const SidebarMenu = ({props,data,logout,langaugeChange,icon}) => {
         <Text
           style={{
             marginTop: 10,
-            marginStart: 25,
             color: '#181725',
             fontSize: 18,
-            fontFamily: 'DMSans-Regular'
+            fontFamily: 'DMSans-Regular',
+            textAlign: 'left',
+            marginLeft: 10,
           }}>
           {translate('success_station')}
         </Text>
@@ -336,6 +337,8 @@ const styles = StyleSheet.create({
   drawerLabelStyle: {
     fontFamily: 'DMSans-Regular',
     fontSize: 15,
+    width: "100%",
+    textAlign: 'left'
   }
 });
 

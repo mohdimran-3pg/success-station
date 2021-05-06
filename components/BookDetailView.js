@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {View, Text, Image, FlatList, TouchableOpacity} from "react-native"
 const BookDetailView = ({book,props,isBookDetail=false}) => {
+  console.log("props ------ ", props);
     let url = (book.image != null && book.image.length > 0) ? book.image[0].url: "";
     return (
       <TouchableOpacity
@@ -30,6 +31,7 @@ const BookDetailView = ({book,props,isBookDetail=false}) => {
                   color: '#000000',
                   marginTop: 10,
                   fontFamily: "DMSans-Regular", 
+                  textAlign: 'left'
                 }}>
               {book.title}
               </Text>
@@ -42,6 +44,7 @@ const BookDetailView = ({book,props,isBookDetail=false}) => {
                   marginTop: 5,
                   marginBottom:5,
                   fontFamily: "DMSans-Regular", 
+                  textAlign: 'left'
                 }}>
                SR {book.price}
               </Text>

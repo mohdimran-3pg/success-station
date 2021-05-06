@@ -15,7 +15,7 @@ const AdPostedAtView = ({clickEvent}) => {
     const [comment, setComment] = useState('');
     return (
         <View style={{width: "100%", height: 200}}>
-            <Text style={{fontSize: 20, fontWeight: "700", fontStyle: "normal", marginTop: 10, marginLeft: 15}}>{translate('ad_posted_at')}</Text>
+            <Text style={{fontSize: 20, fontWeight: "700", fontStyle: "normal", marginTop: 10, marginLeft: 15, textAlign: "left"}}>{translate('ad_posted_at')}</Text>
             <View style={{width: "90%", alignSelf: "center"}}>
                 <TextInput
                     autoCapitalize="none"

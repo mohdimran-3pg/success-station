@@ -185,7 +185,7 @@ export default class AdsScreen extends React.Component {
               <CarouselCards carouselData={this.state.bannerData}/>
             </View>
             <View>
-             <Text style={{fontSize: 20, fontWeight: "700", fontStyle: "normal",marginStart:20}}>{translate('categories')}</Text>
+             <Text style={{fontSize: 20, fontWeight: "700", fontStyle: "normal",marginStart:20, textAlign: 'left'}}>{translate('categories')}</Text>
 
                 <View style={{width: "90%",height:'100%', alignSelf: "center"}}>
                 <FlatList
