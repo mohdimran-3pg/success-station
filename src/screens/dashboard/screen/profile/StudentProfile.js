@@ -121,7 +121,6 @@ const UserCardHeader = ({profile,data,...props}) => {
 
 const CardItem = (item, props) => {
   let image = item.image != null && item.image.length > 0 ? item.image[0].url: 'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg';
-  console.log("this is image ----", image);
   var city = item.city.city != null ? item.city.city+", ": ""
   var country = item.country.name != null ? item.country.name: ""
   var fullAddress = `${city+country}`

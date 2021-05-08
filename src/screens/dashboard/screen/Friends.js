@@ -174,7 +174,6 @@ export default class FreindsScreen extends React.Component {
    this.getFriendList()
   }
   componentWillUnmount() {
-    console.log("componentWillUnmount")
   }
 
   render() {

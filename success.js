@@ -106,7 +106,6 @@ export default class App extends React.Component {
       });
   }
   loadScreen() {
-    console.log("load")
     this.setState({isLoading: Platform.OS != 'android'});
 
     AsyncStorage.getItem('userdata')
@@ -115,7 +114,6 @@ export default class App extends React.Component {
           ApiService.setToken(JSON.parse(value).access_token);
           this.setState({isSigned : true})
           Platform.OS == 'android' ? SplashScreen.hide() : null;
-          console.log("userdata")
         }
         
       })

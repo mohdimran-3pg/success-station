@@ -191,7 +191,6 @@ const DashBoardNavigationStack = createStackNavigator(
 
 
   render() {
-    console.log("LOGOUT",this.props.state.isLogout)
     const {isSigned} = this.state
     return (
       this.props.state.isLogout?<SignInStack/> : isSigned ? <DashBoradStack/>:<IntroStack/>

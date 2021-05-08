@@ -81,7 +81,6 @@ export default class BookDetailScreen extends React.Component {
 
     componentDidMount() {
         this.getBookDetail()
-        console.log("Currency ::: ----" , RNLocalize.getCurrencies())
     }
 
     componentWillUnmount() {
