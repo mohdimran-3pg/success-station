@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View,SafeAreaView, Alert, Text, Image, FlatList, TouchableOpacity, I18nManager, Platform} from "react-native"
+import {View,SafeAreaView, Text, Image, FlatList, TouchableOpacity, I18nManager, Platform, Linking, Alert} from "react-native"
 import DropDownSelectBox from '../../components/DropDownSelectBox'
 import ButtonView from '../../components/ButtonView'
 import * as RNLocalize from 'react-native-localize';
@@ -80,7 +80,20 @@ export default class ChooseLanguageScreen extends React.Component {
     componentWillUnmount() {
     }
 
-
+    showAlert1() {  
+      Alert.alert(  
+          'Change your app language',  
+          "Here's how:\n1. Go to your settings\n2. Pick your language\n3. Reopen your App",  
+          [  
+              {  
+                  text: 'Cancel',  
+                  onPress: () => {},  
+                  style: 'cancel',  
+              },  
+              {text: 'Go to Settings', onPress: () => Linking.openURL('App-Prefs:root=GENERAL')},  
+          ]  
+      );  
+    } 
 
     render() {
       return (
@@ -155,7 +168,7 @@ export default class ChooseLanguageScreen extends React.Component {
                           this.setState({'langTitle': item.label})
                           this.setState({'langCode': item.code})
                           AsyncStorage.setItem('langCode',item.code)
-                        
+                          this.showAlert1();
                         }}>
                         <View style={{flex: 1, justifyContent: 'center', alignItems: "stretch"}}>
                         <Text
