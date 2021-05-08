@@ -13,6 +13,7 @@ import Loader from './Loader';
 import SplashScreen from 'react-native-splash-screen'
 import ApiService from '../network/ApiService';
 import { NativeModules } from "react-native"
+import RNAndroidSettingsTool from "react-native-android-settings-tool";
 const translationGetters = {
 
     en: () => require('../translations/en.json'),
@@ -90,7 +91,13 @@ export default class ChooseLanguageScreen extends React.Component {
                   onPress: () => {},  
                   style: 'cancel',  
               },  
-              {text: 'Go to Settings', onPress: () => Linking.openURL('App-Prefs:root=GENERAL')},  
+              {text: 'Go to Settings', onPress: () => {
+                if (Platform.OS === 'ios') {
+                  Linking.openURL('app-settings:')
+                } else {
+                RNAndroidSettingsTool.ACTION_LOCALE_SETTINGS()
+                }
+              }},  
           ]  
       );  
     } 

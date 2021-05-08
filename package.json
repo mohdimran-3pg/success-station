@@ -29,6 +29,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "^0.63.0",
+    "react-native-android-settings-tool": "^1.0.4",
     "react-native-calendar-picker": "^6.1.5",
     "react-native-customized-image-picker": "^1.1.0",
     "react-native-debounce-input": "^1.0.5",
