@@ -89,7 +89,6 @@ export default class BookDetailScreen extends React.Component {
     }
 
     render() {
-
         return (
             <SafeAreaView style={{flex: 1}}>
                 <View style={{flex: 1}}>
@@ -194,10 +193,16 @@ export default class BookDetailScreen extends React.Component {
                                         ApiService.get(`user-profile?user_id=${userId}`)
                                             .then((response) => {
                                             let userData = response.data
-                                            this.setState({isLoading: false});
-                                            this.props.navigation.navigate('ProfileDetail',{  
-                                            user: userData, ads: response.data, Friendship: {}
+                                            ApiService.get(`listings?user_id=${userId}`)
+                                            .then((response) => {
+                                                this.setState({isLoading: false});
+                                                this.props.navigation.navigate('ProfileDetail',{  
+                                                    user: userData, ads: response.data, Friendship: {}
+                                                    })
                                             })
+                                            .catch((error) => {
+                                                this.setState({isLoading: false});
+                                            });
                                             })
                                             .catch((error) => {
                                             this.setState({isLoading: false});

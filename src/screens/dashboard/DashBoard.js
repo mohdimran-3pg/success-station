@@ -11,6 +11,8 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  Linking,
+  NativeModules,
 } from 'react-native';
 
 import {
@@ -101,6 +103,8 @@ const Drawer = createDrawerNavigator();
               }
               langaugeChange={() =>
                 
+                  //Linking.openURL('app-settings:')
+                  // httpsLinking.openURL('App-Prefs:root=GENERAL')
                   this.props.navigation.replace('chooseLanguageScreen' ,{data:{fromDashBoard : true}})
                 
               }

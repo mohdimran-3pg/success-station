@@ -50,7 +50,6 @@ export default class ChooseLanguageScreen extends React.Component {
         AsyncStorage.getItem('langCode').then((code)=> {
     
         setI18nConfig(code);
-        console.log(props)
         this.loadScreen()
         }).catch(()=> {
           setI18nConfig('en')
@@ -118,10 +117,8 @@ export default class ChooseLanguageScreen extends React.Component {
                                     AsyncStorage.setItem('langCode',this.state.langCode)
                                     setI18nConfig(this.state.langCode)
                                     AsyncStorage.getItem('userdata').then((value)=> {
-                                      console.log(!value)
                                       if ( 0 != value.length) {
                                         this.props.navigation.dispatch(resetAction)
-                                      console.log(this.props.navigation)
                                       }else{
                                         this.props.navigation.navigate('countrySelectScreen', { data: { code: this.state.langCode} })
 

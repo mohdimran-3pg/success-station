@@ -21,8 +21,9 @@ import ApiService from '../../../../network/ApiService';
 import Loader from '../../../Loader';
 import {translate} from '../../../../util/TranslationUtils';
 import BookDetailView from '../../../../../components/BookDetailView';
+import AsyncStorage from '@react-native-community/async-storage'
 
-const UserCardHeader = ({profile, ...props}) => {
+const UserCardHeader = ({profile, onClick, ...props}) => {
   return (
     <View>
       <View
@@ -79,6 +80,23 @@ const UserCardHeader = ({profile, ...props}) => {
               backgroundColor: '#F78A3A',
               borderRadius: 5,
               justifyContent: 'center',
+            }} onPress={() => {
+
+              AsyncStorage.getItem('userdata').then((value)=> {
+                if(!value || 0 != value.length){ 
+                  let user_id = JSON.parse(value).user_id;
+                  console.log("Profile Data :::: ", JSON.stringify(profile))
+                  if (false) {
+                    //clickEvent(user.Friendship.requister_id, user.Friendship.user_requisted_id, user.Friendship.status)
+                    //onClick(1,2)
+                  } else {
+                    onClick(profile.id, user_id, "")
+                    //onClick(1,2)
+                  }
+                  
+                }
+              })
+              
             }}>
             <Text
               style={{
@@ -215,6 +233,38 @@ export default class ServiceDetails extends React.Component {
     ];
   }
 
+  startFollow(friendId, myId) {
+    this.setState({isLoading: true})
+    ApiService.post('friendship-request',{
+      "requister_id": `${myId}`,
+      "user_requisted_id": `${friendId}`,
+      "status": "new"
+    })
+    .then((response) => {
+      this.setState({isLoading: false})
+    })
+    .catch((error) => {
+      alert(error.data.message);
+      this.setState({isLoading: false});
+    });
+  }
+
+  endFollow(requisterId, userRequistedId) {
+    this.setState({isLoading: true})
+    ApiService.post('remove-friend',{
+      "requister_id": `${requisterId}`,
+      "user_requisted_id": `${userRequistedId}`
+    })
+    .then((response) => {
+      this.getFriendList()
+      this.setState({isLoading: false})
+    })
+    .catch((error) => {
+      alert(error.data.message);
+      this.setState({isLoading: false});
+    });
+  }
+
   startFollow = () => {
     this.setState({isLoading: true});
     AsyncStorage.getItem('userdata').then((value)=> {
@@ -259,7 +309,6 @@ export default class ServiceDetails extends React.Component {
     console.log("dkdldj",index)
   };
   _renderScene = (item, index) => {
-    console.log("props.....", this.props)
     switch (item['key']) {
       case '1':
         return <CONTACTS data={this.props.route.params.book} />;
@@ -292,7 +341,18 @@ export default class ServiceDetails extends React.Component {
             ]}
             source={{uri: avatar}}
           />
-          <UserCardHeader profile={data} {...this.props} />
+          <UserCardHeader profile={data} {...this.props} 
+            onClick={(friendId, myId, status) => {
+              this.startFollow(friendId, myId)
+              /*
+              if (status == "accepted") {
+                this.removeFriendRequest(friendId, myId)
+              } else {
+                this.sendFriendRequest(friendId, myId)
+              }
+              */
+            }}
+          />
           {this.state.isLoading ? null
              
            :   <DynamicTabView

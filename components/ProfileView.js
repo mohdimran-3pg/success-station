@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TextInput ,I18nManager, TouchableOpacity
 import {translate} from "../src/util/TranslationUtils";
 const ProfileView = ({data, clickEvent}) => {
     let image = data.user_name != null ? data.user_name.image: {}
+    console.log("JSON Data ---- ", JSON.stringify(data))
     return (
         <View style={{width: "100%", flex:1,justifyContent:'center'}}>
             <TouchableOpacity style={{}}

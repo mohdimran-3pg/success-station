@@ -76,6 +76,7 @@ const UserCardHeader = ({profile,data,...props}) => {
               {profile.profileMsg}
             </Paragraph>
           </Card.Content>
+          {/*
           <View
             style={{
               marginTop: 20,
@@ -86,6 +87,8 @@ const UserCardHeader = ({profile,data,...props}) => {
               borderBottomWidth: 1,
             }}
           />
+          */}
+          {/*
           <View
             style={{
               flexDirection: 'row',
@@ -106,7 +109,7 @@ const UserCardHeader = ({profile,data,...props}) => {
               <Text style={styles.countTextStye}>{profile.following}</Text>
               <Text style={styles.titleCountTextStye}>Following</Text>
             </View>
-          </View>
+          </View>*/}
         </View>
       </Card>
 
@@ -117,7 +120,8 @@ const UserCardHeader = ({profile,data,...props}) => {
 };
 
 const CardItem = (item, props) => {
-  let image = item.image != null && item.image.length > 0 ? item.image[0].url: "";
+  let image = item.image != null && item.image.length > 0 ? item.image[0].url: 'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg';
+  console.log("this is image ----", image);
   var city = item.city.city != null ? item.city.city+", ": ""
   var country = item.country.name != null ? item.country.name: ""
   var fullAddress = `${city+country}`
@@ -125,13 +129,9 @@ const CardItem = (item, props) => {
     <View style={{flex: 1}}>
       <Card style={{margin: 7, elevation: 10}} onPress= {()=> props.navigation.navigate('BookDetailScreen', { data: { bookId: item.id }})}>
         <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-          {image != "" ?(
-          <Image
+          {(<Image
             style={styles.cardImageItem}
-            source={{uri : image}}          />) : 
-            (<Image style={{width: "100%", height: 280}}
-            source={require('./../../../../../assets/book-image.png')} 
-        />)}
+            source={{uri : image}}          />)}
           <View style={{flexDirection: 'column', marginStart: 10}}>
             <Text
               style={{
