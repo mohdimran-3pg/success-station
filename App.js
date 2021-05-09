@@ -172,13 +172,20 @@ const DashBoardNavigationStack = createStackNavigator(
     AsyncStorage.getItem('userdata')
       .then((value) => {
         if (!value || 0 != value.length) {
+          AsyncStorage.getItem('langCode').then((langCode)=> {
+            if(!langCode || 0 != langCode.length){ 
+              ApiService.setLocale(langCode)
+            }
+          }).catch(()=> {
+            ApiService.setLocale('')
+          })
           ApiService.setToken(JSON.parse(value).access_token);
           this.setState({isSigned : true})
           Platform.OS == 'android' ? SplashScreen.hide() : null;
         }
-        
       })
       .catch(() => {
+        ApiService.setLocale('')
         this.setState({isSigned : false})
         Platform.OS == 'android' ? SplashScreen.hide() : null;
       });

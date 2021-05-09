@@ -35,7 +35,7 @@ export const interceptor = (store) => {
  */
 const request = function(options) {
   const onSuccess = function(response) {
-   
+    console.log("This is Headers .....", JSON.stringify(response.config.headers))
     return response.data;
   }
 
@@ -86,9 +86,17 @@ function post(endPoint, postData) {
        } 
   
    }
+
+   function setLocale(code) {
+      if (code.length > 0) {
+        client.defaults.headers.common['locale'] = code;
+      } else {
+        client.defaults.headers.common['locale'] = `en`;
+      }
+   }
   
   const ApiService = {
-    get, post,setToken
+    get, post,setToken,setLocale
   }
   
   export default ApiService;

@@ -41,12 +41,13 @@ const CardItem = ({item,...props}) => {
                 fontSize: 15,
                 color: 'rgba(0, 0, 0, 1)',
                 lineHeight: 20,
-                fontFamily: "DMSans-Regular"
+                fontFamily: "DMSans-Regular",
+                textAlign: 'left'
               }}>
               {item.title}
             </Text>
 
-            <Text style={{color: '#0A878A', fontSize: 15, marginTop: 11, fontFamily: "DMSans-Regular"}}>
+            <Text style={{color: '#0A878A', fontSize: 15, marginTop: 11, fontFamily: "DMSans-Regular", textAlign: 'left'}}>
               SR {item.price}
             </Text>
             <View
@@ -65,7 +66,8 @@ const CardItem = ({item,...props}) => {
                     color: 'rgba(0, 0, 0, 0.6)',
                     marginStart: 5,
                     marginEnd: 10,
-                    fontFamily: "DMSans-Regular"
+                    fontFamily: "DMSans-Regular",
+                    textAlign: 'left'
                   }}>
                   {fullAddress}
                 </Text>
@@ -77,7 +79,8 @@ const CardItem = ({item,...props}) => {
                     fontSize: 10,
                     color: 'rgba(0, 0, 0, 0.6)',
                     marginStart: 5,
-                    fontFamily: "DMSans-Regular"
+                    fontFamily: "DMSans-Regular",
+                    textAlign: 'left'
                   }}>
                   {item.contact_name}
                 </Text>

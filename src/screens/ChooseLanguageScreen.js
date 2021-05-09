@@ -174,7 +174,9 @@ export default class ChooseLanguageScreen extends React.Component {
                           this.ChooseLanguage.close();
                           this.setState({'langTitle': item.label})
                           this.setState({'langCode': item.code})
+                          console.log("Locale::::", item.code)
                           AsyncStorage.setItem('langCode',item.code)
+                          ApiService.setLocale(item.code)
                           this.showAlert1();
                         }}>
                         <View style={{flex: 1, justifyContent: 'center', alignItems: "stretch"}}>
