@@ -103,13 +103,13 @@ export default class BookDetailScreen extends React.Component {
                                 source={require('../../../../../assets/book-image.png')} 
                             />)
     }
-                            <TouchableOpacity style={{width: 22, height: 22, position: "absolute", marginLeft: 15, marginTop: 5}} 
+                            <TouchableOpacity style={{width: 22, height: 22, position: "absolute", marginLeft: 15, top:  Platform.OS === 'ios' ? 5:40}} 
                                 onPress={() =>{
                                     this.props.navigation.pop();
                                 }}
                             >
                             <Image 
-                                resizeMode="contain"
+                                  style={{width: 22, height: 22}}
                                 source={require('../../../../../assets/book/back-icon.png')}
                             />
                             </TouchableOpacity>
@@ -120,19 +120,20 @@ export default class BookDetailScreen extends React.Component {
                             />
                             </TouchableOpacity>*/}
                             {this.state.book.if_favorite == true ? (
-                            <View style={{right: 5, top: 5, position: "absolute", borderRadius: 12.5, width: 25, height: 25, backgroundColor: "#ffffff", justifyContent: 'center'}}>
-                                <Image 
-                                    style={{width: 10, height: 10, alignSelf: "center"}}
-                                    source={ require('../../../../../assets/heart.png') }
-                                />
-                            </View>): null}
+                            <View style={{right: 5, top:  Platform.OS === 'ios' ? 5:40,position: "absolute", borderRadius: 11, width: 22, height: 22, backgroundColor: "#ffffff", justifyContent: 'center'}}>
+                            <Image 
+                              style={{width: 11, height: 11, alignSelf: "center"}}
+                              source={ require('../../../../../assets/heart.png') }
+                            />
+                        </View>
+                        ): null}
                         </View>
                         <View style={{width: "100%"}}>
                             <Text style={{marginLeft: 15, marginTop: 15, marginRight: 15, fontSize: 20, fontStyle: "normal", color: "#000"}}>
                                 {this.state.book != null? this.state.book.title: "N/A"}
                             </Text>
                             <Text style={{marginLeft: 15, marginTop: 15, marginRight: 15, fontSize: 20, fontStyle: "normal", color: "#0A878A"}}>
-                                SR {this.state.book.price}
+                                SR  {this.state.book.price}
                             </Text>
                         </View>
                         <View style={{width: "100%", height: 6, backgroundColor: "#F4F7FC", marginTop: 15}}></View>
