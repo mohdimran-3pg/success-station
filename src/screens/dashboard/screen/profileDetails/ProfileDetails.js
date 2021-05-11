@@ -108,7 +108,7 @@ const UserCardHeader = ({profile,clickEvent, userData, friendShip,...props}) => 
             >
             <Text style={{color:'#151522',fontSize:17,textAlign:'center',fontWeight:'bold'}}>
             {friendshipStatus == "new" ? translate("request_pending"): friendshipStatus == "accepted"  
-                ? roleId == 4 ? translate("Unfollow"): translate('remove_friend')
+                ? roleId == 4 ? translate("unfollow"): translate('remove_friend')
                 : roleId == 4 ? translate("follow") : translate('add_friend')}
             </Text>
             </TouchableOpacity>

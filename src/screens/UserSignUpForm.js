@@ -569,7 +569,7 @@ export default class UserSignUpForm extends React.Component {
               <View style={style.dontHaveAccountViewStyle}>
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.navigation.navigate('userSignUpForm');
+                    this.props.navigation.pop();
                   }}>
                   <View style={{flexDirection: 'row'}}>
                     <Text style={style.dontHaveAccountTextStyle}>
