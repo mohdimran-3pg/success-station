@@ -122,6 +122,7 @@ export default class AdsScreen extends React.Component {
         this.getBookCategories();
       })
       .catch((error) => {
+        this.getBookCategories();
         this.setState({isLoading: false})
       });
   }

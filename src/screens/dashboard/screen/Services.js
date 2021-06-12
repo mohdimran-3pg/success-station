@@ -164,7 +164,11 @@ const BookCard = ({book, ...props}) => {
         borderWidth: 1,
         borderRadius: 4,
       }}
-      onPress={() => props.navigation.navigate('ServiceProfileScreen', {book})}>
+      onPress={() => {
+        props.navigation.navigate('ServiceProfileScreen', {book})
+      }
+        
+      }>
       <View style={{}}>
         <View style={{width: '100%', height: 140}}>
           <Image
@@ -366,10 +370,12 @@ export default class ServicesScreen extends React.Component {
                     }}>
                     <Callout
                       style={{height: 90, width: 200}}
-                      onPress={() =>
-                        this.props.navigation.navigate('ServiceProfileScreen', {
+                      onPress={() => {
+                        /*this.props.navigation.navigate('ServiceProfileScreen', {
                           book,
-                        })
+                        })*/
+                      }
+                        
                       }>
                       <View
                         style={{

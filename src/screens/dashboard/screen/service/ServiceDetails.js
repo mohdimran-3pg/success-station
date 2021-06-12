@@ -225,7 +225,7 @@ export default class ServiceDetails extends React.Component {
       products : []
     };
   
-
+    console.log("Constructor ---------")
     this.data = [
       {key: '1', title: 'CONTACTS'},
       {key: '4', title: 'PRODUCTS'},
